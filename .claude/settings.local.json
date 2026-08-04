@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\localhost\\\\mtcms\" -Directory)",
+      "Bash(Select-Object Name)",
+      "WebFetch(domain:react.dev)",
+      "WebFetch(domain:docs.deno.com)",
+      "Bash(deno lint *)",
+      "Bash(deno fmt *)",
+      "Bash(deno task *)"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "denoland.vscode-deno",
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-typescript-next",
+    "humao.rest-client",
+    "fallowfallow-rs.fallow-vscode",
+    "context7.context7-vscode",
+    "blazejkustra.react-compiler-marker"
+  ]
+}

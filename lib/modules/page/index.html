@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Page Title</title>
+  <style type="text/css">
+    body {
+      background-color: #1f1f1f;
+      color: #b5bac9;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    a {
+      color: #b5bac9;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>MTCMS</h1>
+  <p><a href="/api">API</a></p>
+  <div id="chat">
+    <h2>WebSocket Chat</h2>
+    <div id="messages"
+      style="border: 1px solid #b5bac9; padding: 10px; height: 200px; overflow-y: scroll; margin-bottom: 10px;"></div>
+    <input type="text" id="messageInput" placeholder="Type a message..." style="width: 80%; padding: 5px;" />
+    <button id="sendButton" style="padding: 5px;">Send</button>
+  </div>
+  <script>
+    const getWebSocketUrl = () => {
+      const envWsUrl = window?.ENV?.WEBSOCKET_URL;
+      if (envWsUrl) {
+      return envWsUrl;
+      }
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      return `${protocol}//${window.location.host}/ws`;
+    };
+
+    const ws = new WebSocket(getWebSocketUrl());
+    const messagesDiv = document.getElementById('messages');
+    const messageInput = document.getElementById('messageInput');
+    const sendButton = document.getElementById('sendButton');
+
+    ws.onopen = () => {
+      console.log('WebSocket connection established');
+    };
+
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    ws.onclose = () => {
+      console.warn('WebSocket connection closed');
+    };
+
+    ws.onmessage = (event) => {
+      const message = document.createElement('div');
+      message.textContent = event.data;
+      messagesDiv.appendChild(message);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    };
+
+    const sendMessage = () => {
+      if (messageInput.value.trim() !== '' && ws.readyState === WebSocket.OPEN) {
+        ws.send(messageInput.value);
+        messageInput.value = '';
+      } else if (ws.readyState !== WebSocket.OPEN) {
+        alert('WebSocket connection is not open.\r\nReloading the page to reconnect.');
+        window.location.reload();
+      }
+    };
+
+    sendButton.addEventListener('click', sendMessage);
+
+    messageInput.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>

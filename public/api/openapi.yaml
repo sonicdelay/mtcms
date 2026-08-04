@@ -1,0 +1,431 @@
+openapi: 3.1.0
+info:
+  title: mtCMS API
+  description: |-
+    API for managing nodes stored in the mtCMS backend.
+
+    All `/nodes` endpoints require a Bearer token issued by `POST /api/auth`.
+    See details:
+     - [sonicdelay.net](https://www.sonicdelay.net)
+  version: "1.0.0"
+  contact:
+    email: sascha@sonicdelay.net
+servers:
+  - url: /api/
+    description: Current server
+security:
+  - BearerAuth: []
+paths:
+  /auth:
+    post:
+      tags:
+        - auth
+      summary: Login
+      description: Authenticates with email and password and returns a Bearer token.
+      operationId: login
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Authenticated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "400":
+          $ref: "#/components/responses/RespBadRequest"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
+    get:
+      tags:
+        - auth
+      summary: Refresh token
+      description: Validates the current Bearer token and issues a fresh one.
+      operationId: refreshToken
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Refreshed token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
+
+  /nodes:
+    get:
+      tags:
+        - nodes
+      summary: List nodes
+      description: Returns nodes, optionally filtered by type.
+      operationId: getAllNodes
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: type
+          in: query
+          description: Filter nodes by their type
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Maximum number of nodes to return (1-50)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 50
+        - name: offset
+          in: query
+          description: Number of nodes to skip (0-1000)
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 1000
+            default: 0
+      responses:
+        "200":
+          description: List of nodes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Node"
+        "400":
+          $ref: "#/components/responses/RespBadRequest"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
+    post:
+      tags:
+        - nodes
+      summary: Create node
+      description: Adds a new node to the library.
+      operationId: createNode
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: Details of the node to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NodeInput"
+      responses:
+        "201":
+          description: Node successfully created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Node"
+        "400":
+          $ref: "#/components/responses/RespBadRequest"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
+
+  /nodes/{id}:
+    get:
+      tags:
+        - nodes
+      summary: Get node
+      description: Returns the node with the requested ID.
+      operationId: getNodeById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of the node to request
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 00000000-0000-4000-8000-000000000000
+      responses:
+        "200":
+          description: The requested node
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Node"
+        "400":
+          $ref: "#/components/responses/RespBadRequest"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "404":
+          $ref: "#/components/responses/RespNotfound"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
+    put:
+      tags:
+        - nodes
+      summary: Update node
+      description: Partially updates the node with the specified ID.
+      operationId: updateNode
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of the node to modify
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Fields to update. At least one must be provided.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NodeUpdate"
+      responses:
+        "200":
+          description: Node successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Node"
+        "400":
+          $ref: "#/components/responses/RespBadRequest"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "404":
+          $ref: "#/components/responses/RespNotfound"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
+    delete:
+      tags:
+        - nodes
+      summary: Delete node
+      description: Deletes the node with the specified ID.
+      operationId: deleteNode
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of the node to delete
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Node successfully removed
+        "400":
+          $ref: "#/components/responses/RespBadRequest"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "404":
+          $ref: "#/components/responses/RespNotfound"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
+
+components:
+  schemas:
+    Node:
+      type: object
+      description: A stored node record
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 00000000-0000-4000-8000-000000000000
+        type:
+          type: string
+          example: ROOT
+        update:
+          type: string
+          format: date-time
+          example: "2020-05-24T18:23:25.408Z"
+        sync:
+          type: object
+          nullable: true
+          example: {}
+        data:
+          type: object
+          nullable: true
+          example:
+            "0":
+              icon: root
+              meta: {}
+              title: Root
+              parent: "0"
+              values:
+                en: {}
+              position: 10
+              protected: true
+              reviewGroup: "0"
+      required:
+        - id
+        - type
+        - update
+    NodeInput:
+      type: object
+      description: Payload for creating a node
+      properties:
+        type:
+          type: string
+          example: ROOT
+        sync:
+          type: object
+          default: {}
+          example: {}
+        data:
+          type: object
+          example: {}
+      required:
+        - type
+        - data
+    NodeUpdate:
+      type: object
+      description: Partial payload for updating a node
+      properties:
+        type:
+          type: string
+          example: ROOT
+        sync:
+          type: object
+          example: {}
+        data:
+          type: object
+          example: {}
+    LoginRequest:
+      type: object
+      description: Credentials for authentication
+      properties:
+        email:
+          type: string
+          format: email
+          example: admin@example.com
+        password:
+          type: string
+          format: password
+          example: admin
+      required:
+        - email
+        - password
+    AuthResponse:
+      type: object
+      description: Issued token and its user
+      properties:
+        token:
+          type: string
+          description: Signed JWT (HS256)
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            email:
+              type: string
+              format: email
+            role:
+              type: string
+              example: Admin
+          required:
+            - id
+            - email
+            - role
+      required:
+        - token
+        - user
+    ProblemDetails:
+      description: RFC 7807 Problem Details (https://tools.ietf.org/html/rfc7807)
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI reference that identifies the problem type
+        status:
+          type: integer
+          format: int32
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence
+      required:
+        - status
+        - title
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token issued by `POST /api/auth`
+  responses:
+    RespBadRequest:
+      description: Bad Request
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/ProblemDetails"
+          examples:
+            BadRequest:
+              value:
+                type: about:blank
+                title: Bad Request
+                status: 400
+                detail: "type must be a non-empty string."
+    RespUnauthorized:
+      description: Unauthorized
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/ProblemDetails"
+          examples:
+            Unauthorized:
+              value:
+                type: about:blank
+                title: Unauthorized
+                status: 401
+                detail: "Authentication credentials were missing or incorrect."
+    RespNotfound:
+      description: Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/ProblemDetails"
+          examples:
+            NotFound:
+              value:
+                type: about:blank
+                title: Not Found
+                status: 404
+                detail: "Node not found."
+    RespInternalServerError:
+      description: Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/ProblemDetails"
