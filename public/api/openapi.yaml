@@ -162,6 +162,17 @@ paths:
             type: string
             format: uuid
             example: 00000000-0000-4000-8000-000000000000
+        - name: scope
+          in: query
+          description: Include related nodes instead of (or in addition to) the node itself
+          required: false
+          schema:
+            type: string
+            enum:
+              - parent
+              - children
+              - breadcrumb
+              - editor
       responses:
         "200":
           description: The requested node
@@ -234,6 +245,144 @@ paths:
       responses:
         "204":
           description: Node successfully removed
+        "400":
+          $ref: "#/components/responses/RespBadRequest"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "404":
+          $ref: "#/components/responses/RespNotfound"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
+
+  /fm:
+    get:
+      tags:
+        - fm
+      summary: List media root
+      description: Lists the files and folders under the media root.
+      operationId: listMediaRoot
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: List of files and folders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FileItem"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
+
+  /fm/{path}:
+    get:
+      tags:
+        - fm
+      summary: Get media content
+      description: Lists a directory or returns a file under the media root.
+      operationId: getMediaContent
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: path
+          in: path
+          description: Relative path under the media root
+          required: true
+          schema:
+            type: string
+            example: articles/work
+      responses:
+        "200":
+          description: Directory listing or file content
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FileItem"
+        "400":
+          $ref: "#/components/responses/RespBadRequest"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "404":
+          $ref: "#/components/responses/RespNotfound"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
+    post:
+      tags:
+        - fm
+      summary: Create directory
+      description: Creates a directory (with parents) under the media root.
+      operationId: createMediaDirectory
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: path
+          in: path
+          description: Relative path of the directory to create
+          required: true
+          schema:
+            type: string
+      responses:
+        "201":
+          description: Directory successfully created
+        "400":
+          $ref: "#/components/responses/RespBadRequest"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
+    put:
+      tags:
+        - fm
+      summary: Write file
+      description: Creates or overwrites a text file under the media root.
+      operationId: writeMediaContent
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: path
+          in: path
+          description: Relative path of the file to write
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        "204":
+          description: File successfully written
+        "400":
+          $ref: "#/components/responses/RespBadRequest"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
+    delete:
+      tags:
+        - fm
+      summary: Delete content
+      description: Removes a file or an empty directory under the media root.
+      operationId: deleteMediaContent
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: path
+          in: path
+          description: Relative path of the content to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Content successfully removed
         "400":
           $ref: "#/components/responses/RespBadRequest"
         "401":
@@ -377,6 +526,25 @@ components:
       required:
         - status
         - title
+    FileItem:
+      type: object
+      description: A file or folder entry in the media root
+      properties:
+        name:
+          type: string
+          example: docker.md
+        path:
+          type: string
+          example: articles/work/docker.md
+        type:
+          type: string
+          enum:
+            - dir
+            - file
+      required:
+        - name
+        - path
+        - type
   securitySchemes:
     BearerAuth:
       type: http

@@ -1,248 +1,161 @@
-import "jsr:@std/dotenv/load";
-import { MiniNode, Node } from "../../models/node.interface.ts";
-import { neon } from "@neon/serverless";
+import pool from "./db";
+import type { MiniNode, Node } from "./types";
 
-const databaseUrl = Deno.env.get("DATABASE_URL")!;
-const sql = neon(databaseUrl);
+export class NotFoundError extends Error {
+  constructor(message = "Not Found") {
+    super(message);
+    this.name = "NotFoundError";
+  }
+}
 
-const rootId = "00000000-0000-4000-8000-000000000000";
-const maxDepth = 20;
-const defaultData = {
-  "id": "0",
-  "type": "undefiend",
-  "update": new Date().toISOString().replace("T", " ").replace("Z", ""),
-  "sync": {},
-  "data": {
-    "0": {
-      "icon": "node",
-      "meta": {},
-      "title": "Node",
-      "parent": rootId,
-      "values": {
-        "en": {},
-      },
-      "position": 10,
-      "protected": true,
-      "reviewGroup": "0",
-    },
+export interface ListNodesOptions {
+  type?: string;
+  limit?: number;
+  offset?: number;
+}
+
+export async function getAllNodes(
+  options: ListNodesOptions = {},
+): Promise<Node[]> {
+  const { type, limit = 50, offset = 0 } = options;
+
+  const conditions: string[] = [];
+  const values: unknown[] = [];
+  let idx = 1;
+
+  if (type) {
+    conditions.push(`type = $${idx++}`);
+    values.push(type);
+  }
+
+  const where = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
+  const query = `SELECT id, type, update, sync, data FROM nodes ${where} ORDER BY update DESC LIMIT $${idx++} OFFSET $${idx++}`;
+  values.push(limit, offset);
+
+  const { rows } = await pool.query<Node>(query, values);
+  return rows;
+}
+
+export async function getNodeById(id: string): Promise<Node> {
+  const {
+    rows: [row],
+  } = await pool.query<Node>(
+    "SELECT id, type, update, sync, data FROM nodes WHERE id = $1",
+    [id],
+  );
+
+  if (!row) {
+    throw new NotFoundError("Node not found");
+  }
+
+  return row;
+}
+
+export async function addNode(input: {
+  type: string;
+  sync?: Record<string, unknown>;
+  data: Record<string, unknown>;
+}): Promise<Node> {
+  const {
+    rows: [row],
+  } = await pool.query<Node>(
+    `INSERT INTO nodes (type, sync, data) VALUES ($1, $2, $3) RETURNING id, type, update, sync, data`,
+    [input.type, input.sync ?? {}, input.data],
+  );
+
+  return row;
+}
+
+export async function updateNode(
+  id: string,
+  patch: {
+    type?: string;
+    sync?: Record<string, unknown>;
+    data?: Record<string, unknown>;
   },
-};
+): Promise<Node> {
+  const {
+    rows: [row],
+  } = await pool.query<Node>(
+    `UPDATE nodes SET type = COALESCE($1, type), sync = COALESCE($2, sync), data = COALESCE($3, data) WHERE id = $4 RETURNING id, type, update, sync, data`,
+    [patch.type ?? null, patch.sync ?? null, patch.data ?? null, id],
+  );
 
-export const getAllNodes = (type: string = "") => {
-  return new Promise<Node[]>((resolve, reject) => {
-    if (type != "") {
-      sql.query("SELECT * FROM nodes WHERE type = LOWER($1)", [type])
-        .then((result: unknown) => {
-          resolve(result as Node[]);
-        })
-        .catch((err: any) => reject(err));
-      return;
-    } else {
-      sql.query(`SELECT * FROM nodes`)
-        .then((result: any) => {
-          resolve(result as Node[]);
-        })
-        .catch((err: any) => reject(err));
-    }
-  });
-};
+  if (!row) {
+    throw new NotFoundError("Node not found");
+  }
 
-export const getNodeById = (id: string) => {
-  return new Promise<Node>((resolve, reject) => {
-    sql.query("SELECT * FROM nodes WHERE id = $1 LIMIT 1", [id])
-      .then((result: unknown[]) => {
-        // deno-lint-ignore no-explicit-any
-        if ((result as any[]).length == 0) {
-          reject(new Error("404 Not Found"));
-          return;
-        }
-        resolve(result[0] as Node);
-      })
-      .catch((err: Error) => reject(err));
-  });
-};
+  return row;
+}
 
-export const addNode = (node: Node) => {
-  return new Promise<Node>((resolve, reject) => {
-    const _node = {
-      ...defaultData,
-      ...node,
-    };
-    if (_node.id == "0" || !_node.id) {
-      _node.id = crypto.randomUUID();
-    }
-    try {
-      sql.query(
-        `
-        INSERT INTO nodes (id, type, update, sync, data)
-        VALUES ($1, $2, $3, $4, $5) RETURNING *
-        `,
-        [
-          _node.id,
-          _node.type,
-          _node.update,
-          _node.sync,
-          _node.data,
-        ],
-      )
-        .then((result: any) => resolve(result[0] as Node))
-        .catch((err: Error) => reject(err));
-    } catch (err) {
-      reject(err);
-    }
-  });
-};
+export async function removeNode(id: string): Promise<void> {
+  const { rowCount } = await pool.query(`DELETE FROM nodes WHERE id = $1`, [id]);
 
-export const writeNode = (id: string, node: Node) => {
-  return new Promise<Node>((resolve, reject) => {
-    const _node = {
-      ...defaultData,
-      ...node,
-    };
-    if (_node.id == "0" || !_node.id) {
-      _node.id = crypto.randomUUID();
-    }
-    _node.update = new Date().toISOString().replace("T", " ").replace("Z", "");
+  if (!rowCount) {
+    throw new NotFoundError("Node not found");
+  }
+}
 
-    try {
-      sql.query(
-        `
-        UPDATE nodes SET id=$1, type=$2, update=$3, sync=$4, data=$5
-        WHERE id = $6 RETURNING *
-        `,
-        [
-          _node.id,
-          _node.type,
-          _node.update,
-          _node.sync,
-          _node.data,
-          id,
-        ],
-      )
-        .then((result: unknown) => {
-          if ((result as unknown[]).length == 0) {
-            reject(new Error("404 Not Found"));
-            return;
-          }
-          resolve(result as Node);
-        })
-        .catch((err: Error) => reject(err));
-    } catch (err) {
-      reject(err);
-    }
-  });
-};
+export async function getChildren(id: string): Promise<MiniNode[]> {
+  const { rows } = await pool.query(
+    `SELECT id, data->'0'->>'title' AS title
+     FROM nodes
+     WHERE data @> $1
+     ORDER BY data->'0'->>'position'`,
+    [{ "0": { parent: id } }],
+  );
 
-export const removeNode = (id: string) => {
-  return new Promise<void>((resolve, reject) => {
-    sql.query("DELETE FROM nodes WHERE id = $1 RETURNING id", [id])
-      .then((result) => {
-        if (result.length == 0) {
-          reject(new Error("404 Not Found"));
-        } else {
-          resolve();
-        }
-      })
-      .catch((err) => reject(err));
-  });
-};
+  return rows as MiniNode[];
+}
 
-export const getChildren = (id: string) => {
-  return new Promise<MiniNode[]>((resolve, reject) => {
-    sql.query(`
-      SELECT id, data->'0'->>'title' AS title
-      FROM nodes
-      WHERE data @>'{"0":{"parent":"${id}"}}'
-      ORDER BY data->'0'->>'position'
-    `)
-      .then((result) => {
-        resolve(result as MiniNode[]);
-      })
-      .catch((err: Error) => {
-        console.log(err);
-        reject(err);
-      });
-  });
-};
+export async function getParent(id: string): Promise<Node> {
+  const {
+    rows: [child],
+  } = await pool.query<{ parent: string | null }>(
+    `SELECT data->'0'->>'parent' AS parent FROM nodes WHERE id = $1 LIMIT 1`,
+    [id],
+  );
 
-export const getParent = (id: string) => {
-  return new Promise<Node>((resolve, reject) => {
-    sql.query(
-      `SELECT data->'0'->>'parent' AS parent
-       FROM nodes WHERE id = $1 LIMIT 1`,
-      [id],
-    )
-      .then((data: any) => {
-        if (data[0] === undefined) reject(new Error("404 Not Found"));
-        const pid = data[0].parent;
-        sql.query("SELECT * FROM nodes WHERE id = $1 LIMIT 1", [pid])
-          .then((result: any) => resolve(result[0] as Node))
-          .catch((err: Error) => reject(err));
-      })
-      .catch((err: Error) => reject(err));
-  });
-};
+  if (!child?.parent) {
+    throw new NotFoundError("Parent not found");
+  }
 
-export const getBreadcrumb = (id: string) => {
-  return new Promise<MiniNode[]>((resolve, reject) => {
-    sql.query(
-      `WITH RECURSIVE breadcrumb AS (
+  return getNodeById(child.parent);
+}
+
+export async function getBreadcrumb(id: string): Promise<MiniNode[]> {
+  const { rows } = await pool.query(
+    `WITH RECURSIVE breadcrumb AS (
        SELECT id, data->'0'->>'title' AS title, (data->'0'->>'parent')::UUID AS parent_id
-         FROM nodes
-         WHERE id = '${id}'
-         UNION ALL
+       FROM nodes
+       WHERE id = $1
+       UNION ALL
        SELECT nodes.id, nodes.data->'0'->>'title' AS title, (nodes.data->'0'->>'parent')::UUID AS parent_id
-         FROM breadcrumb
-         JOIN nodes ON breadcrumb.parent_id = nodes.id
-      )
-      SELECT id, title FROM breadcrumb LIMIT ${maxDepth};
-    `,
-    )
-      .then((result) => {
-        resolve(result as MiniNode[]);
-      })
-      .catch((err: Error) => {
-        console.log(err);
-        reject(err);
-      });
-  });
-};
+       FROM breadcrumb
+       JOIN nodes ON breadcrumb.parent_id = nodes.id
+     )
+     SELECT id, title FROM breadcrumb LIMIT 20`,
+    [id],
+  );
 
-export const getByData = (searchString: string) => {
-  return new Promise<Node[]>((resolve, reject) => {
-    sql.query(`SELECT * FROM node WHERE data @> $1)`, [searchString])
-      .then((result: any) => resolve(result.result))
-      .catch((err: Error) => reject(err));
-  });
-};
+  return rows as MiniNode[];
+}
 
-export const getByEmail = (email: string) => {
-  return new Promise<Node>((resolve, reject) => {
-    const re =
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!re.test(email)) {
-      reject(new Error("Invalid email"));
-    }
-    console.log(email);
-    sql.query(
-      `SELECT * FROM nodes WHERE type = 'user' AND data->'0'->'values'->'en'->>'email' = $1`,
-      [email],
-    )
-      .then((result: any) => {
-        console.log(result);
-        resolve(result[0]);
-      })
-      .catch((err: Error) => reject(err));
-  });
-};
+export async function getNodesByType(type: string): Promise<Node[]> {
+  const { rows } = await pool.query<Node>(
+    "SELECT * FROM nodes WHERE type = LOWER($1)",
+    [type],
+  );
+  return rows;
+}
 
-export const getByType = (type: string) => {
-  return new Promise<Node[]>((resolve, reject) => {
-    sql.query(
-      `SELECT * FROM nodes WHERE type = LOWER($1)`,
-      [type],
-    )
-      .then((result: any) => resolve(result as Node[]))
-      .catch((err: Error) => reject(err));
-  });
-};
+export async function getUserByEmail(email: string): Promise<Node | null> {
+  const {
+    rows: [row],
+  } = await pool.query<Node>(
+    `SELECT * FROM nodes WHERE type = 'user' AND data->'0'->'values'->'en'->>'email' = $1`,
+    [email],
+  );
+
+  return row ?? null;
+}

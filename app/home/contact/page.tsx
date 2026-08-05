@@ -1,11 +1,17 @@
 import fs from "node:fs";
 import path from "node:path";
+import { notFound } from "next/navigation";
 import MarkdownIt from "markdown-it";
 
 const md = new MarkdownIt();
 
 export default function AboutPage() {
   const filePath = path.join(process.cwd(), "public", "articles", "contact.md");
+
+  if (!fs.existsSync(filePath)) {
+    notFound();
+  }
+
   const raw = fs.readFileSync(filePath, "utf-8");
   const content = raw.replace(/^---[\s\S]*?---\s*/, "");
   const html = md.render(content);

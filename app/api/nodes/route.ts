@@ -1,10 +1,31 @@
 import { NextResponse } from "next/server";
-import pool from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
 import { problemResponse } from "@/lib/http";
+import { addNode, getAllNodes } from "@/lib/nodes.service";
 
 const MAX_LIMIT = 50;
 const MAX_OFFSET = 1000;
+
+function parseRange(
+  value: string | null,
+  fallback: number,
+  min: number,
+  max: number,
+  name: string,
+): number | NextResponse {
+  if (value === null) {
+    return fallback;
+  }
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < min || parsed > max) {
+    return problemResponse(
+      400,
+      "Bad Request",
+      `${name} must be an integer between ${min} and ${max}.`,
+    );
+  }
+  return parsed;
+}
 
 export async function GET(request: Request) {
   const user = await requireAuth(request);
@@ -14,49 +35,30 @@ export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url);
   const type = searchParams.get("type");
-  const limitParam = searchParams.get("limit");
-  const offsetParam = searchParams.get("offset");
+  const limit = parseRange(
+    searchParams.get("limit"),
+    MAX_LIMIT,
+    1,
+    MAX_LIMIT,
+    "limit",
+  );
+  const offset = parseRange(
+    searchParams.get("offset"),
+    0,
+    0,
+    MAX_OFFSET,
+    "offset",
+  );
 
-  let limit = MAX_LIMIT;
-  let offset = 0;
-
-  if (limitParam !== null) {
-    limit = Number(limitParam);
-    if (!Number.isInteger(limit) || limit < 1 || limit > MAX_LIMIT) {
-      return problemResponse(
-        400,
-        "Bad Request",
-        `limit must be an integer between 1 and ${MAX_LIMIT}.`,
-      );
-    }
-  }
-
-  if (offsetParam !== null) {
-    offset = Number(offsetParam);
-    if (!Number.isInteger(offset) || offset < 0 || offset > MAX_OFFSET) {
-      return problemResponse(
-        400,
-        "Bad Request",
-        `offset must be an integer between 0 and ${MAX_OFFSET}.`,
-      );
-    }
-  }
-
-  const conditions: string[] = [];
-  const values: unknown[] = [];
-  let idx = 1;
-
-  if (type) {
-    conditions.push(`type = $${idx++}`);
-    values.push(type);
-  }
-
-  const where = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
-  const query = `SELECT id, type, update, sync, data FROM nodes ${where} ORDER BY update DESC LIMIT $${idx++} OFFSET $${idx++}`;
-  values.push(limit, offset);
+  if (limit instanceof NextResponse) return limit;
+  if (offset instanceof NextResponse) return offset;
 
   try {
-    const { rows } = await pool.query(query, values);
+    const rows = await getAllNodes({
+      type: type ?? undefined,
+      limit,
+      offset,
+    });
     return NextResponse.json(rows);
   } catch (error) {
     return problemResponse(
@@ -100,12 +102,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    const {
-      rows: [row],
-    } = await pool.query(
-      `INSERT INTO nodes (type, sync, data) VALUES ($1, $2, $3) RETURNING id, type, update, sync, data`,
-      [type, syncValue, data],
-    );
+    const row = await addNode({
+      type,
+      sync: syncValue as Record<string, unknown>,
+      data: data as Record<string, unknown>,
+    });
     return NextResponse.json(row, { status: 201 });
   } catch (error) {
     return problemResponse(

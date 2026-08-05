@@ -1,7 +1,15 @@
 import { NextResponse } from "next/server";
-import pool from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
 import { problemResponse } from "@/lib/http";
+import {
+  getBreadcrumb,
+  getChildren,
+  getNodeById,
+  getParent,
+  NotFoundError,
+  removeNode,
+  updateNode,
+} from "@/lib/nodes.service";
 
 type RouteParams = Promise<{ id: string }>;
 
@@ -15,29 +23,53 @@ function parseId(id: string): string | NextResponse {
 }
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: RouteParams },
 ) {
+  const user = await requireAuth(request);
+  if (typeof user !== "object" || !("email" in user)) {
+    return user;
+  }
+
   const { id } = await params;
   const parsed = parseId(id);
   if (typeof parsed !== "string") {
     return parsed;
   }
 
-  try {
-    const {
-      rows: [row],
-    } = await pool.query(
-      `SELECT id, type, update, sync, data FROM nodes WHERE id = $1`,
-      [parsed],
-    );
+  const scope = new URL(request.url).searchParams.get("scope") ?? "";
 
-    if (!row) {
-      return problemResponse(404, "Not Found", "Node not found.");
+  try {
+    let result: unknown;
+    switch (scope) {
+      case "parent":
+        result = await getParent(parsed);
+        break;
+      case "children":
+        result = await getChildren(parsed);
+        break;
+      case "breadcrumb":
+        result = await getBreadcrumb(parsed);
+        break;
+      case "editor": {
+        const [node, children, breadcrumb] = await Promise.all([
+          getNodeById(parsed),
+          getChildren(parsed),
+          getBreadcrumb(parsed),
+        ]);
+        result = { ...node, children, breadcrumb };
+        break;
+      }
+      default:
+        result = await getNodeById(parsed);
+        break;
     }
 
-    return NextResponse.json(row);
+    return NextResponse.json(result);
   } catch (error) {
+    if (error instanceof NotFoundError) {
+      return problemResponse(404, "Not Found", error.message);
+    }
     return problemResponse(
       500,
       "Internal Server Error",
@@ -92,19 +124,16 @@ export async function PUT(
   }
 
   try {
-    const {
-      rows: [row],
-    } = await pool.query(
-      `UPDATE nodes SET type = COALESCE($1, type), sync = COALESCE($2, sync), data = COALESCE($3, data) WHERE id = $4 RETURNING id, type, update, sync, data`,
-      [type ?? null, sync ?? null, data ?? null, parsed],
-    );
-
-    if (!row) {
-      return problemResponse(404, "Not Found", "Node not found.");
-    }
-
+    const row = await updateNode(parsed, {
+      type: type as string | undefined,
+      sync: sync as Record<string, unknown> | undefined,
+      data: data as Record<string, unknown> | undefined,
+    });
     return NextResponse.json(row);
   } catch (error) {
+    if (error instanceof NotFoundError) {
+      return problemResponse(404, "Not Found", error.message);
+    }
     return problemResponse(
       500,
       "Internal Server Error",
@@ -114,10 +143,10 @@ export async function PUT(
 }
 
 export async function DELETE(
-  _request: Request,
+  request: Request,
   { params }: { params: RouteParams },
 ) {
-  const user = await requireAuth(_request);
+  const user = await requireAuth(request);
   if (typeof user !== "object" || !("email" in user)) {
     return user;
   }
@@ -129,16 +158,12 @@ export async function DELETE(
   }
 
   try {
-    const { rowCount } = await pool.query(`DELETE FROM nodes WHERE id = $1`, [
-      parsed,
-    ]);
-
-    if (!rowCount) {
-      return problemResponse(404, "Not Found", "Node not found.");
-    }
-
+    await removeNode(parsed);
     return new NextResponse(null, { status: 204 });
   } catch (error) {
+    if (error instanceof NotFoundError) {
+      return problemResponse(404, "Not Found", error.message);
+    }
     return problemResponse(
       500,
       "Internal Server Error",

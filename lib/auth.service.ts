@@ -1,75 +1,107 @@
-/// <reference lib="deno.ns" />
-import db from "https://jsr.io/@std/media-types/1.1.0/vendor/db.ts";
-import { Node } from "../../models/node.interface.ts";
-import { getByEmail } from "./nodes.service.js";
-import bcrypt from "bcryptjs";
-import * as jose from "jose";
+import { timingSafeEqual } from "node:crypto";
+import { signToken, type AuthUser } from "./auth";
+import { getUserByEmail } from "./nodes.service";
+import type { NodeDataItem } from "./types";
 
-const jwtSecret = process.env.JWT_SECRET ||
-  "1f5e6a1ccd833d0e6a82a832a5c08671";
-const alg = "HS256";
+export class AuthError extends Error {
+  constructor(message = "Invalid credentials") {
+    super(message);
+    this.name = "AuthError";
+  }
+}
 
-const whitelist = [
-  "",
-];
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
-export const authByEmail = (email: string, password: string) => {
-  return new Promise<Node>((resolve, reject) => {
-    getByEmail(email).then((node: Node) => {
-      if (!node) {
-        reject(new Error("Invalid credentials"));
-        return;
-      }
-      const dbPassword = node.data[0].values.en.password ?? "";
-      if (bcrypt.compareSync(password, dbPassword)) {
-        resolve(node as Node);
-      } else {
-        reject(new Error("Invalid credentials"));
-      }
-    }).catch((err: Error) => {
-      console.log(err);
-      reject(new Error("Invalid credentials"));
-    });
-  });
-};
+async function passwordsMatch(input: string, stored: string): Promise<boolean> {
+  if (stored.startsWith("$2")) {
+    try {
+      const bcrypt = await import("bcryptjs");
+      return bcrypt.compareSync(input, stored);
+    } catch {
+      // bcryptjs is not installed; fall back to a constant-time comparison.
+    }
+  }
 
-export const createToken = async (node: Node) => {
-  const payload = {
-    exp: Math.floor(Date.now() / 1000) + (60 * 60),
-    user: {
-      id: node.id,
-      email: node.data[0].values.en.email,
-      role: node.data[0].values.en.role,
-    },
+  const a = new TextEncoder().encode(input);
+  const b = new TextEncoder().encode(stored);
+  if (a.byteLength !== b.byteLength) {
+    return false;
+  }
+  return timingSafeEqual(a, b);
+}
+
+function userFromNode(node: {
+  id: string;
+  data: Record<string, unknown> | null;
+}): AuthUser | null {
+  const data = node.data as
+    | { "0"?: { values?: { en?: { email?: string; role?: string; password?: string } } } }
+    | null
+    | undefined;
+  const values = data?.["0"]?.values?.en;
+  if (!values?.email) {
+    return null;
+  }
+  return {
+    id: node.id,
+    email: values.email,
+    role: values.role ?? "User",
   };
-  const secret = new TextEncoder().encode(
-    jwtSecret,
-  );
+}
 
-  const jwt = await new jose.SignJWT({ "claim": true, ...payload })
-    .setProtectedHeader({ alg })
-    .setIssuedAt()
-    .setIssuer("https://www.sonicdelay.net")
-    .setAudience("mtcms")
-    .setExpirationTime("2h")
-    .sign(secret);
-  return jwt;
-};
+/**
+ * Authenticates a user against the configured admin credentials or a user
+ * node stored in the database. Throws AuthError on failure.
+ */
+export async function authenticate(
+  email: string,
+  password: string,
+): Promise<AuthUser> {
+  if (
+    ADMIN_EMAIL &&
+    ADMIN_PASSWORD &&
+    email === ADMIN_EMAIL &&
+    password === ADMIN_PASSWORD
+  ) {
+    return {
+      id: "00000000-0000-4000-8000-000000000000",
+      email: ADMIN_EMAIL,
+      role: "Admin",
+    };
+  }
 
-export const validateToken = (token: string) => {
-  return new Promise<Node>((resolve, reject) => {
-    const secret = new TextEncoder().encode(
-      jwtSecret,
-    );
-    // console.log(token);
-    jose.jwtVerify(token, secret, {
-      issuer: "https://www.sonicdelay.net",
-      audience: "mtcms",
-    }).then((result) => {
-      resolve(result.payload as any);
-    }).catch((err) => {
-      //console.log(err, "ERROR VALIDATING TOKEN...");
-      reject(new Error(`Invalid token: ${err.message}`));
-    });
-  });
-};
+  const node = await getUserByEmail(email);
+  const user = node ? userFromNode(node) : null;
+  const storedPassword =
+    node && user
+      ? ((
+          node.data as unknown as {
+            "0": { values?: { en?: NodeDataItem & { password?: string } } };
+          }
+        )?.["0"]?.values?.en?.password ?? "")
+      : "";
+
+  if (user && storedPassword && (await passwordsMatch(password, storedPassword))) {
+    return user;
+  }
+
+  throw new AuthError("Invalid email or password");
+}
+
+/**
+ * Authenticates and issues a signed token.
+ */
+export async function login(email: string, password: string) {
+  const user = await authenticate(email, password);
+  const token = await signToken(user);
+  return { token, user };
+}
+
+/**
+ * Issues a fresh token for an already authenticated user.
+ */
+export async function refresh(user: AuthUser) {
+  const token = await signToken(user);
+  return { token, user };
+}

@@ -1,27 +1,13 @@
-import fs from "node:fs";
-import path from "node:path";
+import type { Metadata } from "next";
 import Link from "next/link";
+import { getArticles } from "@/lib/articles.service";
 
-const articlesDir = path.join(process.cwd(), "..", "media", "articles", "work");
+export const metadata: Metadata = {
+  title: "Articles",
+};
 
-function getArticles() {
-  if (!fs.existsSync(articlesDir)) return [];
-  const files = fs.readdirSync(articlesDir).filter((f) => f.endsWith(".md"));
-
-  return files.map((file) => {
-    const slug = file.replace(/\.md$/, "");
-    const content = fs.readFileSync(path.join(articlesDir, file), "utf-8");
-    const firstLine = content.split("\n").find((line) => line.startsWith("# "));
-    const title = firstLine
-      ? firstLine.replace(/^#\s+/, "").replace(/\s*\[\^\]\(.*\)\s*$/, "").trim()
-      : slug;
-
-    return { slug, title };
-  });
-}
-
-export default function ArticlesPage() {
-  const articles = getArticles();
+export default async function ArticlesPage() {
+  const articles = await getArticles();
 
   return (
     <div className="mx-auto w-full max-w-5xl flex-1 px-6 py-16">
