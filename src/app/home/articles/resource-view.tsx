@@ -1,6 +1,147 @@
+"use client";
+
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { fetchArticleResource, toArticleHref } from "@/lib/articles-fm";
+import { useEffect, useMemo, useState } from "react";
+import MarkdownIt from "markdown-it";
+
+type FileItem = {
+  path: string;
+  name: string;
+  type: "dir" | "file";
+};
+
+type ArticleDirectoryResource = {
+  kind: "directory";
+  path: string[];
+  items: FileItem[];
+};
+
+type ArticleMarkdownResource = {
+  kind: "markdown";
+  path: string[];
+  title: string;
+  html: string;
+};
+
+type ArticleFileResource = {
+  kind: "file";
+  path: string[];
+  title: string;
+  raw: string;
+};
+
+type ArticleJsonResource = {
+  kind: "json";
+  path: string[];
+  data: unknown;
+};
+
+type ArticleResource =
+  | ArticleDirectoryResource
+  | ArticleMarkdownResource
+  | ArticleFileResource
+  | ArticleJsonResource;
+
+const ARTICLES_PREFIX = "articles";
+
+const toArticleHref = (itemPath: string) => {
+  const relativePath = itemPath === ARTICLES_PREFIX
+    ? ""
+    : itemPath.startsWith(`${ARTICLES_PREFIX}/`)
+      ? itemPath.slice(ARTICLES_PREFIX.length + 1)
+      : itemPath;
+
+  return relativePath ? `/home/articles/${relativePath}` : "/home/articles";
+};
+
+const stripFrontmatter = (content: string) =>
+  content.replace(/^---[\s\S]*?---\s*/, "");
+
+const getArticleTitle = (content: string, fallback: string) => {
+  const firstHeading = content.split("\n").find((line) => line.startsWith("# "));
+
+  return firstHeading
+    ? firstHeading.replace(/^#\s+/, "").replace(/\s*\[\^\]\(.*\)\s*$/, "").trim()
+    : fallback;
+};
+
+const isFileItem = (value: unknown): value is FileItem => {
+  if (typeof value !== "object" || value === null) return false;
+  const record = value as Record<string, unknown>;
+
+  return typeof record.path === "string" &&
+    typeof record.name === "string" &&
+    (record.type === "dir" || record.type === "file");
+};
+
+const fetchArticleResource = async (
+  pathSegments: string[],
+  markdown: MarkdownIt,
+): Promise<ArticleResource | null> => {
+  const fetchFromFm = async (segments: string[]) => {
+    const apiPath = [ARTICLES_PREFIX, ...segments].join("/");
+    return fetch(`/api/fm/${apiPath}`, { cache: "no-store" });
+  };
+
+  let resolvedPath = pathSegments;
+  let response = await fetchFromFm(resolvedPath);
+
+  if (response.status === 404 && pathSegments.length > 0) {
+    const last = pathSegments.at(-1) ?? "";
+    const hasExtension = /\.[^./\\]+$/.test(last);
+
+    if (!hasExtension) {
+      resolvedPath = [...pathSegments.slice(0, -1), `${last}.md`];
+      response = await fetchFromFm(resolvedPath);
+    }
+  }
+
+  if (response.status === 404) return null;
+  if (!response.ok) {
+    throw new Error(`Failed to load article resource (${response.status})`);
+  }
+
+  const contentType = response.headers.get("content-type") ?? "";
+
+  if (contentType.includes("application/json")) {
+    const data: unknown = await response.json();
+
+    if (Array.isArray(data) && data.every(isFileItem)) {
+      return {
+        kind: "directory",
+        path: resolvedPath,
+        items: data,
+      };
+    }
+
+    return {
+      kind: "json",
+      path: resolvedPath,
+      data,
+    };
+  }
+
+  const raw = await response.text();
+  const fileName = resolvedPath.at(-1) ?? "";
+  const fallbackTitle = fileName.replace(/\.[^.]+$/, "") || "Articles";
+
+  if (fileName.endsWith(".md")) {
+    const content = stripFrontmatter(raw);
+    return {
+      kind: "markdown",
+      path: resolvedPath,
+      title: getArticleTitle(content, fallbackTitle),
+      html: markdown.render(content),
+    };
+  }
+
+  return {
+    kind: "file",
+    path: resolvedPath,
+    title: fileName || "Articles",
+    raw,
+  };
+};
 
 const BackIcon = () => (
   <svg
@@ -54,15 +195,70 @@ const getParentHref = (pathSegments: string[]) => {
   return toArticleHref(parentPath ? `articles/${parentPath}` : "articles");
 };
 
-export const ArticleResourceView = async ({
+export const ArticleResourceView = ({
   pathSegments = [],
 }: {
   pathSegments?: string[];
 }) => {
-  const resource = await fetchArticleResource(pathSegments);
+  const markdown = useMemo(() => new MarkdownIt({ html: true }), []);
+  const pathKey = useMemo(() => pathSegments.join("/"), [pathSegments]);
+  const stablePathSegments = useMemo(() => pathKey.split("/").filter(Boolean), [pathKey]);
+  const [resource, setResource] = useState<ArticleResource | null>(null);
+  const [status, setStatus] = useState<"loading" | "ready" | "not-found" | "error">("loading");
 
-  if (!resource) {
-    notFound();
+  useEffect(() => {
+    let cancelled = false;
+
+    const run = async () => {
+      setStatus("loading");
+      try {
+        const result = await fetchArticleResource(stablePathSegments, markdown);
+        if (cancelled) return;
+
+        if (!result) {
+          setStatus("not-found");
+          setResource(null);
+          return;
+        }
+
+        setResource(result);
+        setStatus("ready");
+      } catch {
+        if (cancelled) return;
+        setStatus("error");
+        setResource(null);
+      }
+    };
+
+    run();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [markdown, stablePathSegments]);
+
+  if (status === "loading") {
+    return (
+      <div className="mx-auto w-full max-w-5xl flex-1 px-6 py-16 text-zinc-600 dark:text-zinc-300">
+        Loading articles...
+      </div>
+    );
+  }
+
+  if (status === "error") {
+    return (
+      <div className="mx-auto w-full max-w-5xl flex-1 px-6 py-16 text-zinc-600 dark:text-zinc-300">
+        Failed to load content.
+      </div>
+    );
+  }
+
+  if (status === "not-found" || !resource) {
+    return (
+      <div className="mx-auto w-full max-w-5xl flex-1 px-6 py-16 text-zinc-600 dark:text-zinc-300">
+        Article or folder not found.
+      </div>
+    );
   }
 
   if (resource.kind === "directory") {

@@ -97,30 +97,6 @@ export async function GET(
       return NextResponse.json(content);
     }
 
-    if (absolutePath.endsWith(".es6")) {
-      try {
-        const moduleUrl = `${pathToFileURL(absolutePath).href}?t=${Date.now()}`;
-        const loadedModule = await import(moduleUrl);
-
-        if (typeof loadedModule.default === "function") {
-          const result = await loadedModule.default({ request, path: requestedPath });
-          return result instanceof Response
-            ? result
-            : NextResponse.json(result);
-        }
-
-        return NextResponse.json(loadedModule);
-      } catch (err) {
-        return NextResponse.json(
-          {
-            error: "Failed to execute code.",
-            details: err instanceof Error ? err.message : String(err),
-          },
-          { status: 500 },
-        );
-      }
-    }
-
     const fileContent = await readFile(absolutePath);
     return new NextResponse(fileContent, {
       status: 200,

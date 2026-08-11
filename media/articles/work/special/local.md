@@ -1,4 +1,4 @@
-# Engineering Studio Local Setup 
+# ES Local Setup 
 
 ## Get Access
 
