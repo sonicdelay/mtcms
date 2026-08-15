@@ -6,13 +6,13 @@ git checkout integration
 cd codema
 ```
 
-## Install charts
+## Charts installieren
 
 ```bash
 helm install test ./charts/codema -n app --values ./charts/codema/values-k3d-traefik.yaml --dependency-update
 ```
 
-## Troubleshooting
+## Fehler beheben
 
 ```bash
 git checkout integration
@@ -21,7 +21,7 @@ helm uninstall test -n app
 helm install test ./charts/codema -n app --values ./charts/codema/values-k3d-traefik.yaml --dependency-update
 ```
 
-## Up and running
+## Läuft
 
 ```bash
 kubectl get all -A -o wide

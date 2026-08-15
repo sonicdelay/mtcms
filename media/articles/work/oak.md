@@ -1,5 +1,5 @@
 # Oak [^](/articles/)
 
-Oak is a middleware framework for handling HTTP requests
+Oak ist ein Middleware-Framework zum Behandeln von HTTP-Anfragen.
 
-See: https://oakserver.org/
+Siehe: https://oakserver.org/

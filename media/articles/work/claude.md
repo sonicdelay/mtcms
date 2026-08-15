@@ -1,13 +1,13 @@
 # Claude
 
-## API Key expired
+## API-Schlüssel abgelaufen
 
 
 ```Powershell
 code $PROFILE
 ```
 
-Update ANTHROPIC_API_KEY to current
+Aktualisiere ANTHROPIC_API_KEY auf den aktuellen Wert
 
 ```notepad
 $env:ANTHROPIC_BASE_URL = "https://llm.sdc.siemens.cloud"
@@ -16,4 +16,4 @@ $env:CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS = "1"
 $env:ANTHROPIC_MODEL = "claude-sonnet-4-6@default"
 ```
 
-Restart shell
+Starte die Shell neu

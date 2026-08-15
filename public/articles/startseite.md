@@ -1,6 +1,6 @@
-## Welcome
+## Willkommen
 
-Go to engine for 3D gaming...
+Gehe zur Engine für 3D-Gaming...
 
 ```mermaid
 classDiagram

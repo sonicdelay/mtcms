@@ -1,59 +1,59 @@
-# Engineering Studio Local Setup 
+# Engineering Studio lokale Einrichtung
 
-## Get Access
+## Zugriff bekommen
 
-The following tools should be available to you via LDAP user
+Über deinen LDAP-Benutzer solltest du diese Werkzeuge zur Verfügung haben:
 
 * Gitlab - Code
-* Nexus - Backend Repository
-* Jenkins - Pipeline results and artifacts
+* Nexus - Backend-Repository
+* Jenkins - Pipeline-Ergebnisse und Artefakte
 
-## Setup GIT
+## GIT einrichten
 
-Install GIT and add configuration like (with extras not global):
+Installiere GIT und füge die Konfiguration wie folgt hinzu (mit Extras, aber nicht global):
 
 ```
 git config --global pull.rebase true
 git config --global fetch.prune true
 git config --global diff.colorMoved zebra
 ```
-See: https://spin.atomicobject.com/git-configurations-default/
+Siehe: https://spin.atomicobject.com/git-configurations-default/
 
 
 ```
 git clone https://gitlab-dev.psenterprise.com/gdap/engineering-studio-platform.git
 ```
 
-This should end with a version of ./git/config after cloning like:
+Danach sollte deine ./git/config nach dem Klonen ungefähr so aussehen:
 
 ---
 
-## Basic Setup To Run On Local System (Windows)
+## Grundlegende Einrichtung für das lokale System (Windows)
 
-Go to the folder you cloned the code e.g.:
+Gehe in den Ordner, in den du den Code geklont hast, zum Beispiel:
 
 ```bash
 cd  C:\localhost\DIPASW-APOI\gDAP\engineering-studio-platform\
 ```
 
-Start 2 terminal in prioject root folder. In the first run:
+Starte 2 Terminals im Projektordner. Im ersten Terminal führe Folgendes aus:
 
 ```bash
 npm run serve
 ```
 
-and in the second (check your usecase [gdap/...]):
+und im zweiten Terminal (prüfe deinen Anwendungsfall [gdap/...]):
 
 ```bash
 npm run app:gdap
 ```
 ---
 
-# Testing
+# Testen
 
-## Scrips for testing
+## Skripte zum Testen
 
-Engineering Studio has the following test scripts
+Engineering Studio hat folgende Test-Skripte:
 ```json
     "e2e:build": "npm run build --workspace end-to-end-test-framework",
     "e2e:check": "npm run check --workspace end-to-end-test-framework",
@@ -86,7 +86,7 @@ Engineering Studio has the following test scripts
 
 
 
-## Unit Testing
+## Unit-Tests
 
 ```
 npm run test
@@ -94,9 +94,9 @@ npm run test
 
 ...todo
 
-## Storybook Testing
+## Storybook-Tests
 
-Start 3 terminal in prioject root folder
+Starte 3 Terminals im Projektordner
 
 ```bash
 npm run serve
@@ -108,15 +108,15 @@ and
 npm run app:gdap
 ```
 
-Start testing
+Starte die Tests:
 
 ```bash
  npm run storybook
 ```
 
-Then navigate to -> [http://localhost:6006](http://localhost:6006)
+Dann öffne -> [http://localhost:6006](http://localhost:6006)
 
-or for CLI
+oder für die Kommandozeile (CLI):
 
 ```bash
  npm run storybook:test
@@ -124,9 +124,9 @@ or for CLI
 
 ---
 
-## E2E Testing with Python & Macros
+## E2E-Tests mit Python und Makros
 
-In project root folder for exposed debug port start 2 terminals:
+Starte 2 Terminals im Projektordner (für den freigegebenen Debug-Port):
 
 ```bash
 npm run serve
@@ -138,30 +138,30 @@ and
 npm run e2e:gdap
 ```
 
-Then switch to the following folder:
+Wechsle dann in diesen Ordner:
 
 ```bash
 packages\engineering-studio-developer-tools\end-to-end-test-framework\packages\end-to-end-test-framework\source\
 ```
 
-### Full test run
+### Kompletter Testlauf
 
 ```bash
 python  main.py --run_app 0
 ```
 
-or for a single test macro e.g.:
+oder für ein einzelnes Test-Makro, zum Beispiel:
 
 ```bash
 python  main.py --run_app 0 --run_only="*test-select-variables"
 ```
 
-### Stop Test runner
-Press `CTRL+F9`
+### Test-Runner stoppen
+Drücke `CTRL+F9`
 
-### Helper functions
+### Hilfsfunktionen
 
-To get path of clicked Browser element
+So bekommst du den Pfad eines angeklickten Browser-Elements:
 ```javascript
 esx.macros.track()
 ```
@@ -169,57 +169,57 @@ esx.macros.track()
 
 
 
-## Macros
+## Makros
 
-### Record Macros
+### Makros aufnehmen
 
-In developer mode start developer tools type in the console:
+Im Entwicklermodus öffnest du die Entwicklerwerkzeuge und tippst in die Konsole:
 
-To start recording
+Zum Starten der Aufnahme:
 ```javascript
 esx.macros.record('name-of-macro')
 ```
 
-To stop recording
+Zum Stoppen der Aufnahme:
 ```javascript
 esx.macros.stop()
 ```
 
-To copy recorded events to clipboard
+Zum Kopieren der aufgenommenen Ereignisse in die Zwischenablage:
 ```javascript
 esx.macros.toE2E()
 ```
 
-### Help menu
+### Hilfe-Menü
 
 ```javascript
 esx.macros.help()
 ```
 
-shows:
+zeigt:
 
-| Shortcut      | Command                   | Description                                               |
-|---------------|---------------------------|-----------------------------------------------------------|
-| ctrl+a        | Select All                | Select all text in the focused element                    |
-| ctrl+alt+c    | Add Checkpoint            | Add a checkpoint at the current mouse position            |
-| ctrl+alt+e    | Add Wait Element          | Add a wait for element to appear in the DOM               |
-| ctrl+alt+f    | Find Text                 | Find text in the element under the mouse                  |
-| ctrl+alt+t    | Find Text in Panel        | Find text in any element of the panel under the mouse     |
-| ctrl+alt+h    | Hold/Resume Recording     | Hold or resume the macro recording                        |
-| ctrl+alt+j    | Add JavaScript Snippet    | Add a JavaScript snippet to be executed                   |
-| ctrl+alt+m    | Run Macro                 | Run a macro                                               |
-| ctrl+alt+n    | New Macro                 | Start a new macro recording                               |
-| ctrl+alt+o    | Add Mouse Over            | Add a mouse over event at the current mouse position      |
-| ctrl+alt+w    | Add Wait                  | Add a wait for a specific amount of time (milliseconds)   |
-| ctrl+alt+x    | Copy XPath to Clipboard   | Copy the XPath of the element under the mouse to clipboard|
+| Shortcut      | Command                   | Beschreibung                                                  |
+|---------------|---------------------------|---------------------------------------------------------------|
+| ctrl+a        | Alles auswählen           | Wählt den gesamten Text im fokussierten Element aus           |
+| ctrl+alt+c    | Checkpoint hinzufügen     | Fügt einen Checkpoint an der aktuellen Mausposition hinzu     |
+| ctrl+alt+e    | Warte-Element hinzufügen  | Wartet, bis ein Element im DOM erscheint                      |
+| ctrl+alt+f    | Text finden               | Findet Text im Element unter der Maus                         |
+| ctrl+alt+t    | Text im Panel finden      | Findet Text in jedem Element des Panels unter der Maus        |
+| ctrl+alt+h    | Aufnahme pausieren/weiter | Pausiert oder setzt die Makro-Aufnahme fort                   |
+| ctrl+alt+j    | JavaScript-Snippet hinzufügen | Fügt ein JavaScript-Snippet hinzu, das ausgeführt wird     |
+| ctrl+alt+m    | Makro ausführen           | Führt ein Makro aus                                           |
+| ctrl+alt+n    | Neues Makro               | Startet eine neue Makro-Aufnahme                              |
+| ctrl+alt+o    | Mouse Over hinzufügen     | Fügt ein Mouse-Over-Ereignis an der aktuellen Mausposition hinzu |
+| ctrl+alt+w    | Wartezeit hinzufügen      | Wartet eine bestimmte Zeit (in Millisekunden)                 |
+| ctrl+alt+x    | XPath in Zwischenablage kopieren | Kopiert den XPath des Elements unter der Maus in die Zwischenablage |
 
 
-### Autocalculate ids in macro files 
+### IDs in Makro-Dateien automatisch neu berechnen
 
-Macros can be found under /macros. Each test is numbered with an id .... To not renumber everything you can use the following Python script under 
+Die Makros findest du unter /macros. Jeder Test hat eine Nummer (eine id) .... Damit du nicht alles neu nummerieren musst, kannst du dieses Python-Skript verwenden: 
 `packages\engineering-studio-developer-tools\end-to-end-test-framework\packages\end-to-end-test-framework\source\helpers\reset_event_ids.py`
 
-then run:
+Führe dann Folgendes aus:
 
 ```bash
 python reset_event_ids.py \macros\configuration\test-connections-panels.json
@@ -227,15 +227,15 @@ python reset_event_ids.py \macros\configuration\test-connections-panels.json
 
 
 
-## Integration Testing
+## Integrationstests
 
-See wiki: 
+Siehe Wiki: 
 https://gitlab-dev.psenterprise.com/gdap/engineering-studio-platform/-/wikis/Integration-Tests
 
-Current Backend needed for integration testing:
+Dieses Backend wird für Integrationstests benötigt:
 https://nexus.psenterprise.com/repository/gdap-installers/gNLMPC_EKF/gNLMPC_EKF_v2026.1.0-win64_vc17-offline-PR-10050-2026-03-12T13-15-53.zip
 
-Interration  test fiels end with "*integratio .spec.js"
+Integrationstest-Dateien enden mit "*integratio .spec.js"
 
 
 

@@ -2,63 +2,63 @@
 
 See [https://git-scm.com/](https://git-scm.com/) for details.
 
-## Steps for a rebase:
+## Schritte für einen Rebase:
 
-These are the steps to take at a rebase.
+So führst du einen Rebase durch.
 
-0. If necessary, create a backup of the branch
+0. Erstelle bei Bedarf ein Backup des Branches
 
    ```
    git switch -c <feature_branch_name>-rebase
    ```
 
-1. Update the main branch (without switching to main) (get commits from main to
-   the feature branch)
+1. Aktualisiere den main-Branch (ohne zu main zu wechseln) (hole die Commits
+   von main in den feature-Branch)
 
    ```
    git fetch origin
    ```
 
-2. Rebase
+2. Rebase durchführen
 
    ```
    git rebase origin/main
    ```
 
-   => There are no changes (“Current branch ###-XYZ is up to date”). **Ready**
+   => Es gibt keine Änderungen („Current branch ###-XYZ is up to date"). **Fertig**
 
-   => Changes are incorporated (no conflicts: "Successfully rebased and updated
-   refs/head/..."). **Continue with 5.**
+   => Änderungen wurden übernommen (keine Konflikte: „Successfully rebased and
+   updated refs/head/..."). **Weiter mit 5.**
 
-   => Conflicts, **Continue with 3**.
+   => Es gibt Konflikte, **weiter mit 3**.
 
-3. Resolve conflicts in VSCode, then add files
+3. Löse die Konflikte in VSCode und füge dann die Dateien hinzu
 
    ```
    git add .
    ```
-4. Continue rebase (only if there were conflicts)
+4. Setze den Rebase fort (nur wenn es Konflikte gab)
 
    ```
    git rebase --continue
    ```
 
-5. Push everything directly
+5. Schiebe alles direkt hoch
 
    ```
    git push origin HEAD --force
    ```
 
-## Init project
+## Projekt starten
 
-### Git global setup
+### Git global einrichten
 
 ```bash
 git config --global user.name "John Doe"
 git config --global user.email "john.doe@example.com"
 ```
 
-### Create a new repository
+### Ein neues Repository erstellen
 
 ```bash
 git clone git@code.example.com:sascha.hess/energy-customer-portal.git
@@ -70,7 +70,7 @@ git commit -m "add README"
 git push -u origin main
 ```
 
-### Push an existing folder
+### Einen vorhandenen Ordner hochladen
 
 ```bash
 cd existing_folder
@@ -81,7 +81,7 @@ git commit -m "Initial commit"
 git push -u origin main
 ```
 
-### Push an existing Git repository
+### Ein vorhandenes Git-Repository hochladen
 
 ```bash
 cd existing_repo
@@ -91,7 +91,7 @@ git push -u origin --all
 git push -u origin --tags
 ```
 
-## Commit Best Practice
+## Gute Commit-Gewohnheiten
 
 ```bash
 git pull --rebase
@@ -103,7 +103,7 @@ git merge feature-branch
 git branch -d feature-branch
 ```
 
-## Kill all history
+## Komplette History löschen
 
 ```bash
 git checkout --orphan latest_branch

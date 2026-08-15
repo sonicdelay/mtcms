@@ -1,17 +1,17 @@
 # Markdown [^]work/index)
 
-This Markdown cheat sheet provides a quick overview of all the Markdown syntax
-elements. It can’t cover every edge case, so if you need more information about
-any of these elements, refer to the reference guides for
-[basic syntax](https://www.markdownguide.org/basic-syntax) and
-[extended syntax](https://www.markdownguide.org/extended-syntax).
+Dieses Markdown-Spickzettel gibt dir einen schnellen Überblick über alle
+Markdown-Syntax-Elemente. Es kann nicht jeden Spezialfall abdecken. Wenn du
+mehr über eines dieser Elemente wissen willst, schau in die Referenzen für
+[grundlegende Syntax](https://www.markdownguide.org/basic-syntax) und
+[erweiterte Syntax](https://www.markdownguide.org/extended-syntax).
 
-## Basic Syntax
+## Grundlegende Syntax
 
-These are the elements outlined in John Gruber’s original design document. All
-Markdown applications support these elements.
+Das sind die Elemente aus dem ursprünglichen Entwurfsdokument von John Gruber.
+Alle Markdown-Programme unterstützen diese Elemente.
 
-### Heading
+### Überschrift
 
 ```bash
 # H1
@@ -19,25 +19,25 @@ Markdown applications support these elements.
 ### H3
 ```
 
-### Bold
+### Fett
 
 ```bash
 **bold text**
 ```
 
-### Italic
+### Kursiv
 
 ```bash
 *italicized text*
 ```
 
-### Blockquote
+### Zitat (Blockquote)
 
 ```bash
 > blockquote
 ```
 
-### Ordered List
+### Nummerierte Liste
 
 ```bash
 1. First item
@@ -45,7 +45,7 @@ Markdown applications support these elements.
 3. Third item
 ```
 
-### Unordered List
+### Aufzählung
 
 ```bash
 - First item
@@ -59,7 +59,7 @@ Markdown applications support these elements.
 `code`
 ```
 
-### Horizontal Rule
+### Trennlinie
 
 ```bash
 ---
@@ -77,12 +77,12 @@ Markdown applications support these elements.
 ![alt text](https://www.markdownguide.org/assets/images/tux.png)
 ```
 
-## Extended Syntax
+## Erweiterte Syntax
 
-These elements extend the basic syntax by adding additional features. Not all
-Markdown applications support these elements.
+Diese Elemente erweitern die grundlegende Syntax um zusätzliche Funktionen.
+Nicht alle Markdown-Programme unterstützen diese Elemente.
 
-### Table
+### Tabelle
 
 ```bash
 | Syntax | Description |
@@ -91,7 +91,7 @@ Markdown applications support these elements.
 | Paragraph | Text |
 ```
 
-### Fenced Code Block
+### Codeblock (Fenced)
 
 ````bash
 *```
@@ -103,7 +103,7 @@ Markdown applications support these elements.
 *```
 ````
 
-### Footnote
+### Fußnote
 
 ```bash
 Here's a sentence with a footnote. [^1]
@@ -111,26 +111,26 @@ Here's a sentence with a footnote. [^1]
 [^1]: This is the footnote.
 ```
 
-### Heading ID
+### Überschriften-ID
 
 ```bash
 ### My Great Heading {#custom-id}
 ```
 
-### Definition List
+### Definitionsliste
 
 ```bash
 term
 : definition
 ```
 
-### Strikethrough
+### Durchgestrichen
 
 ```bash
 ~~The world is flat.~~
 ```
 
-### Task List
+### Aufgabenliste
 
 ```bash
 - [x] Write the press release
@@ -144,22 +144,22 @@ term
 That is so funny! :joy:
 ```
 
-(See also
-[Copying and Pasting Emoji](https://www.markdownguide.org/extended-syntax/#copying-and-pasting-emoji))
+(Siehe auch
+[Emoji kopieren und einfügen](https://www.markdownguide.org/extended-syntax/#copying-and-pasting-emoji))
 
-### Highlight
+### Hervorheben
 
 ```bash
 I need to highlight these ==very important words==.
 ```
 
-### Subscript
+### Tiefgestellt
 
 ```bash
 H~2~O
 ```
 
-### Superscript
+### Hochgestellt
 
 ```bash
 X^2^

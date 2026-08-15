@@ -1,6 +1,6 @@
-# About [^](/articles/)
+# Über [^](/articles/)
 
-## Intro
+## Einleitung
 
 ### Lorem ipsum ....
 
@@ -17,40 +17,40 @@
 
     ---
 
-**Advertisement :)**
+**Werbung :)**
 
-- **[pica](https://nodeca.github.io/pica/demo/)** - high quality and fast image
-  resize in browser.
-- **[babelfish](https://github.com/nodeca/babelfish/)** - developer friendly
-  i18n with plurals support and easy syntax.
+- **[pica](https://nodeca.github.io/pica/demo/)** - hochwertiges und schnelles
+  Bildgrößenändern im Browser.
+- **[babelfish](https://github.com/nodeca/babelfish/)** - entwicklerfreundliches
+  i18n mit Plural-Unterstützung und einfacher Syntax.
 
-You will like those projects!
-
----
-
-# h1 Heading 8-)
-
-## h2 Heading
-
-### h3 Heading
-
-#### h4 Heading
-
-##### h5 Heading
-
-###### h6 Heading
-
-## Horizontal Rules
+Diese Projekte wirst du mögen!
 
 ---
 
+# h1 Überschrift 8-)
+
+## h2 Überschrift
+
+### h3 Überschrift
+
+#### h4 Überschrift
+
+##### h5 Überschrift
+
+###### h6 Überschrift
+
+## Horizontale Linien
+
+---
+
 ---
 
 ---
 
-## Typographic replacements
+## Typografische Ersetzungen
 
-Enable typographer option to see result.
+Aktiviere die typographer-Option, um das Ergebnis zu sehen.
 
 (c) (C) (r) (R) (tm) (TM) (p) (P) +-
 
@@ -60,7 +60,7 @@ test.. test... test..... test?..... test!....
 
 "Smartypants, double quotes" and 'single quotes'
 
-## Emphasis
+## Hervorhebung
 
 **This is bold text**
 
@@ -72,58 +72,58 @@ _This is italic text_
 
 ~~Strikethrough~~
 
-## Blockquotes
+## Zitate
 
-> Blockquotes can also be nested...
+> Zitate können auch verschachtelt werden...
 >
->> ...by using additional greater-than signs right next to each other...
+>> ...indem du zusätzliche >-Zeichen direkt nebeneinander setzt...
 >>
->>> ...or with spaces between arrows.
+>>> ...oder mit Leerzeichen zwischen den Pfeilen.
 
-## Lists
+## Listen
 
-Unordered
+Unsortiert
 
-- Create a list by starting a line with `+`, `-`, or `*`
-- Sub-lists are made by indenting 2 spaces:
-  - Marker character change forces new list start:
+- Erstelle eine Liste, indem du eine Zeile mit `+`, `-` oder `*` beginnst
+- Unterlisten erstellst du, indem du 2 Leerzeichen einrückst:
+  - Ein anderes Listenzeichen startet eine neue Liste:
     - Ac tristique libero volutpat at
     * Facilisis in pretium nisl aliquet
     - Nulla volutpat aliquam velit
-- Very easy!
+- Ganz einfach!
 
-Ordered
+Sortiert
 
 1. Lorem ipsum dolor sit amet
 2. Consectetur adipiscing elit
 3. Integer molestie lorem at massa
 
-4. You can use sequential numbers...
-5. ...or keep all the numbers as `1.`
+4. Du kannst fortlaufende Zahlen verwenden...
+5. ...oder alle Zahlen als `1.` lassen
 
-Start numbering with offset:
+Nummerierung mit Versatz starten:
 
 57. foo
 58. bar
 
 ## Code
 
-Inline `code`
+Inline-`code`
 
-Indented code
+Eingerückter Code
 
     // Some comments
     line 1 of code
     line 2 of code
     line 3 of code
 
-Block code "fences"
+Codeblock mit "Fences"
 
 ```
 Sample text here...
 ```
 
-Syntax highlighting
+Syntaxhervorhebung
 
 ```js
 var foo = function (bar) {
@@ -133,21 +133,21 @@ var foo = function (bar) {
 console.log(foo(5));
 ```
 
-## Tables
+## Tabellen
 
-| Option | Description                                                               |
-| ------ | ------------------------------------------------------------------------- |
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default.    |
-| ext    | extension to be used for dest files.                                      |
+| Option | Beschreibung                                                             |
+| ------ | ------------------------------------------------------------------------ |
+| data   | Pfad zu den Datendateien, die an die Vorlagen übergeben werden.          |
+| engine | Engine zum Verarbeiten der Vorlagen. Handlebars ist die Standard-Engine. |
+| ext    | Dateiendung für die Zieldateien.                                         |
 
-Right aligned columns
+Rechtsbündige Spalten
 
-| Option |                                                               Description |
-| -----: | ------------------------------------------------------------------------: |
-|   data | path to data files to supply the data that will be passed into templates. |
-| engine |    engine to be used for processing templates. Handlebars is the default. |
-|    ext |                                      extension to be used for dest files. |
+| Option |                                                          Beschreibung |
+| -----: | ---------------------------------------------------------------------: |
+|   data |      Pfad zu den Datendateien, die an die Vorlagen übergeben werden. |
+| engine | Engine zum Verarbeiten der Vorlagen. Handlebars ist die Standard-Engine. |
+|    ext |                                    Dateiendung für die Zieldateien. |
 
 ## Links
 
@@ -155,93 +155,93 @@ Right aligned columns
 
 [link with title](http://nodeca.github.io/pica/demo/ "title text!")
 
-Autoconverted link https://github.com/nodeca/pica (enable linkify to see)
+Automatisch umgewandelter Link https://github.com/nodeca/pica (aktiviere linkify, um es zu sehen)
 
-## Images
+## Bilder
 
 ![Minion](https://octodex.github.com/images/minion.png)
 ![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg 'The Stormtroopocat')
 
-Like links, Images also have a footnote style syntax
+Wie Links haben auch Bilder eine Fußnoten-Syntax
 
 ![Alt text][id]
 
-With a reference later in the document defining the URL location:
+Mit einer Referenz weiter unten im Dokument, die die URL festlegt:
 
 [id]: https://octodex.github.com/images/dojocat.jpg 'The Dojocat'
 
 ## Plugins
 
-The killer feature of `markdown-it` is very effective support of
-[syntax plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).
+Die Killer-Funktion von `markdown-it` ist die sehr gute Unterstützung von
+[Syntax-Plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).
 
 ### [Emojies](https://github.com/markdown-it/markdown-it-emoji)
 
-> Classic markup: :wink: :cry: :laughing: :yum:
+> Klassisches Markup: :wink: :cry: :laughing: :yum:
 >
-> Shortcuts (emoticons): :-) :-( 8-) ;)
+> Kürzel (Emoticons): :-) :-( 8-) ;)
 
-see
-[how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output)
-with twemoji.
+Siehe
+[wie du die Ausgabe änderst](https://github.com/markdown-it/markdown-it-emoji#change-output)
+mit twemoji.
 
-### [Subscript](https://github.com/markdown-it/markdown-it-sub) / [Superscript](https://github.com/markdown-it/markdown-it-sup)
+### [Tiefgestellt](https://github.com/markdown-it/markdown-it-sub) / [Hochgestellt](https://github.com/markdown-it/markdown-it-sup)
 
 - 19^th^
 - H~2~O
 
 ### [\<ins>](https://github.com/markdown-it/markdown-it-ins)
 
-++Inserted text++
+++Eingefügter Text++
 
 ### [\<mark>](https://github.com/markdown-it/markdown-it-mark)
 
-==Marked text==
+==Markierter Text==
 
-### [Footnotes](https://github.com/markdown-it/markdown-it-footnote)
+### [Fußnoten](https://github.com/markdown-it/markdown-it-footnote)
 
-Footnote 1 link[^first].
+Fußnote 1-Link[^first].
 
-Footnote 2 link[^second].
+Fußnote 2-Link[^second].
 
-Inline footnote^[Text of inline footnote] definition.
+Inline-Fußnote^[Text der Inline-Fußnote] Definition.
 
-Duplicated footnote reference[^second].
+Doppelte Fußnoten-Referenz[^second].
 
-[^first]: Footnote **can have markup**
+[^first]: Fußnoten **können Markup enthalten**
 
-    and multiple paragraphs.
+    und mehrere Absätze.
 
-[^second]: Footnote text.
+[^second]: Fußnotentext.
 
-### [Definition lists](https://github.com/markdown-it/markdown-it-deflist)
+### [Definitionslisten](https://github.com/markdown-it/markdown-it-deflist)
 
-Term 1
+Begriff 1
 
-: Definition 1 with lazy continuation.
+: Definition 1 mit träger Fortsetzung.
 
-Term 2 with _inline markup_
+Begriff 2 mit _Inline-Markup_
 
 : Definition 2
 
         { some code, part of Definition 2 }
 
-    Third paragraph of definition 2.
+    Dritter Absatz von Definition 2.
 
-_Compact style:_
+_Kompakter Stil:_
 
-Term 1 ~ Definition 1
+Begriff 1 ~ Definition 1
 
-Term 2 ~ Definition 2a ~ Definition 2b
+Begriff 2 ~ Definition 2a ~ Definition 2b
 
-### [Abbreviations](https://github.com/markdown-it/markdown-it-abbr)
+### [Abkürzungen](https://github.com/markdown-it/markdown-it-abbr)
 
-This is HTML abbreviation example.
+Das ist ein Beispiel für eine HTML-Abkürzung.
 
-It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
+Es ersetzt "HTML", lässt aber Teile wie "xxxHTMLyyy" und so weiter unverändert.
 
 \*[HTML]: Hyper Text Markup Language
 
-### [Custom containers](https://github.com/markdown-it/markdown-it-container)
+### [Eigene Container](https://github.com/markdown-it/markdown-it-container)
 
-::: warning _here be dragons_ :::
+::: warning _hier gibt es Drachen_ :::

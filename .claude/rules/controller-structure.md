@@ -1,16 +1,16 @@
 ---
-description: Enforce router-first structure in api/features/*.controller.ts files
+description: Erzwinge die Router-zuerst-Struktur in api/features/*.controller.ts-Dateien
 globs: ["api/features/*.controller.ts"]
 alwaysApply: true
 ---
 
-# Controller File Structure
+# Struktur von Controller-Dateien
 
-Order in `api/features/*.controller.ts`:
+Reihenfolge in `api/features/*.controller.ts`:
 
 1. **Imports**
-2. **Router** — `const router = new Router()` with `.prefix(...)` and route chain
-3. **Handler functions**
+2. **Router** — `const router = new Router()` mit `.prefix(...)` und Routen-Kette
+3. **Handler-Funktionen**
 4. **`export default router`**
 
 ```ts
@@ -26,4 +26,4 @@ export const listItems = async (ctx: RouterContext<"/">) => { ... };
 export const createItem = async (ctx: RouterContext<"/">) => { ... };
 ```
 
-Router first makes the route surface visible without scrolling past implementation.
+Router zuerst macht die Routen-Oberfläche sichtbar, ohne an der Implementierung vorbeiscrollen zu müssen.
