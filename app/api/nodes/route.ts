@@ -79,17 +79,29 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return problemResponse(400, "Bad Request", "Request body must be valid JSON.");
+    return problemResponse(
+      400,
+      "Bad Request",
+      "Request body must be valid JSON.",
+    );
   }
 
   if (!body || typeof body !== "object" || Array.isArray(body)) {
-    return problemResponse(400, "Bad Request", "Request body must be a JSON object.");
+    return problemResponse(
+      400,
+      "Bad Request",
+      "Request body must be a JSON object.",
+    );
   }
 
   const { type, sync, data } = body as Record<string, unknown>;
 
   if (typeof type !== "string" || !type.trim()) {
-    return problemResponse(400, "Bad Request", "type must be a non-empty string.");
+    return problemResponse(
+      400,
+      "Bad Request",
+      "type must be a non-empty string.",
+    );
   }
 
   if (typeof data !== "object" || data === null || Array.isArray(data)) {
@@ -97,7 +109,11 @@ export async function POST(request: Request) {
   }
 
   const syncValue = sync === undefined ? {} : sync;
-  if (typeof syncValue !== "object" || syncValue === null || Array.isArray(syncValue)) {
+  if (
+    typeof syncValue !== "object" ||
+    syncValue === null ||
+    Array.isArray(syncValue)
+  ) {
     return problemResponse(400, "Bad Request", "sync must be a JSON object.");
   }
 

@@ -1,4 +1,4 @@
-# Engineering Studio lokale Einrichtung
+# ES lokale Einrichtung
 
 ## Zugriff bekommen
 
@@ -21,7 +21,7 @@ Siehe: https://spin.atomicobject.com/git-configurations-default/
 
 
 ```
-git clone https://gitlab-dev.psenterprise.com/gdap/engineering-studio-platform.git
+git clone https://gitlab-dev.example.com/gdap/es-platform.git
 ```
 
 Danach sollte deine ./git/config nach dem Klonen ungefähr so aussehen:
@@ -33,7 +33,7 @@ Danach sollte deine ./git/config nach dem Klonen ungefähr so aussehen:
 Gehe in den Ordner, in den du den Code geklont hast, zum Beispiel:
 
 ```bash
-cd  C:\localhost\DIPASW-APOI\gDAP\engineering-studio-platform\
+cd  C:\localhost\DIPASW-APOI\gDAP\es-platform\
 ```
 
 Starte 2 Terminals im Projektordner. Im ersten Terminal führe Folgendes aus:
@@ -50,40 +50,6 @@ npm run app:gdap
 ---
 
 # Testen
-
-## Skripte zum Testen
-
-Engineering Studio hat folgende Test-Skripte:
-```json
-    "e2e:build": "npm run build --workspace end-to-end-test-framework",
-    "e2e:check": "npm run check --workspace end-to-end-test-framework",
-    "e2e:clean-json-macro": "python ./packages/engineering-studio-developer-tools/end-to-end-test-framework/packages/end-to-end-test-framework/source/helpers/clean_json_macro.py",
-    "e2e:debug": "set IS_DEV=1 && wait-on dist/main.js && node packages/engineering-studio-framework/engineering-studio/engineering-studio-cli/engineering-studio-cli.js",
-    "e2e:describe-macros": "python ./packages/engineering-studio-developer-tools/end-to-end-test-framework/packages/end-to-end-test-framework/source/helpers/describe_macros.py",
-    "e2e:gdap": "set IS_DEV=1 && wait-on dist/main.js && node packages/engineering-studio-framework/engineering-studio/engineering-studio-cli/engineering-studio-cli.js --app Gdap --path gdap --debug 1025",
-    "e2e:play-macro": "python ./packages/engineering-studio-developer-tools/end-to-end-test-framework/packages/end-to-end-test-framework/source/main.py",
-    "e2e:reset-event-id": "python ./packages/engineering-studio-developer-tools/end-to-end-test-framework/packages/end-to-end-test-framework/source/helpers/reset_event_ids.py",
-
-    "electron:test:gnlmpc": "set IS_TEST=1 && electron dist/main.js --app gnlmpc",
-
-    "storybook:build": "storybook build",
-    "storybook:ci:deprecated": "concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"npm run storybook:build --quiet && npx http-server storybook-static --port 6006 --silent\" \"wait-on tcp:127.0.0.1:6006 && npm run storybook:test\"",
-    "storybook:ci": "concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"npm run storybook:dev:ci\" \"wait-on --delay=30000 tcp:127.0.0.1:6006 && npm run storybook:test\"",
-    "storybook:debug": "test-storybook --maxWorkers=2 --watch --verbose",
-    "storybook:dev:ci": "storybook dev -p 6006 --ci",
-    "storybook:test": "test-storybook --testTimeout=100000 --maxWorkers=2 --ci --disable-telemetry",
-    "storybook:test:filter": "test-storybook --testTimeout=100000 --maxWorkers=2 --ci --disable-telemetry -- --testPathPattern",
-    "storybook": "storybook dev -p 6006 --no-open",
-
-    "test:ci": "node --expose-gc --experimental-vm-modules node_modules/jest/bin/jest.js --silent --logHeapUsage --testPathIgnorePatterns (/__tests__/.*.integration.spec.js /__tests__/.*.sequential.spec.js)",
-    "test:integration": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --config jest.integration.config.js",
-    "test:rpc": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --testPathPattern /__tests__/.*grpc-client-test-runner.*.integration.spec.js --config jest.integration.config.js",
-    "test:autorun": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --testPathPattern /__tests__/.*generate-submodels.integration.spec.js --config jest.integration.config.js",
-    "test:sequential": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --config jest.sequential.config.js",
-    "test": "node --expose-gc --experimental-vm-modules node_modules/jest/bin/jest.js --silent --runInBand --logHeapUsage --testPathIgnorePatterns /__tests__/.*.integration.spec.js",
-    test:
-```
-
 
 
 ## Unit-Tests
@@ -141,7 +107,7 @@ npm run e2e:gdap
 Wechsle dann in diesen Ordner:
 
 ```bash
-packages\engineering-studio-developer-tools\end-to-end-test-framework\packages\end-to-end-test-framework\source\
+packages\es-developer-tools\e2e-test-framework\packages\end-to-end-test-framework\source\
 ```
 
 ### Kompletter Testlauf
@@ -217,7 +183,7 @@ zeigt:
 ### IDs in Makro-Dateien automatisch neu berechnen
 
 Die Makros findest du unter /macros. Jeder Test hat eine Nummer (eine id) .... Damit du nicht alles neu nummerieren musst, kannst du dieses Python-Skript verwenden: 
-`packages\engineering-studio-developer-tools\end-to-end-test-framework\packages\end-to-end-test-framework\source\helpers\reset_event_ids.py`
+`packages\es-developer-tools\end-to-end-test-framework\packages\e2e-test-framework\source\helpers\reset_event_ids.py`
 
 Führe dann Folgendes aus:
 
@@ -230,10 +196,10 @@ python reset_event_ids.py \macros\configuration\test-connections-panels.json
 ## Integrationstests
 
 Siehe Wiki: 
-https://gitlab-dev.psenterprise.com/gdap/engineering-studio-platform/-/wikis/Integration-Tests
+https://gitlab-dev.example.com/gdap/es-platform/-/wikis/Integration-Tests
 
 Dieses Backend wird für Integrationstests benötigt:
-https://nexus.psenterprise.com/repository/gdap-installers/gNLMPC_EKF/gNLMPC_EKF_v2026.1.0-win64_vc17-offline-PR-10050-2026-03-12T13-15-53.zip
+https://nexus.example.com/repository/gdap-installers/gNLMPC_EKF/gNLMPC_EKF_v2026.1.0-win64_vc17-offline-PR-10050-2026-03-12T13-15-53.zip
 
 Integrationstest-Dateien enden mit "*integratio .spec.js"
 

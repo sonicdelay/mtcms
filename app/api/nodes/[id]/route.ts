@@ -13,7 +13,8 @@ import {
 
 type RouteParams = Promise<{ id: string }>;
 
-const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 function parseId(id: string): string | NextResponse {
   if (!UUID_RE.test(id)) {
@@ -97,22 +98,40 @@ export async function PUT(
   try {
     body = await request.json();
   } catch {
-    return problemResponse(400, "Bad Request", "Request body must be valid JSON.");
+    return problemResponse(
+      400,
+      "Bad Request",
+      "Request body must be valid JSON.",
+    );
   }
 
   if (!body || typeof body !== "object" || Array.isArray(body)) {
-    return problemResponse(400, "Bad Request", "Request body must be a JSON object.");
+    return problemResponse(
+      400,
+      "Bad Request",
+      "Request body must be a JSON object.",
+    );
   }
 
   const { type, sync, data } = body as Record<string, unknown>;
 
   if (type !== undefined && (typeof type !== "string" || !type.trim())) {
-    return problemResponse(400, "Bad Request", "type must be a non-empty string.");
+    return problemResponse(
+      400,
+      "Bad Request",
+      "type must be a non-empty string.",
+    );
   }
-  if (sync !== undefined && (typeof sync !== "object" || sync === null || Array.isArray(sync))) {
+  if (
+    sync !== undefined &&
+    (typeof sync !== "object" || sync === null || Array.isArray(sync))
+  ) {
     return problemResponse(400, "Bad Request", "sync must be a JSON object.");
   }
-  if (data !== undefined && (typeof data !== "object" || data === null || Array.isArray(data))) {
+  if (
+    data !== undefined &&
+    (typeof data !== "object" || data === null || Array.isArray(data))
+  ) {
     return problemResponse(400, "Bad Request", "data must be a JSON object.");
   }
   if (type === undefined && sync === undefined && data === undefined) {

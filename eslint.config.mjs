@@ -12,6 +12,15 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Non-source directories:
+    ".backup/**",
+    ".claude/**",
+    ".fallow/**",
+    ".github/**",
+    ".opencode/**",
+    ".vscode/**",
+    "ai/**",
+    "media/**",
   ]),
 ]);
 

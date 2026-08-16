@@ -57,10 +57,13 @@ export async function readMediaText(relPath: string): Promise<string> {
   return fs.readFile(resolveMediaPath(relPath), "utf-8");
 }
 
-export async function writeMediaFile(relPath: string, content: string) {
+export async function writeMediaFile(
+  relPath: string,
+  content: string | Buffer,
+) {
   const absolute = resolveMediaPath(relPath);
   await fs.mkdir(path.dirname(absolute), { recursive: true });
-  await fs.writeFile(absolute, content, "utf-8");
+  await fs.writeFile(absolute, content);
 }
 
 export async function createMediaDirectory(relPath: string) {

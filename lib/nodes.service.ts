@@ -89,7 +89,9 @@ export async function updateNode(
 }
 
 export async function removeNode(id: string): Promise<void> {
-  const { rowCount } = await pool.query(`DELETE FROM nodes WHERE id = $1`, [id]);
+  const { rowCount } = await pool.query(`DELETE FROM nodes WHERE id = $1`, [
+    id,
+  ]);
 
   if (!rowCount) {
     throw new NotFoundError("Node not found");

@@ -9,10 +9,7 @@ export interface AuthUser {
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
-async function hmacKey(
-  secret: string,
-  usages: KeyUsage[],
-): Promise<CryptoKey> {
+async function hmacKey(secret: string, usages: KeyUsage[]): Promise<CryptoKey> {
   return crypto.subtle.importKey(
     "raw",
     encoder.encode(secret),
@@ -27,7 +24,10 @@ function base64UrlEncode(data: Uint8Array): string {
   for (const byte of data) {
     binary += String.fromCharCode(byte);
   }
-  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+  return btoa(binary)
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/g, "");
 }
 
 function base64UrlDecode(input: string): Uint8Array<ArrayBuffer> {

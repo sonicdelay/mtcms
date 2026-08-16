@@ -18,7 +18,11 @@ export async function POST(request: Request) {
       email = body?.email;
       password = body?.password;
     } catch {
-      return problemResponse(400, "Bad Request", "Request body must be valid JSON.");
+      return problemResponse(
+        400,
+        "Bad Request",
+        "Request body must be valid JSON.",
+      );
     }
   }
 
@@ -28,7 +32,11 @@ export async function POST(request: Request) {
     !email ||
     !password
   ) {
-    return problemResponse(400, "Bad Request", "email and password are required.");
+    return problemResponse(
+      400,
+      "Bad Request",
+      "email and password are required.",
+    );
   }
 
   try {

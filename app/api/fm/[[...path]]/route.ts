@@ -134,7 +134,7 @@ export async function PUT(
     return problemResponse(400, "Bad Request", "path must not be empty.");
   }
 
-  const content = await request.text();
+  const content = Buffer.from(await request.arrayBuffer());
 
   try {
     await writeMediaFile(relPath, content);

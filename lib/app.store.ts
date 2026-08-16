@@ -64,10 +64,11 @@ export const useAppStore = create<AppState>()(
       (set, get) => ({
         token: null,
         user: null,
-        theme: typeof globalThis !== "undefined" &&
+        theme:
+          typeof globalThis !== "undefined" &&
           globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light",
+            ? "dark"
+            : "light",
         language: normalizeLanguage(
           typeof navigator !== "undefined" ? navigator.language : "en",
         ),
@@ -79,7 +80,11 @@ export const useAppStore = create<AppState>()(
 
         openModal: (content, modalId) =>
           set(
-            { isModalOpen: true, modalId: modalId ?? null, modalContent: content },
+            {
+              isModalOpen: true,
+              modalId: modalId ?? null,
+              modalContent: content,
+            },
             false,
             "app/openModal",
           ),
@@ -91,17 +96,9 @@ export const useAppStore = create<AppState>()(
             "app/closeModal",
           ),
         setModalContent: (content) =>
-          set(
-            { modalContent: content ?? null },
-            false,
-            "app/setModalContent",
-          ),
+          set({ modalContent: content ?? null }, false, "app/setModalContent"),
         setTheme: (theme) => {
-          set(
-            { theme },
-            false,
-            "app/setTheme",
-          );
+          set({ theme }, false, "app/setTheme");
         },
         toggleTheme: () => {
           const { theme, setTheme } = get();
@@ -109,11 +106,7 @@ export const useAppStore = create<AppState>()(
           setTheme(newTheme);
         },
         setLanguage: (language) => {
-          set(
-            { language },
-            false,
-            "app/setLanguage",
-          );
+          set({ language }, false, "app/setLanguage");
         },
         login: async (email: string, password: string) => {
           const trimmedEmail = email?.trim();
@@ -128,11 +121,7 @@ export const useAppStore = create<AppState>()(
             return false;
           }
 
-          set(
-            { loading: true, error: null },
-            false,
-            "app/login:start",
-          );
+          set({ loading: true, error: null }, false, "app/login:start");
 
           try {
             const controller = new AbortController();
@@ -141,7 +130,10 @@ export const useAppStore = create<AppState>()(
             const res = await fetch("/api/auth", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email: trimmedEmail, password: trimmedPassword }),
+              body: JSON.stringify({
+                email: trimmedEmail,
+                password: trimmedPassword,
+              }),
               signal: controller.signal,
             });
 
@@ -234,11 +226,7 @@ export const useAppStore = create<AppState>()(
             clearTimeout(timeoutId);
 
             if (!res.ok) {
-              set(
-                { token: null, user: null },
-                false,
-                "app/refresh:expired",
-              );
+              set({ token: null, user: null }, false, "app/refresh:expired");
               return false;
             }
 
@@ -247,11 +235,7 @@ export const useAppStore = create<AppState>()(
 
             const user = decodePayload(data.token);
             if (!user) {
-              set(
-                { token: null, user: null },
-                false,
-                "app/refresh:error",
-              );
+              set({ token: null, user: null }, false, "app/refresh:error");
               return false;
             }
 
@@ -265,11 +249,7 @@ export const useAppStore = create<AppState>()(
             );
             return true;
           } catch {
-            set(
-              { token: null, user: null },
-              false,
-              "app/refresh:error",
-            );
+            set({ token: null, user: null }, false, "app/refresh:error");
             return false;
           }
         },

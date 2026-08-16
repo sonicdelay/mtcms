@@ -36,7 +36,13 @@ function userFromNode(node: {
   data: Record<string, unknown> | null;
 }): AuthUser | null {
   const data = node.data as
-    | { "0"?: { values?: { en?: { email?: string; role?: string; password?: string } } } }
+    | {
+        "0"?: {
+          values?: {
+            en?: { email?: string; role?: string; password?: string };
+          };
+        };
+      }
     | null
     | undefined;
   const values = data?.["0"]?.values?.en;
@@ -82,7 +88,11 @@ export async function authenticate(
         )?.["0"]?.values?.en?.password ?? "")
       : "";
 
-  if (user && storedPassword && (await passwordsMatch(password, storedPassword))) {
+  if (
+    user &&
+    storedPassword &&
+    (await passwordsMatch(password, storedPassword))
+  ) {
     return user;
   }
 
