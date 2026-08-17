@@ -1,20 +1,19 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  IxButton,
-  IxContentHeader,
-  IxIconButton,
-  showToast,
-} from "@siemens/ix-react";
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
+import { IxContentHeader, IxIconButton, showToast } from "@siemens/ix-react";
 import {
   iconFolder,
   iconRefresh,
   iconDocument,
   iconTrashcan,
-  iconSaveAll,
   iconUpload,
-  iconClose,
   iconChevronRightSmall,
 } from "@siemens/ix-icons/icons";
 import { useAppStore } from "@/lib/app.store";
@@ -27,24 +26,48 @@ import {
   writeMediaFile,
   type FileItem,
 } from "@/lib/admin.api";
-
-interface OpenFile {
-  path: string;
-  name: string;
-  content: string;
-  original: string;
-  dirty: boolean;
-}
+import FileEditorDialog from "./file-editor-dialog";
 
 export default function FilesPage() {
   const token = useAppStore((s) => s.token);
+  const openModal = useAppStore((s) => s.openModal);
+  const closeModal = useAppStore((s) => s.closeModal);
   const [currentPath, setCurrentPath] = useState("");
   const [items, setItems] = useState<FileItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
-  const [openFile, setOpenFile] = useState<OpenFile | null>(null);
   const [busy, setBusy] = useState(false);
   const uploadInputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [sidebarWidth, setSidebarWidth] = useState(240);
+  const [resizing, setResizing] = useState(false);
+
+  const startResize = (event: ReactPointerEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const container = containerRef.current;
+    if (!container) return;
+    const containerLeft = container.getBoundingClientRect().left;
+    const containerWidth = container.getBoundingClientRect().width;
+    setResizing(true);
+    const onMove = (moveEvent: PointerEvent) => {
+      const next = Math.min(
+        Math.max(moveEvent.clientX - containerLeft, 160),
+        Math.max(containerWidth - 320, 160),
+      );
+      setSidebarWidth(next);
+    };
+    const onUp = () => {
+      setResizing(false);
+      document.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerup", onUp);
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+    };
+    document.addEventListener("pointermove", onMove);
+    document.addEventListener("pointerup", onUp);
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+  };
 
   useEffect(() => {
     if (!token) return;
@@ -89,7 +112,6 @@ export default function FilesPage() {
 
   const navigateTo = (path: string) => {
     setCurrentPath(path.replace(/^\/+/, "").replace(/\/+$/, ""));
-    setOpenFile(null);
   };
 
   const createDir = async () => {
@@ -154,32 +176,17 @@ export default function FilesPage() {
     setBusy(true);
     try {
       const content = await readMediaText(token, item.path);
-      setOpenFile({
-        path: item.path,
-        name: item.name,
-        content,
-        original: content,
-        dirty: false,
-      });
       setError(null);
-    } catch (err) {
-      setError((err as Error).message);
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const closeFile = () => setOpenFile(null);
-
-  const saveFile = async () => {
-    if (!token || !openFile) return;
-    setBusy(true);
-    try {
-      await writeMediaFile(token, openFile.path, openFile.content);
-      setOpenFile((f) => (f ? { ...f, original: f.content, dirty: false } : f));
-      refresh();
-      showToast({ title: "File saved", type: "success" });
-      setError(null);
+      openModal(
+        <FileEditorDialog
+          path={item.path}
+          name={item.name}
+          initialContent={content}
+          onSaved={refresh}
+        />,
+        "file-editor",
+        "wide",
+      );
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -193,7 +200,7 @@ export default function FilesPage() {
     setBusy(true);
     try {
       await deleteMediaPath(token, item.path);
-      if (openFile && openFile.path === item.path) setOpenFile(null);
+      closeModal();
       refresh();
       showToast({ title: "Deleted", type: "info" });
     } catch (err) {
@@ -203,49 +210,18 @@ export default function FilesPage() {
     }
   };
 
-  const onChangeOpenContent = (value: string) => {
-    setOpenFile((f) =>
-      f ? { ...f, content: value, dirty: value !== f.original } : f,
-    );
-  };
-
   return (
-    <div className="admin-page">
+    <div className="admin-page admin-page--files">
       <IxContentHeader
         headerTitle="Files"
         headerSubtitle={`media / ${segments.join(" / ") || "…"}`}
       />
 
-      <div className="admin-file-manager">
-        <div className="admin-file-manager__sidebar">
-          <div className="admin-file-manager__sidebar-actions">
-            <IxIconButton
-              icon={iconFolder}
-              title="New folder"
-              onClick={() => void createDir()}
-              disabled={busy}
-            />
-            <IxIconButton
-              icon={iconDocument}
-              title="New file"
-              onClick={() => void createFile()}
-              disabled={busy}
-            />
-            <IxIconButton
-              icon={iconUpload}
-              title="Upload files"
-              onClick={() => uploadInputRef.current?.click()}
-              disabled={busy}
-            />
-            <input
-              ref={uploadInputRef}
-              type="file"
-              multiple
-              hidden
-              onChange={(event) => void uploadFiles(event.target.files)}
-            />
-          </div>
-
+      <div className="admin-file-manager" ref={containerRef}>
+        <div
+          className="admin-file-manager__sidebar"
+          style={{ width: `${sidebarWidth}px` }}
+        >
           <div className="admin-file-manager__nav">
             {segments.map((segment, index) => (
               <button
@@ -270,6 +246,14 @@ export default function FilesPage() {
             )}
           </div>
         </div>
+
+        <div
+          className={`admin-file-manager__splitter${resizing ? " active" : ""}`}
+          onPointerDown={startResize}
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Resize sidebar"
+        />
 
         <div className="admin-file-manager__content">
           <div className="admin-page__toolbar">
@@ -305,7 +289,34 @@ export default function FilesPage() {
                 </span>
               ))}
             </div>
-            <IxIconButton icon={iconRefresh} onClick={refresh} />
+            <div className="admin-file-manager__actions">
+              <IxIconButton
+                icon={iconFolder}
+                title="New folder"
+                onClick={() => void createDir()}
+                disabled={busy}
+              />
+              <IxIconButton
+                icon={iconDocument}
+                title="New file"
+                onClick={() => void createFile()}
+                disabled={busy}
+              />
+              <IxIconButton
+                icon={iconUpload}
+                title="Upload files"
+                onClick={() => uploadInputRef.current?.click()}
+                disabled={busy}
+              />
+              <input
+                ref={uploadInputRef}
+                type="file"
+                multiple
+                hidden
+                onChange={(event) => void uploadFiles(event.target.files)}
+              />
+              <IxIconButton icon={iconRefresh} onClick={refresh} />
+            </div>
           </div>
 
           {error && (
@@ -381,38 +392,6 @@ export default function FilesPage() {
             )}
           </div>
         </div>
-
-        {openFile && (
-          <div className="admin-file-editor">
-            <div className="admin-file-editor__header">
-              <div>
-                <div className="admin-file-editor__title">{openFile.name}</div>
-                <div className="admin-file-editor__path">{openFile.path}</div>
-              </div>
-              <div style={{ display: "flex", gap: "0.5rem" }}>
-                <IxButton
-                  icon={iconSaveAll}
-                  disabled={!openFile.dirty || busy}
-                  onClick={saveFile}
-                >
-                  Save
-                </IxButton>
-                <IxIconButton
-                  icon={iconClose}
-                  title="Close"
-                  onClick={closeFile}
-                />
-              </div>
-            </div>
-            <textarea
-              aria-label={`Content of ${openFile.name}`}
-              spellCheck={false}
-              value={openFile.content}
-              onChange={(event) => onChangeOpenContent(event.target.value)}
-              className="admin-file-editor__textarea"
-            />
-          </div>
-        )}
       </div>
     </div>
   );

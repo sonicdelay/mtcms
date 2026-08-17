@@ -1,8 +1,4 @@
-### **Kapitel 3: Seile, Schnüre, Bänder und Knoten**
-
-_"Es ist erstaunlich, wie wenig der Durchschnittsmensch darüber weiß, wie man auch nur die einfachsten Knoten macht."_
-
-—R.M. ABRAHAM, _WINTER NIGHTS ENTERTAINMENTS_, 1932
+## **Kapitel 3: Seile, Schnüre, Bänder und Knoten**
 
 Seile und Schnüre sind superwichtig für deine Ausrüstung. Mit ihnen kannst du viele andere Sachen bauen. Schnüre gehören zu den „Fünf C" – den fünf wichtigsten Dingen zum Überleben. Wie alles daraus müssen sie für viele Aufgaben taugen.
 
@@ -10,7 +6,7 @@ Eigentlich bedeuten „Schnur" und „Seil" dasselbe. In diesem Buch gilt aber: 
 
 Es ist außerdem schwer und dauert sehr lange, Schnüre aus Naturmaterial selbst zu machen. Deshalb solltest du sie immer mitnehmen. Mit Schnüren kannst du Feuer machen, Dinge zusammenbinden, Fallen bauen, fischen und noch viel mehr. Nimm dir also Zeit, um deine Schnüre gut auszuwählen!
 
-###### **SCHNÜRE**
+### SCHNÜRE
 
 Manche Schnüre, zum Beispiel die Militär-Schnur 550 (auch **Fallschirmschnur** genannt), haben eine äußere Hülle. Diese Hülle heißt **Mantel**. Sie ist geflochten und besteht meist aus Kunststoff. Innen versteckt sie die einzelnen Stränge. Eine echte 550-Schnur hat sieben Stränge im Inneren.
 

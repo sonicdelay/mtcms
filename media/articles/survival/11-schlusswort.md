@@ -1,6 +1,6 @@
-##### **Schluss** 
+##### **Schlusswort** 
 
-Danke, dass du dieses Buch gelesen hast. Natürlich ist es wichtig, dass du nicht nur die Lektionen aufnimmst, sondern auch nach draußen gehst und die Natur genießt. Am besten lernst du die Fähigkeiten, über die wir gesprochen haben, indem du sie übst.
+Danke, dass du diese Wissenssammlung gelesen hast. Natürlich ist es wichtig, dass du nicht nur die Lektionen aufnimmst, sondern auch nach draußen gehst und die Natur genießt. Am besten lernst du die Fähigkeiten, über die wir gesprochen haben, indem du sie übst.
 
 Wir dürfen nicht vergessen, was unsere Vorfahren uns gelehrt haben. Und wir sollten diese Fähigkeiten an alle weitergeben, die sie lernen wollen. Wir alle sind im Herzen Bushcrafter und Waldmenschen. Aber wir müssen auch daran denken: Wir sind Hüter des Landes. Die Natur zu schonen und dafür zu sorgen, dass alles erneuerbar bleibt und sich wieder erneuert – das sollte bei jedem Ausflug ein Hauptziel sein. Nur so gibt es auch für unsere Kinder und deren Kinder noch schöne Orte.
 

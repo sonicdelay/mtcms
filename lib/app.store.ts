@@ -31,9 +31,14 @@ export interface AppState {
   isModalOpen: boolean;
   modalId: string | null;
   modalContent: ModalContent | null;
+  modalSize: "sm" | "wide";
   setTheme: (theme: AppTheme) => void;
   toggleTheme: () => void;
-  openModal: (content: ModalContent, modalId?: string) => void;
+  openModal: (
+    content: ModalContent,
+    modalId?: string,
+    size?: "sm" | "wide",
+  ) => void;
   setModalContent: (content: ModalContent | null) => void;
   closeModal: () => void;
 }
@@ -77,13 +82,15 @@ export const useAppStore = create<AppState>()(
         isModalOpen: false,
         modalId: null,
         modalContent: null,
+        modalSize: "sm",
 
-        openModal: (content, modalId) =>
+        openModal: (content, modalId, size = "sm") =>
           set(
             {
               isModalOpen: true,
               modalId: modalId ?? null,
               modalContent: content,
+              modalSize: size,
             },
             false,
             "app/openModal",
@@ -91,7 +98,12 @@ export const useAppStore = create<AppState>()(
 
         closeModal: () =>
           set(
-            { isModalOpen: false, modalId: null, modalContent: null },
+            {
+              isModalOpen: false,
+              modalId: null,
+              modalContent: null,
+              modalSize: "sm",
+            },
             false,
             "app/closeModal",
           ),

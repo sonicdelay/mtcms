@@ -1,24 +1,44 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useAuthStore } from "./auth-store";
+import { usePathname, useRouter } from "next/navigation";
+import { useAppStore } from "@/lib/app.store";
+import { useMounted } from "./use-mounted";
 import ThemeSwitcher from "./theme-switcher";
 import LanguageSwitcher from "./language-switcher";
+import LoginDialog from "./login-dialog";
 
 const links = [
-  { href: "/home", label: "Home" },
-  { href: "/home/articles", label: "Articles" },
-  { href: "/home/about", label: "About" },
-  { href: "/home/contact", label: "Contact" },
-  { href: "/engine", label: "3D" },
+  { href: "/home", label: "Startseite" },
+  { href: "/home/articles", label: "Artikel" },
+  { href: "/home/content/engine", label: "3D" },
+  { href: "/home/content/about", label: "Über" },
+  { href: "/home/content/contact", label: "Kontakt" },
   { href: "/admin", label: "Admin" },
   { href: "/api", label: "API" },
 ];
 
 export default function Nav() {
   const pathname = usePathname();
-  const { isLoggedIn, login, logout } = useAuthStore();
+  const router = useRouter();
+  const mounted = useMounted();
+  const token = useAppStore((s) => s.token);
+  const user = useAppStore((s) => s.user);
+  const logout = useAppStore((s) => s.logout);
+  const openModal = useAppStore((s) => s.openModal);
+
+  const isLoggedIn = token != null;
+  const email = user?.email;
+
+  const handleLoginClick = () => {
+    useAppStore.setState({ error: null });
+    openModal(LoginDialog);
+  };
+
+  const handleLogout = () => {
+    logout();
+    router.push("/");
+  };
 
   return (
     <header className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
@@ -30,8 +50,13 @@ export default function Nav() {
           SonicDelay
         </Link>
         <ul className="flex items-center gap-4">
-          {links.map((link) => (
-            <li key={link.href}>
+          {links
+            .filter(
+              (link) =>
+                !["/admin", "/api"].includes(link.href) || (mounted && isLoggedIn),
+            )
+            .map((link) => (
+              <li key={link.href}>
               <Link
                 href={link.href}
                 className={`text-sm font-medium transition-colors hover:text-zinc-900 dark:hover:text-zinc-50 ${
@@ -43,33 +68,33 @@ export default function Nav() {
                 {link.label}
               </Link>
             </li>
-          ))}
+            ))}
         </ul>
         <div className="ml-auto flex items-center gap-2">
           <ThemeSwitcher />
           <LanguageSwitcher />
-          {isLoggedIn ? (
+          {mounted && isLoggedIn ? (
             <>
               <Link
                 href="/admin"
                 className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-900 text-sm font-medium text-white dark:bg-zinc-50 dark:text-zinc-900"
-                title="Admin"
+                title={email ?? "Admin"}
               >
-                A
+                {email ? email.charAt(0).toUpperCase() : "A"}
               </Link>
               <button
                 type="button"
-                onClick={logout}
+                onClick={handleLogout}
                 className="text-xs font-medium text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
                 title="Logout"
               >
                 Logout
               </button>
             </>
-          ) : (
+          ) : mounted ? (
             <button
               type="button"
-              onClick={login}
+              onClick={handleLoginClick}
               className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-300 text-sm font-medium text-zinc-500 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800"
               title="Login"
             >
@@ -86,7 +111,7 @@ export default function Nav() {
                 />
               </svg>
             </button>
-          )}
+          ) : null}
         </div>
       </nav>
     </header>

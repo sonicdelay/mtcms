@@ -13,7 +13,7 @@ import {
 type Params = Promise<{ path?: string[] }>;
 
 const md = new MarkdownIt({
-  html: false,
+  html: true,
   linkify: true,
 });
 
@@ -55,6 +55,25 @@ function displayName(item: { name: string; type: string }, title?: string) {
     return title ?? item.name.replace(/\.md$/, "");
   }
   return item.name;
+}
+
+function Breadcrumb({ crumbs }: { crumbs: { label: string; href: string }[] }) {
+  return (
+    <nav className="mb-6 text-sm text-zinc-500 dark:text-zinc-400">
+      {crumbs.map((crumb, index) => (
+        <span key={crumb.href}>
+          {index > 0 && <span className="mx-2">/</span>}
+          {index < crumbs.length - 1 ? (
+            <Link href={crumb.href} className="hover:underline">
+              {crumb.label}
+            </Link>
+          ) : (
+            <span>{crumb.label}</span>
+          )}
+        </span>
+      ))}
+    </nav>
+  );
 }
 
 export async function generateMetadata({

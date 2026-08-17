@@ -10,6 +10,13 @@
   padding: 1.5rem;
 }
 
+.admin-page--files {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
 .admin-page__toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -74,34 +81,62 @@
 }
 
 .admin-file-manager {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 1rem;
-  align-items: start;
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  flex: 1;
+  min-height: 0;
 }
 
 .admin-file-manager__sidebar {
+  flex-shrink: 0;
   display: grid;
   gap: 0.5rem;
   padding: 0.75rem;
   border: 1px solid var(--theme-color-soft-bdr);
   border-radius: 0.375rem;
-  position: sticky;
-  top: 0;
+  overflow: auto;
 }
 
-.admin-file-manager__sidebar-actions {
+.admin-file-manager__content {
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.admin-file-manager__splitter {
+  flex-shrink: 0;
+  align-self: stretch;
+  width: 14px;
+  cursor: col-resize;
+  margin: 0 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  user-select: none;
+}
+
+.admin-file-manager__splitter::before {
+  content: "";
+  width: 3px;
+  height: 100%;
+  background: var(--theme-color-soft-bdr);
+  border-radius: 2px;
+  transition: background 0.15s ease;
+}
+
+.admin-file-manager__splitter:hover::before,
+.admin-file-manager__splitter.active::before {
+  background: var(--theme-color-primary);
 }
 
 .admin-file-manager__nav {
   display: grid;
   gap: 0.25rem;
-}
-
-.admin-file-manager__content {
-  min-width: 0;
 }
 
 .admin-file-manager__breadcrumbs {
@@ -119,6 +154,13 @@
   gap: 0.25rem;
 }
 
+.admin-file-manager__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
 .admin-file-manager__crumb {
   border: 0;
   background: none;
@@ -132,45 +174,6 @@
 
 .admin-file-manager__crumb:hover {
   text-decoration: underline;
-}
-
-.admin-file-editor {
-  grid-column: 1 / -1;
-  display: grid;
-  gap: 0.5rem;
-  padding: 0.75rem;
-  border: 1px solid var(--theme-color-soft-bdr);
-  border-radius: 0.375rem;
-}
-
-.admin-file-editor__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.admin-file-editor__title {
-  font-weight: 600;
-}
-
-.admin-file-editor__path {
-  font-size: 0.75rem;
-  opacity: 0.7;
-}
-
-.admin-file-editor__textarea {
-  width: 100%;
-  min-height: 280px;
-  padding: 0.75rem;
-  border-radius: 0.25rem;
-  border: 1px solid var(--theme-color-std-bdr);
-  background: var(--theme-color-2);
-  color: inherit;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  resize: vertical;
 }
 
 .admin-edit {

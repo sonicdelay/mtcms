@@ -1,12 +1,8 @@
-# Ein Feldführer zur Kunst des Überlebens in der Wildnis
-
-Von Dave Canterbury
-
-#### Madamsmedia
+# Überleben in der Wildnis
 
 ##### **WIDMUNG**
 
-Ich widme dieses Buch allen Grenzgängern und Waldmännern, die vor mir kamen. Sie haben ihr Wissen durch Bücher und Tagebücher weitergegeben. Ohne sie hätten wir nicht so viel Wissen. Und ohne ihren Einsatz wäre ein Buch wie dieses unmöglich.
+Gut Pfad lautet der Gruß der Pfadfinder. Ich widme dieses Buch allen junggebliebenen, die jenseits von technik und dem modernen Lebendstil e trotzdem wagen in die Wildnis hinaus zugehen.
 
 ##### **INHALT**
 
@@ -16,7 +12,7 @@ Ich widme dieses Buch allen Grenzgängern und Waldmännern, die vor mir kamen. S
 
 ###### **KAPITEL 1: DEIN RUCKSACK**
 
-- Die fünf Cs
+- Die fünf englischen Cs
 - Rucksäcke: Ein Überblick
 - Deine Wolldecken tragen
 - Rucksäcke

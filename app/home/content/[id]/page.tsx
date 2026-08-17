@@ -1,13 +1,19 @@
 import fs from "node:fs";
 import path from "node:path";
-import { notFound } from "next/navigation";
 import MarkdownIt from "markdown-it";
+import { notFound } from "next/navigation";
 
-const md = new MarkdownIt();
+const md = new MarkdownIt({ html: true });
 
-export default function AboutPage() {
-  const filePath = path.join(process.cwd(), "public", "articles", "contact.md");
+export default async function ContentPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
 
+  const filePath = path.join(process.cwd(), "public", "articles", `${id}.md`);
+  console.log("filePath", filePath);
   if (!fs.existsSync(filePath)) {
     notFound();
   }

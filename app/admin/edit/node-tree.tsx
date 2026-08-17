@@ -16,16 +16,19 @@ interface NodeTreeProps {
 }
 
 export default function NodeTree({
-  model,
-  context,
-  onContextChange,
+  // model,
+  // context,
+  // onContextChange,
 }: NodeTreeProps) {
   return (
-    <IxTree
-      root={ZERO_UUID}
-      model={model as TreeModel<unknown>}
-      context={context}
-      onContextChange={(event) => onContextChange(event.detail)}
-    />
+    <>
+      <h4>Tree</h4>
+      {/* <IxTree
+        root={ZERO_UUID}
+        model={model as TreeModel<unknown>}
+        context={context}
+        onContextChange={(event) => onContextChange(event.detail)}
+      /> */}
+    </>
   );
 }

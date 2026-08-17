@@ -4,8 +4,8 @@ Ein richtig toller Weg, interaktive 3D-Inhalte auf dem Bildschirm zu zeigen,
 ist das Framework [BabylonJS](https://www.babylonjs.com/). Klicke auf das Bild,
 um mehr zu erfahren...
 
-[![Engine](images/engine.png)](/engine)
-
+[![Engine](/images/engine.png)](/engine)
+<!-- 
 <p class="text-end">
 <a href="https://github.com/BabylonJS/Assets" target="_blank"> Modelle von
 https://github.com/BabylonJS/Assets
@@ -16,5 +16,5 @@ Die Optimierung des CDN-Dienstes ist noch in Arbeit.
 
 ## BabylonJS
 
-Bald folgt ...
+Bald folgt ... -->
 

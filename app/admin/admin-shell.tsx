@@ -51,12 +51,12 @@ export default function AdminShell({
 
   const handleLogout = () => {
     logout();
-    router.push("/admin");
+    router.push("/");
     router.refresh();
   };
 
-  const username = user?.email ?? "admin@example.com";
-  const role = user?.role ?? "Admin";
+  const username = user?.email ?? "Guest";
+  const role = user?.role ?? "Guest";
 
   return (
     <div className="ix-admin">
