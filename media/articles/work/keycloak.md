@@ -1,84 +1,86 @@
 # KEYCLOAK [^](/articles/)
 
-## Setting up development environment for KeyCloak
+## Entwicklungsumgebung für KeyCloak einrichten
 
-### Step-by-step guide
+### Schritt-für-Schritt-Anleitung
 
-The following steps are required to follow:
+Du musst folgende Schritte ausführen:
 
-1. Clone repository: https://code.#######.com/codema/iam/Keycloak
-2. As per the readme file in the repo, run the command on the gitbash/shell: sh
-   replace-root-url.sh http://localhost:4200
-3. Add the attached docker-compose file in the folder where Keycloak is cloned.
-   The image tag version can be changed if required. docker-compose.yml
-4. Run docker compose up on command prompt.
-5. Once the container is running, open http://localhost:8080.
-6. Landing page of Keycloak see PDF
-7. Go to Administration Console, and give username and password as "admin".
-8. Click on Realm and create a new realm
-9. REALM see PDF
-10. Browse the file : <path-to-repository>/realm-config/###-realm.json.
-11. click create see PDF with: Resource file >> ###-realm.json Realm name = ###
-    Enabled = ON
-12. Select the "### realm, as by default Master will be selected.
-13. Add user for the realm ###.
-14. List new users
-15. Create a user as shown in example Email = test@test.com First name = test
-    Last name = test
-16. Once user is created, add password credentials.
-17. Set the password as shown in example: 'test;
-18. Now run the API to get the access token as example (curl -X POST -d
-    "client_id=###" -d "username=test@test.com" -d "password=test" -d
-    "grant_type=password"
+1. Kloone das Repository: https://code.#######.com/codema/iam/Keycloak
+2. Wie in der Readme-Datei im Repository beschrieben, führe den Befehl in der
+   gitbash/Shell aus: sh replace-root-url.sh http://localhost:4200
+3. Lege die docker-compose-Datei in den Ordner, in dem Keycloak geklont ist.
+   Die Image-Tag-Version kannst du bei Bedarf ändern. docker-compose.yml
+4. Führe docker compose up in der Eingabeaufforderung aus.
+5. Sobald der Container läuft, öffne http://localhost:8080.
+6. Die Startseite von Keycloak: siehe PDF
+7. Gehe zur Administration Console und gib Benutzername und Passwort „admin"
+   ein.
+8. Klicke auf Realm und erstelle ein neues Realm
+9. REALM: siehe PDF
+10. Wähle die Datei: <path-to-repository>/realm-config/###-realm.json.
+11. Klicke auf create (siehe PDF) mit: Resource file >> ###-realm.json,
+    Realm name = ###, Enabled = ON
+12. Wähle das „###"-Realm, denn standardmäßig ist Master ausgewählt.
+13. Füge einen Benutzer für das Realm ### hinzu.
+14. Zeige die neuen Benutzer an
+15. Erstelle einen Benutzer wie im Beispiel: Email = test@test.com,
+    First name = test, Last name = test
+16. Sobald der Benutzer erstellt ist, füge die Passwort-Zugangsdaten hinzu.
+17. Setze das Passwort wie im Beispiel: „test".
+18. Führe nun die API aus, um den Access Token zu bekommen, zum Beispiel
+    (curl -X POST -d "client_id=###" -d "username=test@test.com" -d
+    "password=test" -d "grant_type=password"
     localhost:8080/realms/###/protocol/openid-connect/token)
-19. In the API, the parameters are as mentioned : curl -X POST -d
+19. In der API sind die Parameter wie folgt: curl -X POST -d
     "client_id=<client>" -d "username=<username>" -d "password=<password>" -d
     "grant_type=password"
     localhost:8080/realms/<realm>/protocol/openid-connect/token
 
 ---
 
-S ID Keycloak validate token redirect requests with token in auth header API
-Gateway Requests including token in auth header UI or other client Query Data
-for tenant cloud services database Get Token Requests including token in auth
-header discovery agent use as identity provider Get Token extract tenant
-information from token
+S ID Keycloak prüft Token und leitet Anfragen mit Token im Auth-Header weiter
+API Gateway Anfragen mit Token im Auth-Header UI oder anderer Client Daten für
+Tenant abfragen Cloud-Services-Datenbank Token holen Anfragen mit Token im
+Auth-Header Discovery-Agent als Identity Provider verwenden Token holen
+Tenant-Informationen aus dem Token lesen
 
-Auth server = keycloak
+Auth-Server = keycloak
 
-Instead of using its own internal/external identity provider, S ID will be
-integrated with keycloak as identity provider.
+Statt einen eigenen internen/externen Identity Provider zu nutzen, wird S ID
+mit keycloak als Identity Provider integriert.
 
 ---
 
-## UI or web client (Browser):
+## UI oder Web-Client (Browser):
 
-- User opens ### UI
-- User is redirected to keycloak login page
-- User provide credentials.
-- If authentication is successful, client receives an access token & will be
-  redirected to ### UI.
-- All further calls to application should have this access token.
-- API gateway when receives request, will validate token from keycloak
-  introspect token endpoint.
-- If the token is valid, the request will further propagate to downstream(cloud)
-  services, otherwise the request will be rejected with 401 status.
-- (The management of access token completely depend on how a developer has
-  implemented the application logic to store & use the token)
+- Der Benutzer öffnet die ###-UI
+- Der Benutzer wird zur keycloak-Loginseite weitergeleitet
+- Der Benutzer gibt seine Zugangsdaten ein.
+- Wenn die Anmeldung erfolgreich ist, erhält der Client einen Access Token und
+  wird zur ###-UI weitergeleitet.
+- Alle weiteren Anfragen an die Anwendung müssen diesen Access Token enthalten.
+- Wenn das API Gateway eine Anfrage erhält, prüft es den Token über den
+  keycloak-Introspect-Token-Endpoint.
+- Wenn der Token gültig ist, wird die Anfrage an die nachgelagerten
+  (Cloud-)Services weitergeleitet, sonst wird sie mit Status 401 abgelehnt.
+- (Wie der Access Token verwaltet wird, hängt ganz davon ab, wie ein Entwickler
+  die Logik zum Speichern und Nutzen des Tokens umgesetzt hat)
 
-## Web server (backend service):
+## Webserver (Backend-Service):
 
-- App requests for authorization code to keycloak auth endpoint with grant type
-  auth
-- App receives auth code
-- App requests for access token to keycloak token endpoint with generated auth
-  code & credentials
-- App receives access token & refresh token
-- All further calls to API gateway should contain this access token.
-- API gateway when receives request, will validate token from keycloak
-  introspect token endpoint.
-- If the token is valid, the request will further propagate to downstream(cloud)
-  services, otherwise the request will be rejected with 401 status.
-- Access token has a limited, pre-set expiration time.
-- When an access token expires, refresh token can be used to generate a new
-  access token without generating auth code.
+- Die App fragt einen Authorization Code beim keycloak-Auth-Endpoint an
+  (grant type: auth)
+- Die App erhält den Auth Code
+- Die App fragt den Access Token beim keycloak-Token-Endpoint an, mit dem
+  erzeugten Auth Code und den Zugangsdaten
+- Die App erhält einen Access Token und einen Refresh Token
+- Alle weiteren Anfragen an das API Gateway müssen diesen Access Token
+  enthalten.
+- Wenn das API Gateway eine Anfrage erhält, prüft es den Token über den
+  keycloak-Introspect-Token-Endpoint.
+- Wenn der Token gültig ist, wird die Anfrage an die nachgelagerten
+  (Cloud-)Services weitergeleitet, sonst wird sie mit Status 401 abgelehnt.
+- Der Access Token hat eine begrenzte, fest eingestellte Gültigkeitsdauer.
+- Wenn ein Access Token abläuft, kann der Refresh Token genutzt werden, um
+  einen neuen Access Token zu bekommen, ohne einen neuen Auth Code zu erzeugen.

@@ -1,64 +1,64 @@
 ---
-title: About
+title: Über mich
 published_at: 2026-05-29
-snippet: Background, technical focus, and selected projects.
+snippet: Hintergrund, technischer Schwerpunkt und ausgewählte Projekte.
 ---
 
-# About
+# Über mich
 
 ![Sascha](/images/sascha.png)
 
-Sascha Hess (born 1974)
+Sascha Hess (geboren 1974)
 
-## Profile
+## Profil
 
-Software engineer with a strong full-stack background and a focus on turning
-ideas into reliable products. Experience includes web applications,
-platform-oriented solutions, data-intensive systems, and AI-supported tooling
-for industrial use cases.
+Softwareentwickler mit viel Erfahrung im Full-Stack-Bereich und dem Fokus
+darauf, Ideen in zuverlässige Produkte zu verwandeln. Zu meiner Erfahrung
+gehören Webanwendungen, Plattformlösungen, datenintensive Systeme und
+KI-gestützte Werkzeuge für industrielle Einsatzbereiche.
 
-## Technical Journey
+## Meine Reise mit der Technik
 
-Programming started at age 9 with LOGO, moving the classic "turtle" step by
-step. Since then, the toolbox has grown across multiple ecosystems, including
-Assembler, BASIC, C/C++, C#, Go, Java, JavaScript, .NET, PHP, Pascal, and
-TypeScript.
+Mit dem Programmieren habe ich mit 9 Jahren angefangen, mit LOGO und dem
+klassischen "Turtle"-Befehl, Schritt für Schritt. Seitdem ist mein
+Werkzeugkasten über viele Ökosysteme gewachsen, darunter Assembler, BASIC,
+C/C++, C#, Go, Java, JavaScript, .NET, PHP, Pascal und TypeScript.
 
-## Professional Work
+## Berufliche Arbeit
 
-> "Who knows how long the internet will be around? We make our money with
-> hardware..."
+> "Wer weiß schon, wie lange es das Internet noch geben wird? Wir verdienen
+> unser Geld mit Hardware..."
 >
-> - Colleague, 2001
+> - Kollege, 2001
 
-### Selected Projects
+### Ausgewählte Projekte
 
-- Energy customer portal (PHP, MySQL, AngularJS)
+- Kundenportal für Energie (PHP, MySQL, AngularJS)
 - HMI/UI DCS R8 (Java, AngularJS)
-- Drive train monitoring (Node.js, Angular)
-- ACHEMA fair demonstrator (Spring, Angular)
-- Field device management (Spring, Angular)
-- Vibration monitoring (Python, custom Django)
-- Production event management for manufacturing plants (MindSphere, Angular)
-- AI-based recognition of electrical circuit diagrams
+- Überwachung von Antriebssträngen (Node.js, Angular)
+- Messedemonstrator für die ACHEMA (Spring, Angular)
+- Feldgeräteverwaltung (Spring, Angular)
+- Vibrationsüberwachung (Python, custom Django)
+- Produktions-Eventmanagement für Fabriken (MindSphere, Angular)
+- KI-gestützte Erkennung von elektrischen Schaltplänen
   (TensorFlow, Node.js, Angular)
-- Cloud-based asset management for production facilities (Go, Angular)
+- Cloudbasiertes Anlagenmanagement für Produktionsstätten (Go, Angular)
 
-### Additional Responsibilities
+### Weitere Aufgaben
 
-- Technical product documentation
-- Salesforce validation and SECP migration support
-- Fire protection assistant
-- First responder
+- Technische Produktdokumentation
+- Salesforce-Validierung und SECP-Migrationsunterstützung
+- Brandschutzhelfer
+- Ersthelfer
 
-## Collaborative Patent
+## Gemeinsames Patent
 
 - [Training Data Generator and Method for Generation of Training Datasets](https://patents.justia.com/patent/20230401880)
 
-## Community Engagement
+## Ehrenamtliches Engagement
 
 ### DPSG Pforzheim (2001-2010)
 
-- Scout leader
-- Board member
-- Member of the Pforzheim City Youth Committee
+- Gruppenleiter
+- Vorstandsmitglied
+- Mitglied im Stadtjugendring Pforzheim

@@ -1,7 +1,7 @@
 ---
 title: Deno,
 published_at: 2024-04-30,
-snippet: How to setup Deno and a starter project,
+snippet: So richtest du Deno und ein Startprojekt ein,
 ---
 
 # Deno [^](/articles/)
@@ -10,7 +10,7 @@ snippet: How to setup Deno and a starter project,
 
 ## Installation
 
-Latest:
+Neueste:
 [https://github.com/denoland/deno_install](https://github.com/denoland/deno_install)
 
 ```bash
@@ -22,7 +22,7 @@ export PATH="/home/username/.deno/bin:$PATHD"
 deno --version
 ```
 
-e.g.:
+z. B.:
 
 ```
 deno 2.3.7 (stable, release, x86_64-pc-windows-msvc)
@@ -30,7 +30,7 @@ v8 13.7.152.6-rusty
 typescript 5.8.3
 ```
 
-To receive more information, run:
+Für weitere Informationen führe Folgendes aus:
 
 ```bash
 >>$ deno --help

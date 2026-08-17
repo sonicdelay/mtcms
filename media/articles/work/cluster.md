@@ -2,20 +2,20 @@
 {
   title: Cluster,
   published_at: 2024-04-30,
-  snippet: How to setup the K3D cluster used for an internal project,
+  snippet: So richtest du den K3D-Cluster ein, der für ein internes Projekt genutzt wird,
 }
 ---
 
 # Cluster [^](/articles/)
 
-Setup according to:
+Einrichtung nach:
 
 - <https://code.example.com/score/dev-tools/wsl2-setup>
 - <https://code.example.com/codema/utils/helm-charts/codema/-/blob/integration/docs/LOCAL_DEV.md>
 
-## WSL instance score
+## WSL-Instanz score
 
-### Download artifact v0.0.4 from
+### Lade das Artefakt v0.0.4 herunter von
 
 - <https://code.example.com/score/dev-tools/wsl2-setup/-/package_files/663778/download>
 
@@ -34,34 +34,34 @@ passwd // (score:score)
 
 ---
 
-## Store public ssh key for repo access
+## Öffentlichen SSH-Schlüssel für den Repo-Zugriff speichern
 
-### Create ssh key
+### SSH-Schlüssel erstellen
 
 ```shell
 ssh-keygen -q -t rsa -N ''
 ```
 
-### Copy public key
+### Öffentlichen Schlüssel kopieren
 
 ```shell
 cat /$HOME/.ssh/id_rsa.pub
 ```
 
-- Paste public key into your gitlab profile
+- Füge den öffentlichen Schlüssel in dein GitLab-Profil ein
   (<https://code.example.com/-/profile/keys>)
 
 ---
 
-## K3d cluster dev
+## K3d-Cluster dev
 
-### Create Cluster
+### Cluster erstellen
 
 ```shell
 k3d cluster create dev --api-port 6550 -p "8099:80@loadbalancer" --agents 2 --k3s-arg "--no-deploy=traefik@server:*"
 ```
 
-### Create name space and secrets kubectl create ns app
+### Namespace und Secrets erstellen
 
 ```shell
 kubectl create ns app
@@ -73,7 +73,7 @@ kubectl patch sa default -n app -p='{"imagePullSecrets": [{"name": "group-regist
 kubectl -n app create secret generic keycloak-secret --from-literal=keycloak_admin_user=admin --from-literal=keycloak_admin_password=admin
 ```
 
-### Install kong as ingress controller
+### Installiere Kong als Ingress-Controller
 
 ```shell
 helm repo add kong https://charts.konghq.com
@@ -95,7 +95,7 @@ helm upgrade --install kong kong/kong \
 
 µµ
 
-### Update Umbrella Charts
+### Umbrella-Charts aktualisieren
 
 ```shell
 git clone git@code.example.com:codema/utils/helm-charts/codema.git && cd codema
@@ -104,7 +104,7 @@ git switch -d integration
 git pull
 ```
 
-### Setup Test
+### Test einrichten
 
 ```shell
 helm registry login cr.example.com --username sascha.####@example.com --password -CSC-exampleexample######
@@ -112,13 +112,13 @@ helm dependency update ./charts/codema
 helm install test ./charts/codema -n app --values ./charts/codema/values-kong-local.yaml --dependency-update
 ```
 
-### Verfiy Up&Running
+### Prüfe, ob alles läuft
 
 ```shell
 watch -n 2 kubectl get pods -n app -o=wide
 ```
 
-### Kill commands
+### Befehle zum Beenden
 
 ```shell
 k3d cluster delete <cluster-name>

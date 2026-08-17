@@ -2,13 +2,13 @@
 {
   title: Angular,
   published_at: 2024-04-31,
-  snippet: How to setup the framework,
+  snippet: So richtest du das Framework ein,
 }
 ---
 
 # Angular 
 
-## Documentation
+## Doku
 
 [https://https://angular.dev/overview](https://https://angular.dev/overview)
 
@@ -21,9 +21,9 @@ cd my-app
 ng serve --open
 ```
 
-## Adoptions
+## Verwendete Oberfläche
 
-UI for the time being MaterialUI
+UI vorerst MaterialUI
 
 ```
 ng add @angular/material

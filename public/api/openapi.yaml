@@ -2,139 +2,107 @@ openapi: 3.1.0
 info:
   title: mtCMS API
   description: |-
-    This API explains how to use and access nodes an files of the server backend.
+    API for managing nodes stored in the mtCMS backend.
 
+    All `/nodes` endpoints require a Bearer token issued by `POST /api/auth`.
     See details:
      - [sonicdelay.net](https://www.sonicdelay.net)
-  version: "1.0"
+  version: "1.0.0"
   contact:
     email: sascha@sonicdelay.net
 servers:
   - url: /api/
     description: Current server
-  # - url: https://www.sonicdelay.net/api/
-  - url: ws://yourdomain.com
-    description: WebSocket Server (Unsecured)
-  - url: wss://yourdomain.com
-    description: WebSocket Server (Secured)
-    security:
-      - BearerAuth: []
+security:
+  - BearerAuth: []
 paths:
   /auth:
-    get:
-      tags:
-        - auth
-      description: Auth refresh
-      operationId: auth
-      security:
-        - BearerAuth: []
-      #   parameters:
-      #     - name: case
-      #       in: query
-      #       description: Type of login case
-      #       required: false
-      #       schema:
-      #         type: string
-      #         enum:
-      #           - "LOGOUT"
-      #           - "PASSWORD"
-      #           - "BASIC"
-      #           - "BEARER"
-      responses:
-        "200":
-          description: Auth context
-          $ref: "#/components/responses/RespDefaultError"
-        "401":
-          $ref: "#/components/responses/RespUnauthorized"
-    #     "403":
-    #       $ref: "#/components/responses/RespForbidden"
     post:
       tags:
         - auth
-      description: Auth context Login
-      operationId: authData
-      # security:
-      #   - BearerAuth: []
-      # parameters:
-      #   - name: case
-      #     in: query
-      #     description: Type of login case
-      #     required: false
-      #     schema:
-      #       type: string
-      #       enum:
-      #         - "BASIC"
-      #         - "BEARER"
+      summary: Login
+      description: Authenticates with email and password and returns a Bearer token.
+      operationId: login
+      security: []
       requestBody:
-        description: Data to login
-        required: false
+        required: true
         content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  example: admin@example.com
-                password:
-                  type: string
-                  format: password
-                  example: admin
-              required:
-                - email
-                - password
+              $ref: "#/components/schemas/LoginRequest"
       responses:
         "200":
-          description: Token for given user generated sucessfully
-          examples:
-            Auth:
-              $ref: "#/components/examples/Auth"
+          description: Authenticated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
         "400":
           $ref: "#/components/responses/RespBadRequest"
         "401":
           $ref: "#/components/responses/RespUnauthorized"
-        "403":
-          $ref: "#/components/responses/RespForbidden"
-        "404":
-          $ref: "#/components/responses/RespNotfound"
         "500":
           $ref: "#/components/responses/RespInternalServerError"
-        default:
-          $ref: "#/components/responses/RespDefaultError"
+    get:
+      tags:
+        - auth
+      summary: Refresh token
+      description: Validates the current Bearer token and issues a fresh one.
+      operationId: refreshToken
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Refreshed token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
 
   /nodes:
     get:
       tags:
         - nodes
-      description: Return all the nodes available in the library
+      summary: List nodes
+      description: Returns nodes, optionally filtered by type.
       operationId: getAllNodes
       security:
         - BearerAuth: []
       parameters:
         - name: type
           in: query
-          description: Type of entries to filter for
+          description: Filter nodes by their type
           required: false
           schema:
             type: string
         - name: limit
           in: query
-          description: Limit the number of entries to return. Maximum=50
+          description: Maximum number of nodes to return (1-50)
           required: false
-          maximum: 50
           schema:
             type: integer
+            minimum: 1
+            maximum: 50
+            default: 50
         - name: offset
           in: query
-          description: Offset the number of entries to return
+          description: Number of nodes to skip (0-1000)
           required: false
-          maximum: 1000
           schema:
             type: integer
-
+            minimum: 0
+            maximum: 1000
+            default: 0
       responses:
         "200":
-          description: List with all the available nodes in the library
+          description: List of nodes
           content:
             application/json:
               schema:
@@ -145,48 +113,43 @@ paths:
           $ref: "#/components/responses/RespBadRequest"
         "401":
           $ref: "#/components/responses/RespUnauthorized"
-        "403":
-          $ref: "#/components/responses/RespForbidden"
-        "404":
-          $ref: "#/components/responses/RespNotfound"
         "500":
           $ref: "#/components/responses/RespInternalServerError"
-        default:
-          $ref: "#/components/responses/RespDefaultError"
     post:
       tags:
         - nodes
-      description: Add a new node to the library
+      summary: Create node
+      description: Adds a new node to the library.
       operationId: createNode
       security:
         - BearerAuth: []
       requestBody:
-        description: Details of the node to add
+        description: Details of the node to create
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Node"
+              $ref: "#/components/schemas/NodeInput"
       responses:
         "201":
-          description: node successfully added to the library
+          description: Node successfully created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Node"
         "400":
           $ref: "#/components/responses/RespBadRequest"
         "401":
           $ref: "#/components/responses/RespUnauthorized"
-        "403":
-          $ref: "#/components/responses/RespForbidden"
-        "404":
-          $ref: "#/components/responses/RespNotfound"
         "500":
           $ref: "#/components/responses/RespInternalServerError"
-        default:
-          $ref: "#/components/responses/RespDefaultError"
+
   /nodes/{id}:
     get:
       tags:
         - nodes
-      description: Return the details about the node with the requested ID
+      summary: Get node
+      description: Returns the node with the requested ID.
       operationId: getNodeById
       security:
         - BearerAuth: []
@@ -195,19 +158,20 @@ paths:
           in: path
           description: ID of the node to request
           required: true
-          example: 00000000-0000-4000-8000-000000000000
           schema:
             type: string
+            format: uuid
+            example: 00000000-0000-4000-8000-000000000000
         - name: scope
           in: query
-          description: Filter job list so that only jobs with this status are returned.
+          description: Include related nodes instead of (or in addition to) the node itself
           required: false
           schema:
             type: string
             enum:
               - parent
-              - breadcrumb
               - children
+              - breadcrumb
               - editor
       responses:
         "200":
@@ -215,32 +179,20 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  discoveries:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Node"
-              examples:
-                Nodes:
-                  $ref: "#/components/examples/Node"
-
+                $ref: "#/components/schemas/Node"
         "400":
           $ref: "#/components/responses/RespBadRequest"
         "401":
           $ref: "#/components/responses/RespUnauthorized"
-        "403":
-          $ref: "#/components/responses/RespForbidden"
         "404":
           $ref: "#/components/responses/RespNotfound"
         "500":
           $ref: "#/components/responses/RespInternalServerError"
-        default:
-          $ref: "#/components/responses/RespDefaultError"
     put:
       tags:
         - nodes
-      description: Update the details about the node with the specified ID
+      summary: Update node
+      description: Partially updates the node with the specified ID.
       operationId: updateNode
       security:
         - BearerAuth: []
@@ -251,22 +203,34 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       requestBody:
-        description: New details of the node to be modified
+        description: Fields to update. At least one must be provided.
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Node"
+              $ref: "#/components/schemas/NodeUpdate"
       responses:
         "200":
-          description: node successfully updated
+          description: Node successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Node"
+        "400":
+          $ref: "#/components/responses/RespBadRequest"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
         "404":
-          description: node with the requested ID not found
+          $ref: "#/components/responses/RespNotfound"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
     delete:
       tags:
         - nodes
-      description: Delete the node with the specified ID
+      summary: Delete node
+      description: Deletes the node with the specified ID.
       operationId: deleteNode
       security:
         - BearerAuth: []
@@ -277,311 +241,316 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       responses:
         "204":
-          description: node successfully removed
+          description: Node successfully removed
+        "400":
+          $ref: "#/components/responses/RespBadRequest"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
         "404":
-          description: node with the requested ID not found
+          $ref: "#/components/responses/RespNotfound"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
 
   /fm:
     get:
       tags:
         - fm
-      description: List with all the available fiels and folders
-      operationId: getFMContent
+      summary: List media root
+      description: Lists the files and folders under the media root.
+      operationId: listMediaRoot
       security:
         - BearerAuth: []
       responses:
         "200":
-          description: List with all the available fiels and folders
-
-  /fm/{path}:
-    get:
-      tags:
-        - fm
-      description: List with all the available fiels and folders
-      operationId: getFMContent
-      security:
-        - BearerAuth: []
-      parameters:
-        - name: path
-          in: path
-          description: Path to the folder
-          required: false
-          example: ""
-          schema:
-            type: string
-      responses:
-        "200":
-          description: List with all the available nodes in the library
-    post:
-      tags:
-        - fm
-      description: Add a new node to the library
-      operationId: createFMContent
-      security:
-        - BearerAuth: []
-      requestBody:
-        description: Details of the node to add
-        required: true
-        content:
-          text/plain:
-            schema:
-              type: string
-        #  application/json:
-        #     schema:
-        #       $ref: "#/components/schemas/Node"
-      responses:
-        "201":
-          description: node successfully added to the library
-        "400":
-          description: Bad request
-        "401":
-          description: Non authorized to do this operation
-    put:
-      tags:
-        - fm
-      description: Update the details about the node with the specified ID
-      operationId: updateFMContent
-      security:
-        - BearerAuth: []
-      parameters:
-        - name: id
-          in: path
-          description: ID of the node to modify
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: New details of the node to be modified
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Node"
-      responses:
-        "200":
-          description: node successfully updated
-        "404":
-          description: node with the requested ID not found
-    delete:
-      tags:
-        - fm
-      description: Delete the node with the specified ID
-      operationId: deleteFMContent
-      security:
-        - BearerAuth: []
-      parameters:
-        - name: id
-          in: path
-          description: ID of the node to delete
-          required: true
-          schema:
-            type: string
-      responses:
-        "204":
-          description: node successfully removed
-        "404":
-          description: node with the requested ID not found
-
-  /mcp/v1:
-    get:
-      tags:
-        - mcp
-      description: Return all the nodes available in the library
-      operationId: getMCPData
-      security:
-        - BearerAuth: []
-      parameters:
-        - name: type
-          in: query
-          description: Type of entries to filter for
-          required: false
-          schema:
-            type: string
-        - name: limit
-          in: query
-          description: Limit the number of entries to return. Maximum=50
-          required: false
-          maximum: 50
-          schema:
-            type: integer
-        - name: offset
-          in: query
-          description: Offset the number of entries to return
-          required: false
-          maximum: 1000
-          schema:
-            type: integer
-
-      responses:
-        "200":
-          description: List with all the available nodes in the library
+          description: List of files and folders
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Node"
+                  $ref: "#/components/schemas/FileItem"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
+
+  /fm/{path}:
+    get:
+      tags:
+        - fm
+      summary: Get media content
+      description: Lists a directory or returns a file under the media root.
+      operationId: getMediaContent
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: path
+          in: path
+          description: Relative path under the media root
+          required: true
+          schema:
+            type: string
+            example: articles/work
+      responses:
+        "200":
+          description: Directory listing or file content
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FileItem"
         "400":
           $ref: "#/components/responses/RespBadRequest"
         "401":
           $ref: "#/components/responses/RespUnauthorized"
-        "403":
-          $ref: "#/components/responses/RespForbidden"
         "404":
           $ref: "#/components/responses/RespNotfound"
         "500":
           $ref: "#/components/responses/RespInternalServerError"
-        default:
-          $ref: "#/components/responses/RespDefaultError"        
-
-  /ws:
-    get:
+    post:
       tags:
-        - ws
-      summary: WebSocket Endpoint
-      description: Establishes a WebSocket connection.
-      operationId: connectWebSocket
+        - fm
+      summary: Create directory
+      description: Creates a directory (with parents) under the media root.
+      operationId: createMediaDirectory
+      security:
+        - BearerAuth: []
       parameters:
-        - in: header
-          name: Authorization token if needed
+        - name: path
+          in: path
+          description: Relative path of the directory to create
+          required: true
           schema:
             type: string
-          description: Optional authentication token.
       responses:
-        "101": # Switching Protocols
-          description: Successful WebSocket handshake.
-          headers:
-            Upgrade:
-              schema:
-                type: string
-              description: websocket
-            Connection:
-              schema:
-                type: string
-              description: Upgrade
+        "201":
+          description: Directory successfully created
         "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error message.
+          $ref: "#/components/responses/RespBadRequest"
         "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Authentication failed.
+          $ref: "#/components/responses/RespUnauthorized"
         "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: An unexpected error occurred on the server.
+          $ref: "#/components/responses/RespInternalServerError"
+    put:
+      tags:
+        - fm
+      summary: Write file
+      description: Creates or overwrites a text file under the media root.
+      operationId: writeMediaContent
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: path
+          in: path
+          description: Relative path of the file to write
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        "204":
+          description: File successfully written
+        "400":
+          $ref: "#/components/responses/RespBadRequest"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
+    delete:
+      tags:
+        - fm
+      summary: Delete content
+      description: Removes a file or an empty directory under the media root.
+      operationId: deleteMediaContent
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: path
+          in: path
+          description: Relative path of the content to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Content successfully removed
+        "400":
+          $ref: "#/components/responses/RespBadRequest"
+        "401":
+          $ref: "#/components/responses/RespUnauthorized"
+        "404":
+          $ref: "#/components/responses/RespNotfound"
+        "500":
+          $ref: "#/components/responses/RespInternalServerError"
 
 components:
   schemas:
     Node:
       type: object
+      description: A stored node record
       properties:
         id:
           type: string
+          format: uuid
           example: 00000000-0000-4000-8000-000000000000
         type:
           type: string
           example: ROOT
         update:
           type: string
-          example: "2020-05-24 18:23:25.408368"
+          format: date-time
+          example: "2020-05-24T18:23:25.408Z"
+        sync:
+          type: object
+          nullable: true
+          example: {}
+        data:
+          type: object
+          nullable: true
+          example:
+            "0":
+              icon: root
+              meta: {}
+              title: Root
+              parent: "0"
+              values:
+                en: {}
+              position: 10
+              protected: true
+              reviewGroup: "0"
+      required:
+        - id
+        - type
+        - update
+    NodeInput:
+      type: object
+      description: Payload for creating a node
+      properties:
+        type:
+          type: string
+          example: ROOT
+        sync:
+          type: object
+          default: {}
+          example: {}
+        data:
+          type: object
+          example: {}
+      required:
+        - type
+        - data
+    NodeUpdate:
+      type: object
+      description: Partial payload for updating a node
+      properties:
+        type:
+          type: string
+          example: ROOT
         sync:
           type: object
           example: {}
         data:
           type: object
-          example: >-
-            {"0": {"icon": "root", "meta": {}, "title": "Root", "parent": "0",
-            "values": {"en": {}}, "position": 10, "protected": true,
-            "reviewGroup": "0"}}
-        _children:
-          type: array
-          items:
-            $ref: "#/components/schemas/Node"
+          example: {}
+    LoginRequest:
+      type: object
+      description: Credentials for authentication
+      properties:
+        email:
+          type: string
+          format: email
+          example: admin@example.com
+        password:
+          type: string
+          format: password
+          example: admin
       required:
-        - id
-        - type
-        - update
-        - sync
-        - data
-      example:
-        $ref: "#/components/examples/Node"
+        - email
+        - password
+    AuthResponse:
+      type: object
+      description: Issued token and its user
+      properties:
+        token:
+          type: string
+          description: Signed JWT (HS256)
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            email:
+              type: string
+              format: email
+            role:
+              type: string
+              example: Admin
+          required:
+            - id
+            - email
+            - role
+      required:
+        - token
+        - user
     ProblemDetails:
-      description: RFC7807 Problem Details (https://tools.ietf.org/html/rfc7807)
+      description: RFC 7807 Problem Details (https://tools.ietf.org/html/rfc7807)
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                format: uri
-                default: about:blank
-                description: A URI reference that identifies the problem type.
-              status:
-                type: integer
-                format: int32
-                minimum: 100
-                maximum: 600
-                exclusiveMaximum: 600
-                description: The HTTP status code.
-              title:
-                type: string
-                description: A short, human-readable summary of the problem type.
-              detail:
-                type: string
-                description: >-
-                  A human-readable explanation specific to this occurrence of
-                  the problem
-              instance:
-                type: string
-                format: uri
-                description: >-
-                  A URI reference that identifies the specific occurrence of the
-                  problem.
-
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI reference that identifies the problem type
+        status:
+          type: integer
+          format: int32
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence
+      required:
+        - status
+        - title
+    FileItem:
+      type: object
+      description: A file or folder entry in the media root
+      properties:
+        name:
+          type: string
+          example: docker.md
+        path:
+          type: string
+          example: articles/work/docker.md
+        type:
+          type: string
+          enum:
+            - dir
+            - file
+      required:
+        - name
+        - path
+        - type
   securitySchemes:
-    Auth:
-      type: apiKey
-      name: api_key
-      description: >-
-        API key provided by the administrator, in order to be able to add new
-        nodes or modify the existing ones
-      in: query
-    BasicAuth:
-      type: http
-      scheme: basic
     BearerAuth:
       type: http
       scheme: bearer
-    ApiKeyAuth:
-      type: apiKey
-      in: header
-      name: X-API-Key
-
+      bearerFormat: JWT
+      description: JWT token issued by `POST /api/auth`
   responses:
     RespBadRequest:
       description: Bad Request
@@ -592,12 +561,10 @@ components:
           examples:
             BadRequest:
               value:
-                errors:
-                  - type: "https://example.com/bad-request"
-                    status: 400
-                    title: "Bad Request"
-                    detail: "The request was invalid or cannot be served."
-                    instance: "/api/v1/resource/12345"
+                type: about:blank
+                title: Bad Request
+                status: 400
+                detail: "type must be a non-empty string."
     RespUnauthorized:
       description: Unauthorized
       content:
@@ -607,25 +574,10 @@ components:
           examples:
             Unauthorized:
               value:
-                errors:
-                  - type: "https://example.com/unauthorized"
-                    status: 401
-                    title: "Unauthorized"
-                    detail: "Authentication credentials were missing or incorrect."
-                    instance: "/api/v1/resource/12345"
-    RespForbidden:
-      description: Forbidden
-      content:
-        application/problem+json:
-          schema:
-            $ref: "#/components/schemas/ProblemDetails"
-          examples:
-            Forbidden:
-              value:
-                errors:
-                  - type: "https://example.com/forbidden"
-                    status: 403
-                    title: "Forbidden"
+                type: about:blank
+                title: Unauthorized
+                status: 401
+                detail: "Authentication credentials were missing or incorrect."
     RespNotfound:
       description: Not Found
       content:
@@ -635,53 +587,13 @@ components:
           examples:
             NotFound:
               value:
-                errors:
-                  - type: "https://example.com/not-found"
-                    status: 404
-                    title: "Not Found"
-                    detail: "The requested resource was not found."
-                    instance: "/api/v1/resource/12345"
+                type: about:blank
+                title: Not Found
+                status: 404
+                detail: "Node not found."
     RespInternalServerError:
       description: Internal Server Error
       content:
         application/problem+json:
           schema:
             $ref: "#/components/schemas/ProblemDetails"
-    RespDefaultError:
-      description: >-
-        error occurred - see status code and problem object for more
-        information.
-      content:
-        application/problem+json:
-          schema:
-            $ref: "#/components/schemas/ProblemDetails"
-
-  examples:
-    Node:
-      summary: Node hierarchy
-      value:
-        id: ""
-        type: root
-        update: "2020-05-24T16:23:25.408Z"
-        sync: []
-        data:
-          $ref: "#/components/examples/Data"
-
-    Data:
-      value:
-        "0":
-          icon: root
-          meta: {}
-          title: Root
-          parent: "0"
-          values:
-            en: {}
-          position: 10
-          protected: true
-          reviewGroup: "0"
-
-    Auth:
-      value:
-        {
-          "token": "eyJhbGciOiJIUzI1NiJ8.eyJjbGFpbSI6dHJ1ZSwiZXhwIjoxNzQ2ODA3NzgzLCJ1c2VyIjp7ImlkIjoiMzcxYTAzYzktNjMxOS00NzM5LTllYjEtYjNiYjMxNjc2YWQ0IiwiZW1haWwiOiJzYXNjaGFAc29uaWNkZWxheS5uZXQiLCJyb2xlIjoiQWRtaW4ifSwiaWF0IjoxNzQ2ODAwNTgzLCJpc3MiOiJodHRwczovL3d3dy5zb25pY2RlbGF5Lm5ldCIsImF1ZCI6Im10Y21zIn0.YwWz57_D0AWTcxeU86-n0N32HUrX0sJIO1N2Qq3pK48",
-        }

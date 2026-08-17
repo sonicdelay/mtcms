@@ -3,17 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 4000",
+    "dev": "next dev -p 4210",
     "build": "next build",
-    "start": "next start -p 4000",
-    "lint": "eslint"
+    "start": "next start -p 4210",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@babylonjs/core": "^9.21.2",
+    "@babylonjs/havok": "^1.3.14",
+    "@babylonjs/loaders": "^9.21.2",
     "@neondatabase/serverless": "^1.1.0",
+    "@siemens/ix": "^4.0.0",
+    "@siemens/ix-icons": "^3.2.0",
+    "@siemens/ix-react": "^4.0.0",
     "@types/markdown-it": "^14.1.2",
     "@types/pg": "^8.20.0",
     "bcryptjs": "^3.0.3",
-    "jose": "^6.2.8",
     "markdown-it": "^14.3.0",
     "next": "16.2.10",
     "pg": "^8.22.0",
@@ -29,6 +37,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "prettier": "^3.9.6",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

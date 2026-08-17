@@ -6,6 +6,8 @@
     "humao.rest-client",
     "fallowfallow-rs.fallow-vscode",
     "context7.context7-vscode",
-    "blazejkustra.react-compiler-marker"
+    "blazejkustra.react-compiler-marker",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
   ]
 }
