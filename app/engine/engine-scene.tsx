@@ -10,7 +10,6 @@ import {
   HavokPlugin,
   HemisphericLight,
   MeshBuilder,
-  Mesh,
   PhysicsAggregate,
   PhysicsShapeType,
   Scene,
@@ -24,7 +23,6 @@ import { spawnObjects } from "./scene-objects";
 export default function EngineScene() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<Scene | null>(null);
-  const meshesRef = useRef<Mesh[]>([]);
   const [inspectorOpen, setInspectorOpen] = useState(false);
 
   useEffect(() => {
@@ -44,7 +42,6 @@ export default function EngineScene() {
       scn.clearColor = new Color4(0.07, 0.08, 0.1, 1);
 
       const havok = await HavokPhysics();
-      if (eng.isDisposed) return;
       scn.enablePhysics(new Vector3(0, -9.81, 0), new HavokPlugin(true, havok));
 
       const camera = new ArcRotateCamera(
@@ -82,31 +79,16 @@ export default function EngineScene() {
       ground.position.y = -1;
       new PhysicsAggregate(ground, PhysicsShapeType.BOX, { mass: 0 }, scn);
 
-      const meshes = spawnObjects(scn, 30);
-      meshesRef.current = meshes;
-
-      const respawn = (mesh: Mesh) => {
-        const position = new Vector3(0, 10, 10);
-        mesh.position = position;
-        mesh.physicsBody?.setLinearVelocity(Vector3.Zero());
-        mesh.physicsBody?.setAngularVelocity(Vector3.Zero());
-        mesh.physicsBody?.setTargetTransform(
-          position,
-          mesh.rotationQuaternion ?? mesh.rotation.toQuaternion(),
-        );
-      };
-
-      scn.onBeforeRenderObservable.add(() => {
-        for (const mesh of meshesRef.current) {
-          const z =
-            mesh.physicsBody?.getObjectCenterWorld().z ?? mesh.position.z;
-          if (z < -5) {
-            respawn(mesh);
-          }
-        }
-      });
-
-      if (eng.isDisposed) return;
+      const groupOrigins = Array.from(
+        { length: 260 },
+        () =>
+          new Vector3(
+            Math.random() * 16,
+            Math.random() * 16,
+            Math.random() * 16,
+          ),
+      );
+      groupOrigins.forEach((origin, i) => spawnObjects(scn, origin, i));
 
       eng.runRenderLoop(() => scn.render());
     };
@@ -121,7 +103,6 @@ export default function EngineScene() {
       engine?.stopRenderLoop();
       sceneRef.current?.dispose();
       sceneRef.current = null;
-      meshesRef.current = [];
       engine?.dispose();
     };
   }, []);
