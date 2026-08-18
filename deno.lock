@@ -3,7 +3,8 @@
   "specifiers": {
     "npm:@babylonjs/core@^9.21.2": "9.21.2",
     "npm:@babylonjs/havok@^1.3.14": "1.3.14",
-    "npm:@babylonjs/loaders@^9.21.2": "9.21.2_@babylonjs+core@9.21.2",
+    "npm:@babylonjs/inspector@^9.21.2": "9.21.2_@babylonjs+addons@9.21.2__@babylonjs+core@9.21.2_@babylonjs+core@9.21.2_@babylonjs+gui@9.21.2__@babylonjs+core@9.21.2_@babylonjs+gui-editor@9.21.2__@babylonjs+core@9.21.2__@babylonjs+gui@9.21.2___@babylonjs+core@9.21.2__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17_@babylonjs+loaders@9.21.2__@babylonjs+core@9.21.2__babylonjs-gltf2interface@9.21.2_@babylonjs+materials@9.21.2__@babylonjs+core@9.21.2_@babylonjs+node-editor@9.21.2__@babylonjs+core@9.21.2__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17_@babylonjs+node-geometry-editor@9.21.2__@babylonjs+core@9.21.2__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17_@babylonjs+node-particle-editor@9.21.2__@babylonjs+core@9.21.2_@babylonjs+node-render-graph-editor@9.21.2__@babylonjs+core@9.21.2__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17_@babylonjs+serializers@9.21.2__@babylonjs+core@9.21.2__babylonjs-gltf2interface@9.21.2_@fluentui-contrib+react-resize-handle@0.8.4__@fluentui+react-components@9.74.6___@types+react@19.2.17___@types+react-dom@19.2.3____@types+react@19.2.17___react@19.2.4___react-dom@19.2.4____react@19.2.4___scheduler@0.27.0__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17__react@19.2.4__react-dom@19.2.4___react@19.2.4__scheduler@0.27.0_@fluentui-contrib+react-virtualizer@1.0.0__@fluentui+react-shared-contexts@9.26.3___@types+react@19.2.17___react@19.2.4__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17__react@19.2.4__react-dom@19.2.4___react@19.2.4_@fluentui+react-components@9.74.6__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17__react@19.2.4__react-dom@19.2.4___react@19.2.4__scheduler@0.27.0_@fluentui+react-icons@2.0.337__react@19.2.4_@fluentui+react-motion-components-preview@0.15.7__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17__react@19.2.4__react-dom@19.2.4___react@19.2.4_@fluentui+react-utilities@9.26.6__@types+react@19.2.17__react@19.2.4_react@19.2.4_react-dom@19.2.4__react@19.2.4_usehooks-ts@3.1.1__react@19.2.4_@fluentui+react-shared-contexts@9.26.3__@types+react@19.2.17__react@19.2.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_babylonjs-gltf2interface@9.21.2_scheduler@0.27.0",
+    "npm:@babylonjs/loaders@^9.21.2": "9.21.2_@babylonjs+core@9.21.2_babylonjs-gltf2interface@9.21.2",
     "npm:@neondatabase/serverless@^1.1.0": "1.1.0",
     "npm:@siemens/ix-icons@^3.2.0": "3.2.0",
     "npm:@siemens/ix-react@4": "4.0.0_@siemens+ix-icons@3.2.0_react@19.2.4_react-dom@19.2.4__react@19.2.4_@types+react@19.2.17",
@@ -18,7 +19,7 @@
     "npm:eslint-config-next@16.2.10": "16.2.10_eslint@9.39.5_typescript@5.9.3",
     "npm:eslint@9": "9.39.5",
     "npm:markdown-it@^14.3.0": "14.3.0",
-    "npm:next@16.2.10": "16.2.10_react@19.2.4_react-dom@19.2.4__react@19.2.4_sass@1.101.3",
+    "npm:next@^16.3.1": "16.3.1_react@19.2.4_react-dom@19.2.4__react@19.2.4_sass@1.101.3",
     "npm:pg@^8.22.0": "8.22.0",
     "npm:prettier@^3.9.6": "3.9.6",
     "npm:react-dom@19.2.4": "19.2.4_react@19.2.4",
@@ -125,6 +126,9 @@
       ],
       "bin": true
     },
+    "@babel/runtime@7.29.7": {
+      "integrity": "sha512-Nq8OhGWiZIZGV6hLHoyAKLLcJihP/xFeBMGJoUrxTX2psI8dCifzLhZISFb+VWS3wFMRDmCGw5R+dOySCqPLhw=="
+    },
     "@babel/template@7.29.7": {
       "integrity": "sha512-puq+Gf35oI24FeN11LkoUQFqv9uwNeWpxXZi/Ji3rRIoKAzKnxRaZ+Gkj0vKS9ZCiTESfng1N9LyOyXvo+m+Gg==",
       "dependencies": [
@@ -152,8 +156,29 @@
         "@babel/helper-validator-identifier"
       ]
     },
+    "@babylonjs/addons@9.21.2_@babylonjs+core@9.21.2": {
+      "integrity": "sha512-JTDFHduUyKz66w9Ya86JaNQvjv93u8UB52JvrBitqlgWzLYqK3eMAyMILX91yhUDMjqHry8hhwujeI3DKI2mSw==",
+      "dependencies": [
+        "@babylonjs/core"
+      ]
+    },
     "@babylonjs/core@9.21.2": {
       "integrity": "sha512-y4brONcZ4X5rfoiLqTdd9jSZzyIeJ+zHhvN6qgDCpgVIyM2sJlCouLBSvNn+Kl7jIxmzJhIvbBvUIS/sx8jFUw=="
+    },
+    "@babylonjs/gui-editor@9.21.2_@babylonjs+core@9.21.2_@babylonjs+gui@9.21.2__@babylonjs+core@9.21.2_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17": {
+      "integrity": "sha512-vBzZhG40JRaBrM+PIvtWGc5PBZEIR3Ja3dRyLRnw4JzPXw2E6GJ2nlTWGceaj5VGeSSEYIgJJEYa+YVIS6KS6w==",
+      "dependencies": [
+        "@babylonjs/core",
+        "@babylonjs/gui",
+        "@types/react",
+        "@types/react-dom"
+      ]
+    },
+    "@babylonjs/gui@9.21.2_@babylonjs+core@9.21.2": {
+      "integrity": "sha512-cpUx+L932cYMtuDIByqUodzsOx9KcuEmjsD285noksV5jym3AfM19rNdf5lpCmh74ywKODtlLN6kK6aqmdwoKw==",
+      "dependencies": [
+        "@babylonjs/core"
+      ]
     },
     "@babylonjs/havok@1.3.14": {
       "integrity": "sha512-+j2FDwLtkh5Gb//KizE8Ks3GIB/3vH8Yx9cQsMvZQpsKkH5gn089wIlJ9Yt8dJxbwBmWKGpMTIXxZE7YdOHUnQ==",
@@ -161,8 +186,77 @@
         "@types/emscripten"
       ]
     },
-    "@babylonjs/loaders@9.21.2_@babylonjs+core@9.21.2": {
+    "@babylonjs/inspector@9.21.2_@babylonjs+addons@9.21.2__@babylonjs+core@9.21.2_@babylonjs+core@9.21.2_@babylonjs+gui@9.21.2__@babylonjs+core@9.21.2_@babylonjs+gui-editor@9.21.2__@babylonjs+core@9.21.2__@babylonjs+gui@9.21.2___@babylonjs+core@9.21.2__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17_@babylonjs+loaders@9.21.2__@babylonjs+core@9.21.2__babylonjs-gltf2interface@9.21.2_@babylonjs+materials@9.21.2__@babylonjs+core@9.21.2_@babylonjs+node-editor@9.21.2__@babylonjs+core@9.21.2__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17_@babylonjs+node-geometry-editor@9.21.2__@babylonjs+core@9.21.2__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17_@babylonjs+node-particle-editor@9.21.2__@babylonjs+core@9.21.2_@babylonjs+node-render-graph-editor@9.21.2__@babylonjs+core@9.21.2__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17_@babylonjs+serializers@9.21.2__@babylonjs+core@9.21.2__babylonjs-gltf2interface@9.21.2_@fluentui-contrib+react-resize-handle@0.8.4__@fluentui+react-components@9.74.6___@types+react@19.2.17___@types+react-dom@19.2.3____@types+react@19.2.17___react@19.2.4___react-dom@19.2.4____react@19.2.4___scheduler@0.27.0__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17__react@19.2.4__react-dom@19.2.4___react@19.2.4__scheduler@0.27.0_@fluentui-contrib+react-virtualizer@1.0.0__@fluentui+react-shared-contexts@9.26.3___@types+react@19.2.17___react@19.2.4__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17__react@19.2.4__react-dom@19.2.4___react@19.2.4_@fluentui+react-components@9.74.6__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17__react@19.2.4__react-dom@19.2.4___react@19.2.4__scheduler@0.27.0_@fluentui+react-icons@2.0.337__react@19.2.4_@fluentui+react-motion-components-preview@0.15.7__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17__react@19.2.4__react-dom@19.2.4___react@19.2.4_@fluentui+react-utilities@9.26.6__@types+react@19.2.17__react@19.2.4_react@19.2.4_react-dom@19.2.4__react@19.2.4_usehooks-ts@3.1.1__react@19.2.4_@fluentui+react-shared-contexts@9.26.3__@types+react@19.2.17__react@19.2.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_babylonjs-gltf2interface@9.21.2_scheduler@0.27.0": {
+      "integrity": "sha512-IXHP1gVKZ4sF691OyybpCn39WVC/97y9bElE+ZNA489JymMw32aW2DgVFESRWN8Fy4QOmOykcvxVxGgdJ3RAvA==",
+      "dependencies": [
+        "@babylonjs/addons",
+        "@babylonjs/core",
+        "@babylonjs/gui",
+        "@babylonjs/gui-editor",
+        "@babylonjs/loaders",
+        "@babylonjs/materials",
+        "@babylonjs/node-editor",
+        "@babylonjs/node-geometry-editor",
+        "@babylonjs/node-particle-editor",
+        "@babylonjs/node-render-graph-editor",
+        "@babylonjs/serializers",
+        "@fluentui-contrib/react-resize-handle",
+        "@fluentui-contrib/react-virtualizer",
+        "@fluentui/react-components",
+        "@fluentui/react-icons",
+        "@fluentui/react-motion-components-preview",
+        "@fluentui/react-utilities",
+        "react",
+        "react-dom",
+        "usehooks-ts"
+      ],
+      "bin": true
+    },
+    "@babylonjs/loaders@9.21.2_@babylonjs+core@9.21.2_babylonjs-gltf2interface@9.21.2": {
       "integrity": "sha512-ZPfVpNBbxZhL3Xns355gyIFBfEgq4qGAbW/Rf5rwvkivTbQcKQRTmp+GTieTdPtEcPGBTSBVFnr/LioKEmJlvQ==",
+      "dependencies": [
+        "@babylonjs/core",
+        "babylonjs-gltf2interface"
+      ]
+    },
+    "@babylonjs/materials@9.21.2_@babylonjs+core@9.21.2": {
+      "integrity": "sha512-YAfnjxJBiEIKLI1nlI4OFtTyir9LjYawZpNEamZxliOW04Uma/VOGT9Hh7ckSun0/6Jz746wauystgJQWY/oYQ==",
+      "dependencies": [
+        "@babylonjs/core"
+      ]
+    },
+    "@babylonjs/node-editor@9.21.2_@babylonjs+core@9.21.2_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17": {
+      "integrity": "sha512-7guySSNnhzCI6qka6AYaAUmC5f+lfCFG6JOWept5cDoqLPRqT0uR1knSFzD+I155ZrjVjJu/U3HXKvyKQPbjVg==",
+      "dependencies": [
+        "@babylonjs/core",
+        "@types/react",
+        "@types/react-dom"
+      ]
+    },
+    "@babylonjs/node-geometry-editor@9.21.2_@babylonjs+core@9.21.2_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17": {
+      "integrity": "sha512-7LfVtvqru8PjLlsWCRveVsAyb/sAcmdBU1Ts+Q+9MePr26wJaeQmKpRhJRBpIWavd0aIY0EsHJLC47sbsue4KQ==",
+      "dependencies": [
+        "@babylonjs/core",
+        "@types/react",
+        "@types/react-dom"
+      ]
+    },
+    "@babylonjs/node-particle-editor@9.21.2_@babylonjs+core@9.21.2": {
+      "integrity": "sha512-vOBR6tjuk9XwXTsqdTzVwSXwSfjU8c9JRP9kCkxxBPVUfhnRf55sXSw2beuaJhBw37iQhqtVILJOGkPxo0PWuA==",
+      "dependencies": [
+        "@babylonjs/core"
+      ]
+    },
+    "@babylonjs/node-render-graph-editor@9.21.2_@babylonjs+core@9.21.2_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17": {
+      "integrity": "sha512-a1czaTUW1zZ6dCtVmMkSgX10FuDxK6ubb2jyISVwzfkw0NRPZnHX1mxj45XOEW6pH3HZ+Y6JNYl9Oc6Y+3jw9g==",
+      "dependencies": [
+        "@babylonjs/core",
+        "@types/react",
+        "@types/react-dom"
+      ]
+    },
+    "@babylonjs/serializers@9.21.2_@babylonjs+core@9.21.2_babylonjs-gltf2interface@9.21.2": {
+      "integrity": "sha512-qbBMUQDCRrv5RBIj5/JZY1lFVGOGHDQ7xbBVcKibT1cSXBXU1bkXHAAEa/ATOa+N3m6YgPBAAxe8yQ9C/cZJ6Q==",
       "dependencies": [
         "@babylonjs/core",
         "babylonjs-gltf2interface"
@@ -192,6 +286,9 @@
       "dependencies": [
         "tslib"
       ]
+    },
+    "@emotion/hash@0.9.2": {
+      "integrity": "sha512-MyqliTZGuOm3+5ZRSaaBGP3USLw6+EGykkwZns2EPC5g8jJ4z9OrdZY9apkl3+UP9+sdz76YYkwCKP5gh8iY3g=="
     },
     "@emotion/unitless@0.10.0": {
       "integrity": "sha512-dFoMUuQA20zvtVTuxZww6OHoJYgrzfKM1t52mVySDJnMSEa08ruEvdYQbhvyu6soU+NeLVd3yKfTfT0NeV6qGg=="
@@ -259,6 +356,12 @@
         "@floating-ui/utils"
       ]
     },
+    "@floating-ui/devtools@0.2.3_@floating-ui+dom@1.8.0": {
+      "integrity": "sha512-ZTcxTvgo9CRlP7vJV62yCxdqmahHTGpSTi5QaTDgGoyQq0OyjaVZhUhXv/qdkQFOI3Sxlfmz0XGG4HaZMsDf8Q==",
+      "dependencies": [
+        "@floating-ui/dom"
+      ]
+    },
     "@floating-ui/dom@1.8.0": {
       "integrity": "sha512-yXSrzeHZBTZadLOlfyhCkJHNeLJnHRnRInwdZ40L7ZiaAtrBwoYlsDrX3v5zB1Utk7CLfzcOVnVVWoXEky7Ceg==",
       "dependencies": [
@@ -268,6 +371,1195 @@
     },
     "@floating-ui/utils@0.2.12": {
       "integrity": "sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww=="
+    },
+    "@fluentui-contrib/react-resize-handle@0.8.4_@fluentui+react-components@9.74.6__@types+react@19.2.17__@types+react-dom@19.2.3___@types+react@19.2.17__react@19.2.4__react-dom@19.2.4___react@19.2.4__scheduler@0.27.0_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-g3cJ3q+nn32BB5b5mEtuSh6sGNYOGcKvRxQljvfg+UAhStceCPZYRM8gF+HswPPhQ0LUR6h780WMe072ndR6Lw==",
+      "dependencies": [
+        "@fluentui/react-components",
+        "@fluentui/react-utilities",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui-contrib/react-virtualizer@1.0.0_@fluentui+react-shared-contexts@9.26.3__@types+react@19.2.17__react@19.2.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-z1KE+OyCTICkOeyCmFI0nlNRTPAhCv2ZhCIDjebnlkNQMIcMtTrI/ogy4Fu8UgbFP+WReE50JeduLtM+Sst+1A==",
+      "dependencies": [
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/keyboard-keys@9.0.9": {
+      "integrity": "sha512-DjX4z+dDCB49rsmyDuOwtD28Zbe9CUf86JKi8aUEvO5/TetsiuGPokgJiFIR0S9SGeFbquj5CUmAslk1RpgMzw=="
+    },
+    "@fluentui/priority-overflow@9.4.2": {
+      "integrity": "sha512-xjjOolrrFWXny0RQFazheFnQ6O5qEm2cmHrsl8sUveRyARGmlzZQFxSQ4NAvtpnhx/GHXcqCKfINH+9ciyJX0w=="
+    },
+    "@fluentui/react-accordion@9.12.2_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-j4uWILIw3jnVduQVxttQUZV26eHfkqlzsOavrdf7cjTtfJItmiicqvP520jZgfFLR3FsQhLQmcJvzxXbB9GQuw==",
+      "dependencies": [
+        "@fluentui/react-aria",
+        "@fluentui/react-context-selector",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-motion",
+        "@fluentui/react-motion-components-preview",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-alert@9.0.1-0_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-pzV5sFD6JX38PegV+rmV2i0psTO1yCTODYewg0PPEz/g/hpLsbUCpLoPn0Ga3Nqc/szMcWbY4b/2c7cAkO79fg==",
+      "dependencies": [
+        "@fluentui/react-avatar",
+        "@fluentui/react-button",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-aria@9.17.14_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-/oBdrvWcIpziaVj5b5e8lDR2DLzVztvQQXuJqscM7ztYxhLYK2wZG0rAVxlAv+Bhyvx1Zqf/YtPCv/6mItx3zw==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-utilities",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-avatar@9.11.5_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-frrqEbOKTGyff3aW5kaal7TNa+Slguwc6nVj+CvxV4AidEmf0r1Vk0QnIj/ioNT1UoG1/PNzaLfz3uu8ce6aSg==",
+      "dependencies": [
+        "@fluentui/react-badge",
+        "@fluentui/react-context-selector",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-popover",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-tooltip",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-badge@9.5.5_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-1BtuzPTsIgV6edHwV9oVKnZRhOIP/3RZTMDd3gSHt3nmXV/R8CcpOxxFhDuG+4AtKC26cvk6DV3hy5BKhw9bPg==",
+      "dependencies": [
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-breadcrumb@9.4.5_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-WUfOJSsiWLuNT7QCTGGWGi7bx5gRjspEE0B14eQIj5bfYhu5svfjfbf4Cgxi0Q3VYootiCciPHgom8/pFi0ItQ==",
+      "dependencies": [
+        "@fluentui/react-aria",
+        "@fluentui/react-button",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-link",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-button@9.11.0_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-81zsqSvJSZx1SEG0kztcmEZb2kS8YUX0uPYsPp2bZCPEJB9YIBQn9kPrdt0M0YeAkoPKXQXG5gudSun9M80maA==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-aria",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-card@9.7.2_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-FsSmSYguIorjDPKcIfaXKIYRo+ZgQfu7toyKLRZsxtUiPa2i+C0bBTDwYVd0lLTo9oJN5dIiPshy9JBvw94BZw==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-text",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-carousel@9.9.12_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-N8QUMzrKP/n+e+xJl9UO6tJhpMl5+S0/KZzUWYL7UxYwZ+cPJ1IdC45JOxI+iOwnFDXPpt+aAjU3WkPFo2PyLQ==",
+      "dependencies": [
+        "@fluentui/react-aria",
+        "@fluentui/react-button",
+        "@fluentui/react-context-selector",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-tooltip",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "embla-carousel",
+        "embla-carousel-autoplay",
+        "embla-carousel-fade",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-checkbox@9.6.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-3OQaUJPXsMbi4ODVLl4zmRn4XqQBlfJS93cSnSYAAYHsA162D1UlsqwfZoTbnuUEJS+st9cWgbEcuZTYYQxm0Q==",
+      "dependencies": [
+        "@fluentui/react-field",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-label",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-color-picker@9.3.0_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-2pNHOcDe0aci5hyqsnA+0YvJ1CMfHKt1+a4UUrgssb6i5S1l1rcwnljonAQ4sCve4bMx6FVqNybx9tJ+g7CNXg==",
+      "dependencies": [
+        "@fluentui/react-context-selector",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-combobox@9.17.5_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-roH1DwhPslUxvtOnI9lnnIn+YtEqnmd5SIBgqDB1pQVqcznDZsbGSNXk/8IoVntM5LsMOa0YKKOd8N+8+/7aQg==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-aria",
+        "@fluentui/react-context-selector",
+        "@fluentui/react-field",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-portal",
+        "@fluentui/react-positioning",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-components@9.74.6_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-JfAbId8J0W+dMh2KFxZbpX2ag7ZbpchIQam8Twc15k0qis+OkrCCxts+DF1xVb403PTFz/5n2YFxGWmEajUlDA==",
+      "dependencies": [
+        "@fluentui/react-accordion",
+        "@fluentui/react-alert",
+        "@fluentui/react-aria",
+        "@fluentui/react-avatar",
+        "@fluentui/react-badge",
+        "@fluentui/react-breadcrumb",
+        "@fluentui/react-button",
+        "@fluentui/react-card",
+        "@fluentui/react-carousel",
+        "@fluentui/react-checkbox",
+        "@fluentui/react-color-picker",
+        "@fluentui/react-combobox",
+        "@fluentui/react-dialog",
+        "@fluentui/react-divider",
+        "@fluentui/react-drawer",
+        "@fluentui/react-field",
+        "@fluentui/react-image",
+        "@fluentui/react-infobutton",
+        "@fluentui/react-infolabel",
+        "@fluentui/react-input",
+        "@fluentui/react-label",
+        "@fluentui/react-link",
+        "@fluentui/react-list",
+        "@fluentui/react-menu",
+        "@fluentui/react-message-bar",
+        "@fluentui/react-motion",
+        "@fluentui/react-nav",
+        "@fluentui/react-overflow",
+        "@fluentui/react-persona",
+        "@fluentui/react-popover",
+        "@fluentui/react-portal",
+        "@fluentui/react-positioning",
+        "@fluentui/react-progress",
+        "@fluentui/react-provider",
+        "@fluentui/react-radio",
+        "@fluentui/react-rating",
+        "@fluentui/react-search",
+        "@fluentui/react-select",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-skeleton",
+        "@fluentui/react-slider",
+        "@fluentui/react-spinbutton",
+        "@fluentui/react-spinner",
+        "@fluentui/react-swatch-picker",
+        "@fluentui/react-switch",
+        "@fluentui/react-table",
+        "@fluentui/react-tabs",
+        "@fluentui/react-tabster",
+        "@fluentui/react-tag-picker",
+        "@fluentui/react-tags",
+        "@fluentui/react-teaching-popover",
+        "@fluentui/react-text",
+        "@fluentui/react-textarea",
+        "@fluentui/react-theme",
+        "@fluentui/react-toast",
+        "@fluentui/react-toolbar",
+        "@fluentui/react-tooltip",
+        "@fluentui/react-tree",
+        "@fluentui/react-utilities",
+        "@fluentui/react-virtualizer",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-context-selector@9.2.19_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-NfBKjtaWxXGFI4ZC75aPeQRTKPJOSQDwpdsiX6L4miewLnEwBKtK7+8Tbj2eTLh6fKY0aRwBfHwGqydF2kXVzQ==",
+      "dependencies": [
+        "@fluentui/react-utilities",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom",
+        "scheduler"
+      ]
+    },
+    "@fluentui/react-dialog@9.18.3_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-fI87iSHyncgeGKxiXquGDORm2vRAjygZOQkjVehEPsyX1RFlEDZxjqvW82NX41f4wv4ie6/qLclOOSkHzCTG3w==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-aria",
+        "@fluentui/react-context-selector",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-motion",
+        "@fluentui/react-motion-components-preview",
+        "@fluentui/react-portal",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-divider@9.7.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-Ue7mwFIVSpyiATZPl5g0H/08Gaj6M0OzA9SVGVVpYK90zIYvP1Da23tlUpr80OkFTDCjSNUP1NSYtBGG27AH3g==",
+      "dependencies": [
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-drawer@9.13.2_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-VM50S0Lr7PmA1DP770q+tZxCY9GmnAbQoKrlQWNJbhy74759dXbV2PVT0JnIWRkCqvNP0S2RDN4Z6SRJArIzQw==",
+      "dependencies": [
+        "@fluentui/react-dialog",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-motion",
+        "@fluentui/react-motion-components-preview",
+        "@fluentui/react-portal",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-field@9.5.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-RoVtH7/GK/45V45NPvCuVVG3K3/FeBXF+Jkk2Gw12XKqfKru2eI8MIhDofKsSH5l6ZkLclZ0ElmQvrYrJSvqJQ==",
+      "dependencies": [
+        "@fluentui/react-context-selector",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-label",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-icons@2.0.337_react@19.2.4": {
+      "integrity": "sha512-0lhTfPAMnRaozExvwIB0fWb8Iluz6pvz2Xj6Jgfq9CYmMmdoIYRLCqxhxFGOw1ZHBIQWs6tRgH1zATrWcXlQMA==",
+      "dependencies": [
+        "@griffel/react",
+        "react",
+        "tslib"
+      ]
+    },
+    "@fluentui/react-image@9.4.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-vjBHrUTuuDVp/IvIiz4bB0iqebU00EJHGJZpF5NlMd+TL7bcMhLU29MrbxQdvlNch78C+XCqoexbjHYoAUET9w==",
+      "dependencies": [
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-infobutton@9.0.0-beta.119_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-6BsHqXEOxqWmSo3yqLynEht1uQTJO5snD+GbuyGJgnNWW2BuJ9Fzq/ZxaJNgY6t6c7T7W9JqRMPerXi0YsnNqQ==",
+      "dependencies": [
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-label",
+        "@fluentui/react-popover",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-infolabel@9.4.24_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-AfApeHDRMxWMT1JsxJpDW+5Q2JfDX3HUxMhaj4q1Zz9204rqPN8r4VB3+fTqEC8SNghqiiDhIfI1bNeQ4baPwg==",
+      "dependencies": [
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-label",
+        "@fluentui/react-popover",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-input@9.8.6_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-4EAMOTN5DCXB5DFKLwsFkCbMMelqOfl+jnB4kbH9Nu6nLwhJj89EYYGzzs2V3bctmJN9mtd7xkGITAZLYhUpTQ==",
+      "dependencies": [
+        "@fluentui/react-field",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-jsx-runtime@9.4.5_@types+react@19.2.17_react@19.2.4": {
+      "integrity": "sha512-T791vRKj9l3WhJd6oWZ30J9xA8Pyv32VfB55PlywSqH8PchO+EzteG6q2yZ+6j919WRRMy45ElYebe1DulnGOA==",
+      "dependencies": [
+        "@fluentui/react-utilities",
+        "@types/react",
+        "react"
+      ]
+    },
+    "@fluentui/react-label@9.4.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-Xsi+K+c0SawFQFr72zpmzTHFhSqBpI8Lo6uqrfnVHtoF6lQyL11LyAIk0JtoLq82Pikqy4vvRta14fvwy0UM2g==",
+      "dependencies": [
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-link@9.8.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-wwyA/wRJOozyT2C0RK6maGKZM6xFgfoNt196WN5g+WApbNlgDEgqOLUScj14o+MNOe8H/bnfuNN1U6KEGtD09A==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-list@9.6.17_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-KytdJlezG06DByb9uLfdnXtlaM1VxEpMXeaINfgjxwlHa/uohJVpwN3il+NSchYfTh/kle6telVRWG515Klhhg==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-checkbox",
+        "@fluentui/react-context-selector",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-menu@9.25.3_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-TLOIxNwrZG0vqLoQRQPPOcVJm+q8X6CiFBLHmEeomFgV1BWcxKkjo4Qohcqd2UEiBzGbSNc9vP1UZAC2wNc+5w==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-aria",
+        "@fluentui/react-context-selector",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-motion",
+        "@fluentui/react-motion-components-preview",
+        "@fluentui/react-portal",
+        "@fluentui/react-positioning",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-message-bar@9.7.5_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-Q5VM6EkW3D0P7+/XCUO/4IBZW8tRLcsd9/yqLRk4ec9egxVrZZ6l5Z+SUK/MCEyoHXKP7GcErjcDGR1jm6JzxQ==",
+      "dependencies": [
+        "@fluentui/react-button",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-link",
+        "@fluentui/react-motion",
+        "@fluentui/react-motion-components-preview",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-motion-components-preview@0.15.7_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-YeG5cPkmODOGfmVktpPCFCe/0mKj3CCrquHOREcf+gug2aXLp/0jFy8LY4LUhYeJw7wVzVr9XzBxuzo5dE4XIg==",
+      "dependencies": [
+        "@fluentui/react-motion",
+        "@fluentui/react-utilities",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-motion@9.16.2_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-fraG2s/UlduW5JYbvP619S2755DlG7kiPKd/rlXEebgPRTSVgkuSWW5suvYVqO64/PJpZrnJD23sweAeqol6PA==",
+      "dependencies": [
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-utilities",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-nav@9.4.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-JIIC/QuWE+ySEEW6jF414Vh/wMNbO210wU+qC2U5+r6KiPFBvgkog5Pqr5qRY62XHlmJz2Zl+pDXBwoX9RSe4Q==",
+      "dependencies": [
+        "@fluentui/react-aria",
+        "@fluentui/react-button",
+        "@fluentui/react-context-selector",
+        "@fluentui/react-divider",
+        "@fluentui/react-drawer",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-motion",
+        "@fluentui/react-motion-components-preview",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-tooltip",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-overflow@9.9.2_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-11NL9YtysCKQrgcPkty4271MQ6cVsBANEU09qHtDkNpN2bODddwzrvK5ggCBaK7n7cTVlpJWYZzQZV+YxZ5EQQ==",
+      "dependencies": [
+        "@fluentui/priority-overflow",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-persona@9.7.7_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-+xrJIClBzH6ua0yWRum0+9McEuZ/lCcOpdC9cmltcBag0Gb3/rjmf5Dr2w4tLPTIGzbLuDE00Yoexy6jJLWm2A==",
+      "dependencies": [
+        "@fluentui/react-avatar",
+        "@fluentui/react-badge",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-popover@9.14.6_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-BMDS4acfZbg/44za41s38PzRplqid5ardTA2Xcjq77YPwhoaLRVAPztU1/9/ivss3tuPDn1+20knyv+bBhInzw==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-aria",
+        "@fluentui/react-context-selector",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-motion",
+        "@fluentui/react-motion-components-preview",
+        "@fluentui/react-portal",
+        "@fluentui/react-positioning",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-portal@9.8.15_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-1lXeUn+K31DwpJGQNKIRs6wz1iZOQWsH0gfLF6qy69m1EdR16SqfjprLZ3jI97xJDVatHIuYAvO/5EmmVv60/g==",
+      "dependencies": [
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-positioning@9.23.1_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-QtnF1gOc0pQx5ks0DADpl5Jxh8mh4R82ddtaYu9XdyqBIfRz/SdYOPD6eB99qc7ynZnywuHsNH144W77jO+vdQ==",
+      "dependencies": [
+        "@floating-ui/devtools",
+        "@floating-ui/dom",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom",
+        "use-sync-external-store"
+      ]
+    },
+    "@fluentui/react-progress@9.5.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-SLVw/NCrW3pglcF2J7Cu9hc5CAnDq6yyeDuRd4FTxUtMnOpqH+k3AkkLAZDmELKlHe2ZJs5E7jHwFb5kPYcV7A==",
+      "dependencies": [
+        "@fluentui/react-field",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-motion",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-provider@9.22.20_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-Cu97d65ry3t+nbGWxBmkfbmQo3IPyFjxxskQWUkd4yQcC2OB5VKbuaO28gHP8EgZglxkQmoEMf/0sWCo5HI0rQ==",
+      "dependencies": [
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/core",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-radio@9.6.5_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-xcyyGvklsmvcSYa95jPVKreJRwfOWVXFmPzWQ4OTSqDKe3zVRvPmkqiBVMwHAORsjkchMUQ6Gdvh0BG0hh6DLw==",
+      "dependencies": [
+        "@fluentui/react-field",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-label",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-rating@9.4.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-GhM49vZ5018vE/FBDs8LXZVmK1SVdG/KNbJ0jDvQSUp4acgonnSxe9dPej2l8l6l3TZ2aEGmeUKwYhxQC3DcJg==",
+      "dependencies": [
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-search@9.4.6_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-cKe1nPhl08ity4wEktUdX2UGWlcVkwSjVckmCHoyVKKP1w/9jlL9KqzkEHaOUpo0NUr8vHWyOLjZSG5mcJox+g==",
+      "dependencies": [
+        "@fluentui/react-icons",
+        "@fluentui/react-input",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-select@9.5.5_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-cUu9gTlrlXdnVJ0GhzjTXfpMckyiFgNc1eY4HmcWbAIN6si250CsPkrdyvuqCwklWR9A/JHH3RD8RU+GUFmn7g==",
+      "dependencies": [
+        "@fluentui/react-field",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-shared-contexts@9.26.3_@types+react@19.2.17_react@19.2.4": {
+      "integrity": "sha512-+FvkVJqX9yuZaZ//FWtNA4O0V33UA8Q82/5shp2fCox6HItENn87E5QecUobsodeYJ6xCAbTHccMh+LRiZhHJA==",
+      "dependencies": [
+        "@fluentui/react-theme",
+        "@types/react",
+        "react"
+      ]
+    },
+    "@fluentui/react-skeleton@9.7.5_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-CpjtweojZjeDzOYdOgMneKfKrLosxR5xe1Fw3sySws8fZP0bqF7u6MKaJYUhRL6sFt4XK1e2gBFzJLe5IbAgRA==",
+      "dependencies": [
+        "@fluentui/react-field",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-slider@9.6.5_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-GTDrlMaacPsXzrHPmmb+HdwOlJ6DSk9svFYHq/uDlneHPqGaBHH5RkkpRi3iqAQySd9YjqXVhUk9yOAgbci4OQ==",
+      "dependencies": [
+        "@fluentui/react-field",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-spinbutton@9.6.5_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-ooGgs1QJM2inLGlO0LDLAtOTw/erG78ZfPNhbeKTkOAcNYnoOykw9WQ3rTqYRuNmFfhIRyusjcDky5aiYYCqJg==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-field",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-spinner@9.8.5_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-75LFy1x95R6UB50uaxNCgrlQJ72PodO15vrCawcWkVF4DkR+RynpZLoQNIPAABpbNM6ZD+Cdq9fnvYF+d1U1ww==",
+      "dependencies": [
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-label",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-swatch-picker@9.6.0_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-5s8P3MQyTOsCNoGiKMUvVufJXJ+0Hb0KDWL79CvGsJGpwnN9uhKHuVft3MkfUl+SOExacv+OqqzzMFk+wB4HTg==",
+      "dependencies": [
+        "@fluentui/react-context-selector",
+        "@fluentui/react-field",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-switch@9.7.5_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-YTHlC8FA47A/0zspQq2K31FQ9lPhe0bO3Y30FRpaubmia1I+XqbmenyGNRxMhz7CYYVU7kbMb6o458eDrfutxQ==",
+      "dependencies": [
+        "@fluentui/react-field",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-label",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-table@9.19.19_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-w2T+EsBATODdu9zbzXL3dho2ZTVvW5ep57yXFT9r+6X2gz+cNUejVGCChWaSxL+/1y3KTt1dyE0JCquRfEST3g==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-aria",
+        "@fluentui/react-avatar",
+        "@fluentui/react-checkbox",
+        "@fluentui/react-context-selector",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-radio",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-tabs@9.12.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-YsaqjDFXcC8nvEAW3QpwdD1xIpzzyLFdftqXDA8ULmb2gmeRNWqPClCHftLa0QEIyLAIhX5pXDejHLDPFnQ2mg==",
+      "dependencies": [
+        "@fluentui/react-context-selector",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-tabster@9.26.17_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-kr6el429OvaMD1sSIOt9qyoQTbbgz2zLar81qM9OTi2lj9vhclHSgwaHT7x5yTV0a2LfYQ02emEJeG5NHVAn2w==",
+      "dependencies": [
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "keyborg",
+        "react",
+        "react-dom",
+        "tabster"
+      ]
+    },
+    "@fluentui/react-tag-picker@9.10.2_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-9T+XWOgBBcPwV4vTOyrawVNxnYvIZbngQ1lpcEwec0Ap51pRIr7DxG0Z459S2HB4qZbF2JJ+xX2z4Snx9Y9QUQ==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-aria",
+        "@fluentui/react-combobox",
+        "@fluentui/react-context-selector",
+        "@fluentui/react-field",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-portal",
+        "@fluentui/react-positioning",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-tags",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-tags@9.9.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-vwE56xx1sWdem1PejayTquRg7a+Uef/o10tf8fJ2z2w+y4jS98DcXVlH4BG57ZPWef1DGVuCFh1xUPldYLt8Zg==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-aria",
+        "@fluentui/react-avatar",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-teaching-popover@9.7.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-XPnHrNlb6/wj1Gl0hLL306ANtlgDLxfXdjApdGS2aSNp136C1I3pJvRmHxW9byEaY26Wbn4Gb+cC1NI2Fb9lEQ==",
+      "dependencies": [
+        "@fluentui/react-aria",
+        "@fluentui/react-button",
+        "@fluentui/react-context-selector",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-popover",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom",
+        "use-sync-external-store"
+      ]
+    },
+    "@fluentui/react-text@9.6.19_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-mgGdeRfDHOWJHUeywwebJAVOqZeQLUK09YMbJsETskELsDH1JOVHOGPBrBs+OKnoVNh43hYwqpDqScFT5z+nrg==",
+      "dependencies": [
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-textarea@9.7.6_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-7evgM3j9uUaXUHDhsCygrL0xsWwG+AUs3w6gQgBb8YNzXZa4q2sQJaxv2IRyDxNIoIp6pBZDI4F9nZlNlLtrdg==",
+      "dependencies": [
+        "@fluentui/react-field",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-theme@9.2.2": {
+      "integrity": "sha512-yUQMQkMLGvo6+Q/RITxpLh00STvI299gnk1IV/QHc2DW5EKiCcmIp9xma7+lJzfLACfDkwJDy5hZSl+7MIYf9w==",
+      "dependencies": [
+        "@fluentui/tokens"
+      ]
+    },
+    "@fluentui/react-toast@9.8.2_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-Zm6J35ZBQ6si/tnWdEZnrhtoqkCUBjr+2z5uNJAZUP8RQSyZA78JwgkRXn7GxJ7VHeNQVUQN4SjuRCFmD6oJ4w==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-aria",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-motion",
+        "@fluentui/react-motion-components-preview",
+        "@fluentui/react-portal",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-toolbar@9.8.4_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-fFLTzT6lV4u58xkLy6mdWFTxdQAPYk8wDAKplHHKtCfV1hilFH2IPIcRakyN2aLS3c3hS87QDWtEBO6nfXum+g==",
+      "dependencies": [
+        "@fluentui/react-button",
+        "@fluentui/react-context-selector",
+        "@fluentui/react-divider",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-radio",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-tooltip@9.10.5_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-GiQiu2NeD9GTJHOCqjARMR4eQIN2815a73ZBvXOxyB0H1Z4I/IpiHdsoHMiBIGv6OhKWASO4KYh0RPuJ1TiRSg==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-portal",
+        "@fluentui/react-positioning",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-tree@9.16.5_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4_scheduler@0.27.0": {
+      "integrity": "sha512-KTlUEjfcYHq02Hd63KXvqIBxBbXT1uheuu5Bzr202FlY7lsIEveF6EJU9h09GLJQkFYro/SYy/V3qxapM3nDHg==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-aria",
+        "@fluentui/react-avatar",
+        "@fluentui/react-button",
+        "@fluentui/react-checkbox",
+        "@fluentui/react-context-selector",
+        "@fluentui/react-icons",
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-motion",
+        "@fluentui/react-motion-components-preview",
+        "@fluentui/react-radio",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-tabster",
+        "@fluentui/react-theme",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/react-utilities@9.26.6_@types+react@19.2.17_react@19.2.4": {
+      "integrity": "sha512-a14Iihg2MmRSq1fxqr/4ffMl8VO0gYWRHAYKENz2PoL+oWnCtkMz4PDglIY8rVa7RADwXYI65XOjui0BjIFMvQ==",
+      "dependencies": [
+        "@fluentui/keyboard-keys",
+        "@fluentui/react-shared-contexts",
+        "@types/react",
+        "react"
+      ]
+    },
+    "@fluentui/react-virtualizer@9.0.0-alpha.115_@types+react@19.2.17_@types+react-dom@19.2.3__@types+react@19.2.17_react@19.2.4_react-dom@19.2.4__react@19.2.4": {
+      "integrity": "sha512-8ZOFmt5eSkiH9jWYvfmMkef+2jGvWrDeXjUptZeesgn4VRXwQu4SUKPLWqZ+ETcYXX/0leGEDl6KItdp/XxbmA==",
+      "dependencies": [
+        "@fluentui/react-jsx-runtime",
+        "@fluentui/react-shared-contexts",
+        "@fluentui/react-utilities",
+        "@griffel/react",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
+      ]
+    },
+    "@fluentui/tokens@1.0.0-alpha.24": {
+      "integrity": "sha512-YrjGQfnxBR+9o8wXyTflON3Ohsv7OrZWYLVRU+7RaiFO1gcu36iDm3WjudlVmYuWRLDO0Gmxotm6RQNhbZuEQQ=="
+    },
+    "@griffel/core@1.21.3": {
+      "integrity": "sha512-FMnlwhtmCRWvXEg2j/6W90wzvW+PFqdrsWFslfmxwS6l9X73gO0dnndKphht9ZOsJODvmLdqlnU1Lh8igg2mKw==",
+      "dependencies": [
+        "@emotion/hash",
+        "@griffel/style-types",
+        "csstype",
+        "rtl-css-js",
+        "stylis",
+        "tslib"
+      ]
+    },
+    "@griffel/react@1.7.7_react@19.2.4": {
+      "integrity": "sha512-XNBfZTgyOJOn1Buk70q4DgtwsQt71yH6R34lleImLVhvcIANP1yim86qLBnQSP03eQFXV5wgSmUVPxRUpdvYhg==",
+      "dependencies": [
+        "@griffel/core",
+        "react",
+        "tslib"
+      ]
+    },
+    "@griffel/style-types@1.4.2": {
+      "integrity": "sha512-MsSghfpyxR2MpTrYdcCozISsSLkmFjNw94wNPi4bDBRLW8W43718W/ZjmUdVkoM0KXMtJPYuEkx8Mzibqb03qA==",
+      "dependencies": [
+        "csstype"
+      ]
     },
     "@humanfs/core@0.19.2": {
       "integrity": "sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==",
@@ -295,155 +1587,168 @@
     "@img/colour@1.1.0": {
       "integrity": "sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ=="
     },
-    "@img/sharp-darwin-arm64@0.34.5": {
-      "integrity": "sha512-imtQ3WMJXbMY4fxb/Ndp6HBTNVtWCUI0WdobyheGf5+ad6xX8VIDO8u2xE4qc/fr08CKG/7dDseFtn6M6g/r3w==",
+    "@img/sharp-darwin-arm64@0.35.3": {
+      "integrity": "sha512-RMnFX7YQsMoh7lWfcM4NEHHymBX/rLuKNPVM84XE9ONPcaSCDgE7CHIHpSgPcO2xcRthgBy1HfNO319mwhIAkg==",
       "optionalDependencies": [
         "@img/sharp-libvips-darwin-arm64"
       ],
       "os": ["darwin"],
       "cpu": ["arm64"]
     },
-    "@img/sharp-darwin-x64@0.34.5": {
-      "integrity": "sha512-YNEFAF/4KQ/PeW0N+r+aVVsoIY0/qxxikF2SWdp+NRkmMB7y9LBZAVqQ4yhGCm/H3H270OSykqmQMKLBhBJDEw==",
+    "@img/sharp-darwin-x64@0.35.3": {
+      "integrity": "sha512-Xo+5uFBtLN0BKqieTxiFzFPQAUlBbbH5iBKyRX/z1JrbnYsHTfKJnUfL8+p2TPXr1pXqao4eeL4Rl144uDpK9w==",
       "optionalDependencies": [
         "@img/sharp-libvips-darwin-x64"
       ],
       "os": ["darwin"],
       "cpu": ["x64"]
     },
-    "@img/sharp-libvips-darwin-arm64@1.2.4": {
-      "integrity": "sha512-zqjjo7RatFfFoP0MkQ51jfuFZBnVE2pRiaydKJ1G/rHZvnsrHAOcQALIi9sA5co5xenQdTugCvtb1cuf78Vf4g==",
+    "@img/sharp-freebsd-wasm32@0.35.3": {
+      "integrity": "sha512-lUxcqWIj2wMQ9BrwNjngcr1gWUr5xgaGThBRqPPalIC2n67Cqj1uPh8NnA/ZhAg8hUbKl+kVHKwgUIwe6ZYPrg==",
+      "dependencies": [
+        "@img/sharp-wasm32"
+      ],
+      "os": ["freebsd"]
+    },
+    "@img/sharp-libvips-darwin-arm64@1.3.2": {
+      "integrity": "sha512-9J6ypZFpQBj4YnePGoq/S38w6nz+vqg5WZLrLGY4YuSemdMq47GMLBPO42MzwdGwpg/agZ7xzZcFHa48xlywfg==",
       "os": ["darwin"],
       "cpu": ["arm64"]
     },
-    "@img/sharp-libvips-darwin-x64@1.2.4": {
-      "integrity": "sha512-1IOd5xfVhlGwX+zXv2N93k0yMONvUlANylbJw1eTah8K/Jtpi15KC+WSiaX/nBmbm2HxRM1gZ0nSdjSsrZbGKg==",
+    "@img/sharp-libvips-darwin-x64@1.3.2": {
+      "integrity": "sha512-m2pW1n6cns9VaubNwsZ+c3CRYjxNQWgJ5gPlnL1nbBcpkBvFm6SCFN5o0psFHI8w9n11NKhFkeEDns98tiqbEw==",
       "os": ["darwin"],
       "cpu": ["x64"]
     },
-    "@img/sharp-libvips-linux-arm64@1.2.4": {
-      "integrity": "sha512-excjX8DfsIcJ10x1Kzr4RcWe1edC9PquDRRPx3YVCvQv+U5p7Yin2s32ftzikXojb1PIFc/9Mt28/y+iRklkrw==",
+    "@img/sharp-libvips-linux-arm64@1.3.2": {
+      "integrity": "sha512-dqVSFynCox4C/J8kT16V7SIFAns0IjgLwkvYT7p8LQVmJ5OS5b6tI9IGflxTeuBS//zXeFIUbwt5dwxyZ17cnA==",
       "os": ["linux"],
       "cpu": ["arm64"]
     },
-    "@img/sharp-libvips-linux-arm@1.2.4": {
-      "integrity": "sha512-bFI7xcKFELdiNCVov8e44Ia4u2byA+l3XtsAj+Q8tfCwO6BQ8iDojYdvoPMqsKDkuoOo+X6HZA0s0q11ANMQ8A==",
+    "@img/sharp-libvips-linux-arm@1.3.2": {
+      "integrity": "sha512-1eMLzy92I4J6rmi4mAT8yC3HxOtniyGELlzGbNMLLeqe052ahFQ0h6LFq+lh5DsDIdYViIDst08abvSbcEdLXQ==",
       "os": ["linux"],
       "cpu": ["arm"]
     },
-    "@img/sharp-libvips-linux-ppc64@1.2.4": {
-      "integrity": "sha512-FMuvGijLDYG6lW+b/UvyilUWu5Ayu+3r2d1S8notiGCIyYU/76eig1UfMmkZ7vwgOrzKzlQbFSuQfgm7GYUPpA==",
+    "@img/sharp-libvips-linux-ppc64@1.3.2": {
+      "integrity": "sha512-3z0NHDxD6n5I9gc05U1eW1AyRm+Gznzq3naMrthPNqE6oYykcogW0l/jfpJdjYnuNl8R7yI9pNbE1XiUeyq0Aw==",
       "os": ["linux"],
       "cpu": ["ppc64"]
     },
-    "@img/sharp-libvips-linux-riscv64@1.2.4": {
-      "integrity": "sha512-oVDbcR4zUC0ce82teubSm+x6ETixtKZBh/qbREIOcI3cULzDyb18Sr/Wcyx7NRQeQzOiHTNbZFF1UwPS2scyGA==",
+    "@img/sharp-libvips-linux-riscv64@1.3.2": {
+      "integrity": "sha512-bsb4rI+NldGOsXuej2r8OdSS8+zXDVaCWxyWrcv6kneTOlgAHtZABRzBBCwdsPiD90J4myNJuHpg6kA20ImW/w==",
       "os": ["linux"],
       "cpu": ["riscv64"]
     },
-    "@img/sharp-libvips-linux-s390x@1.2.4": {
-      "integrity": "sha512-qmp9VrzgPgMoGZyPvrQHqk02uyjA0/QrTO26Tqk6l4ZV0MPWIW6LTkqOIov+J1yEu7MbFQaDpwdwJKhbJvuRxQ==",
+    "@img/sharp-libvips-linux-s390x@1.3.2": {
+      "integrity": "sha512-/ABshyj8gCpyIrNXnHn4LorDJ0HHm1VhXPBlxZ8zAtfVPAaSafXPGn+sUSIRiwaSBy0mmFjSjiXI5mkcwdChKQ==",
       "os": ["linux"],
       "cpu": ["s390x"]
     },
-    "@img/sharp-libvips-linux-x64@1.2.4": {
-      "integrity": "sha512-tJxiiLsmHc9Ax1bz3oaOYBURTXGIRDODBqhveVHonrHJ9/+k89qbLl0bcJns+e4t4rvaNBxaEZsFtSfAdquPrw==",
+    "@img/sharp-libvips-linux-x64@1.3.2": {
+      "integrity": "sha512-ITPEtgffGJ0S6G9dRyw/366tJQqFRcHWPHhC+Stpg3Z8AEMrDrTr2lhdz4f/Y/HMbRh//7Z5mBzEpVdi62Oc3w==",
       "os": ["linux"],
       "cpu": ["x64"]
     },
-    "@img/sharp-libvips-linuxmusl-arm64@1.2.4": {
-      "integrity": "sha512-FVQHuwx1IIuNow9QAbYUzJ+En8KcVm9Lk5+uGUQJHaZmMECZmOlix9HnH7n1TRkXMS0pGxIJokIVB9SuqZGGXw==",
+    "@img/sharp-libvips-linuxmusl-arm64@1.3.2": {
+      "integrity": "sha512-zE9EdiUzUmg5mDT5a1rk5fYJ6GWPloTwWBYDS14naqHsL+EaMpDj1AWnpLgh3u0YCORv2Tt50wrcrpYqkP97Kw==",
       "os": ["linux"],
       "cpu": ["arm64"]
     },
-    "@img/sharp-libvips-linuxmusl-x64@1.2.4": {
-      "integrity": "sha512-+LpyBk7L44ZIXwz/VYfglaX/okxezESc6UxDSoyo2Ks6Jxc4Y7sGjpgU9s4PMgqgjj1gZCylTieNamqA1MF7Dg==",
+    "@img/sharp-libvips-linuxmusl-x64@1.3.2": {
+      "integrity": "sha512-m0lrLiUt+lBYnCFr8qV/65yMR4E/c7/wf78I5eKTdkEakFAlZ9QlzEM3QIhhAwVeUhLAHLcCq7a7Vszq/oFNZQ==",
       "os": ["linux"],
       "cpu": ["x64"]
     },
-    "@img/sharp-linux-arm64@0.34.5": {
-      "integrity": "sha512-bKQzaJRY/bkPOXyKx5EVup7qkaojECG6NLYswgktOZjaXecSAeCWiZwwiFf3/Y+O1HrauiE3FVsGxFg8c24rZg==",
+    "@img/sharp-linux-arm64@0.35.3": {
+      "integrity": "sha512-QgKDspHPnrU+GQ55XPhGwyhC8acLVOOSyAvo1oVfFmrIXLkDNmGWzAfDZ4xK8oSA1qBQrALcHX0G5UZni/SuFQ==",
       "optionalDependencies": [
         "@img/sharp-libvips-linux-arm64"
       ],
       "os": ["linux"],
       "cpu": ["arm64"]
     },
-    "@img/sharp-linux-arm@0.34.5": {
-      "integrity": "sha512-9dLqsvwtg1uuXBGZKsxem9595+ujv0sJ6Vi8wcTANSFpwV/GONat5eCkzQo/1O6zRIkh0m/8+5BjrRr7jDUSZw==",
+    "@img/sharp-linux-arm@0.35.3": {
+      "integrity": "sha512-affVWCTLooy8TSxbDx2qkzuDeaWLNVBA+P//FNBirHsXpP2fuBhk5AuboYUnrDnzoXes8GFjpTx0SBFOCRg+FA==",
       "optionalDependencies": [
         "@img/sharp-libvips-linux-arm"
       ],
       "os": ["linux"],
       "cpu": ["arm"]
     },
-    "@img/sharp-linux-ppc64@0.34.5": {
-      "integrity": "sha512-7zznwNaqW6YtsfrGGDA6BRkISKAAE1Jo0QdpNYXNMHu2+0dTrPflTLNkpc8l7MUP5M16ZJcUvysVWWrMefZquA==",
+    "@img/sharp-linux-ppc64@0.35.3": {
+      "integrity": "sha512-sMd8rDxmpLOwv/7N44klFjOD5DUO7FLdjiXDI0hoxYaf7Ar262dQIEkosE98bps+5HPLtp/EvNqeqQtOycP/IA==",
       "optionalDependencies": [
         "@img/sharp-libvips-linux-ppc64"
       ],
       "os": ["linux"],
       "cpu": ["ppc64"]
     },
-    "@img/sharp-linux-riscv64@0.34.5": {
-      "integrity": "sha512-51gJuLPTKa7piYPaVs8GmByo7/U7/7TZOq+cnXJIHZKavIRHAP77e3N2HEl3dgiqdD/w0yUfiJnII77PuDDFdw==",
+    "@img/sharp-linux-riscv64@0.35.3": {
+      "integrity": "sha512-0Eob78yjlYPfL5vMNWAW55l3R9Y6BQS/gOfe0ZcP9mEz9ohhKSt4im1hayiknXgf8AWrFqMvJcKIdmLmEe7yeQ==",
       "optionalDependencies": [
         "@img/sharp-libvips-linux-riscv64"
       ],
       "os": ["linux"],
       "cpu": ["riscv64"]
     },
-    "@img/sharp-linux-s390x@0.34.5": {
-      "integrity": "sha512-nQtCk0PdKfho3eC5MrbQoigJ2gd1CgddUMkabUj+rBevs8tZ2cULOx46E7oyX+04WGfABgIwmMC0VqieTiR4jg==",
+    "@img/sharp-linux-s390x@0.35.3": {
+      "integrity": "sha512-KgAxQ0DxpNOq1rG2t5cgTgShJFGSuU7XO45cqC+1NVOuZnP6tlgZRuSYOfNupGkHID0o3cJOsw4DVeJpMovcGw==",
       "optionalDependencies": [
         "@img/sharp-libvips-linux-s390x"
       ],
       "os": ["linux"],
       "cpu": ["s390x"]
     },
-    "@img/sharp-linux-x64@0.34.5": {
-      "integrity": "sha512-MEzd8HPKxVxVenwAa+JRPwEC7QFjoPWuS5NZnBt6B3pu7EG2Ge0id1oLHZpPJdn3OQK+BQDiw9zStiHBTJQQQQ==",
+    "@img/sharp-linux-x64@0.35.3": {
+      "integrity": "sha512-8pqvxubL2PGdhlPy6GLqzDYMUjyRmKAwKHYKixpdJYBUK7PJ0C029XdsnpFIdgRZG68fZiGdHVWcKPvtiPB4cA==",
       "optionalDependencies": [
         "@img/sharp-libvips-linux-x64"
       ],
       "os": ["linux"],
       "cpu": ["x64"]
     },
-    "@img/sharp-linuxmusl-arm64@0.34.5": {
-      "integrity": "sha512-fprJR6GtRsMt6Kyfq44IsChVZeGN97gTD331weR1ex1c1rypDEABN6Tm2xa1wE6lYb5DdEnk03NZPqA7Id21yg==",
+    "@img/sharp-linuxmusl-arm64@0.35.3": {
+      "integrity": "sha512-Vz0iQjzzcSX3HCbfwFfCSG/9SCIqyO0mH2sXyiHaAYfBk0cRsCWXRyQYX0ovCK/PAQBbTzQ0dsPQHh5MAFL59w==",
       "optionalDependencies": [
         "@img/sharp-libvips-linuxmusl-arm64"
       ],
       "os": ["linux"],
       "cpu": ["arm64"]
     },
-    "@img/sharp-linuxmusl-x64@0.34.5": {
-      "integrity": "sha512-Jg8wNT1MUzIvhBFxViqrEhWDGzqymo3sV7z7ZsaWbZNDLXRJZoRGrjulp60YYtV4wfY8VIKcWidjojlLcWrd8Q==",
+    "@img/sharp-linuxmusl-x64@0.35.3": {
+      "integrity": "sha512-6O1NPKcDVj9QEdg7Hx549EX8U0rp6yXQERqru6yRN7fGBn32UvIRJUlWnk+8xDCiG76hXVBbX82NZ/ZKr0euIg==",
       "optionalDependencies": [
         "@img/sharp-libvips-linuxmusl-x64"
       ],
       "os": ["linux"],
       "cpu": ["x64"]
     },
-    "@img/sharp-wasm32@0.34.5": {
-      "integrity": "sha512-OdWTEiVkY2PHwqkbBI8frFxQQFekHaSSkUIJkwzclWZe64O1X4UlUjqqqLaPbUpMOQk6FBu/HtlGXNblIs0huw==",
+    "@img/sharp-wasm32@0.35.3": {
+      "integrity": "sha512-cZ0XkcYGpHZkqW6iCkqTcmUC0CD9DhD5d/qeZlZkfRBn6GnHniZXLUo5+9xw8Iv76YE6LQFN9YNBlKREcCG76w==",
       "dependencies": [
-        "@emnapi/runtime@1.10.0"
+        "@emnapi/runtime@1.11.2"
+      ]
+    },
+    "@img/sharp-webcontainers-wasm32@0.35.3": {
+      "integrity": "sha512-2rnq7bX3NzeR2T4YWgz8qiG4h3TSdMe+vN1iQXpJleSJ3SM5zQ8Fy2SyyXAWlbxpEZ2Y+Z4u1BePgJEYbSy80Q==",
+      "dependencies": [
+        "@img/sharp-wasm32"
       ],
       "cpu": ["wasm32"]
     },
-    "@img/sharp-win32-arm64@0.34.5": {
-      "integrity": "sha512-WQ3AgWCWYSb2yt+IG8mnC6Jdk9Whs7O0gxphblsLvdhSpSTtmu69ZG1Gkb6NuvxsNACwiPV6cNSZNzt0KPsw7g==",
+    "@img/sharp-win32-arm64@0.35.3": {
+      "integrity": "sha512-4bPwFdMbeC4JQ8L8LOyWp6nsHcboP5fxkp6iPOXz2Vg49R42TuMs2whkJ5OAP4/Ul035qOzy0AecOF9VOscn4w==",
       "os": ["win32"],
       "cpu": ["arm64"]
     },
-    "@img/sharp-win32-ia32@0.34.5": {
-      "integrity": "sha512-FV9m/7NmeCmSHDD5j4+4pNI8Cp3aW+JvLoXcTUo0IqyjSfAZJ8dIUmijx1qaJsIiU+Hosw6xM5KijAWRJCSgNg==",
+    "@img/sharp-win32-ia32@0.35.3": {
+      "integrity": "sha512-r53mXsBN6lFUDiST764SvgwUdHAqM4rPAiDzAmf4fLoB6X/rkfyTrLCg6+g17wJJiCmB3JYgHuUldCWUIRFSXw==",
       "os": ["win32"],
       "cpu": ["ia32"]
     },
-    "@img/sharp-win32-x64@0.34.5": {
-      "integrity": "sha512-+29YMsqY2/9eFEiW93eqWnuLcWcufowXewwSNIT6UwZdUUCrM3oFjMWH/Z6/TMmb4hlFenmfAVbpWeup2jryCw==",
+    "@img/sharp-win32-x64@0.35.3": {
+      "integrity": "sha512-D4y1vNeZrIIJCN+uHaWVtH86B+aCrdMYYjicy9pXHvbGZeGYLLSd3wdVuC37FxVXlU1ARsk84eKWfWMXGYEqvA==",
       "os": ["win32"],
       "cpu": ["x64"]
     },
@@ -484,7 +1789,6 @@
       "integrity": "sha512-ZLv/JdUfkvOy9eCnnBaGfiO+XimbjebAeO+MRQqD/B+FR1tnRN0tpKSJHRbE8sFfS6aqsXZ67TQjfwfsxULVbg==",
       "dependencies": [
         "@emnapi/core",
-        "@emnapi/runtime@1.10.0",
         "@tybys/wasm-util"
       ]
     },
@@ -499,8 +1803,8 @@
     "@neondatabase/serverless@1.1.0": {
       "integrity": "sha512-r3ZZhRjEcfEdKIZnoB1RusNgvHuaBRqfCzV4Gi+5A9yUX0S4HTws/ASWqt13wL4y4I+0rqsWGdA2w7EQXHi3+Q=="
     },
-    "@next/env@16.2.10": {
-      "integrity": "sha512-zLPxg9M0MEHmygpj5OuxjQ+vHMiy/K7cSp74G8ecYolmgUWw0RwN02tF56npup/+qaI8JB97hQgS/r2Hb6QwVA=="
+    "@next/env@16.3.1": {
+      "integrity": "sha512-35G3xwkQUb2oETSDjFXGrVugknoayLFBh7vSE+yAcl9IP2zT9wyGwq7297AYHR11kJld807t5f8AJBs6WBzXsQ=="
     },
     "@next/eslint-plugin-next@16.2.10": {
       "integrity": "sha512-Gs8D2m21VnJeFo9qvYIIqJH94frWerWYu41BprU1pLtRVF7PCQNLiFZZ3fG+iPuj3K83Cwv/rt+msLOy8Qgu3Q==",
@@ -508,43 +1812,43 @@
         "fast-glob"
       ]
     },
-    "@next/swc-darwin-arm64@16.2.10": {
-      "integrity": "sha512-v9IdJCa0H0mbo+8z5zwUpOk1Vj7RjkcI5uNYf5Ws1y6szf/p3Mzl9hLaST8SCt6L9h8NGnruZcd2+o0NTNwDhA==",
+    "@next/swc-darwin-arm64@16.3.1": {
+      "integrity": "sha512-ABMIu2zQ7cnNIHm5ivKGwZwUrm0pAai3yiJ/gK/rF1c1VP9UOnj7XECbMKFdVKp9I9eMYq9NoDs1WXOoowxzJw==",
       "os": ["darwin"],
       "cpu": ["arm64"]
     },
-    "@next/swc-darwin-x64@16.2.10": {
-      "integrity": "sha512-17IS0jJRViROGmA9uGdNR8VPJpfbnaVG7E9qhso5jDLkmyd0lSDORWxbcKINzcFqzZqGwGtMSnrFRxBpuUYjLQ==",
+    "@next/swc-darwin-x64@16.3.1": {
+      "integrity": "sha512-gNG21e/UnrroeScbY/QndUEdl0mF1FRibW7BBeYUz/5ABCepjqDdEdgr592vpzMtCn/m7FTjYq3TN4TpyDnutw==",
       "os": ["darwin"],
       "cpu": ["x64"]
     },
-    "@next/swc-linux-arm64-gnu@16.2.10": {
-      "integrity": "sha512-GRQRsRtuciNJvB54AvvuQTiq0oZtFwa1owQqtZD8wwnGpM2L39MV22kpI72YSXLKIyY40LC66EiLFv4PiicXxg==",
+    "@next/swc-linux-arm64-gnu@16.3.1": {
+      "integrity": "sha512-6B6Lw016iwNUQuaJoraMMTLh6TwHzFUtxipSScD1F3YyymcrRWkobodRS2ftIOkF5vrs4zNlyUrTC5YZQ9Lz5w==",
       "os": ["linux"],
       "cpu": ["arm64"]
     },
-    "@next/swc-linux-arm64-musl@16.2.10": {
-      "integrity": "sha512-zkN9MQYS7UQBro+FnISUq1itaQjXI9xqISzuQ+2bc921NcJ1x4yPCqrn77tVN6/dOOXaaWVX3k6/bR07pPwK+A==",
+    "@next/swc-linux-arm64-musl@16.3.1": {
+      "integrity": "sha512-JUiPXZKK9wOhjf4MgDiH29GZLxfqOesbLtHq2pDxwH/WwscTRV2ToymnOTh1egzaZf0ueUf8T2+CeYTGHjW0Iw==",
       "os": ["linux"],
       "cpu": ["arm64"]
     },
-    "@next/swc-linux-x64-gnu@16.2.10": {
-      "integrity": "sha512-iCVJnwvrPYECvA6WM/7+oo+OiTvedIKLxtCLAZP4xZR3nXa1zmzZyLPbYCmWvpd4CvMYF1EMTafd0ii3DygLvA==",
+    "@next/swc-linux-x64-gnu@16.3.1": {
+      "integrity": "sha512-Uog9jsrmIRIL/lfvIp9htmskSNC7JcQsMVucXL2V2YY1y/D9IUN3LPEafqy0zRJ2cIU1SQ0V6F6TlffQ+pLAGg==",
       "os": ["linux"],
       "cpu": ["x64"]
     },
-    "@next/swc-linux-x64-musl@16.2.10": {
-      "integrity": "sha512-ov2g4H0dHY9bPoOU83m91hWT7Iq5qy13bUnyyshLU3HGR1Ownn0X9QpmDPc5iIUaahTp7f7LeGAhV4DSFtackw==",
+    "@next/swc-linux-x64-musl@16.3.1": {
+      "integrity": "sha512-6yy3FT13KgUFOj5H8bl8w/6nKiJwHIvbtwh1V+1acsu+7y4tJjnemSa6mhsh53BeoVrlozE+fMgZhXH46WmjMA==",
       "os": ["linux"],
       "cpu": ["x64"]
     },
-    "@next/swc-win32-arm64-msvc@16.2.10": {
-      "integrity": "sha512-DwAnhLX76HQiFFQNgWlcK+JzlnD1rZ+UK/WY0ZMI/deXpvgnesjNYrqcfo1JzBuz4Kf7o3brIBL0glI1junatA==",
+    "@next/swc-win32-arm64-msvc@16.3.1": {
+      "integrity": "sha512-iOoN1QecUoGNZik536U/vtK43YwgyrCsGIkth52yIkl612n+0C9MjSnJbQAikISpb+WYRooBVhaDlUW7iZoKog==",
       "os": ["win32"],
       "cpu": ["arm64"]
     },
-    "@next/swc-win32-x64-msvc@16.2.10": {
-      "integrity": "sha512-0JXq3b85Jk9Jg4ntLUbXSPvoDw3gpZou7twuKdoFG2jOw635v7+IiXfTaa0TxVMyx78pUjnrVYwLgjKfX4e6/A==",
+    "@next/swc-win32-x64-msvc@16.3.1": {
+      "integrity": "sha512-d/k+PpAriUPaeMJJOG7HUSdqfEX46FEPWU1p3/nm2ACmXhj9hFEWdFODUBIpkuijXYkfL90qZzTqVPRp4BW/hw==",
       "os": ["win32"],
       "cpu": ["x64"]
     },
@@ -744,8 +2048,8 @@
         "ts-morph"
       ]
     },
-    "@swc/helpers@0.5.15": {
-      "integrity": "sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==",
+    "@swc/helpers@0.5.23": {
+      "integrity": "sha512-5lSsMOTXURePglDfvuAQUqkGek9Hg2kksOYay2m0+XR++b2NWYL/4sWyuvVBIs8oKnJaxkdi9whaL/sqN13afw==",
       "dependencies": [
         "tslib"
       ]
@@ -852,7 +2156,7 @@
         "@alloc/quick-lru",
         "@tailwindcss/node",
         "@tailwindcss/oxide",
-        "postcss@8.5.20",
+        "postcss",
         "tailwindcss"
       ]
     },
@@ -1491,6 +2795,21 @@
     },
     "electron-to-chromium@1.5.394": {
       "integrity": "sha512-Wmt2Gm0o8JWBuGgmc4XZ0u9s1RaCRqhxP47phplmfg04+qypTUurpeJGP45A7Fhv7jdrrVH44PLlR9qXo37cVQ=="
+    },
+    "embla-carousel-autoplay@8.6.0_embla-carousel@8.6.0": {
+      "integrity": "sha512-OBu5G3nwaSXkZCo1A6LTaFMZ8EpkYbwIaH+bPqdBnDGQ2fh4+NbzjXjs2SktoPNKCtflfVMc75njaDHOYXcrsA==",
+      "dependencies": [
+        "embla-carousel"
+      ]
+    },
+    "embla-carousel-fade@8.6.0_embla-carousel@8.6.0": {
+      "integrity": "sha512-qaYsx5mwCz72ZrjlsXgs1nKejSrW+UhkbOMwLgfRT7w2LtdEB03nPRI06GHuHv5ac2USvbEiX2/nAHctcDwvpg==",
+      "dependencies": [
+        "embla-carousel"
+      ]
+    },
+    "embla-carousel@8.6.0": {
+      "integrity": "sha512-SjWyZBHJPbqxHOzckOfo8lHisEaJWmwd23XppYFYVh10bU66/Pn5tkVkbkCMZVdbUE5eTCI2nD8OyIP4Z+uwkA=="
     },
     "emoji-regex@9.2.2": {
       "integrity": "sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg=="
@@ -2345,6 +3664,9 @@
         "object.values"
       ]
     },
+    "keyborg@2.14.1": {
+      "integrity": "sha512-/WmmVBa6Me3hIKAOIyIq1sql+6oydQZzGMBDLNfOcJ8710byMsq3KSLS8GQhBJHOMtvnXnUBrDAIbABcZVipcg=="
+    },
     "keyv@4.5.4": {
       "integrity": "sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==",
       "dependencies": [
@@ -2453,6 +3775,9 @@
         "p-locate"
       ]
     },
+    "lodash.debounce@4.0.8": {
+      "integrity": "sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow=="
+    },
     "lodash.merge@4.6.2": {
       "integrity": "sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ=="
     },
@@ -2535,14 +3860,14 @@
     "natural-compare@1.4.0": {
       "integrity": "sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw=="
     },
-    "next@16.2.10_react@19.2.4_react-dom@19.2.4__react@19.2.4_sass@1.101.3": {
-      "integrity": "sha512-2som5AVXb3kE6Yjine3/mNbBayYF58eguBWIVVUdr1y/L426xyVEgYxgBG+1QC34P2x5E+tcDup6XkuOAX3dCA==",
+    "next@16.3.1_react@19.2.4_react-dom@19.2.4__react@19.2.4_sass@1.101.3": {
+      "integrity": "sha512-hsAp0i7Rh+/dhe7DGIeN2YlpLM1DP4MNxti9EtDMtqcO612X81MvvEj388/oTce9U1EcEIOWDlGq0zRwrBKvuA==",
       "dependencies": [
         "@next/env",
         "@swc/helpers",
         "baseline-browser-mapping",
         "caniuse-lite",
-        "postcss@8.4.31",
+        "postcss",
         "react",
         "react-dom",
         "sass",
@@ -2742,16 +4067,8 @@
     "possible-typed-array-names@1.1.0": {
       "integrity": "sha512-/+5VFTchJDoVj3bhoqi6UeymcD00DAwb1nJwamzPvHEszJ4FpF6SNNbUbOS8yI56qHzdV8eK0qEfOSiodkTdxg=="
     },
-    "postcss@8.4.31": {
-      "integrity": "sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==",
-      "dependencies": [
-        "nanoid",
-        "picocolors",
-        "source-map-js"
-      ]
-    },
-    "postcss@8.5.20": {
-      "integrity": "sha512-lW616l85ucIQL+FocMmL7pQFPqBmwejrCMg+iPxyImlrANNJG9NHq/RkyCZopDhd8C3LA03PHRJDjkbGu8vvug==",
+    "postcss@8.5.23": {
+      "integrity": "sha512-g50586zr4bZmwFiTlflMu8E0bDTb5I5gertgwAKmsdUlTQIhZtunzUlD1WSzwcVWPoAVpsrA6vlfCD7oXvRwgg==",
       "dependencies": [
         "nanoid",
         "picocolors",
@@ -2867,6 +4184,12 @@
     "reusify@1.1.0": {
       "integrity": "sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw=="
     },
+    "rtl-css-js@1.16.1": {
+      "integrity": "sha512-lRQgou1mu19e+Ya0LsTvKrVJ5TYUbqCVPAiImX3UfLTenarvPUl1QFdvu5Z3PYmHT9RCcwIfbjRQBntExyj3Zg==",
+      "dependencies": [
+        "@babel/runtime"
+      ]
+    },
     "run-parallel@1.2.0": {
       "integrity": "sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==",
       "dependencies": [
@@ -2949,8 +4272,8 @@
         "es-object-atoms"
       ]
     },
-    "sharp@0.34.5": {
-      "integrity": "sha512-Ou9I5Ft9WNcCbXrU9cMgPBcCK8LiwLqcbywW3t4oDV37n1pzpuNLsYiAV8eODnjbtQlSDwZ2cUEeQz4E54Hltg==",
+    "sharp@0.35.3": {
+      "integrity": "sha512-ej0zVHuZGHCiABXcNxeYhpRnPNPAcvbG8RMdBAhDAxLKkCRVSpK3Iyu7qbqw3JMzoj0REeM6f3tJLtVwl0023Q==",
       "dependencies": [
         "@img/colour",
         "detect-libc",
@@ -2959,6 +4282,7 @@
       "optionalDependencies": [
         "@img/sharp-darwin-arm64",
         "@img/sharp-darwin-x64",
+        "@img/sharp-freebsd-wasm32",
         "@img/sharp-libvips-darwin-arm64",
         "@img/sharp-libvips-darwin-x64",
         "@img/sharp-libvips-linux-arm",
@@ -2977,12 +4301,11 @@
         "@img/sharp-linux-x64",
         "@img/sharp-linuxmusl-arm64",
         "@img/sharp-linuxmusl-x64",
-        "@img/sharp-wasm32",
+        "@img/sharp-webcontainers-wasm32",
         "@img/sharp-win32-arm64",
         "@img/sharp-win32-ia32",
         "@img/sharp-win32-x64"
-      ],
-      "scripts": true
+      ]
     },
     "shebang-command@2.0.0": {
       "integrity": "sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==",
@@ -3133,6 +4456,9 @@
         "react"
       ]
     },
+    "stylis@4.4.0": {
+      "integrity": "sha512-5Z9ZpRzfuH6l/UAvCPAPUo3665Nk2wLaZU3x+TLHKVzIz33+sbJqbtrYoC3KD4/uVOr2Zp+L0LySezP9OHV9yA=="
+    },
     "supports-color@7.2.0": {
       "integrity": "sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==",
       "dependencies": [
@@ -3141,6 +4467,13 @@
     },
     "supports-preserve-symlinks-flag@1.0.0": {
       "integrity": "sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w=="
+    },
+    "tabster@8.8.0": {
+      "integrity": "sha512-eGFXgtvKOQP5BywDI9Ngs+Atm6TRj45epAAqWKyVoi+HmOmdamEB//1H/FttLdNly/+Cz+GJ4RN8TnXTw0KwfA==",
+      "dependencies": [
+        "keyborg",
+        "tslib"
+      ]
     },
     "tailwindcss@4.3.3": {
       "integrity": "sha512-gOhV3P7ufE62QDGg1zVaTgCR+EtPv92k2nIhVcVKcLmxT1sUBsQGhnZj175j+MqRt4zLF7ic+sCYjfhxMxj7YQ=="
@@ -3309,6 +4642,19 @@
         "punycode"
       ]
     },
+    "use-sync-external-store@1.6.0_react@19.2.4": {
+      "integrity": "sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==",
+      "dependencies": [
+        "react"
+      ]
+    },
+    "usehooks-ts@3.1.1_react@19.2.4": {
+      "integrity": "sha512-I4diPp9Cq6ieSUH2wu+fDAVQO43xwtulo+fKEidHUwZPnYImbtkTjzIJYcDcJqxgmX31GVqNFURodvcgHcW0pA==",
+      "dependencies": [
+        "lodash.debounce",
+        "react"
+      ]
+    },
     "which-boxed-primitive@1.1.1": {
       "integrity": "sha512-TbX3mj8n0odCBFVlY8AxkqcHASw3L60jIuF8jFP78az3C2YhmGvqbHBpAjTRH2/xqYunrJ9g1jSyjCjpoWzIAA==",
       "dependencies": [
@@ -3403,6 +4749,7 @@
       "dependencies": [
         "npm:@babylonjs/core@^9.21.2",
         "npm:@babylonjs/havok@^1.3.14",
+        "npm:@babylonjs/inspector@^9.21.2",
         "npm:@babylonjs/loaders@^9.21.2",
         "npm:@neondatabase/serverless@^1.1.0",
         "npm:@siemens/ix-icons@^3.2.0",
@@ -3418,7 +4765,7 @@
         "npm:eslint-config-next@16.2.10",
         "npm:eslint@9",
         "npm:markdown-it@^14.3.0",
-        "npm:next@16.2.10",
+        "npm:next@^16.3.1",
         "npm:pg@^8.22.0",
         "npm:prettier@^3.9.6",
         "npm:react-dom@19.2.4",
