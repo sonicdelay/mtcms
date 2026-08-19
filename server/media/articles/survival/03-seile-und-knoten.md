@@ -1,4 +1,4 @@
-## **Kapitel 3: Seile, Schnüre, Bänder und Knoten**
+﻿## **Kapitel 3: Seile, Schnüre, Bänder und Knoten**
 
 Seile und Schnüre sind superwichtig für deine Ausrüstung. Mit ihnen kannst du viele andere Sachen bauen. Schnüre gehören zu den „Fünf C" – den fünf wichtigsten Dingen zum Überleben. Wie alles daraus müssen sie für viele Aufgaben taugen.
 
@@ -67,7 +67,7 @@ Willst du eine noch stärkere Schnur? Dann nimm zwei fertige Schnüre und drehe 
 
 ###### **EINFACHE UND NÜTZLICHE KNOTEN FÜRS LAGER**
 
-Knoten sind die Grundlage für alles Binden und Befestigen. Sie halten deine Ladung zusammen oder sichern einen Toggle (Stöckchen). Wir benutzen Knoten jeden Tag, und es gibt Hunderte davon.
+Knoten sind die Grundlage für alles Binden und Befestigen. Sie halten deine Ladung zusammen oder sichern einen Knebel (Stöckchen). Wir benutzen Knoten jeden Tag, und es gibt Hunderte davon.
 
 Übe Knoten oft, bis du sie richtig kannst! Du solltest sie sogar mit verbundenen Augen oder mit den Händen auf dem Rücken binden können. Dann kannst du sie im Notfall ohne Nachdenken machen. Ob du deine Ausrüstung festbindest oder ein Schutzdach baust – Knoten sind eine lebenswichtige Fähigkeit.
 
@@ -83,7 +83,7 @@ Es gibt drei Grundarten von Knoten:
 
 Ein Stoppknoten ist ein einfacher Überhandknoten am Ende einer Leine. Er verhindert, dass das Seil durchrutscht. Er passt gut zu jedem anderen Knoten als Sicherung. Lasse hinter dem Knoten meist ein kleines Stück Schnur übrig.
 
-###### **BUSHCRAFT-TIPPS FÜR SCHNÜRE**
+###### **WILDNIS-TIPPS FÜR SCHNÜRE**
 
 1. Für lange einzelne Schnüre aus einer Haut: Stecke dein Messer in einen Baumstumpf und schneide die Haut im Kreis auf. Das Messer bleibt still stehen, du ziehst die Haut zur Klinge. So bekommst du viel längere Schnüre, als wenn du die Haut der Länge nach aufschneidest.
 2. Achtung: Schnüre aus Nylon (zum Beispiel Fallschirmschnur) schmelzen, wenn man sie anzündet. Schmilzt du nur den äußeren Mantel, kannst du daraus einen Notkleber oder einen Flicken für kleine Löcher machen – zum Beispiel in Behältern.

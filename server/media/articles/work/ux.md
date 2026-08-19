@@ -1,8 +1,8 @@
----
+﻿---
 { title: UX, published_at, snippet: Wie es begann }
 ---
 
-# UX [^](./articles/)
+# UX
 
 ## 1. UX-Grundlagen
 

@@ -1,4 +1,4 @@
----
+﻿---
 {
   "title": "Raspberry Pi Tipps",
   "published_at": "2024-11-01",
@@ -6,7 +6,7 @@
 }
 ---
 
-# Raspberry Pi [^](/articles/)
+# Raspberry Pi
 
 ## Einrichtung
 

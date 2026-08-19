@@ -1,10 +1,6 @@
-## **TEIL 2: IM BUSCH**
+﻿## **TEIL 2: IM BUSCH**
 
 ### **Kapitel 7: DAS LAGER AUFSCHLAGEN**
-
-_„Ein Unterschlupf schafft eine kleine Schutzzone. Er ersetzt zu dünne Kleidung oder lässt dich schwere Schichten ablegen. Besonders wenn du aufhören willst zu laufen oder bei kaltem Wetter schlafen willst. Ein Unterschlupf verstärkt auch die Wirkung eines wärmenden Feuers."_
-
-—MORS KOCHANSKI, 1987
 
 Eine der wichtigsten Entscheidungen beim Wandern ist: Wo baue ich mein Lager? Viele Entscheidungen folgen einfachen Regeln (den Vier Ws). Aber es gibt noch andere Fragen:
 
@@ -94,7 +90,7 @@ Du brauchst eine Art Seil (Ridgeline) als Hauptstütze für die Plane. Bei einer
 
 2. Führe das Seil um einen Baum oder eine Hauptbefestigung. Dann stecke das lose Ende durch den Palstek. So entsteht eine Schlaufe, die sich selbst zuzieht. Sie blockiert nicht (du kannst sie leicht verstellen), bleibt aber unter Last sicher.
 
-3. Ist das andere Seilende um einen gegenüberliegenden Baum gewickelt, mach einen Trucker-Hitch (Wagenlenker-Knoten). Lass eine Schlaufe übrig, die am Stoppknoten stoppt. So sicherst du eine Ecke der Plane: Stecke die Schlaufe durch einen Befestigungspunkt der Plane und leg einen einfachen Knebel (Toggle) in die Seilschlaufe. Zieh sie zu, um die Plane zu spannen. Zum Abbrechen oder Verstellen lässt sie sich leicht lösen.
+3. Ist das andere Seilende um einen gegenüberliegenden Baum gewickelt, mach einen Wagenlenker-Knoten. Lass eine Schlaufe übrig, die am Stoppknoten stoppt. So sicherst du eine Ecke der Plane: Stecke die Schlaufe durch einen Befestigungspunkt der Plane und leg einen einfachen Knebel  in die Seilschlaufe. Zieh sie zu, um die Plane zu spannen. Zum Abbrechen oder Verstellen lässt sie sich leicht lösen.
 
 4. Am besten benutzt du am anderen Ende der Plane einen einfachen Prusik-Knoten aus einer 15 cm langen Seilschlaufe. Nachdem du das Seil an die Ridgeline gebunden hast, zieh die Schlaufe durch die gegenüberliegende Befestigungsschlaufe und kneble sie. Dann kannst du sie am Seil entlangschieben, bis die Plane straff an der Ridgeline sitzt. Sie hält durch Reibung. So ist Verstellen und Abbauen einfach.
 
@@ -114,7 +110,7 @@ Tarp-Zelte sind meist quadratische Planen mit Verlängerungen nach vorn. Sie wer
 
 ###### **BODENPLANEN**
 
-Eine **Bodenplane** (Ground Cloth) ist praktisch. Sie hält Feuchtigkeit fern. Und du kannst dich oder deine Ausrüstung damit vom direkten Boden ablegen. Du kannst sie aus jedem Reststoff machen, der wasserdicht ist (wenn möglich). Sie muss nicht größer sein als deine Länge und Breite. So bleibt deine Ausrüstung leicht. Eine Bodenplane, die du zusammenfalten kannst, gehört in ein Roll-System (Bedroll). Bei schönem Wetter kannst du ganz auf eine Plane verzichten.
+Eine **Bodenplane** ist praktisch. Sie hält Feuchtigkeit fern. Und du kannst dich oder deine Ausrüstung damit vom direkten Boden ablegen. Du kannst sie aus jedem Reststoff machen, der wasserdicht ist (wenn möglich). Sie muss nicht größer sein als deine Länge und Breite. So bleibt deine Ausrüstung leicht. Eine Bodenplane, die du zusammenfalten kannst, gehört in ein Roll-System. Bei schönem Wetter kannst du ganz auf eine Plane verzichten.
 
 ###### **FEUERKUNST (FIRECRAFT)**
 
@@ -150,7 +146,7 @@ Außerdem brauchst du dein Startmaterial: den Zunder.
 
 Ein **Vogelnest** ist brennbares Material, das wie das Nest eines Vogels geformt ist. Wichtig ist: Es muss wirklich wie ein Vogelnest sein — eine Mischung aus feinem, mittlerem und grobem, sehr brennbarem Material. Zum Beispiel Innen- und Außenrinde von weichen Bäumen wie Pappeln. Gräser und Unkraut funktionieren dafür, auch Birkenrinde. Aber manche Rinden haben andere Eigenschaften — dazu später mehr. Ein Vogelnest benutzt du zusammen mit einer Glut. Die Glut kommt aus verkohltem Material oder aus einer anderen Methode wie dem Fidelbohrer. Das Nest muss groß genug sein, um lange genug zu brennen, bis das Anmachholz Feuer fängt. Gute Faustregel für Zunder: Mach es so groß wie einen Softball oder größer.
 
-###### **BUSHCRAFT-TIPP**
+###### **WILDNIS-TIPP**
 
 Viele Bäume haben natürliche Öle und **Harze**, die wie Anzünder wirken. Das ist sehr nützlich. Rinden und Holz brennen nämlich viel länger als Pflanzenfasern. Die zwei wichtigsten Quellen für dich: Birkenrinde und Kiefernharz. Beide brauchen unterschiedliche Bearbeitung. Birkenrinde kannst du vom Baum ziehen. Aber wie du sie benutzt, hängt davon ab, wofür du sie willst. Denk daran: Wenn du Funken von einem Stab fangen willst, brauchst du viel Oberfläche, um die Funken zu fangen. Das gilt auch für Rinden wie Birkenrinde: Zerkleinere sie so fein wie möglich, damit viele Flächen entstehen, die Funken fangen. Hast du eine offene Flamme, brennt die Rinde direkt vom Baum weg.
 

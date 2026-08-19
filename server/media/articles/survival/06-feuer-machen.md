@@ -1,8 +1,4 @@
-### **Kapitel 6: FEUERMACHEN (COMBUSTION)**
-
-_„Feuer zu entfachen, wenn es darauf ankommt, ist eine Voraussetzung für Leben und Überleben im Busch."_
-
-—MORS KOCHANSKI, 1987
+﻿### **Kapitel 6: FEUERMACHEN (COMBUSTION)**
 
 Feuer war für den Menschen schon immer wichtig. Es wärmte seinen Körper. Es half ihm, Essen zu kochen und haltbar zu machen. Es machte die dunklen Wände seiner Höhle hell, wenn er seine Jagden an die Wand malte. Und es gab ihm etwas zum Anschauen, wenn er einschlief. Feuer hält wilde Tiere fern, die schlafende Menschen angreifen könnten. Und es vertreibt die „Monster" in der Nacht — ob eingebildet oder echt. Auch heute brauchen wir Feuer. Wir brauchen seine Wärme an kalten Nächten. Wir kochen und erhitzen Wasser damit. Und wir machen unser Trinkwasser damit sicher.
 
@@ -46,7 +42,7 @@ Auch hier ist die Feuchtigkeit am wichtigsten — in beiden Teilen. Das Feuerbre
 
 **Verkohlungskosen** gehören zu jeder Waldläufer-Ausrüstung. Eine Dose wie für Pfefferminz (Altoids) oder Schuhcreme ist perfekt. In dieser Dose machst du verkohltes Material. Das hilft dir beim Feuermachen — besonders wenn es feucht ist und keine trockenen Vogelnester da sind. Verkohltes Material entzündet sich sofort. Damit hast du eine sichere Glut, um dein Vogelnest zu entzünden. So funktioniert die Dose: Lege etwas Naturmaterial hinein, zum Beispiel Baumwolle, mürbes Holz (Punky Wood) oder das weiche Innere von Pflanzen. Schließe den Deckel. Stelle die Dose auf die glühenden Kohlen deines Feuers. Die Materialien im Inneren werden superheiß — aber Sauerstoff kommt nicht hinein. So entsteht verkohltes Material wie Holzkohle. Wichtig: Lass die Dose erst abkühlen, bevor du sie öffnest. Kommt Sauerstoff an heiße Materialien, fängt es an zu brennen. Für ein paar Stoffstückchen von etwa 5 × 5 cm brauchst du in einer normalen Dose etwa zehn Minuten.
 
-###### **BUSHCRAFT-TIPP**
+###### **WILDNIS-TIPP**
 
 Du kannst dein verkohltes Material mit jedem Zündmittel testen. (Das ist der Vorteil dieses Materials: Ein einziger Funke sollte sofort eine glühende Glut machen — wenn alles richtig gemacht ist.) Mit Sonne und einer Lupe sollte es weniger als fünf Sekunden dauern. Das ist dein Sicherheitsnetz. Falls du unterwegs oder vom Vortag kein gutes Vogelnest oder Zunderbündel gesammelt hast und mit mäßigem Material arbeiten musst.
 

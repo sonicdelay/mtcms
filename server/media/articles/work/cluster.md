@@ -1,4 +1,4 @@
----
+﻿---
 {
   title: Cluster,
   published_at: 2024-04-30,
@@ -6,7 +6,7 @@
 }
 ---
 
-# Cluster [^](/articles/)
+# Cluster
 
 Einrichtung nach:
 

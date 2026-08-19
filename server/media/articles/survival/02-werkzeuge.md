@@ -1,8 +1,6 @@
-### **Kapitel 2: WERKZEUGE**
+﻿### **Kapitel 2: WERKZEUGE**
 
-_„In den frühen Tagen des amerikanischen Lebens waren Axt und Messer die beiden unverzichtbaren Werkzeuge … Mit dem Messer machten sie Löffel, Besen, Rechen und Schalen. Sie schnitten die Häute der Tiere, die sie fingen, und machten die kleineren Dinge, die sie in der Hütte oder um sie herum brauchten."_ — PHILIP D. FAGANS, 1933
-
-Deine Werkzeuge sind der Unterschied zwischen einem schönen, bequemen Spaziergang und einem misslungenen – oder sogar gefährlichen – Ausflug in den Wald. Denk an Kapitel 1 zurück: Schneidewerkzeuge sind eines der fünf Cs. Das heißt, sie sind beim Bushcraft unverzichtbar. Es gibt so viele Messer, Sägen und Äxte. Dieses Kapitel gibt dir das Wissen, um die besten Werkzeuge für deine Bedürfnisse und Ziele auszuwählen.
+Deine Werkzeuge sind der Unterschied zwischen einem schönen, bequemen Spaziergang und einem misslungenen – oder sogar gefährlichen – Ausflug in den Wald. Denk an Kapitel 1 zurück: Schneidewerkzeuge sind eines der fünf Cs. Das heißt, sie sind beim Wildnishandwerk unverzichtbar. Es gibt so viele Messer, Sägen und Äxte. Dieses Kapitel gibt dir das Wissen, um die besten Werkzeuge für deine Bedürfnisse und Ziele auszuwählen.
 
 Auch die Pflege deiner Werkzeuge ist eine wichtige Fähigkeit. Es reicht nicht, sie im Gepäck zu haben. Richtige Pflege sorgt dafür, dass deine Werkzeuge lange halten. Genauso wichtig ist, dass du sicher mit Messer, Säge und Axt umgehst. Vom Schärfen über das Holzen bis zum Fällen von Bäumen: Dieses Kapitel zeigt dir die wichtigsten Fähigkeiten, um ein Experte zu werden – und dich selbst und andere zu schützen.
 
@@ -14,11 +12,11 @@ Ein Gürtelmesser ist das wichtigste Werkzeug, das ein Waldmensch besitzt. Darum
 
 ###### **TASCHENMESSER (KLAPPMESSER)**
 
-Es gibt viele Arten von Taschenmessern. Sie reichen von **Schweizer Taschenmessern** über Multitools bis zu teuren Einzelklingen-Klappmessern. Wichtig ist, zu verstehen, was das Werkzeug für dich tun soll. Wähle ein Messer, das so vielseitig ist, wie du es brauchst. Bevor du ein Taschen- oder Faltwerkzeug kaufst: Denk zuerst an sein Messer. Das Wichtigste ist die Klinge.
+Es gibt viele Arten von Taschenmessern. Sie reichen von **Schweizer Taschenmessern** über Mehrzweckwerkzeuge bis zu teuren Einzelklingen-Klappmessern. Wichtig ist, zu verstehen, was das Werkzeug für dich tun soll. Wähle ein Messer, das so vielseitig ist, wie du es brauchst. Bevor du ein Taschen- oder Faltwerkzeug kaufst: Denk zuerst an sein Messer. Das Wichtigste ist die Klinge.
 
-###### _Über Multitool-Funktionen_
+###### _Über Mehrzweckwerkzeug-Funktionen_
 
-Das Hauptproblem vieler Multitool-Messer: Als Werkzeug sind sie sehr nützlich. Aber als Messer sind sie oft richtig schlecht. Harriet Simpson Arnow erzählt in ihrem Buch _Seedtime on the Cumberland_ von 1960 von einem Mann, der am Lagerfeuer mit seinem Schnitzmesser einen neuen Schaft für seine kaputte Steinschlosswaffe schnitzt. Ich kann mir das mit den Klingen von heutigen Multitools nicht vorstellen. Sie sind meist kleiner und dünner als eine normale Klappklinge und viel weniger nützlich. Manche Schweizer-Taschenmesser haben aber ordentliche Klingen und bieten auch andere nützliche Werkzeuge. Die Pfadfinder benutzten viele Jahre ein Camp-Messer. Auch das US-Militär hat diese Bauart übernommen. Dieses Camp-Messer hat eine gute Mischung aus Werkzeugen und eine nützliche kleine Klinge für feine Arbeiten.
+Das Hauptproblem vieler Mehrzweckwerkzeug-Messer: Als Werkzeug sind sie sehr nützlich. Aber als Messer sind sie oft richtig schlecht. Harriet Simpson Arnow erzählt in ihrem Buch _Seedtime on the Cumberland_ von 1960 von einem Mann, der am Lagerfeuer mit seinem Schnitzmesser einen neuen Schaft für seine kaputte Steinschlosswaffe schnitzt. Ich kann mir das mit den Klingen von heutigen Mehrzweckwerkzeugen nicht vorstellen. Sie sind meist kleiner und dünner als eine normale Klappklinge und viel weniger nützlich. Manche Schweizer-Taschenmesser haben aber ordentliche Klingen und bieten auch andere nützliche Werkzeuge. Die Pfadfinder benutzten viele Jahre ein Lager-Messer. Auch das US-Militär hat diese Bauart übernommen. Dieses Lager-Messer hat eine gute Mischung aus Werkzeugen und eine nützliche kleine Klinge für feine Arbeiten.
 
 ###### **TASCHENMESSER ZUM ENTHÄUTEN**
 
@@ -32,7 +30,7 @@ Wenn du dein Messer gewählt hast, musst du lernen, sicher damit umzugehen. Das 
 
 Das **Dreieck des Todes** ist der Raum zwischen deinen Oberschenkeln. Dazu gehören der Schritt und beide Oberschenkelarterien. Meide diesen Bereich immer mit einer offenen Klinge. Schneide nie in diesen Bereich. Und halte Gegenstände nie so, dass die Klinge hineinrutschen könnte.
 
-###### **BUSHCRAFT-TIPP**
+###### **WILDNIS-TIPP**
 
 Wenn du nicht allein im Wald bist, musst du vor jedem Gebrauch deines Gürtelmessers deinen **Blutkreis** prüfen. Das ist der Bereich rund 360° um dich, weiter als eine Armlänge. Dort könnte jemand mit einer Klinge in Kontakt kommen, die vom Schnittgut weggedrückt wird.
 
@@ -44,13 +42,13 @@ Sicherheit hat höchste Wichtigkeit. Darum steckst du dein Gürtelmesser direkt 
 
 Manchmal musst du mit deinem Gürtelmesser batonen. **Batoning** ist eine Methode, Holz zu schneiden und zu spalten. Du benutzt einen Baton – also einen Stock –, um auf den Messerrücken zu schlagen. So treibst du die Klinge durch ein Stück Holz. Das ist besonders gut, um aus größerem Material feines Anmachholz zu machen – zum Beispiel wenn das Holz außen nass, aber innen trocken ist. Für richtiges Batoning brauchst du einen Baton. Meist ist das ein Ast aus hartem Holz, ungefähr so lang wie von deiner Achsel bis zu deiner Handfläche. Weiches Holz bricht leicht. Lose Holzstücke fliegen herum und können ins Auge gehen. Lege das Material zum Batonen nach Möglichkeit auf eine flache Fläche. Das gibt eine feste Unterlage und verhindert, dass deine Klinge versehentlich Erde oder Steine berührt. Stelle das Holzscheit mit der Schnittfläche nach oben auf eine feste Unterlage oder einen Amboss-Stumpf. Setze die Klinge an die Stelle, an der du schneiden oder spalten willst. Schlage mit dem Baton auf den Messerrücken. So spaltet sich das Holz an der gewünschten Stelle.
 
-###### **BUSHCRAFT-TIPP**
+###### **WILDNIS-TIPP**
 
 Holz mit viel Maserung, wie Eiche, spaltet sich von einem geraden Schnitt oft ungleichmäßig. Du kannst das etwas ausgleichen, indem du die Klinge beim Batoning von der Laufrichtung wegdrehst. Wenn das Holz beim ersten Schlag nicht spaltet oder die Klinge unter die Oberfläche des gewünschten Stücks rutscht, musst du weiter batonen. Schlage dann weiter in Richtung Klingenspitze auf den Rücken. Das ist ein weiterer Grund, warum du eine Klinge hoher Qualität brauchst. Versuche nie, ein Stück zu batonen, das dicker ist als deine Klinge.
 
 ###### **DER V-KERB**
 
-Einen **V-Kerb** zu machen, ist eine sehr nützliche Fähigkeit. Du brauchst sie für Toggle-Stöcke für viele Dinge – von Planen-Leinen bis zu Topfaufhängern. (Ein Toggle ist ein kleiner Holzstab, der an einem Seil hängt und mit dem du Dinge aufhängen kannst.) Dieser Kerb hält eine Schnur an der gewünschten Stelle eines Toggles fest. Du kannst ihn auch größer machen, damit gestapeltes Material nicht verrutscht – wenn der Kerb genauso groß ist wie das Material oder wenn das andere Stück Holz gleich gekerbt ist. Dieser Kerb ähnelt dem „Blockhaus-Kerb" (siehe unten), ist aber schräg und nicht so genau in Tiefe und Form. So machst du diesen Kerb: Wähle das Material und lege es waagerecht auf eine feste Fläche. Setze deine Klinge in einem 45°-Winkel an. Batan die Klinge bis zu 1/3–1/2 der Dicke des Holzes – je nachdem, wofür du den Kerb brauchst. Gehe auf die andere Seite des Kerbs und wiederhole das. So entsteht ein „V". Bei Kerben, die gespannt werden und nicht gestapelt sind, schneide nie tiefer als ein Drittel der Dicke.
+Einen **V-Kerb** zu machen, ist eine sehr nützliche Fähigkeit. Du brauchst sie für Knebelstöcke für viele Dinge – von Planen-Leinen bis zu Topfaufhängern. (Ein Knebel ist ein kleiner Holzstab, der an einem Seil hängt und mit dem du Dinge aufhängen kannst.) Dieser Kerb hält eine Schnur an der gewünschten Stelle eines Knebels fest. Du kannst ihn auch größer machen, damit gestapeltes Material nicht verrutscht – wenn der Kerb genauso groß ist wie das Material oder wenn das andere Stück Holz gleich gekerbt ist. Dieser Kerb ähnelt dem „Blockhaus-Kerb" (siehe unten), ist aber schräg und nicht so genau in Tiefe und Form. So machst du diesen Kerb: Wähle das Material und lege es waagerecht auf eine feste Fläche. Setze deine Klinge in einem 45°-Winkel an. Batan die Klinge bis zu 1/3–1/2 der Dicke des Holzes – je nachdem, wofür du den Kerb brauchst. Gehe auf die andere Seite des Kerbs und wiederhole das. So entsteht ein „V". Bei Kerben, die gespannt werden und nicht gestapelt sind, schneide nie tiefer als ein Drittel der Dicke.
 
 ###### **DER BLOCKHAUS-KERB**
 
@@ -68,7 +66,7 @@ Der **Topf-/Bügel-Kerb** ist nützlich für Kochwerkzeug. Er hält den Bügel (
 
 Junge Bäume mit dem Messer zu fällen sollte dein letzter Ausweg sein. Tu es nur, wenn du keine Axt oder Säge hast oder kein totes Holz findest. Um einen Jungbaum zu schneiden, musst du Druck auf den Baum bringen. Biege ihn um und mache mehrere Scherenschnitte, um ihn wie ein Biber durchzunagen.
 
-###### **BUSHCRAFT-TIPP**
+###### **WILDNIS-TIPP**
 
 Die **Biber-Technik** macht viele Schnitte rund um den Stock. So wird er Richtung Mitte geschwächt. Das ist wie bei einem Biber, der einen Baum fällt – nur nutzt du dein Messer statt deiner Zähne.
 
@@ -78,7 +76,7 @@ Mit einem guten, scharfen Messer ist das ganz einfach. Aber du musst vorsichtig 
 
 Rinde zu entfernen brauchst du für die meisten Projekte. Besonders wichtig ist es, wenn du Innenrinde für Anzündmaterial verarbeiten willst. Zum Rinde-Entfernen legst du das Material auf einen guten Amboss. Nutze den Messerrücken in Scherentechnik. Für feinere Späne aus Innenrinde, Fettkiefer und Pilzen – oder für flauschiges Anzündmaterial – kannst du dieselbe Technik mit weniger Druck und anderem Winkel nutzen.
 
-###### **BUSHCRAFT-TIPP**
+###### **WILDNIS-TIPP**
 
 Die Schneide deines Messers ist eine Ressource. Und alle Ressourcen sollte man schonen – du weißt nie, wann ein Notfall kommt und du nicht heimkommst, wie du geplant hast. Ein weiterer guter Grund für den scharfen 90°-Rücken deines Messers: Du kannst damit leicht Rinde entfernen und Anzündmaterial aus Rinde oder Fettkiefer herstellen.
 
@@ -90,7 +88,7 @@ Mach bis zu zwanzig dieser streichholzgroßen Federspäne. Lege sie als Anzünd-
 
 ###### **MESSERPFLEGE**
 
-Es ist sehr wichtig, dass dein Messer scharf bleibt und du es mit Respekt behandelst. Es ist eines der wichtigsten Werkzeuge, die ein Bushcrafter hat.
+Es ist sehr wichtig, dass dein Messer scharf bleibt und du es mit Respekt behandelst. Es ist eines der wichtigsten Werkzeuge, die ein Wildnishandwerker hat.
 
 ###### **SCHUTZ**
 
@@ -124,9 +122,9 @@ Zuerst musst du den Winkel der Schneide deines Messers kennen. Er liegt meist zw
 
 Ein Messermacher sagte mir einmal: „Schärfe dein Messer einmal und zieh es danach ewig ab." Das stimmt. Aber denk daran: Jeder Schritt mit groben, mittleren und feinen Schleifmitteln nimmt Metall von der Klinge.
 
-**BUSHCRAFT-TIPP**
+**WILDNIS-TIPP**
 
-Die meisten Wetzsteine wurden früher mit Öl benutzt. Aber Wasser ist auf dem Weg und im Camp viel besser. Denk daran: Wenn du einen neuen Stein einmal mit Öl benutzt hast, kannst du nie wieder Wasser nehmen.
+Die meisten Wetzsteine wurden früher mit Öl benutzt. Aber Wasser ist auf dem Weg und im Lager viel besser. Denk daran: Wenn du einen neuen Stein einmal mit Öl benutzt hast, kannst du nie wieder Wasser nehmen.
 
 Steine haben eine Körnung (Grit). Je größer die Zahl, desto feiner der Stein. Zum Beispiel gilt ein 800er-Stein als grob. Er wird nur für starkes Abtragen benutzt, zum Beispiel bei großen Graten. Ein 3000er-Stein dagegen ist ein sehr feiner Stein für den letzten Schliff und das Abziehen. Für normales Schärfen nehme ich meist einen 1000–1200er-Stein und danach einen Lederriemen. Zum Schärfen lässt du den Stein zuerst etwas in Wasser liegen, damit sich alle Poren füllen. Dann legst du ihn auf eine flache Fläche oder baust einen Ständer aus Holz, der den Stein gerade hält. Mit kleinen Nägeln kannst du ihn auf einem Holzstück oder Stumpf festhalten. Wenn der Stein liegt, ziehst du die Klinge im richtigen Winkel (je nach Schliff, siehe unten) über den Stein – von der Griffseite zur Spitze. Halte den Winkel beim ganzen Zug gleich.
 
@@ -152,11 +150,11 @@ Ein weiteres wichtiges Schneidewerkzeug ist die **Säge** . Wie bei Messern gibt
 
 Es gibt heute viele Klappsägen. Sie sind tolle Werkzeuge für den Wald, weil sie leicht, klein und günstig sind. Eine Säge zu benutzen ist immer sicherer, als mit einer Axt zu schwingen. Und wenn du nicht sehr geübt mit der Axt bist, ist eine Säge auch genauer. Mit einer Säge kannst du beim Kerben viel Batoning sparen. Zum Schneiden und Entasten ist dieses Werkzeug kaum zu schlagen.
 
-###### **BUSHCRAFT-TIPP**
+###### **WILDNIS-TIPP**
 
 Mit einer Säge kannst du Holz ziemlich leicht spalten: Nimm einen trockenen Ast von ungefähr Handgelenk-Dicke. Mache einen Anhaltsschnitt bis etwa in die Hälfte. Dann schlage das Stück mit dem Anhaltsschnitt senkrecht zum Boden auf einen Amboss oder Stumpf. So sollte sich der Ast vom Anhaltsschnitt aus in zwei Hälften spalten.
 
-Es gibt viele Marken von Klappsägen. Aber meiner Erfahrung nach ist die Bahco Laplander die beste Säge für Bushcraft. Mit etwa 30 Dollar ist sie sehr günstig. Meine eigene Säge ist über sechs Jahre alt und läuft immer noch gut.
+Es gibt viele Marken von Klappsägen. Aber meiner Erfahrung nach ist die Bahco Laplander die beste Säge für Wildnishandwerk. Mit etwa 30 Dollar ist sie sehr günstig. Meine eigene Säge ist über sechs Jahre alt und läuft immer noch gut.
 
 ###### **BÜGELSÄGEN (RAHMENSÄGEN)**
 
@@ -170,7 +168,7 @@ Die Klinge deiner Säge kann durch Rost abnutzen oder beschädigt werden. Halte 
 
 Wenn du die Zähne doch neu setzen willst, geht das so:
 
-1. Nimm eine kleine Zange (vielleicht aus einem Multitool oder deinem Fallenzeug). Biege vorsichtig jeden zweiten Zahn nach außen. Achte darauf, dass der nächste Zahn ein Stück in die andere Richtung gedrückt wird.
+1. Nimm eine kleine Zange (vielleicht aus einem Mehrzweckwerkzeug oder deinem Fallenzeug). Biege vorsichtig jeden zweiten Zahn nach außen. Achte darauf, dass der nächste Zahn ein Stück in die andere Richtung gedrückt wird.
 
 2. Nimm die Klinge ab. Lege sie auf einen Stumpf oder Holzamboss. Klopfe mit einem Nagel und deiner Axt vorsichtig jeden zweiten Zahn. Drehe dann die Klinge um und wiederhole es auf der anderen Seite. Dieses Verfahren ist nicht genau. Aber im Notfall ist es besser als nichts. Du kannst auch ein Werkzeug zum Zähne-Setzen kaufen. Das ist aber ein weiteres Teil zum Tragen und nicht nötig, weil die Klingen lange halten, bevor man sie ersetzen oder neu setzen muss.
 
@@ -180,7 +178,7 @@ Wenn du die Zähne doch neu setzen willst, geht das so:
 
 Die Tomahawk-Klinge sitzt im Griff. Ihr Kopf wird vor allem durch Druck gehalten. Der Griff ist verjüngt und wird von oben durch den Kopf gesteckt. Die Verjüngung verhindert, dass der Griff ganz durch das „Auge" des Tomahawk-Kopfes rutscht. Weil er nicht befestigt ist, lässt er sich leicht herausnehmen oder ersetzen, wenn er bricht.
 
-Die Geschichte vom Tomahawk als Waffe an der Grenze mag stimmen. Aber das war nicht sein ursprünglicher Zweck. Der Tomahawk war ein frühes Multitool. Man konnte damit kleines Feuerholz am Camp verarbeiten. Mit abgenommenem Kopf ist er ein ausgezeichnetes Werkzeug zum Schaben und Häuten. Er kann auch als Keil zum Spalten von Baumstämmen dienen. Darum ist der Tomahawk besser als ein kleines Gürtelbeil, wenn dein Ziel eine Fallenlinie ist oder das Verarbeiten von Häuten.
+Die Geschichte vom Tomahawk als Waffe an der Grenze mag stimmen. Aber das war nicht sein ursprünglicher Zweck. Der Tomahawk war ein frühes Mehrzweckwerkzeug. Man konnte damit kleines Feuerholz am Lager verarbeiten. Mit abgenommenem Kopf ist er ein ausgezeichnetes Werkzeug zum Schaben und Häuten. Er kann auch als Keil zum Spalten von Baumstämmen dienen. Darum ist der Tomahawk besser als ein kleines Gürtelbeil, wenn dein Ziel eine Fallenlinie ist oder das Verarbeiten von Häuten.
 
 ###### **GÜRTELÄXTE (BEILE)**
 
@@ -188,7 +186,7 @@ Gürteläxte – auch Werkbeile oder Hachets genannt – gibt es seit den frühe
 
 ###### **EINE GRÖSSERE AXT WÄHLEN**
 
-Auch Äxte gibt es in vielen Formen, Gewichten und Stiellängen. Eine Axt, die so groß ist, dass du sie am Rucksack befestigen musst, brauchst du nur für bestimmte Arbeiten am Camp und auf dem Weg. Eine Axt mit einem Stiel von deiner Achsel bis zu deiner Handfläche ist eine gute Fäll-Axt. Diese Größe brauchst du nur, wenn du wirklich große Bäume fällen musst. Große Bäume sind in diesem Buch Bäume mit einem Durchmesser, den du ohne die Axt kaum bewältigen kannst. Du musst also gut überlegen, ob du eine große Axt wirklich brauchst.
+Auch Äxte gibt es in vielen Formen, Gewichten und Stiellängen. Eine Axt, die so groß ist, dass du sie am Rucksack befestigen musst, brauchst du nur für bestimmte Arbeiten am Lager und auf dem Weg. Eine Axt mit einem Stiel von deiner Achsel bis zu deiner Handfläche ist eine gute Fäll-Axt. Diese Größe brauchst du nur, wenn du wirklich große Bäume fällen musst. Große Bäume sind in diesem Buch Bäume mit einem Durchmesser, den du ohne die Axt kaum bewältigen kannst. Du musst also gut überlegen, ob du eine große Axt wirklich brauchst.
 
 ###### **SICHERES HANDHABEN UND BENUTZEN**
 
@@ -216,13 +214,13 @@ Das **Fällen** sollte man nicht leichtfertig tun. Nutze immer Totholz für den 
 
 Um die Sicherheitszone vor dem Fällen festzulegen, musst du wissen, wie hoch der Baum ist. So weißt du, wie viel Platz du brauchst. Dafür kannst du deinen Kompass-Inklinometer nutzen. Gehe so weit vom Baum weg, bis der Kompass auf die Spitze zeigt und ein 45°-Winkel am Inklinometer steht. In diesem Moment ist deine Entfernung zum Baum ungefähr so groß wie seine Höhe.
 
-###### **BUSHCRAFT-TIPP**
+###### **WILDNIS-TIPP**
 
 Wenn du keinen Kompass hast, nimm ein anderes Messwerkzeug. Ich brenne meist Marken in den Rücken meines Axtstiels, alle 2,5 Zentimeter. Miss vom Fuß des Baumes aus. Binde eine Schnur auf bequemer Höhe an, zum Beispiel bei etwa 1,5 Metern. Gehe vom Baum weg, bis du diese 1,5 Meter Höhe in deine 2,5-Zentimeter-Marke am Beil bekommst. Schau dann zur Baumspitze hoch. Zähle, wie viele Marken am Beil der Baum hoch ist. Nimm diese Zahl mal 1,5 Meter. So bekommst du die ungefähre Höhe des Baumes.
 
 ###### **DIE SICHERHEITSZONE**
 
-Große Bäume zu fällen sollte nur der erfahrene Bushcrafter versuchen, weil es gefährlich ist. Um Bäume zu wählen, die das Gewicht tragen und noch recht sicher sind, nutze den „Umgreif-Test". Umarme den gewählten Baum. Wenn du mit der rechten Hand deine linke Schulter berühren kannst (oder andersherum), ist er eine sichere Größe, um ihn allein oder ohne viel Erfahrung anzugehen. Fälle immer auf ebenem Boden ohne große Felsen oder andere Hebel-Punkte im Fallweg. Prüfe die Sicherheitszone – einen Bereich von 180° in Fallrichtung –, damit alle Personen und Geräte frei sind.
+Große Bäume zu fällen sollte nur der erfahrene Wildnishandwerker versuchen, weil es gefährlich ist. Um Bäume zu wählen, die das Gewicht tragen und noch recht sicher sind, nutze den „Umgreif-Test". Umarme den gewählten Baum. Wenn du mit der rechten Hand deine linke Schulter berühren kannst (oder andersherum), ist er eine sichere Größe, um ihn allein oder ohne viel Erfahrung anzugehen. Fälle immer auf ebenem Boden ohne große Felsen oder andere Hebel-Punkte im Fallweg. Prüfe die Sicherheitszone – einen Bereich von 180° in Fallrichtung –, damit alle Personen und Geräte frei sind.
 
 ###### **DIE FÄLLSCHNITTE**
 

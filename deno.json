@@ -1,0 +1,68 @@
+{
+  "nodeModulesDir": "auto",
+  "exclude": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.next/**",
+    "**/.backup/**",
+    "server/media/**",
+    "client/public/**"
+  ],
+  "fmt": {
+    "lineWidth": 80,
+    "indentWidth": 2,
+    "singleQuote": false,
+    "semiColons": true,
+    "proseWrap": "preserve",
+    "exclude": [
+      "node_modules",
+      "dist",
+      "build",
+      ".next",
+      ".backup",
+      "client/public"
+    ]
+  },
+  "lint": {
+    "exclude": [
+      "node_modules",
+      "dist",
+      "build",
+      ".next",
+      ".backup",
+      "client/public"
+    ],
+    "rules": {
+      "tags": [
+        "recommended"
+      ],
+      "exclude": [
+        "no-sloppy-imports",
+        "no-window",
+        "no-window-prefix"
+      ]
+    }
+  },
+  "tasks": {
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && deno task dev",
+    "dev": {
+      "dependencies": [
+        "dev:client",
+        "dev:server"
+      ]
+    },
+    "check:client": "cd client && npm run typecheck",
+    "check:server": "cd server && deno task check",
+    "check": {
+      "dependencies": [
+        "check:client",
+        "check:server"
+      ]
+    },
+    "fmt": "deno fmt",
+    "fmt:check": "deno fmt --check",
+    "lint": "deno lint"
+  }
+}

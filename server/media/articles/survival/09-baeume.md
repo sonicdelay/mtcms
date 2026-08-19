@@ -2,10 +2,6 @@
 
 ##### **DIE RESSOURCE FÜR ALLE JAHRESZEITEN** 
 
-_„Seit den ältesten Zeiten glauben die Menschen ganz tief daran, dass Pflanzen heilende Kräfte haben.“_
-
-—MATTHEW WOOD, _DAS BUCH DER HEILPFLANZEN-WEISHEIT_ , 1997
-
 Alle Pflanzen haben eine Wachstumszeit. Viele Pflanzen, die du als Essen oder Medizin benutzt, sind nur kurze Zeit nutzbar. Bäume sind anders: Viele Dinge von ihnen bekommst du das ganze Jahr über. Am wichtigsten sind Baumaterial und Medizin. Wenn du die häufigsten Bäume und ihre Eigenschaften kennst, findest du ein paar, die dir die meisten Dinge liefern. Dieses Kapitel zeigt dir die wichtigsten Bäume – und die mit den meisten Ressourcen – für deine Zeit im Wald.
 
 ###### **KIEFERN** 

@@ -1,8 +1,4 @@
-### **Kapitel 8: SICH IM GELÄNDE ZURECHTFINDEN**
-
-_„Zu wissen, wo du bist, ist unnötig. Was du wissen musst, ist, wie du dorthin zurückkommst, wo du warst."_
-
-—DON PAUL, 1991
+﻿### **Kapitel 8: SICH IM GELÄNDE ZURECHTFINDEN**
 
 Der Weg zurück zum Lager von einem kurzen Erkundungsgang braucht immer eine Kontrollmethode — für den Fall, dass du dich verlaufst. Es ist nicht nur wichtig, alle Teile von Karte und Kompass zu verstehen. Du musst auch ein Gefühl für Richtungen entwickeln. Achte genau darauf, wo du warst und wohin du gehst. Gelände-Merkmale zu erkennen und Handläufe zu nutzen hilft dir sehr bei kurzen Strecken. Für lange Touren sind Karte und Kompass der Schlüssel zum Erfolg.
 
@@ -20,7 +16,7 @@ Mit diesen Funktionen im Kopf kannst du dir vorstellen, welchen Kompass du wähl
 
 Die Antwort ist nicht so klar, wie es klingt. Für grobe Richtungen brauchst du keinen Kompass. Bei Sonnenschein bist du selbst dein Schattenstock! Auf der Nordhalbkugel gilt: Wenn du zur Sonne schaust, schaust du nach Süden. Am Morgen ist das Südosten (SO), am Abend Südwesten (SW) und zur Mittagszeit (10 bis 14 Uhr) meist genau Süden (S).
 
-###### **BUSHCRAFT-TIPP**
+###### **WILDNIS-TIPP**
 
 Scheint keine Sonne, sagen dir die Bäume die Antwort. Alle Bäume haben eines gemeinsam: Sie müssen Photosynthese betreiben, um zu leben. Deshalb sitzen die meisten Zweige auf der Südseite des Baumes. Schau dir mehrere Bäume an, um sicherzugehen.
 

@@ -1,10 +1,6 @@
-### **Kapitel 10: FALLEN STELLEN UND WILD VERARBEITEN** 
+﻿### **Kapitel 10: FALLEN STELLEN UND WILD VERARBEITEN** 
 
-_„Bei der Wahl des Fallen-Gebiets ist es immer gut, einen Ort zu wählen, an dem man so viel wie möglich auf dem Wasser reisen kann. Otter, Nerz, Biber und Bisamratte gehören zu den begehrtesten Tieren für den Fallensteller. Da diese Tiere alle amphibisch leben (an Land und im Wasser), ist ein wasserreiches Gebiet am besten.“_
-
-—W. HAMILTON GIBSON, _CAMP LIFE IN THE WOODS_ , 1881
-
-Fallenstellen wird oft falsch verstanden. Denk einmal an die Jagd: Du kannst nach Tieren Ausschau halten und mit deiner Waffe alles schießen, was in deinen Schussbereich kommt – das können leicht 100 Meter oder mehr sein. Bei einer Falle musst du ein Tier dazu bringen, seinen Fuß in einen Kreis von 5 Zentimetern zu setzen – und du bist gar nicht da! Fallenstellen ist eine Kunst wie das Spurenlesen. Aber es gibt viele Wege, deine Chancen zu verbessern. Wenn du die Zeichen und die Landschaft lesen kannst, geht es um **Sets** (das Platzieren der Fallen), Geduld und Statistik. Je mehr Fallen du stellst, desto mehr Chancen hast du. Aber das heißt nicht, dass du Fallen ohne Grund stellen sollst. Achte auf **Setting Signs** – das sind Zeichen, dass Tiere hier waren. Wenn du nur ein paar Fallen am Camp stellst, fängst du oft nicht einmal nach ein paar Tagen etwas. Fallenstellen ist ein Spiel der Prozente. Zwölf Fallen sollten das Minimum sein, wenn du mit Fallen Fleisch bekommen willst. Ich weiß, das klingt nach viel. Aber wenn du die Grundlagen kannst, schaffst du das mit wenig Material in etwa einer Stunde.
+Fallenstellen wird oft falsch verstanden. Denk einmal an die Jagd: Du kannst nach Tieren Ausschau halten und mit deiner Waffe alles schießen, was in deinen Schussbereich kommt – das können leicht 100 Meter oder mehr sein. Bei einer Falle musst du ein Tier dazu bringen, seinen Fuß in einen Kreis von 5 Zentimetern zu setzen – und du bist gar nicht da! Fallenstellen ist eine Kunst wie das Spurenlesen. Aber es gibt viele Wege, deine Chancen zu verbessern. Wenn du die Zeichen und die Landschaft lesen kannst, geht es um **Sets** (das Platzieren der Fallen), Geduld und Statistik. Je mehr Fallen du stellst, desto mehr Chancen hast du. Aber das heißt nicht, dass du Fallen ohne Grund stellen sollst. Achte auf **Fallenzeichen** – das sind Zeichen, dass Tiere hier waren. Wenn du nur ein paar Fallen am Lager stellst, fängst du oft nicht einmal nach ein paar Tagen etwas. Fallenstellen ist ein Spiel der Prozente. Zwölf Fallen sollten das Minimum sein, wenn du mit Fallen Fleisch bekommen willst. Ich weiß, das klingt nach viel. Aber wenn du die Grundlagen kannst, schaffst du das mit wenig Material in etwa einer Stunde.
 
 ###### **DIE TEILE EINER FALLE** 
 
@@ -12,7 +8,7 @@ Fast alle Fallen haben drei Hauptteile: den **Auslöser**, den **Hebel** und den
 
 1. Der **Auslöser** ist das Teil, das nachgibt und die Falle auslöst. Bei einer einfachen Falle ist das oft der Köder-Stock. Bei einer Conibear-Falle sind es zum Beispiel die Draht-Auslöser.
 2. Der **Hebel** hält die Spannung der Falle. Der Auslöser gibt ihn frei oder bewegt ihn.
-3. Der **Antrieb** gibt der Falle die Kraft. Es kann die Schwerkraft sein (bei einer Deadfall-Falle) oder ein gespannter junger Baum oder Busch. Alles, was Gewicht überträgt oder Energie speichert, ist ein Antrieb.
+3. Der **Antrieb** gibt der Falle die Kraft. Es kann die Schwerkraft sein (bei einer Fallgewicht-Falle) oder ein gespannter junger Baum oder Busch. Alles, was Gewicht überträgt oder Energie speichert, ist ein Antrieb.
 
 Fallen haben meist eine von drei Aufgaben: zerquetschen, würgen oder lebend fangen. (Oder, wie John „Lofty“ Wiseman sagte: Würgen, Quetschen und Hängen.) Welche Falle du stellst, hängt vom Tier ab. Denk dran: Lebende Beute verdirbt nicht. Aber ein wütender Waschbär ist gefährlich! Sei also klug beim Fallenstellen. Es ist besser, das Tier zu töten und sicher zu sein, als dich mit einem gefährlichen Tier herumzuschlagen.
 
@@ -20,7 +16,7 @@ Fallen haben meist eine von drei Aufgaben: zerquetschen, würgen oder lebend fan
 
 Ein Zeichen-Pfahl (Sign Post) zeigt dir, welche Tiere in deinem Fallen-Gebiet unterwegs sind. Du brauchst ihn nicht, wenn du schon viele Zeichen gesehen hast und weißt, welche Tiere da sind. So machst du ihn: Suche eine Stelle, wo Tiere oft vorbeilaufen, und stecke einen Stock in die Erde. Räume den Boden rundherum auf etwa 60 × 60 Zentimeter frei. Dann sieht man Tierspuren, wenn ein Tier zum Nachsehen kommt. Auf den Stock kannst du einen Sicht- oder Geruchs-Lockstoff legen. Am besten benutzt du beide. Zum Beispiel: Eingeweide eines Frosches und eine Feder – oder ein helles Stück Stoff am Stock. Tiere bemerken Veränderungen auf ihren täglichen Wegen. Genau wie du, wenn jemand in deinem Zimmer etwas Neues hinstellt. Die Tiere kommen nachsehen und hinterlassen Spuren. So erkennst du, welche Tiere hier leben. Danach kannst du Fallen und Köder besser wählen.
 
-###### **BUSHCRAFT-TIPP** 
+###### **WILDNIS-TIPP** 
 
 Sich um den Geruch zu kümmern ist übertrieben! Ja, wirklich übertrieben. Du musst deinen Menschengeruch nicht so stark verstecken. Säugetiere sind neugierig und alle „Schnüffler“: Sie wollen wissen, wer wo war und warum. Manche werden sogar von Stinkendem angezogen – zum Beispiel von deinem Schweiß oder Urin. Ich kenne einen Mann, der die Blätter, mit denen er sich nach dem Geschäft abgewischt hat, an seinen Zeichen-Pfahl gelegt hat. Damit hat er mehrere Waschbären und ein Opossum angelockt. Menschengeruch kann beim Jagen schaden, aber Aasfresser stört er nicht. Die Lehre daraus: Was stinkt, ist manchmal der beste Lockstoff. Und sich um den eigenen Geruch zu sorgen, ist unnötig. Dreck und ein rauchiges Feuer überdecken deinen Geruch schon. Außer du hast einen übel riechenden Chemikalien- oder Kraftstoffgeruch an den Händen, bist du ziemlich sicher.
 
@@ -36,7 +32,7 @@ Hier kommen ein paar Grundlagen für moderne Fallen, die ich für eine Notfall-A
 
 ###### **DIE #110 CONIBEAR** 
 
-Die **Conibear**-Falle (auch „Body Grip“ genannt) ist nach ihrem Erfinder benannt. Sie ist wahrscheinlich die beste Falle, die je gebaut wurde. Mit dem richtigen Set fängst du alles Kleine: Wasservögel, Boden-Vögel und sogar Fische. Sie ist eine Tötungsfalle – Tiere sind darin fast nie noch am Leben. Du kannst sie empfindlicher oder unempfindlicher einstellen und mit oder ohne Köder benutzen. Die kleine #110 stellst du leicht mit der Hand. Die #220 braucht meist ein Werkzeug zum Stellen – deshalb ist sie weniger gut.
+Die **Conibear**-Falle (auch „Körperklemme“ genannt) ist nach ihrem Erfinder benannt. Sie ist wahrscheinlich die beste Falle, die je gebaut wurde. Mit dem richtigen Set fängst du alles Kleine: Wasservögel, Boden-Vögel und sogar Fische. Sie ist eine Tötungsfalle – Tiere sind darin fast nie noch am Leben. Du kannst sie empfindlicher oder unempfindlicher einstellen und mit oder ohne Köder benutzen. Die kleine #110 stellst du leicht mit der Hand. Die #220 braucht meist ein Werkzeug zum Stellen – deshalb ist sie weniger gut.
 
 Rattenfallen werden oft übersehen. Sie sind wie ein „Conibear für arme Leute“: sehr gut für kleinere Tiere bis zu Eichhörnchen und kleinen Vögeln. Wenn du Rattenfallen benutzt, streiche sie in einer matten, erdigen Farbe an. Bohre in eine Ecke ein Loch, damit du sie festmachen kannst. So kann sie kein Tier wegschleppen, wenn sie nicht tötet.
 
@@ -66,7 +62,7 @@ Machen wir die Fallen bereit. Neue Fallen aus der Fabrik sind mit Öl beschichte
 
 Wie bei jedem Hobby gibt es viele Fallen-Gadgets im Laden. Aber du kannst – und solltest – es einfach halten. Du brauchst ein Sieb, um feine Erdkrümel auf deinen Standort zu rieseln. Zum Einschlagen der Pfähle reicht der Schaft einer Axt oder ein großes Stück Holz. Zum Graben der Fallen-Grube tut es ein Grabwerkzeug (E-Tool), ein kleiner Handspaten oder ein Grabstock. Ein kleiner Pinsel zum Freilegen des Pedals ist sehr hilfreich.
 
-###### **BUSHCRAFT-TIPP** 
+###### **WILDNIS-TIPP** 
 
 Ein Wort zum Wachsen der Fallen: Das machst du, damit sie leicht laufen und nicht weiterrosten. Es hält sie auch in Bewegung, wenn du sie im Wasser oder in nasser Erde bei Frost benutzt. Das beste Wachs dafür ist Bienenwachs. Wenn du kein eigenes hast, kannst du es kaufen. Das Färben ist nicht unbedingt nötig. Viele Experten sagen: Sprühfarbe tut es auch, oder gar nichts. Hauptsache, die Falle ist gut mit Wachs eingeschmiert. Dann arbeitet sie und fängt Tiere, wenn sie richtig gestellt ist.
 
@@ -78,7 +74,7 @@ Denk daran: Jagen, Fischen und Fallenstellen kosten Kalorien und Energie. Wenn d
 
 Heißt das alles, du darfst die Beine eines großen Frosches nicht essen, bevor du die Reste als Köder benutzt? Natürlich nicht! Es heißt: Wähle klug, was du isst, und spare Ressourcen für größere Mahlzeiten. Nimm leichte Sachen mit viel Eiweiß und Fett – und benutze den Rest, um noch mehr Eiweiß und Fett zu bekommen. Sieh immer zu, dass du deine Lage verbesserst. Genau darum geht es beim Überleben: Mach es dir leicht, statt es dir schwer zu machen!
 
-###### **BUSHCRAFT-TIPP** 
+###### **WILDNIS-TIPP** 
 
 Ein **Lockstoff (Lure)** zieht das Tier durch den Geruch an den Ort. Ein **Köder (Bait)** ist etwas, das das Tier fressen oder untersuchen will. Lockstoffe sind meist aus Drüsen oder Ölen. Köder sind meist Essen. Ein gutes Beispiel für einen Lockstoff ist Stinktier-Moschus: Er lockt Tiere von sehr weit her an. Köder sind zum Beispiel rohes Fleisch.
 
@@ -86,7 +82,7 @@ Ein **Lockstoff (Lure)** zieht das Tier durch den Geruch an den Ort. Ein **Köde
 
 Wenn der Ort gut ist, entscheidest du, wie groß die Falle sein soll und welche du nimmst. Für Fußfallen mag ich Doppel-Langfedern-Fallen (DLS). Eine kleine DLS hält dieselben Tiere wie eine größere Einzel-Federfalle – aber sie fängt auch kleineres Wild. Diese Fallen sind stabiler im Wasser, sicherer und leichter zu stellen als Einzel- oder Spiral-Federn-Fallen. Ich bevorzuge die #11 DLS von Sleepy Creek. Ich habe damit alles gefangen: Opossum, Waschbär und Kojote.
 
-Ich empfehle, mindestens sechs davon zu tragen, zusammen mit Schlingen und Body Grips. Wenn das Gewicht wichtig ist, reichen auch drei. Für langes Fleisch- und Pelzsammeln wären zwölf besser. Aber so viele Fallen trägst du nur mit einem Transportmittel, nicht nur im Rucksack. Für gutes Fleisch-Sammeln trage ich nie mehr als zwölf Fallen, egal in welcher Mischung. Wenn du die richtigen zwölf Fallen für deine Gegend richtig stellst, hältst du dich mit Fleisch versorgt – ohne zu jagen.
+Ich empfehle, mindestens sechs davon zu tragen, zusammen mit Schlingen und Körperklemmen. Wenn das Gewicht wichtig ist, reichen auch drei. Für langes Fleisch- und Pelzsammeln wären zwölf besser. Aber so viele Fallen trägst du nur mit einem Transportmittel, nicht nur im Rucksack. Für gutes Fleisch-Sammeln trage ich nie mehr als zwölf Fallen, egal in welcher Mischung. Wenn du die richtigen zwölf Fallen für deine Gegend richtig stellst, hältst du dich mit Fleisch versorgt – ohne zu jagen.
 
 Handschuhe brauchst du beim Fallenstellen übrigens nicht – außer du willst deine Hände schützen. Ich finde sie beim Stellen gefährlich: Sie machen die Finger unempfindlich. Genau das Gefühl brauche ich aber, um eine Falle sicher zu stellen.
 
@@ -96,33 +92,33 @@ Wenn du bereit bist, deine Falle an einem super Ort zu stellen, der auch die vor
 
 Die #11 DLS hat zwei Federn, die wie Stabilisatoren wirken. Selbst wenn das Betten nicht perfekt ist, wackelt sie nicht so leicht wie eine Spiral-Federn-Falle.
 
-Stelle die Falle in Windrichtung und mit dem Hund zum hinteren Ende des Standorts. So blockiert der Hund nicht den Fuß des Tieres und schiebt ihn nicht aus dem Weg der zuschnappenden Kiefer. Wenn die Falle gestellt und mit gesiebter Erde bedeckt ist, bedecke die ganze Fallen-Grube mit gesiebter Erde. Das ist wichtig: Du willst keine großen Erdklumpen in den Kiefern. Die könnten die Kiefer auseinanderhalten und das Tier entkommen lassen. Wenn das Betten fertig ist, fege oder puste die Erde vom Pedal, damit man es sieht. So entscheidest du den Offset (die Lage des Pedals zum Erdloch oder Köderbereich) und wo dein Backing und dein Erdloch oder deine Sicht-Lockstoffe hinkommen.
+Stelle die Falle in Windrichtung und mit dem Hund zum hinteren Ende des Standorts. So blockiert der Hund nicht den Fuß des Tieres und schiebt ihn nicht aus dem Weg der zuschnappenden Kiefer. Wenn die Falle gestellt und mit gesiebter Erde bedeckt ist, bedecke die ganze Fallen-Grube mit gesiebter Erde. Das ist wichtig: Du willst keine großen Erdklumpen in den Kiefern. Die könnten die Kiefer auseinanderhalten und das Tier entkommen lassen. Wenn das Betten fertig ist, fege oder puste die Erde vom Pedal, damit man es sieht. So entscheidest du die Versetzung (die Lage des Pedals zum Erdloch oder Köderbereich) und wo deine Rückwand und dein Erdloch oder deine Sicht-Lockstoffe hinkommen.
 
-###### **DEN BACKING BAUEN** 
+###### **DIE RÜCKWAND BAUEN**
 
-Der **Backing** ist die Struktur hinter dem Standort. Er verhindert, dass das Tier aus einer anderen Richtung kommt, als du willst. Das kann ein Halbkreis aus Dreck, Blättern oder anderem sein – oder ein Baumstamm, ein Baum, ein Felsen oder ein Stumpf. Lege an den Backing ein Erdloch als Köderhalter. Das Loch sollte etwa 30 Zentimeter tief sein und in einem Winkel von 30–45 Grad. Das bringt zwei Vorteile:
+Die **Rückwand** ist die Struktur hinter dem Standort. Sie verhindert, dass das Tier aus einer anderen Richtung kommt, als du willst. Das kann ein Halbkreis aus Dreck, Blättern oder anderem sein – oder ein Baumstamm, ein Baum, ein Felsen oder ein Stumpf. Lege an die Rückwand ein Erdloch als Köderhalter.Das Loch sollte etwa 30 Zentimeter tief sein und in einem Winkel von 30–45 Grad. Das bringt zwei Vorteile:
 
 1. Das Tier muss von vorne kommen, damit seine Augen und Nase in einer Linie mit dem Loch sind.
 
 In das Loch kommt ein Lockstoff. Natürlich gibt es viele gekaufte Köder, aber du kannst auch alles Stinkende benutzen. Ich mag den Catfish-Sticky-Köder aus der großen Dose: Er hält lange, und eine kleine Menge reicht. Als Alternative tut es alles, was vom letzten Fang übrig ist. Denk einfach stinkend – alles Verrottete funktioniert.
 
-###### **BUSHCRAFT-TIPP** 
+###### **WILDNIS-TIPP** 
 
-Ein toller Trick für das Erdloch: Befülle das Loch mit Köder und stopfe es dann mit dem Schwanz eines anderen Fangs zu – zum Beispiel von einem Kaninchen oder Waschbären. Das wird dann auch ein Sicht-Lockstoff. Denk dran: Tiere jagen mit Augen und Nase. Sicht-Lockstoffe sind also immer gut. Manchmal reichen sie ganz allein. Ein anderer Trick: Nimm ein auffälliges Objekt als Backing. Das kann ein großer Knochen, ein verkohlter Baumstamm oder etwas sein, das sich klar von der Umgebung abhebt – um die Tiere mit den Augen anzulocken.
+Ein toller Trick für das Erdloch: Befülle das Loch mit Köder und stopfe es dann mit dem Schwanz eines anderen Fangs zu – zum Beispiel von einem Kaninchen oder Waschbären. Das wird dann auch ein Sicht-Lockstoff. Denk dran: Tiere jagen mit Augen und Nase. Sicht-Lockstoffe sind also immer gut. Manchmal reichen sie ganz allein. Ein anderer Trick: Nimm ein auffälliges Objekt als Rückwand. Das kann ein großer Knochen, ein verkohlter Baumstamm oder etwas sein, das sich klar von der Umgebung abhebt – um die Tiere mit den Augen anzulocken.
 
 Köder oder Lockstoff auf das Objekt selbst: Du kannst Köder in die Knochen-Löcher schieben oder einfach Eingeweide unter einen großen Stein legen, leicht mit Dreck bedeckt – als hätte ein anderes Tier sie vergraben. Das Ziel ist: Das Tier soll von vorne an deine Falle kommen und seine Nase in das Loch stecken. Hier kommt der Offset ins Spiel.
 
 ###### **OFFSET** 
 
-Der Offset (die Versetzung) zählt von links nach rechts und von vorne nach hinten. Denk an das Tier: Es setzt einen Fuß zuerst auf. Dieser Fuß ist aus der Mitte versetzt. Mit Fencing (Leitwerk) kannst du bestimmen, welcher Fuß das ist (dazu gleich mehr). Die Größe des Tieres bestimmt, wie weit seine Nase von seinem Fuß entfernt ist. Ich habe oft den hinteren Fuß eines kleineren Tieres gefangen, zum Beispiel Fuchs oder Waschbär, wenn ich für den größeren Kojoten mit einem größeren Set gestellt hatte. Für die Fleischjagd finde ich eine kleine Versetzung von 5–10 Zentimetern in beide Richtungen am besten. Bei größeren Raubtieren brauchst du 15–23 Zentimeter.
+Der Offset (die Versetzung) zählt von links nach rechts und von vorne nach hinten. Denk an das Tier: Es setzt einen Fuß zuerst auf. Dieser Fuß ist aus der Mitte versetzt. Mit einem Leitwerk kannst du bestimmen, welcher Fuß das ist (dazu gleich mehr). Die Größe des Tieres bestimmt, wie weit seine Nase von seinem Fuß entfernt ist. Ich habe oft den hinteren Fuß eines kleineren Tieres gefangen, zum Beispiel Fuchs oder Waschbär, wenn ich für den größeren Kojoten mit einem größeren Set gestellt hatte. Für die Fleischjagd finde ich eine kleine Versetzung von 5–10 Zentimetern in beide Richtungen am besten. Bei größeren Raubtieren brauchst du 15–23 Zentimeter.
 
 ###### **LETZTE SCHRITTE** 
 
-Wenn du weißt, wo dein Pedal ist, baue dein Erdloch oder deinen Sicht-Lockstoff – oder beides. Dann stelle deinen Backing auf, wenn er nicht schon von Natur aus da ist. Wenn der Backing steht, kannst du dich um das Fencing kümmern.
+Wenn du weißt, wo dein Pedal ist, baue dein Erdloch oder deinen Sicht-Lockstoff – oder beides. Dann stelle deine Rückwand auf, wenn sie nicht schon von Natur aus da ist. Wenn die Rückwand steht, kannst du dich um das Leitwerk kümmern.
 
-**Fencing (Leitwerk)** benutzt du, damit das Tier seinen Fuß genau dort hinstellt, wo du es willst. Es kann ganz einfach sein – zum Beispiel raues Material von deinem Sieb, auf das das Tier nicht treten will. Versuche, Fencing oder Backing nicht über den vorderen („losen“) Kiefer der Falle hinausragen zu lassen. Es macht das Tier misstrauisch, seinen Fuß in den engen Raum zu setzen. Mit anderen Worten: Für den Kiefer gegenüber dem Hund kann es „zu viel Fencing“ geben. Danach kannst du zweites Fencing benutzen – zum Beispiel Steinchen, Stöcke und Spreu – um das Tier noch näher zum Pedal zu drängen.
+**Leitwerk** benutzt du, damit das Tier seinen Fuß genau dort hinstellt, wo du es willst. Es kann ganz einfach sein – zum Beispiel raues Material von deinem Sieb, auf das das Tier nicht treten will. Versuche, Leitwerk oder Rückwand nicht über den vorderen („losen“) Kiefer der Falle hinausragen zu lassen. Es macht das Tier misstrauisch, seinen Fuß in den engen Raum zu setzen. Mit anderen Worten: Für den Kiefer gegenüber dem Hund kann es „zu viel Leitwerk“ geben. Danach kannst du ein zweites Leitwerk benutzen – zum Beispiel Steinchen, Stöcke und Spreu – um das Tier noch näher zum Pedal zu drängen.
 
-Wenn alle Schritte fertig sind, bedecke das Pedal leicht mit gesiebter Erde – etwa ein halber Zentimeter reicht. Bis jetzt sollte das Pedal der tiefste Punkt des ganzen Standorts sein. Genau das willst du: Das Tier muss sein Gewicht nach unten drücken, um bequem zu stehen. Wenn der Standort fertig ist, kannst du Köder, Lockstoff, Sicht-Lockmittel – oder alles drei – einsetzen. Kot von anderen Tieren ist immer ein guter Neugier-Booster: Er ist Sicht- und Geruchs-Lockstoff und dient als zweites Fencing. Federn in einem Erd-Backing sind auch ein toller Sicht-Lockstoff. Ein guter Lehrer hat mir einmal gesagt: Jeder Standort braucht ein BLT: „Bait, Lure und einen Kot-Haufen.“ (Köder, Lockstoff und Kot.)
+Wenn alle Schritte fertig sind, bedecke das Pedal leicht mit gesiebter Erde – etwa ein halber Zentimeter reicht. Bis jetzt sollte das Pedal der tiefste Punkt des ganzen Standorts sein. Genau das willst du: Das Tier muss sein Gewicht nach unten drücken, um bequem zu stehen. Wenn der Standort fertig ist, kannst du Köder, Lockstoff, Sicht-Lockmittel – oder alles drei – einsetzen. Kot von anderen Tieren ist immer ein guter Neugier-Booster: Er ist Sicht- und Geruchs-Lockstoff und dient als zweites Leitwerk. Federn in einer Erd-Rückwand sind auch ein toller Sicht-Lockstoff. Ein guter Lehrer hat mir einmal gesagt: Jeder Standort braucht ein BLT: „Bait, Lure und einen Kot-Haufen.“ (Köder, Lockstoff und Kot.)
 
 ###### **FALLEN IM WASSER** 
 
@@ -130,11 +126,11 @@ Landtiere haben meist wertvolleres Fell. Aber Wassertiere sind viel leichter zu 
 
 Einfachheit ist hier das Zauberwort. Die meisten Tiere dort sind amphibisch (leben an Land und im Wasser) und mit Ratten verwandt. Sie sind nicht so schlau wie Hunde- oder Katzenartige. Im Wasser fängst du gut mit ein paar Doppel-Langfedern-Fallen in den Größen #1 bis #3. Damit fängst du Nerz und Biber.
 
-Wasser-Fallen brauchen kein Betten: Das Wasser ist deine Fallen-Grube, und die langen Federn sorgen für Stabilität. Die wichtigsten Wasser-Sets sind der **Pocket Set** und der **Castor-Mound-Set** für Biber.
+Wasser-Fallen brauchen kein Betten: Das Wasser ist deine Fallen-Grube, und die langen Federn sorgen für Stabilität. Die wichtigsten Wasser-Sets sind der **Grubenfalle** und der **Biber-Hügel-Set** für Biber.
 
 ###### **POCKET SET** 
 
-Ein Pocket Set ist ein Loch, das du mit der Fußspitze ins Ufer drückst. Lege den Köder in das Loch – knapp über dem Wasserspiegel – und stelle die Falle mittig vor das Loch. Fencing geht auch: Stecke ein paar Stöcke auf, die das Tier von vorne hineinlenken, damit es auf das Pedal treten muss.
+Ein Grubenfalle ist ein Loch, das du mit der Fußspitze ins Ufer drückst. Lege den Köder in das Loch – knapp über dem Wasserspiegel – und stelle die Falle mittig vor das Loch. Ein Leitwerk geht auch: Stecke ein paar Stöcke auf, die das Tier von vorne hineinlenken, damit es auf das Pedal treten muss.
 
 **Falle mit schräger Stange**
 
@@ -144,23 +140,23 @@ Einfache Fallen benutzen Menschen, seit wir Jäger und Sammler sind. Sie wirken 
 
 ###### **AUSLÖSER** 
 
-Das Wichtigste beim einfachen Fallenstellen ist ein Auslöser-System, das du an viele Fallen anpassen kannst. So kannst du mehrere Schlingen vorbereiten und die Auslöser und Fallen unterwegs anpassen. Ein einfacher Kipp-Auslöser (Toggle Trigger) reicht, um viele Fallen zu stellen, die alles Kleine fangen – auch Vögel und sogar Fische an Ufer-Leinen. Es ist viel besser, ein paar Fallen mit diesem einfachen Auslöser zu können, als viele komplizierte Fallen ein bisschen zu kennen. Komplizierte Teile zu schnitzen braucht Zeit, Mühe und viel Anpassung. Einfache Kipp-Auslöser sind einfach – und viele dieser Fallen brauchen gar kein Werkzeug. Für jede komplizierte Falle kannst du viele einfache stellen und dasselbe – oder ein besseres – Ergebnis bekommen.
+Das Wichtigste beim einfachen Fallenstellen ist ein Auslöser-System, das du an viele Fallen anpassen kannst. So kannst du mehrere Schlingen vorbereiten und die Auslöser und Fallen unterwegs anpassen. Ein einfacher Kipp-Auslöser (Knebel Trigger) reicht, um viele Fallen zu stellen, die alles Kleine fangen – auch Vögel und sogar Fische an Ufer-Leinen. Es ist viel besser, ein paar Fallen mit diesem einfachen Auslöser zu können, als viele komplizierte Fallen ein bisschen zu kennen. Komplizierte Teile zu schnitzen braucht Zeit, Mühe und viel Anpassung. Einfache Kipp-Auslöser sind einfach – und viele dieser Fallen brauchen gar kein Werkzeug. Für jede komplizierte Falle kannst du viele einfache stellen und dasselbe – oder ein besseres – Ergebnis bekommen.
 
-###### **BUSHCRAFT-TIPP** 
+###### **WILDNIS-TIPP** 
 
 Viele Menschen machen einfaches Fallenstellen zu kompliziert! Fallenstellen ist ganz einfach zu verstehen. Jede Falle, die ein Tier hält oder tötet, ist alles, was du brauchst. Ich bin um die ganze Welt gereist. Stammesvölker, die noch Jäger und Sammler sind, haben mir gezeigt: Einfache Fallen mit einem einfachen Kipp-Auslöser sind die besten, um Fleisch zu bekommen. Genau die benutzen sie jeden Tag für kleine Säugetiere und Vögel. Die KISS-Methode (Keep It Simple and Sensible = Mach es einfach und vernünftig) funktioniert beim Fallenstellen.
 
-###### **DEADFALL-FALLEN** 
+###### **FALLGEWICHT-FALLEN**
 
-**Deadfall-Fallen** (Fall-Fallen) benutzt man seit Jahrhunderten, meist für kleine Tiere wie Erdhörnchen, Mäuse und größere Nagetiere. Deadfall-Fallen arbeiten mit demselben Kipp-Auslöser wie Schlingen-Fallen. Das nennt man „ **Paiute Deadfall** “, benannt nach den Paiute-Indianern der Wüste, die ihn oft benutzt haben. Die Deadfall-Falle muss fünfmal schwerer sein als die Beute. Sie zerquetscht die Beute. Aber das heißt nicht, dass das Tier sofort tot ist – es kann auch langsam ersticken.
+**Fallgewicht-Fallen** benutzt man seit Jahrhunderten, meist für kleine Tiere wie Erdhörnchen, Mäuse und größere Nagetiere. Fallgewicht-Fallen arbeiten mit demselben Kipp-Auslöser wie Schlingen-Fallen. Das nennt man „ **Paiute-Fallgewichtsfalle** “, benannt nach den Paiute-Indianern der Wüste, die ihn oft benutzt haben. Die Fallgewicht-Falle muss fünfmal schwerer sein als die Beute. Sie zerquetscht die Beute. Aber das heißt nicht, dass das Tier sofort tot ist – es kann auch langsam ersticken.
 
-Du kannst Kombinationen bauen, zum Beispiel einen **Cubby Set**. Cubby Sets sind kleine Löcher wie Pocket Sets, manchmal am Fuß eines Baumes oder Baumstamms. Sie werden über einer Deadfall-Falle gebaut, um die Falle schwerer zu machen und sie zu verstecken. Traditionelle Paiute-Deadfalls benutzten große Steine als Tötungs-Gewicht. In Wäldern kannst du die Falle anpassen: Nimm Baumstämme oder den Cubby Set. Andere Deadfall-Fallen für mittlere Tiere kannst du leicht mit größeren Stämmen bauen: Baue einen einfachen Rahmen und benutze denselben Kipp-Auslöser. Diese Fallen sind nur durch deine Fantasie begrenzt. Der Nachteil: Es kommt darauf an, ob das richtige Material an deinem Ort vorhanden ist – und der Bau braucht Zeit.
+Du kannst Kombinationen bauen, zum Beispiel einen **Nischenfalle**. Nischenfallen sind kleine Löcher wie Grubenfallen, manchmal am Fuß eines Baumes oder Baumstamms. Sie werden über einer Fallgewicht-Falle gebaut, um die Falle schwerer zu machen und sie zu verstecken. Traditionelle Paiute-Fallgewichtsfallen benutzten große Steine als Tötungs-Gewicht. In Wäldern kannst du die Falle anpassen: Nimm Baumstämme oder den Nischenfalle. Andere Fallgewicht-Fallen für mittlere Tiere kannst du leicht mit größeren Stämmen bauen: Baue einen einfachen Rahmen und benutze denselben Kipp-Auslöser. Diese Fallen sind nur durch deine Fantasie begrenzt. Der Nachteil: Es kommt darauf an, ob das richtige Material an deinem Ort vorhanden ist – und der Bau braucht Zeit.
 
 ###### **VOGELFALLEN** 
 
 Vogelfallen benutzen dasselbe Schlingen- und Kipp-System. Oder es sind Käfig-Fallen, die den Vogel lebend fangen und für später aufheben. Viele Käfig-Fallen sind für kleine Vögel. Größere Vögel und Wasservögel fängst du besser mit anderen Methoden, wie in den Abschnitten davor beschrieben. Käfig-Fallen funktionieren gut für Boden-Vögel wie Wachtel, Auerhuhn und Fasan. Auch für kleine Sitzvögel wie Trauertauben und Turteltauben.
 
-Beim Vogelfangen mit Schlingen brauchst du nicht so viel Zugfestigkeit wie bei kleinen Säugetieren. Deshalb ist mehrlagige Schnur, die du in der Stärke verkleinern kannst, ein großer Pluspunkt. Ein „Breakaway“-Auslöser (Losbrech-Auslöser) wird für diese Fallen benutzt und passt auch zu Deadfalls. Beim Lebendfangen benutzt du meist einen Stolperdraht oder einen Stock: Der Vogel muss darüber, um zum Köder zu kommen.
+Beim Vogelfangen mit Schlingen brauchst du nicht so viel Zugfestigkeit wie bei kleinen Säugetieren. Deshalb ist mehrlagige Schnur, die du in der Stärke verkleinern kannst, ein großer Pluspunkt. Ein „Breakaway“-Auslöser (Losbrech-Auslöser) wird für diese Fallen benutzt und passt auch zu Fallgewichtsfallen. Beim Lebendfangen benutzt du meist einen Stolperdraht oder einen Stock: Der Vogel muss darüber, um zum Köder zu kommen.
 
 ###### **KLEINE FALLEN-AUSRÜSTUNGEN** 
 
@@ -182,15 +178,15 @@ Diese Ruten sind etwa 2,7 bis 4 Meter lang. Frisch geschnittene Stöcke funktion
 
 ###### **SCHNÜRE VORBEREITEN** 
 
-Wie schon gesagt: Mit einer Tenkara-Rute kannst du mehrere fertige Schnüre mitnehmen, sie an die Bedingungen anpassen und schnell wechseln. Du kannst schwimmende Fliegenschnüre, geflochtene Schnüre und gedrehte (furled) Schnüre auf verschiedenen Leine-Leitern lagern, mit verschiedenen Lockmitteln. Fertige Schnüre lassen dich die meisten Situationen abdecken. Wenn du die Schnur und die Montage gewählt hast (zum Beispiel Haken, Senkblei, Schwimmer oder Trockenfliege und Anzeiger), knote oben eine einfache Schlaufe in die Schnur – eine Acht-Schlaufe mit einer Schlaufe von etwa 1 Zentimeter. Um die Schnur an die Rute zu hängen, mach eine „Lark's Head“-Schlaufe in die Schnur und lege sie über den Ball-Knoten am Lillian-Geflecht. Dann zieht sie sich von selbst fest. Sie fällt nicht ab, lässt sich aber leicht entfernen, wenn du die Schnur wechseln willst.
+Wie schon gesagt: Mit einer Tenkara-Rute kannst du mehrere fertige Schnüre mitnehmen, sie an die Bedingungen anpassen und schnell wechseln. Du kannst schwimmende Fliegenschnüre, geflochtene Schnüre und gedrehte (furled) Schnüre auf verschiedenen Leine-Leitern lagern, mit verschiedenen Lockmitteln. Fertige Schnüre lassen dich die meisten Situationen abdecken. Wenn du die Schnur und die Montage gewählt hast (zum Beispiel Haken, Senkblei, Schwimmer oder Trockenfliege und Anzeiger), knote oben eine einfache Schlaufe in die Schnur – eine Acht-Schlaufe mit einer Schlaufe von etwa 1 Zentimeter. Um die Schnur an die Rute zu hängen, mach eine „Ankerstich“-Schlaufe in die Schnur und lege sie über den Ball-Knoten am Lillian-Geflecht. Dann zieht sie sich von selbst fest. Sie fällt nicht ab, lässt sich aber leicht entfernen, wenn du die Schnur wechseln willst.
 
-###### **BUSHCRAFT-TIPP** 
+###### **WILDNIS-TIPP** 
 
 **Leine-Leitern (Line Ladders)** halten die fertigen Schnüre ordentlich. Sie sind nicht unbedingt nötig. Du kannst die Schnüre auch in eine Dose rollen. Aber die Leitern verhindern, dass sie sich beim Herausholen verknoten. Eine Leiter ist einfach eine Mini-Leiter aus Holz oder Plastik. Du machst sie leicht aus einem flachen Holzstreifen, den du an beiden Enden halbmondförmig schnitzt. Die Länge ist Geschmackssache – ich mag etwa 10 Zentimeter. Wickel die Schnur darum, damit sie ordentlich und bereit für ihren Zweck bleibt.
 
 ###### **KLEINES WILD VERARBEITEN** 
 
-Kleines Wild zu verarbeiten geht schneller und leichter als ein großes Tier. Und es kostet weniger Energie, das Fleisch vom Fangort zurück ins Camp zu tragen. Der Hauptgrund für kleines Wild: Oft kannst du es in einer Mahlzeit ganz aufessen – und es bleibt etwas für den Köder übrig. Großes Wild zu verarbeiten, zu kochen oder aufzubewahren ist zeitaufwendig und manchmal mühsam. Und wo Raubtiere leben, ist viel Fleisch, Blut oder ein Kadaver im Camp gefährlich. Kleines Wild zu verarbeiten ist meist ganz leicht. Das kann fast jeder mit ein wenig Übung.
+Kleines Wild zu verarbeiten geht schneller und leichter als ein großes Tier. Und es kostet weniger Energie, das Fleisch vom Fangort zurück ins Lager zu tragen. Der Hauptgrund für kleines Wild: Oft kannst du es in einer Mahlzeit ganz aufessen – und es bleibt etwas für den Köder übrig. Großes Wild zu verarbeiten, zu kochen oder aufzubewahren ist zeitaufwendig und manchmal mühsam. Und wo Raubtiere leben, ist viel Fleisch, Blut oder ein Kadaver im Lager gefährlich. Kleines Wild zu verarbeiten ist meist ganz leicht. Das kann fast jeder mit ein wenig Übung.
 
 ###### **KLEINE SÄUGETIERE** 
 

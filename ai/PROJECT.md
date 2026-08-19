@@ -1,34 +1,82 @@
-# Vault
+# mtCMS
 
-Encrypted file-storage server using Express 5, Deno, TypeScript, and React SSR.
+Content-management web app split into a React client and an Express API server.
+
+## Layout
+
+- `client/` — Vite + React 19 + React Router 7 + Tailwind CSS 4 + Siemens iX.
+  Home site, admin UI, and a lazy-loaded BabylonJS 3D engine view.
+- `server/` — Express 5 running on Deno, backed by PostgreSQL (Neon or `pg`).
+  Serves `/api/*`, Swagger, and the built client from `dist/`.
 
 ## Standards
 
-- Use TypeScript and ES modules; keep explicit `.ts`/`.tsx` import extensions.
-- Use `.tsx` for React server-rendered views and `.ts` for server code.
-- Use Deno commands and existing dependencies; do not introduce Node-specific tooling.
-- Keep changes focused and preserve the middleware order and public API.
+- Client: TypeScript + ES modules with explicit `.ts`/`.tsx` import extensions.
+  Use `.tsx` for React components and `.ts` for plain modules.
+- Server: Deno runtime, explicit `.ts` import extensions, npm packages referenced
+  via `npm:` specifiers in `server/deno.json`. No Node-specific tooling.
+- Keep changes focused; preserve the middleware order in `server/src/app.ts`.
 
 ## Commands
 
+Server (run from `server/`):
+
 - `deno task dev` runs the server in watch mode.
-- `deno run --allow-all main.ts` runs the server on port 4000; `PORT` overrides the port.
-- `deno check --config deno.json main.ts main_test.ts` type-checks the main entry points.
-- `deno test --allow-all` runs the integration suite against temporary directories.
+- `deno task start` runs the server on port 4000; `PORT` overrides it.
+- `deno task check` type-checks `main.ts` and `main_test.ts`.
+- `deno task test` runs the integration suite (auth + auth-guard cases).
+
+Client (run from `client/`):
+
+- `npm run dev` starts the Vite dev server on port 4210, proxying `/api` to the
+  server (`API_TARGET` env overrides the target, default `http://localhost:4000`).
+- `npm run build` runs `vite build` then `scripts/sync-dist.mjs`, copying
+  `client/dist` into `server/dist` so the server can serve the app.
+- `npm run lint` runs ESLint; `npx tsc -b` type-checks.
 
 ## Architecture
 
-- `main.ts` creates the Express app and starts listening only when `import.meta.main` is true. Tests import `createApp()` and bind an ephemeral port.
-- Middleware order is load-bearing: `/api` and `/files` routers, static serving, URL-encoded parsing, static-tree POST actions, static serving again, then directory listings. Keep API routers before static serving.
-- `controllers/files.ts` stores encrypted files under `<staticDir>/vault`. Files are addressed by the SHA-256 of their plaintext and stored in four-character directory chunks. Each blob has a plaintext `.meta.json` sibling containing name, type, and size.
-- `middleware/vaultKey.ts` selects a non-empty `x-vault-key` header; otherwise it uses the current in-memory server key. The key is never persisted to disk.
-- `middleware/directoryActions.ts` handles static-tree uploads, folder creation, deletion, key updates, and optional content-hash storage. `middleware/directoryListing.ts` renders directory pages.
-- `lib/vault.ts` derives AES-GCM keys by SHA-256 hashing the key string. Encrypted blobs contain a 12-byte IV followed by ciphertext and the GCM tag.
-- `views/index.tsx` and `views/apiDocs.tsx` render HTML with React SSR. `views/index.script.ts` is plain client JavaScript embedded in a template literal; escape backticks and `${` when editing it.
+- `server/main.ts` creates the Express app and starts listening only when
+  `import.meta.main` is true. Tests import `createApp()` and bind an ephemeral
+  port (see `main_test.ts`).
+- Middleware order in `server/src/app.ts` is load-bearing: `/api` routers
+  (`auth`, `nodes`, `fm`, `articles`, `content`, `api`), static serving of
+  `dist/`, then a `/*splat` catch-all that serves `dist/index.html` for non-API
+  paths and a JSON 404 for unknown `/api` paths. An error handler maps
+  body-parser errors to RFC 7807 responses.
+- Body parsing is scoped per router: `express.json()` on the auth/nodes routers;
+  `express.raw({ type: () => true, limit: "200mb" })` on the fm router so uploads
+  are never consumed by a JSON parser.
+- `src/lib/auth.ts` issues/verifies HS256 JWTs via WebCrypto and provides the
+  `authRequired` middleware (sets `req.user`, sends a 401 problem otherwise).
+- `src/lib/http.ts` provides the RFC 7807 `problem(res, status, title, detail)`
+  helper.
+- `src/lib/db.ts` builds the `pg` pool (or `@neondatabase/serverless` when
+  `DBPROVIDER=neon`) at import time; connections are created lazily.
+- `src/lib/nodes.service.ts` implements node CRUD, `getChildren`, `getParent`,
+  `getBreadcrumb` (recursive CTE), and `getUserByEmail`.
+- `src/lib/articles.service.ts` reads markdown from `server/media/articles/`.
+  Path resolution guards against traversal; `.md` files are enriched with
+  extracted titles for directory listings.
+- `src/lib/fm.service.ts` provides the media file manager over `server/media/`.
+- `client/src/router.tsx` defines the React Router tree. The engine and admin
+  routes use `lazy` with inline string-literal `import()` calls so Vite can
+  code-split them (BabylonJS is loaded only when `/engine` is visited).
+- `client/src/routes/home/content-page.tsx` renders public markdown pages from
+  `client/public/content/*.md` (served statically, e.g. `/content/engine.md`)
+  client-side with `markdown-it`.
+- `client/src/routes/home/articles-page.tsx` renders article markdown fetched
+  from `/api/articles`, rewriting `.md` links to article routes.
 
 ## Invariants
 
-- The default static directory is `media/`; it is gitignored.
-- The default encryption key is in memory only. A `key` form field updates it for the current process; a non-empty `x-vault-key` header overrides it for that request.
-- Identical plaintext uploaded with different keys shares a content-addressed path, so the later upload replaces the earlier ciphertext.
-- A wrong key causes `GET /files/:hash` to return `401`.
+- The client always calls relative `/api/...`; in dev the Vite proxy forwards it,
+  in production the same origin serves both.
+- The default media root is `server/media/`; article pages live in
+  `server/media/articles/` and public content pages are served statically from
+  `client/public/content/`.
+- Build outputs (`client/dist/`, `server/dist/`) and `node_modules/` are
+  gitignored; `server/dist` is generated by `npm run build`.
+- The bootstrap admin credentials (`ADMIN_EMAIL`/`ADMIN_PASSWORD`) authenticate
+  against `POST /api/auth` only when configured; otherwise users come from `user`
+  nodes in the database.

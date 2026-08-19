@@ -1,4 +1,4 @@
-# Git [^](/articles/)
+﻿# Git
 
 See [https://git-scm.com/](https://git-scm.com/) for details.
 

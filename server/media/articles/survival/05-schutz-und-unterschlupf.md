@@ -1,8 +1,4 @@
-### **Kapitel 5: Schutz vor Wind und Wetter**
-
-_"Ein angenehmer Rastplatz ist in hügeligem, gut bewaldetem Land selten schwer zu finden … In einer flachen Gegend – ob offene Ebene oder bewaldetes Tiefland – können gutes Wasser und ein hoher, trockener Platz schwer zu finden sein."_
-
-—HORACE KEPHART, _CAMPING AND WOODCRAFT_, 1919
+﻿### **Kapitel 5: Schutz vor Wind und Wetter**
 
 Wie du dich gegen Wind und Wetter schützt, hängt von drei Dingen ab: von deiner Umgebung, von der Jahreszeit und davon, wie lange du in der Wildnis bleibst. Ein gut gebautes Schutzdach aus stabilem Material kann den Unterschied machen zwischen einer sicheren, warmen und trockenen Nacht – und einer lebensgefährlichen Situation.
 
@@ -15,23 +11,23 @@ Der größte Vorteil einer Plane oder eines Planen-Zeltes: Sie haben **keinen Bo
 1. Wasser kann unter das Zelt laufen und durchsickern – und wird dann vom Boden festgehalten.
 2. Weil die Feuchtigkeit nicht entweichen kann, wird ein Zelt mit Boden nachts zum Kondensations-Albtraum. Die Luftfeuchtigkeit schlägt sich überall nieder.
 
-Planen sind leicht zu tragen und zu packen. Sie sind auch am vielseitigsten für verschiedene Aufbauten – je nach Wetter und Jahreszeit. Die häufigsten Materialien sind **Polypropylen**, **Silnylon** (Nylon mit Silikon), **Canvas** (Planenstoff) und **Ölplanen-Stoff (Oilcloth)**. Alle haben Vor- und Nachteile.
+Planen sind leicht zu tragen und zu packen. Sie sind auch am vielseitigsten für verschiedene Aufbauten – je nach Wetter und Jahreszeit. Die häufigsten Materialien sind **Polypropylen**, **silikonbeschichtetes Nylon**, **Segeltuch** und **Wachstuch**. Alle haben Vor- und Nachteile.
 
-###### **POLYPROPYLEN UND SILNYLON**
+###### **POLYPROPYLEN UND SILIKONBESCHICHTETES NYLON**
 
 **Polypropylen** ist leicht und sehr billig. Aber es hält nicht lange und ist nicht robust. Für längere Zeit taugt es nicht. Ein erfahrener Camper würde daraus nie einen oft benutzten Unterschlupf machen – auch wegen der Umwelt. Ein weiteres Problem: Planen aus Polypropylen haben immer Ösen (Grommets) aus Metall zum Anbinden – und keine genähten, verstärkten Schlaufen. Echte Schlaufen sind besser. Sie halten besser und belasten das Material weniger.
 
-**Silnylon** ist Nylon, das mit Silikon getränkt ist. Man nutzt es für Schutzplanen und Fliegen. Der größte Vorteil: Es ist sehr leicht und lässt sich in ein winziges Päckchen quetschen. Der größte Nachteil für den Buschhandwerker: Es fängt sehr leicht Feuer. Viele Firmen benutzen bei Silnylon immer noch Ösen, die unter Spannung brechen. Es gibt gute Silnylon-Planen. Aber denk daran: Wie alles in deiner Ausrüstung muss auch deine Plane vielseitig und haltbar sein. Ein Reh würdest du auf einer Silnylon-Plane nie aus dem Wald ziehen – die Plane wäre sofort kaputt.
+**silikonbeschichtetes Nylon** ist Nylon, das mit Silikon getränkt ist. Man nutzt es für Schutzplanen und Fliegen. Der größte Vorteil: Es ist sehr leicht und lässt sich in ein winziges Päckchen quetschen. Der größte Nachteil für den Buschhandwerker: Es fängt sehr leicht Feuer. Viele Firmen benutzen bei silikonbeschichtetes Nylon immer noch Ösen, die unter Spannung brechen. Es gibt gute silikonbeschichtetes Nylon-Planen. Aber denk daran: Wie alles in deiner Ausrüstung muss auch deine Plane vielseitig und haltbar sein. Ein Reh würdest du auf einer silikonbeschichtetes Nylon-Plane nie aus dem Wald ziehen – die Plane wäre sofort kaputt.
 
-###### **CANVAS (PLANENSTOFF)**
+###### **SEGELTUCH**
 
-Traditioneller **Canvas** ist eines der robustesten Materialien für Planen und Planen-Zelte. Heute sind viele Canvas-Planen schwerer entflammbar und schimmelresistent als früher. Darum ist Canvas prima für langen Gebrauch als Schutzdach. Der größte Nachteil ist das **Gewicht**: Alles über etwa 2,1 × 2,1 Meter ist ohne Fahrzeug zu sperrig. Viele Canvas-Planen haben gut genähte Anbindepunkte – aber auch hier: Meide Ösen!
+Traditionelles **Segeltuch** ist eines der robustesten Materialien für Planen und Planen-Zelte. Heute sind viele Segeltuch-Planen schwerer entflammbar und schimmelresistent als früher. Darum ist Segeltuch prima für langen Gebrauch als Schutzdach. Der größte Nachteil ist das **Gewicht**: Alles über etwa 2,1 × 2,1 Meter ist ohne Fahrzeug zu sperrig. Viele Segeltuch-Planen haben gut genähte Anbindepunkte – aber auch hier: Meide Ösen!
 
 Für einen einzelnen Wanderer sind Planen-Zelte in etwa 2,4 × 2,4, 2,7 × 2,7 oder 2,7 × 3,6 Meter am nützlichsten. Ich mag Tentsmiths.com’s ägyptischen Ölplanen-Stoff sehr – leicht zum Tragen und haltbar. Wenn du deine Plane eine Saison lang benutzt, ist es wichtig, dass sie bei jedem Wetter stark bleibt.
 
-###### **EIN CANVAS-ZELT BASTELN**
+###### **EIN SEGELTUCH-ZELT BASTELN**
 
-Du kannst aus jeder Maler-Plane aus Canvas (Drop Cloth) ein einfaches Planen-Zelt bauen. Eine Größe von etwa 2,7 × 3,6 Meter gibt dir viele Aufbau-Möglichkeiten. Du kannst sie leicht mit Mitteln wie Kiwi Camp Dry oder Thompson’s Water Seal behandeln. Du brauchst Anbindepunkte, um Heringe einzuschlagen und Spannleinen zu spannen.
+Du kannst aus jeder Maler-Plane aus Segeltuch ein einfaches Planen-Zelt bauen. Eine Größe von etwa 2,7 × 3,6 Meter gibt dir viele Aufbau-Möglichkeiten. Du kannst sie leicht mit Mitteln wie Kiwi Camp Dry oder Thompson’s Water Seal behandeln. Du brauchst Anbindepunkte, um Heringe einzuschlagen und Spannleinen zu spannen.
 
 So machst du es:
 
@@ -75,7 +71,7 @@ Diese Decken sind leicht und ein toller Feuchtigkeits-Schutz auf dem Boden deine
 
 ###### **HÄNGEMATTEN**
 
-**Hängematten** werden seit Hunderten von Jahren benutzt. Für moderne Waldwanderer sind sie aber ziemlich neu. Ihr Vorteil: Du kommst vom Boden weg – weg von den Krabbeltieren. Zusammen mit einer guten Plane musst du dich kaum um das Trockenbleiben kümmern, selbst bei strömendem Regen. Hängematten sind außerdem leicht, klein zu packen, schnell aufgebaut und sehr bequem. Die meisten modernen Hängematten sind aus nylonartigem Fallschirm-Material. Man kann sie aber auch aus Seil oder Canvas machen.
+**Hängematten** werden seit Hunderten von Jahren benutzt. Für moderne Waldwanderer sind sie aber ziemlich neu. Ihr Vorteil: Du kommst vom Boden weg – weg von den Krabbeltieren. Zusammen mit einer guten Plane musst du dich kaum um das Trockenbleiben kümmern, selbst bei strömendem Regen. Hängematten sind außerdem leicht, klein zu packen, schnell aufgebaut und sehr bequem. Die meisten modernen Hängematten sind aus nylonartigem Fallschirm-Material. Man kann sie aber auch aus Seil oder Segeltuch machen.
 
 **DIE HÄNGEMATTE AUFSPANNEN**
 
@@ -111,7 +107,7 @@ Trage Schlafsäcke wie Schlafrollen: Rolle sie zusammen und hänge sie an deinen
 
 Eine **Wolldecke** ist für lange Zeit und für ihre Vielseitigkeit die beste Wahl. Um aber bequem darunter zu schlafen, brauchst du ein Blätterbett oder einen Browse Bag. Und vielleicht ein ordentliches Feuer in der Nähe deines Bettes.
 
-###### **BUSHCRAFT-TIPP**
+###### **WILDNIS-TIPP**
 
 Für den Wolldecken-Schläfer sind zwei Dinge lebenswichtig: die **Regel des quadratischen Abstands** und ein **Holz-Rücken als Rückwand** am Feuer.
 

@@ -1,0 +1,351 @@
+@import "@siemens/ix/dist/siemens-ix/siemens-ix.css";
+@import "@siemens/ix/dist/siemens-ix/theme/classic-dark.css";
+@import "@siemens/ix/dist/siemens-ix/theme/classic-light.css";
+
+.ix-admin {
+  --theme-color-primary: #00bde3;
+}
+
+.admin-page {
+  padding: 1.5rem;
+}
+
+.admin-page--files {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.admin-page__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.admin-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.admin-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.admin-card__actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.admin-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--theme-color-soft-bdr);
+  border-radius: 0.375rem;
+}
+
+.admin-row + .admin-row {
+  margin-top: 0.5rem;
+}
+
+.admin-row__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-row__title {
+  font-weight: 600;
+}
+
+.admin-row__meta {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.admin-detail {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.admin-file-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.admin-file-manager {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  flex: 1;
+  min-height: 0;
+}
+
+.admin-file-manager__sidebar {
+  flex-shrink: 0;
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: 1px solid var(--theme-color-soft-bdr);
+  border-radius: 0.375rem;
+  overflow: auto;
+}
+
+.admin-file-manager__content {
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.admin-file-manager__splitter {
+  flex-shrink: 0;
+  align-self: stretch;
+  width: 14px;
+  cursor: col-resize;
+  margin: 0 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  user-select: none;
+}
+
+.admin-file-manager__splitter::before {
+  content: "";
+  width: 3px;
+  height: 100%;
+  background: var(--theme-color-soft-bdr);
+  border-radius: 2px;
+  transition: background 0.15s ease;
+}
+
+.admin-file-manager__splitter:hover::before,
+.admin-file-manager__splitter.active::before {
+  background: var(--theme-color-primary);
+}
+
+.admin-file-manager__nav {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.admin-file-manager__breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-file-manager__crumb-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.admin-file-manager__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.admin-file-manager__crumb {
+  border: 0;
+  background: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--theme-color-primary);
+  cursor: pointer;
+}
+
+.admin-file-manager__crumb:hover {
+  text-decoration: underline;
+}
+
+.admin-edit {
+  display: flex;
+  gap: 1rem;
+  height: 100%;
+  min-height: 0;
+  padding: 1.5rem;
+}
+
+.admin-edit__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  width: 280px;
+  padding: 0.75rem;
+  border: 1px solid var(--theme-color-soft-bdr);
+  border-radius: 0.375rem;
+  overflow: auto;
+}
+
+.admin-edit__main {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.admin-edit__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.admin-edit__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.admin-edit__field ix-textarea {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: block;
+  height: 100%;
+}
+
+.admin-edit__field ix-textarea textarea {
+  height: 100%;
+  resize: none;
+}
+
+.admin-page--edit {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  padding: 1.5rem;
+}
+
+.admin-node-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--theme-color-soft-bdr);
+  margin-bottom: 0.75rem;
+}
+
+.admin-node-breadcrumb__items {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.admin-node-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.admin-node-breadcrumb__item button {
+  border: 0;
+  background: none;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.25rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--theme-color-primary);
+  cursor: pointer;
+}
+
+.admin-node-breadcrumb__item button:hover {
+  text-decoration: underline;
+}
+
+.admin-node-breadcrumb__separator {
+  opacity: 0.5;
+}
+
+.admin-edit-layout {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.admin-edit-layout__tree {
+  flex-shrink: 0;
+  width: 300px;
+  padding: 0.75rem;
+  border: 1px solid var(--theme-color-soft-bdr);
+  border-radius: 0.375rem;
+  overflow: auto;
+}
+
+.admin-edit-layout__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.admin-dynamic-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.admin-dynamic-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  min-height: 120px;
+}
+
+.admin-dynamic-form__label code {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.admin-dynamic-form__textarea {
+  width: 100%;
+  flex: 1;
+  resize: none;
+  border: 1px solid var(--theme-color-soft-bdr);
+  border-radius: 0.375rem;
+  background: var(--theme-color-inv-std-bdr);
+  color: var(--theme-color-std-text);
+  padding: 0.5rem 0.625rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.admin-dynamic-form__textarea:focus {
+  outline: 2px solid var(--theme-color-primary);
+  outline-offset: 1px;
+}

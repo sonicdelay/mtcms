@@ -34,7 +34,6 @@ paths:
             schema:
               $ref: "#/components/schemas/LoginRequest"
 
-              
       responses:
         "200":
           description: Authenticated successfully

@@ -1,8 +1,4 @@
-### **Kapitel 4: Behälter und Kochwerkzeuge**
-
-_„…mehr Freude man an seinen Erfolgen hat."_
-
-—HORACE KEPHART, _CAMP COOKERY_, 1910
+﻿### **Kapitel 4: Behälter und Kochwerkzeuge**
 
 Die richtigen Behälter und Kochwerkzeuge sind wichtig. Es gibt sehr viele davon, und die moderne Welt des Ultralight-Campings gibt dir noch mehr Auswahl als früher. Flaschen, Becher, Töpfe und Pfannen aus dem richtigen Material zu wählen, ist eine wichtige Entscheidung. Sie sollte zu deinen Bedürfnissen im Wald passen. Darum ist es wichtig, die verschiedenen Materialien zu kennen, bevor du etwas kaufst oder losziehst.
 
@@ -30,7 +26,7 @@ Ich empfehle eine **Edelstahlflasche** mit mindestens 1 Liter Fassungsvermögen.
 
 Es gibt nur wenige gute Metall-Feldflaschen. Die einzige Edelstahl-Feldflasche, die ich kenne, gibt es bei Self Reliance Outfitters. Sie kommt mit Becher und Ofen-Unterstand. Aluminium-Feldflaschen sind nicht eloxiert und nicht so haltbar wie Edelstahl.
 
-Mit einem Stöckchen (Toggle) und einer Schnur kannst du deine Flasche übers Feuer hängen – oder sie wieder herunterholen, wenn das Wasser heiß ist. Binde den Toggle mit einem Mastwurf (Clove Hitch) etwas außerhalb der Mitte fest. So kann der Toggle leicht hinein- und hinausschwenken, wenn er locker ist. Hängt die Flasche aber, klemmt er an ihren Schultern fest.
+Mit einem Stöckchen  und einer Schnur kannst du deine Flasche übers Feuer hängen – oder sie wieder herunterholen, wenn das Wasser heiß ist. Binde den Knebel mit einem Mastwurf etwas außerhalb der Mitte fest. So kann der Knebel leicht hinein- und hinausschwenken, wenn er locker ist. Hängt die Flasche aber, klemmt er an ihren Schultern fest.
 
 ###### **BECHER**
 
@@ -56,7 +52,7 @@ Es gibt mehrere gute Arten, einen Topf über dem Feuer aufzuhängen. Am nützlic
 
 Ein Dreibein machst du aus drei gleich langen Stöcken mit etwa 4 bis 5 Zentimetern Durchmesser. Diese Stöcke sollten am unteren Ende zugespitzt sein. So rutschen sie auf nassem Boden oder Schnee nicht weg.
 
-Lass genug Schnur übrig, damit du nach dem Binden noch ein Stöckchen (Toggle) festmachen kannst. Diesen Toggle wickelst du über die Enden des Dreibeins. So kannst du die Höhe des Topfes über dem Feuer verstellen. Der Toggle sollte länger sein als die Öffnung des Topf-Bügels, damit er sich verklemmt und hält. Binde den Toggle mit einer V-Kerbe fest.
+Lass genug Schnur übrig, damit du nach dem Binden noch ein Stöckchen  festmachen kannst. Diesen Knebel wickelst du über die Enden des Dreibeins. So kannst du die Höhe des Topfes über dem Feuer verstellen. Der Knebel sollte länger sein als die Öffnung des Topf-Bügels, damit er sich verklemmt und hält. Binde den Knebel mit einer V-Kerbe fest.
 
 Viele Topfdeckel kannst du auch als Teller benutzen – zum Beispiel, um Essen zwischenzulagern, während etwas anderes kocht.
 
@@ -66,7 +62,7 @@ Einen einfachen Fleisch-Drehspieß baust du aus einem gegabelten Stock. Er wird 
 
 Lege den Drehspieß auf zwei senkrechte Gabel-Stöcke. Diese steckst du auf beiden Seiten des Feuers in den Boden. So kannst du das Fleisch drehen, damit es gleichmäßig gart. Ist das Fleisch von einem Wildtier, stecke Spieße durch Fleisch und Gabelstock. Das hält den Brustkorb offen und macht das Garen gleichmäßiger.
 
-###### **BUSHCRAFT-TIPP**
+###### **WILDNIS-TIPP**
 
 Fast alle Kochwerkzeuge kannst du aus Naturmaterial machen. Nur einen Eimer brauchst du fürs Wasser-Abkochen und zum Fleisch-Kochen. Alle Krane, Topfhänger und Werkzeuge in diesem Kapitel sind aus Stöcken gemacht!
 
@@ -96,7 +92,7 @@ Ein flacher Stein kann ein toller Grill sein. Je nach Dicke kannst du auf Stein 
 
 Mit **Gusseisen** wird schon seit den Pionierzeiten gekocht. Man sagt: „Nichts kocht so gut wie Gusseisen." Eine gut eingebrannte Gusseisen-Pfanne oder ein Topf ist ein Familienerbstück. Das Hauptproblem ist das **Gewicht**. Hast du kein Fahrzeug (Kanu, Pferd oder ATV), wirst du selbst mit dem kleinsten Stück schwer beladen. Wenn du aber die Wahl hast, ist Gusseisen bequem und vielseitig am Lager oder in der Hütte. Ein Schmortopf (Dutch Oven) mit etwa 2 Litern und eine Pfanne, auf die sein Deckel passt, sind fast perfekt fürs Lagerkochen.
 
-###### **BUSHCRAFT-TIPP**
+###### **WILDNIS-TIPP**
 
 Willst du, dass dein Gusseisen eingebrannt bleibt, dann wasche es **nie mit Seife**. („Eingebrannt" bedeutet: Die Poren des Eisens sind mit Öl und Fett vollgesogen. So wird das Geschirr antihaftend und gibt dem Essen Geschmack.)
 
@@ -130,6 +126,6 @@ Der Unterstand vom schwedischen Kochset ist beides: Ofen-Unterstand UND Windschu
 
 Achte darauf, dass dein Unterstand gut in dein Kochset passt. Dann nimmt er keinen Extra-Platz im Rucksack weg. Einen schnellen Ofen-Unterstand kannst du aus einer großen Suppendose bauen: Schneide den Boden und den Deckel ab und bohre mehrere Löcher rund um den unteren und oberen Teil der Dose. So kann Sauerstoff hinein.
 
-###### **BUSHCRAFT-TIPP**
+###### **WILDNIS-TIPP**
 
 Wenn deine Glut fertig ist, zerbrich die Kohlenstücke vollständig und verstreue sie. So veränderst du die Natur möglichst wenig.

@@ -1,4 +1,4 @@
-### **Anhang A: Das Pathfinder-Konzept – Ressourcen sparen und nutzen**
+### **Anhang A: Das Pathfinder-Prinzip – Ressourcen sparen und nutzen**
 
 Ressourcen sparen bedeutet viele Dinge. In diesem Buch heißt das: Sei sparsam und nutze alles, was du hast, so gut wie möglich. Wenn du in der Wildnis gestrandet bist, weißt du nicht, wie lange es dauert, bis dich jemand findet. Darum musst du die wichtigsten Ressourcen gut kennen und sparen. Hier sind ein paar Dinge, an die du denken solltest.
 

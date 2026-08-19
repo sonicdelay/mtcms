@@ -1,10 +1,10 @@
----
+﻿---
 title: Deno,
 published_at: 2024-04-30,
 snippet: So richtest du Deno und ein Startprojekt ein,
 ---
 
-# Deno [^](/articles/)
+# Deno
 
 [https://deno.land/](https://deno.land/)
 

@@ -1,36 +1,71 @@
-Dies ist ein [Next.js](https://nextjs.org)-Projekt, erstellt mit [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# mtCMS
 
-## Erste Schritte
+A content-management web app split into a React client and an Express API server.
 
-Starte zuerst den Entwicklungsserver:
+- `client/` — Vite + React 19 + React Router 7 + Tailwind CSS 4. Includes the
+  home site, the admin UI (Siemens iX), and a BabylonJS 3D engine view that is
+  lazy-loaded (loaded only when navigating to `/engine`).
+- `server/` — Express 5 running on Deno, backed by PostgreSQL (Neon or `pg`).
+  Serves the `/api/*` routes, Swagger documentation, and the built client from
+  `dist/`.
+
+## Prerequisites
+
+- Deno 2.x for the server
+- Node.js + npm for the client
+
+## Environment
+
+Copy `.env.example` to `.env` (at the repo root) and fill in:
+
+- `ADMIN_EMAIL` / `ADMIN_PASSWORD` — bootstrap admin credentials
+- `DATABASE_URL` / `DBPROVIDER` — PostgreSQL connection (Neon or `pg`)
+- `JWT_SECRET` — HS256 secret for signing tokens
+- `PORT` — server port (default `4000`)
+
+The client's dev server proxies `/api` to the server; set `API_TARGET` in
+`client/.env` (default `http://localhost:4000`) if needed.
+
+## Commands
+
+Server (run from `server/`):
 
 ```bash
-npm run dev
-# oder
-yarn dev
-# oder
-pnpm dev
-# oder
-bun dev
+deno task dev        # watch mode
+deno task start      # run
+deno task check      # type-check
+deno task test       # integration tests
 ```
 
-Öffne [http://localhost:4210](http://localhost:4210) im Browser, um das Ergebnis zu sehen.
+Client (run from `client/`):
 
-Du kannst die Seite bearbeiten, indem du `app/page.tsx` änderst. Die Seite aktualisiert sich automatisch, während du die Datei bearbeitest.
+```bash
+npm install
+npm run dev          # Vite dev server on http://localhost:4210
+npm run build        # vite build + copy dist into server/dist
+npm run lint         # eslint
+npx tsc -b           # type-check
+```
 
-Dieses Projekt nutzt [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts), um [Geist](https://vercel.com/font) automatisch zu optimieren und zu laden, eine neue Schriftfamilie für Vercel.
+## Production
 
-## Mehr erfahren
+Build the client, then start the server — it serves the client from
+`server/dist`:
 
-Um mehr über Next.js zu lernen, schau dir die folgenden Quellen an:
+```bash
+cd client && npm run build
+cd ../server && deno task start
+```
 
-- [Next.js-Dokumentation](https://nextjs.org/docs) – erfahre mehr über die Funktionen und die API von Next.js.
-- [Next.js lernen](https://nextjs.org/learn) – ein interaktives Next.js-Tutorial.
+The server serves the SPA with a catch-all route that falls back to
+`dist/index.html`; unknown `/api/*` paths return a JSON `404`.
 
-Du kannst dir auch [das Next.js-GitHub-Repository](https://github.com/vercel/next.js) anschauen – Feedback und Beiträge sind willkommen!
+## API
 
-## Auf Vercel bereitstellen
-
-Der einfachste Weg, deine Next.js-App bereitzustellen, ist die [Vercel-Plattform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) von den Erstellern von Next.js.
-
-Weitere Details findest du in unserer [Next.js-Deployment-Dokumentation](https://nextjs.org/docs/app/building-your-application/deploying).
+- `POST /api/auth` — login (`{ email, password }`)
+- `GET /api/auth` — refresh the token
+- `/api/nodes` — CRUD for CMS nodes (JWT required)
+- `/api/fm/:path*` — file manager over `server/media/` (JWT required)
+- `/api/articles/:path*` — article listing / markdown from `server/media/articles/`
+- `/content/:id.md` — public markdown pages served statically from `client/public/content/`
+- `/api` — Swagger UI, `/api/openapi.yaml` — OpenAPI spec
