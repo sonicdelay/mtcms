@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { IxButton, IxIconButton, showToast } from "@siemens/ix-react";
-import { iconSaveAll, iconClose } from "@siemens/ix-icons/icons";
-import { useAppStore } from "../../lib/app.store";
-import { writeMediaFile } from "../../lib/admin.api";
+import { iconClose, iconSaveAll } from "@siemens/ix-icons/icons";
+import { useAppStore } from "../lib/app.store";
+import { writeMediaFile } from "../lib/admin.api";
 
 interface FileEditorDialogProps {
   path: string;
