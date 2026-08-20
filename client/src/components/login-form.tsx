@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IxButton, IxContentHeader, IxInput } from "@siemens/ix-react";
-import { useAppStore } from "../../lib/app.store";
+import { useAppStore } from "../lib/app.store";
 
 export default function LoginForm() {
   const login = useAppStore((s) => s.login);
@@ -25,8 +25,7 @@ export default function LoginForm() {
           type="email"
           required
           onInput={(event) =>
-            setEmail((event.target as HTMLInputElement).value)
-          }
+            setEmail((event.target as HTMLInputElement).value)}
         />
         <IxInput
           label="Password"
@@ -34,8 +33,7 @@ export default function LoginForm() {
           type="password"
           required
           onInput={(event) =>
-            setPassword((event.target as HTMLInputElement).value)
-          }
+            setPassword((event.target as HTMLInputElement).value)}
         />
         {error && (
           <p style={{ margin: 0, color: "var(--theme-color-alarm-text)" }}>

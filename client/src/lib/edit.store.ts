@@ -56,6 +56,9 @@ const getLineage = (node: EditorNode): LineageItem[] =>
     label: item.title || item.id,
   }));
 
+const displayName = (label: string, id: string): string =>
+  label === id ? label : `${label} (${id})`;
+
 const buildTreeState = (
   node: EditorNode,
   previousTree: TreeState,
@@ -99,7 +102,7 @@ const buildTreeState = (
 
     treeModel[item.id] = {
       id: item.id,
-      data: { name: item.label },
+      data: { name: displayName(item.label, item.id) },
       hasChildren: (currentItem?.hasChildren ?? false) || children.length > 0,
       children,
     };
@@ -115,7 +118,7 @@ const buildTreeState = (
     const existingChild = treeModel[child.id];
     treeModel[child.id] = {
       id: child.id,
-      data: { name: child.title || child.id },
+      data: { name: displayName(child.title || child.id, child.id) },
       hasChildren: existingChild?.hasChildren ?? false,
       children: existingChild?.children ?? [],
     };
@@ -162,7 +165,7 @@ interface EditStore {
   setTreeContext: (context: TreeContext) => void;
   setLanguage: (language: Language) => void;
   setFormFields: (fields: FormField[]) => void;
-  fetchNode: (nodeId: string) => Promise<EditorNode | null>;
+  fetchNode: (nodeId: string, force?: boolean) => Promise<EditorNode | null>;
   addNode: (
     parentId: string,
     name: string,
@@ -202,9 +205,9 @@ export const useEditStore = create<EditStore>()(
         },
         setFormFields: (fields) =>
           set({ formFields: fields }, false, "edit/setFormFields"),
-        fetchNode: async (nodeId) => {
+        fetchNode: async (nodeId, force = false) => {
           const currentNode = get().node;
-          if (currentNode?.id === nodeId) {
+          if (!force && currentNode?.id === nodeId) {
             set({ selectedNodeId: nodeId }, false, "edit/fetchNode:reuse");
             return currentNode;
           }

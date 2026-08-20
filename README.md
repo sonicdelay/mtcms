@@ -18,13 +18,13 @@ A content-management web app split into a React client and an Express API server
 
 Copy `.env.example` to `.env` (at the repo root) and fill in:
 
-- `ADMIN_EMAIL` / `ADMIN_PASSWORD` — bootstrap admin credentials
-- `DATABASE_URL` / `DBPROVIDER` — PostgreSQL connection (Neon or `pg`)
+- `DATABASE_URL` / `DBPROVIDER` — PostgreSQL connection (Neon or `pg`); user
+  accounts authenticate against `user` nodes in the database
 - `JWT_SECRET` — HS256 secret for signing tokens
-- `PORT` — server port (default `4000`)
+- `PORT` — server port (default `8421`)
 
 The client's dev server proxies `/api` to the server; set `API_TARGET` in
-`client/.env` (default `http://localhost:4000`) if needed.
+`client/.env` (default `http://localhost:4210`) if needed.
 
 ## Commands
 

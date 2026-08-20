@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import {
   IxButton,
@@ -10,11 +10,52 @@ import {
 import { iconAdd, iconSaveAll, iconTrashcan } from "@siemens/ix-icons/icons";
 import { useAppStore } from "../../lib/app.store";
 import { useEditStore } from "../../lib/edit.store";
-import NodeBreadcrumb from "./edit/node-breadcrumb";
-import NodeTree from "./edit/node-tree";
-import DynamicForm from "./edit/dynamic-form";
+import NodeBreadcrumb from "../../components/edit/node-breadcrumb";
+import NodeTree from "../../components/edit/node-tree";
+import DynamicForm from "../../components/edit/dynamic-form";
 
 const ZERO_UUID = "00000000-0000-4000-8000-000000000000";
+const MIN_TREE_WIDTH = 180;
+const MAX_TREE_WIDTH = 640;
+
+function useTreeWidth(initial = 300) {
+  const [width, setWidth] = useState(initial);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const draggingRef = useRef(false);
+
+  useEffect(() => {
+    const move = (event: PointerEvent) => {
+      if (!draggingRef.current || !containerRef.current) return;
+      const left = containerRef.current.getBoundingClientRect().left;
+      setWidth(
+        Math.min(
+          MAX_TREE_WIDTH,
+          Math.max(MIN_TREE_WIDTH, event.clientX - left),
+        ),
+      );
+    };
+    const up = () => {
+      draggingRef.current = false;
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+    };
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+    return () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+    };
+  }, []);
+
+  return {
+    width,
+    containerRef,
+    onPointerDown: (event: React.PointerEvent) => {
+      event.preventDefault();
+      draggingRef.current = true;
+    },
+  };
+}
 
 export default function EditPage() {
   const navigate = useNavigate();
@@ -33,10 +74,10 @@ export default function EditPage() {
 
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
+  const tree = useTreeWidth();
 
   useEffect(() => {
-    if (!token) return;
-    void fetchNode(nodeId);
+    if (token) void fetchNode(nodeId);
   }, [token, nodeId, fetchNode]);
 
   useEffect(() => {
@@ -46,6 +87,9 @@ export default function EditPage() {
   }, [node]);
 
   const isRoot = node?.id === ZERO_UUID;
+
+  const toast = (title: string, type: "success" | "error" | "info") =>
+    showToast({ title, type });
 
   const handleAddChild = async () => {
     if (!node?.id || busy) return;
@@ -60,10 +104,10 @@ export default function EditPage() {
         language,
       );
       if (createdId) {
-        await fetchNode(node.id);
-        showToast({ title: "Node created", type: "success" });
+        await fetchNode(node.id, true);
+        toast("Node created", "success");
       } else {
-        showToast({ title: "Could not create node", type: "error" });
+        toast("Could not create node", "error");
       }
     } finally {
       setBusy(false);
@@ -75,10 +119,9 @@ export default function EditPage() {
     setBusy(true);
     try {
       const ok = await saveNode();
-      showToast(
-        ok
-          ? { title: "Node saved", type: "success" }
-          : { title: "Could not save node", type: "error" },
+      toast(
+        ok ? "Node saved" : "Could not save node",
+        ok ? "success" : "error",
       );
     } finally {
       setBusy(false);
@@ -94,29 +137,37 @@ export default function EditPage() {
       if (parentId) {
         navigate(`/admin/edit/${encodeURIComponent(parentId)}`);
         void fetchNode(parentId);
-        showToast({ title: "Node deleted", type: "info" });
+        toast("Node deleted", "info");
       } else {
-        showToast({ title: "Could not delete node", type: "error" });
+        toast("Could not delete node", "error");
       }
     } finally {
       setBusy(false);
     }
   };
 
-  if (!token) {
-    return null;
-  }
+  if (!token) return null;
 
   return (
     <div className="admin-page admin-page--edit">
-      <IxContentHeader headerTitle="Edit" headerSubtitle={node?.id ?? ""} />
+      <IxContentHeader headerTitle={`Edit ( id=${node?.id ?? ""} )`} />
 
       <NodeBreadcrumb />
 
-      <div className="admin-edit-layout">
-        <aside className="admin-edit-layout__tree">
+      <div className="admin-edit-layout" ref={tree.containerRef}>
+        <aside
+          className="admin-edit-layout__tree"
+          style={{ width: `${tree.width}px` }}
+        >
           <NodeTree />
         </aside>
+
+        <div
+          className="admin-edit-layout__splitter"
+          role="separator"
+          aria-orientation="vertical"
+          onPointerDown={tree.onPointerDown}
+        />
 
         <main className="admin-edit-layout__content">
           {loading && <p style={{ opacity: 0.7 }}>Loading…</p>}
@@ -127,7 +178,8 @@ export default function EditPage() {
               <div className="admin-page__toolbar">
                 <IxSelect
                   value={language}
-                  onValueChange={(value) => setLanguage(String(value) as "en" | "de")}
+                  onValueChange={(value) =>
+                    setLanguage(String(value) as "en" | "de")}
                 >
                   <IxSelectItem value="en">English</IxSelectItem>
                   <IxSelectItem value="de">Deutsch</IxSelectItem>
@@ -136,25 +188,19 @@ export default function EditPage() {
                   icon={iconAdd}
                   onClick={() => void handleAddChild()}
                   disabled={busy}
-                >
-                  Add child
-                </IxButton>
+                />
                 <IxButton
                   icon={iconSaveAll}
                   onClick={() => void handleSave()}
                   disabled={busy}
-                >
-                  Save
-                </IxButton>
+                />
                 {!isRoot && (
                   <IxButton
                     variant="secondary"
                     icon={iconTrashcan}
                     onClick={() => void handleDelete()}
                     disabled={busy}
-                  >
-                    Delete
-                  </IxButton>
+                  />
                 )}
               </div>
 

@@ -1,7 +1,6 @@
-import { timingSafeEqual } from "node:crypto";
+import bcrypt from "bcryptjs";
 import { type AuthUser, signToken } from "./auth.ts";
 import { getUserByEmail } from "./nodes.service.ts";
-import type { NodeDataItem } from "./types.ts";
 
 export class AuthError extends Error {
   constructor(message = "Invalid credentials") {
@@ -10,92 +9,41 @@ export class AuthError extends Error {
   }
 }
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-
-async function passwordsMatch(input: string, stored: string): Promise<boolean> {
-  if (stored.startsWith("$2")) {
-    try {
-      const bcrypt = await import("bcryptjs");
-      return bcrypt.compareSync(input, stored);
-    } catch {
-      // bcryptjs is not installed; fall back to a constant-time comparison.
-    }
-  }
-
-  const a = new TextEncoder().encode(input);
-  const b = new TextEncoder().encode(stored);
-  if (a.byteLength !== b.byteLength) {
-    return false;
-  }
-  return timingSafeEqual(a, b);
-}
-
-function userFromNode(node: {
-  id: string;
-  data: Record<string, unknown> | null;
-}): AuthUser | null {
-  const data = node.data as
-    | {
-      "0"?: {
-        values?: {
-          en?: { email?: string; role?: string; password?: string };
-        };
-      };
-    }
-    | null
-    | undefined;
-  const values = data?.["0"]?.values?.en;
-  if (!values?.email) {
-    return null;
-  }
-  return {
-    id: node.id,
-    email: values.email,
-    role: values.role ?? "User",
+interface UserNodeData {
+  "0"?: {
+    values?: {
+      en?: { email?: string; role?: string; password?: string };
+    };
   };
 }
 
 /**
- * Authenticates a user against the configured admin credentials or a user
- * node stored in the database. Throws AuthError on failure.
+ * Authenticates a user against a user node stored in the database.
+ * Throws AuthError on failure.
  */
 export async function authenticate(
   email: string,
   password: string,
 ): Promise<AuthUser> {
-  if (
-    ADMIN_EMAIL &&
-    ADMIN_PASSWORD &&
-    email === ADMIN_EMAIL &&
-    password === ADMIN_PASSWORD
-  ) {
-    return {
-      id: "00000000-0000-4000-8000-000000000000",
-      email: ADMIN_EMAIL,
-      role: "Admin",
-    };
-  }
-
   const node = await getUserByEmail(email);
-  const user = node ? userFromNode(node) : null;
-  const storedPassword = node && user
-    ? ((
-      node.data as unknown as {
-        "0": { values?: { en?: NodeDataItem & { password?: string } } };
-      }
-    )?.["0"]?.values?.en?.password ?? "")
-    : "";
-
-  if (
-    user &&
-    storedPassword &&
-    (await passwordsMatch(password, storedPassword))
-  ) {
-    return user;
+  if (!node) {
+    throw new AuthError("Invalid email or password");
   }
 
-  throw new AuthError("Invalid email or password");
+  const values = (node.data as UserNodeData | null)?.["0"]?.values?.en;
+  if (!values?.email || !values.password) {
+    throw new AuthError("Invalid email or password");
+  }
+
+  if (!bcrypt.compareSync(password, values.password)) {
+    throw new AuthError("Invalid email or password");
+  }
+
+  return {
+    id: node.id,
+    email: values.email,
+    role: values.role ?? "User",
+  };
 }
 
 /**

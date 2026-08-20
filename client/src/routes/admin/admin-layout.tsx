@@ -10,16 +10,16 @@ import {
 } from "@siemens/ix-react";
 import {
   iconAddTaskList,
+  iconElement,
+  iconFolderApplicationScreen,
   iconHome,
   iconLogOut,
-  iconFolderApplicationScreen,
-  iconElement,
   iconObjectsTree,
   iconUser,
 } from "@siemens/ix-icons/icons";
 import { useAppStore } from "../../lib/app.store";
 import { useMounted } from "../../components/use-mounted";
-import LoginForm from "./login-form";
+import LoginForm from "../../components/login-form";
 import "../../admin.scss";
 
 const navItems = [
@@ -85,32 +85,34 @@ export default function AdminLayout() {
           )}
         </IxApplicationHeader>
 
-        {token ? (
-          <>
-            <IxMenu enableToggleTheme i18nToggleTheme="Toggle theme">
-              {navItems.map((item) => {
-                const active = pathname === item.href;
-                return (
-                  <IxMenuItem
-                    key={item.href}
-                    label={item.label}
-                    icon={item.icon}
-                    active={active}
-                    href={item.href}
-                    onClick={() => navigate(item.href)}
-                  />
-                );
-              })}
-            </IxMenu>
+        {token
+          ? (
+            <>
+              <IxMenu enableToggleTheme i18nToggleTheme="Toggle theme">
+                {navItems.map((item) => {
+                  const active = pathname === item.href;
+                  return (
+                    <IxMenuItem
+                      key={item.href}
+                      label={item.label}
+                      icon={item.icon}
+                      active={active}
+                      href={item.href}
+                      onClick={() => navigate(item.href)}
+                    />
+                  );
+                })}
+              </IxMenu>
+              <IxContent>
+                <Outlet />
+              </IxContent>
+            </>
+          )
+          : (
             <IxContent>
-              <Outlet />
+              <LoginForm />
             </IxContent>
-          </>
-        ) : (
-          <IxContent>
-            <LoginForm />
-          </IxContent>
-        )}
+          )}
       </IxApplication>
     </div>
   );

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import { IxTree } from "@siemens/ix-react";
-import { useEditStore } from "../../../lib/edit.store";
+import { useEditStore } from "../../lib/edit.store";
 
 const ZERO_UUID = "00000000-0000-4000-8000-000000000000";
 
