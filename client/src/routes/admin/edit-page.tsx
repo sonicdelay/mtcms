@@ -150,7 +150,35 @@ export default function EditPage() {
 
   return (
     <div className="admin-page admin-page--edit">
-      <IxContentHeader headerTitle={`Edit ( id=${node?.id ?? ""} )`} />
+      <IxContentHeader headerTitle={`Edit ( id=${node?.id ?? ""} )`}>
+        <div className="admin-page__toolbar">
+          <IxSelect
+            value={language}
+            onValueChange={(value) => setLanguage(String(value) as "en" | "de")}
+          >
+            <IxSelectItem value="en">English</IxSelectItem>
+            <IxSelectItem value="de">Deutsch</IxSelectItem>
+          </IxSelect>
+          <IxButton
+            icon={iconAdd}
+            onClick={() => void handleAddChild()}
+            disabled={busy}
+          />
+          <IxButton
+            icon={iconSaveAll}
+            onClick={() => void handleSave()}
+            disabled={busy}
+          />
+          {!isRoot && (
+            <IxButton
+              variant="secondary"
+              icon={iconTrashcan}
+              onClick={() => void handleDelete()}
+              disabled={busy}
+            />
+          )}
+        </div>
+      </IxContentHeader>
 
       <NodeBreadcrumb />
 
@@ -173,40 +201,7 @@ export default function EditPage() {
           {loading && <p style={{ opacity: 0.7 }}>Loading…</p>}
           {!loading && !node && <p>Node not found.</p>}
 
-          {node && (
-            <>
-              <div className="admin-page__toolbar">
-                <IxSelect
-                  value={language}
-                  onValueChange={(value) =>
-                    setLanguage(String(value) as "en" | "de")}
-                >
-                  <IxSelectItem value="en">English</IxSelectItem>
-                  <IxSelectItem value="de">Deutsch</IxSelectItem>
-                </IxSelect>
-                <IxButton
-                  icon={iconAdd}
-                  onClick={() => void handleAddChild()}
-                  disabled={busy}
-                />
-                <IxButton
-                  icon={iconSaveAll}
-                  onClick={() => void handleSave()}
-                  disabled={busy}
-                />
-                {!isRoot && (
-                  <IxButton
-                    variant="secondary"
-                    icon={iconTrashcan}
-                    onClick={() => void handleDelete()}
-                    disabled={busy}
-                  />
-                )}
-              </div>
-
-              <DynamicForm />
-            </>
-          )}
+          {node && <DynamicForm />}
         </main>
       </div>
     </div>

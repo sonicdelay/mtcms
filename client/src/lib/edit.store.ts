@@ -57,7 +57,7 @@ const getLineage = (node: EditorNode): LineageItem[] =>
   }));
 
 const displayName = (label: string, id: string): string =>
-  label === id ? label : `${label} (${id})`;
+  label === id ? label : `${label}`;
 
 const buildTreeState = (
   node: EditorNode,
@@ -148,7 +148,7 @@ const buildFormModel = (node: EditorNode, language: Language): FormField[] => {
 
   return [
     {
-      name: "nodeData",
+      name: "raw data...",
       type: "textarea",
       value: JSON.stringify(node.data ?? {}, null, 2),
     },
