@@ -1,10 +1,5 @@
 import type { MiniNode, Node } from "./types";
-
-export interface FileItem {
-  name: string;
-  path: string;
-  type: "dir" | "file";
-}
+import { FileItem } from "./types";
 
 export interface EditorNode extends Node {
   children: MiniNode[];

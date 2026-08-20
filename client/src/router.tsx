@@ -4,38 +4,12 @@ import HomeLayout from "./routes/home/home-layout";
 import HomePage from "./routes/home/home-page";
 import ArticlesPage from "./routes/home/articles-page";
 import ContentPage from "./routes/home/content-page";
-
-const engineRoute = async () => ({
-  Component: (await import("./routes/engine/engine-page")).default,
-});
-
-const adminLayoutRoute = async () => ({
-  Component: (await import("./routes/admin/admin-layout")).default,
-});
-
-const dashboardRoute = async () => ({
-  Component: (await import("./routes/admin/dashboard-page")).default,
-});
-
-const tasksRoute = async () => ({
-  Component: (await import("./routes/admin/tasks-page")).default,
-});
-
-const toolsRoute = async () => ({
-  Component: (await import("./routes/admin/tools-page")).default,
-});
-
-const filesRoute = async () => ({
-  Component: (await import("./routes/admin/files-page")).default,
-});
-
-const editIndexRoute = async () => ({
-  Component: (await import("./routes/admin/edit-index-page")).default,
-});
-
-const editPageRoute = async () => ({
-  Component: (await import("./routes/admin/edit-page")).default,
-});
+import FilesPage from "./routes/admin/files-page";
+import EditIndexPage from "./routes/admin/edit-index-page";
+import EditPage from "./routes/admin/edit-page";
+import TasksPage from "./routes/admin/tasks-page";
+import ToolsPage from "./routes/admin/tools-page";
+//import DashboardPage from "./routes/admin/dashboard-page";
 
 export const router = createBrowserRouter([
   {
@@ -54,18 +28,21 @@ export const router = createBrowserRouter([
       },
       {
         path: "engine",
-        lazy: engineRoute,
+        lazy: async () => ({
+          Component: (await import("./routes/engine/engine-page")).default,
+        }),
       },
       {
         path: "admin",
-        lazy: adminLayoutRoute,
+        lazy: async () => ({
+          Component: (await import("./routes/admin/admin-layout")).default,
+        }),
         children: [
-          { index: true, lazy: dashboardRoute },
-          { path: "tasks", lazy: tasksRoute },
-          { path: "tools", lazy: toolsRoute },
-          { path: "files", lazy: filesRoute },
-          { path: "edit", lazy: editIndexRoute },
-          { path: "edit/:id", lazy: editPageRoute },
+          { index: true, element: <TasksPage /> },
+          { path: "tools", element: <ToolsPage /> },
+          { path: "files", element: <FilesPage /> },
+          { path: "edit", element: <EditIndexPage /> },
+          { path: "edit/:id", element: <EditPage /> },
         ],
       },
       { path: "*", element: <Navigate to="/home" replace /> },

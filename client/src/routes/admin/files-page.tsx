@@ -1,18 +1,18 @@
 import {
+  type PointerEvent as ReactPointerEvent,
   useEffect,
   useMemo,
   useRef,
   useState,
-  type PointerEvent as ReactPointerEvent,
 } from "react";
 import { IxContentHeader, IxIconButton, showToast } from "@siemens/ix-react";
 import {
+  iconChevronRightSmall,
+  iconDocument,
   iconFolder,
   iconRefresh,
-  iconDocument,
   iconTrashcan,
   iconUpload,
-  iconChevronRightSmall,
 } from "@siemens/ix-icons/icons";
 import { useAppStore } from "../../lib/app.store";
 import {
@@ -22,9 +22,9 @@ import {
   readMediaText,
   uploadMediaFile,
   writeMediaFile,
-  type FileItem,
 } from "../../lib/admin.api";
-import FileEditorDialog from "./file-editor-dialog";
+import type { FileItem } from "../../lib/types";
+import FileEditorDialog from "../../components/file-editor-dialog";
 
 export default function FilesPage() {
   const token = useAppStore((s) => s.token);
@@ -227,8 +227,7 @@ export default function FilesPage() {
                 type="button"
                 className="admin-file-manager__crumb"
                 onClick={() =>
-                  navigateTo(segments.slice(0, index + 1).join("/"))
-                }
+                  navigateTo(segments.slice(0, index + 1).join("/"))}
               >
                 {segment}
               </button>
@@ -279,8 +278,7 @@ export default function FilesPage() {
                     type="button"
                     className="admin-file-manager__crumb"
                     onClick={() =>
-                      navigateTo(segments.slice(0, index + 1).join("/"))
-                    }
+                      navigateTo(segments.slice(0, index + 1).join("/"))}
                   >
                     {segment}
                   </button>
@@ -345,7 +343,8 @@ export default function FilesPage() {
                 <IxIconButton
                   icon={iconTrashcan}
                   title="Delete"
-                  onClick={() => removeItem(item)}
+                  onClick={() =>
+                    removeItem(item)}
                 />
               </div>
             ))}
@@ -370,7 +369,9 @@ export default function FilesPage() {
                   <div className="admin-row__meta">{item.path}</div>
                 </a>
                 <a
-                  href={`/api/fm/${item.path.split("/").map(encodeURIComponent).join("/")}`}
+                  href={`/api/fm/${
+                    item.path.split("/").map(encodeURIComponent).join("/")
+                  }`}
                   target="_blank"
                   rel="noreferrer"
                   title="Open raw"
