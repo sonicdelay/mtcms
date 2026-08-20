@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useAppStore } from "../lib/app.store";
+import i18n from "../lib/i18n";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const theme = useAppStore((s) => s.theme);
@@ -15,6 +16,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     document.documentElement.lang = language;
+    void i18n.changeLanguage(language);
   }, [language]);
 
   return <>{children}</>;

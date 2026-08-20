@@ -1,6 +1,6 @@
 ##### **Einleitung**
 
-**Wildnishandwerk** ist das Wort für Fähigkeiten, die man in der Wildnis braucht. Es bedeutet: draußen in der Natur überleben und dabei gut zurechtkommen. Wer Wildnishandwerk gut können will, muss viel lernen: Feuer machen, sich orientieren, Fallen bauen, einen Unterschlupf errichten, Spuren lesen und mit Werkzeugen umgehen – mit modernen und mit ganz alten.
+**Überlebenstechniken** ist das Wort für Fähigkeiten, die man in der Wildnis braucht. Es bedeutet: draußen in der Natur überleben und dabei gut zurechtkommen. Wer Wildnishandwerk gut können will, muss viel lernen: Feuer machen, sich orientieren, Fallen bauen, einen Unterschlupf errichten, Spuren lesen und mit Werkzeugen umgehen – mit modernen und mit ganz alten.
 
 Erfahrene Wanderer nehmen nur wenige, aber wichtige Dinge mit. Statt viel Ausrüstung tragen sie ihr Wissen im Kopf. So können sie sich aus der Natur holen, was sie gerade brauchen. In der Wildnis zu leben ist ohne den Komfort von zu Hause nicht einfach. Man braucht Durchhaltevermögen. Wie bei jedem Hobby braucht es Übung und Wissen. Manche dieser Fähigkeiten können im Notfall sogar das Leben retten.
 

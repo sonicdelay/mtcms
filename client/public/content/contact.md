@@ -2,13 +2,11 @@
 
 Für die Angebote von SonicDelay.net, SonicDelay.de und Bietje.de
 
-&nbsp;
-
 Sascha Hess<br/>
-Wichernstraße &#x32;&#x37;
-76&#x31;85 Karlsruhe
-support&commat;sonicdelay.net
-+497&#x32;4586&#x30;585&#x32;
+Wichernstraße &#x32;&#x37;<br/>
+76&#x31;85 Karlsruhe<br/>
+support&commat;sonicdelay.net<br/>
++497&#x32;1/;
 
 &nbsp;
 
@@ -70,4 +68,6 @@ Bedingungen im jeweiligen Einzelfall.
 
 &nbsp;
 
-Quelle: [fachanwalt.de](https://www.fachanwalt.de)
+<div style="float:right">
+<a href="https://www.fachanwalt.de" target="_blank">Quelle: fachanwalt.de</a>
+</div>

@@ -31,3 +31,4 @@ const title = await page.title();
 console.log(title);
 await browser.close();
 ```
+

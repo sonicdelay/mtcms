@@ -1,4 +1,4 @@
-﻿### Schlusswort
+﻿## Schlusswort
 
 Danke, dass du diese Wissenssammlung gelesen hast. Natürlich ist es wichtig, dass du nicht nur die Lektionen aufnimmst, sondern auch nach draußen gehst und die Natur genießt. Am besten lernst du die Fähigkeiten, über die wir gesprochen haben, indem du sie übst.
 

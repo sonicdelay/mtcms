@@ -20,8 +20,7 @@ const md = new MarkdownIt({
   linkify: true,
 });
 
-const defaultRender =
-  md.renderer.rules.link_open ??
+const defaultRender = md.renderer.rules.link_open ??
   ((tokens, idx, options, _env, self) =>
     self.renderToken(tokens, idx, options));
 
@@ -31,9 +30,7 @@ md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
 
   if (/^[a-zA-Z0-9][^:/]*\.md(?:#.*)?$/.test(href)) {
     const base = env.articlePath?.replace(/\.md$/, "") ?? "";
-    const dir = base.includes("/")
-      ? base.slice(0, base.lastIndexOf("/"))
-      : "";
+    const dir = base.includes("/") ? base.slice(0, base.lastIndexOf("/")) : "";
     const name = href.replace(/\.md$/, "");
     token.attrSet("href", `/home/articles/${dir ? `${dir}/` : ""}${name}`);
   }
@@ -43,7 +40,7 @@ md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
 
 function buildBreadcrumb(segments: string[]) {
   const crumbs: { label: string; href: string }[] = [
-    { label: "Articles", href: "/home/articles" },
+    { label: "Artikel", href: "/home/articles" },
   ];
   let acc = "";
   for (const segment of segments) {
@@ -70,13 +67,13 @@ function Breadcrumb({
       {crumbs.map((crumb, index) => (
         <span key={crumb.href}>
           {index > 0 && <span className="mx-2">/</span>}
-          {index < crumbs.length - 1 ? (
-            <Link to={crumb.href} className="hover:underline">
-              {crumb.label}
-            </Link>
-          ) : (
-            <span>{crumb.label}</span>
-          )}
+          {index < crumbs.length - 1
+            ? (
+              <Link to={crumb.href} className="hover:underline">
+                {crumb.label}
+              </Link>
+            )
+            : <span>{crumb.label}</span>}
         </span>
       ))}
     </nav>
@@ -162,7 +159,7 @@ export default function ArticlesPage() {
     <div className="mx-auto w-full max-w-5xl flex-1 px-6 py-16">
       <Breadcrumb crumbs={crumbs} />
       <h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
-        {segments[segments.length - 1] ?? "Articles"}
+        {segments[segments.length - 1] ?? "Artikel"}
       </h1>
       <ul className="mt-8 flex flex-col gap-3">
         {state.items.map((item) => {

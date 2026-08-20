@@ -1,6 +1,6 @@
 # Überleben in der Wildnis
 
-##### **WIDMUNG**
+## **WIDMUNG**
 
 „Gut Pfad" ist der Gruß der Pfadfinder. Dieses Buch ist für alle, die jung im Herzen geblieben sind und sich trotz Technik und modernem Leben in die Wildnis trauen.
 
