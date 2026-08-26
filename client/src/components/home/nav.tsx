@@ -22,7 +22,8 @@ export default function Nav() {
     { href: "/home/content/engine", label: t("nav.engine") },
     { href: "/home/content/about", label: t("nav.about") },
     { href: "/home/content/contact", label: t("nav.contact") },
-    { href: "/admin", label: t("nav.admin") },
+    { href: "/admin", label: t("nav.admin"), requiresAuth: true },
+    { href: "/api", label: "API", requiresAuth: true, external: true },
   ];
 
   const isLoggedIn = token != null;
@@ -49,31 +50,31 @@ export default function Nav() {
         </Link>
         <ul className="flex items-center gap-4">
           {links
-            .filter(
-              (link) => link.href !== "/admin" || (mounted && isLoggedIn),
-            )
-            .map((link) => (
-              <li key={link.href}>
-                <Link
-                  to={link.href}
-                  className={`text-sm font-medium transition-colors hover:text-zinc-900 dark:hover:text-zinc-50 ${
-                    pathname === link.href
-                      ? "text-zinc-900 dark:text-zinc-50"
-                      : "text-zinc-500 dark:text-zinc-400"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          <li>
-            <a
-              href="/api"
-              className="text-sm font-medium text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
-            >
-              API
-            </a>
-          </li>
+            .filter((link) => !link.requiresAuth || (mounted && isLoggedIn))
+            .map((link) => {
+              const className =
+                `text-sm font-medium transition-colors hover:text-zinc-900 dark:hover:text-zinc-50 ${
+                  pathname === link.href
+                    ? "text-zinc-900 dark:text-zinc-50"
+                    : "text-zinc-500 dark:text-zinc-400"
+                }`;
+
+              return (
+                <li key={link.href}>
+                  {link.external
+                    ? (
+                      <a href={link.href} className={className}>
+                        {link.label}
+                      </a>
+                    )
+                    : (
+                      <Link to={link.href} className={className}>
+                        {link.label}
+                      </Link>
+                    )}
+                </li>
+              );
+            })}
         </ul>
         <div className="ml-auto flex items-center gap-2">
           <ThemeSwitcher />
