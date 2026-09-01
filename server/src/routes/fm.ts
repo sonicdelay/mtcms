@@ -1,3 +1,4 @@
+import type { Request, Response, Router } from "express";
 import express from "express";
 import path from "node:path";
 import { authRequired } from "../lib/auth.ts";
@@ -12,11 +13,6 @@ import {
   writeMediaFile,
 } from "../lib/fm.service.ts";
 import { problem } from "../lib/http.ts";
-
-export const fmRouter = express.Router();
-
-fmRouter.use(authRequired);
-fmRouter.use(express.raw({ type: () => true, limit: "200mb" }));
 
 function contentTypeFor(filePath: string): string {
   switch (path.extname(filePath).toLowerCase()) {
@@ -41,7 +37,7 @@ function contentTypeFor(filePath: string): string {
   }
 }
 
-function relPathOf(req: express.Request): string {
+function relPathOf(req: Request): string {
   const splat = (req.params as Record<string, unknown>).splat;
   if (Array.isArray(splat)) {
     return splat.join("/");
@@ -49,7 +45,7 @@ function relPathOf(req: express.Request): string {
   return (splat as string | undefined) ?? "";
 }
 
-async function handleGet(req: express.Request, res: express.Response) {
+const getFM = async (req: Request, res: Response) => {
   const relPath = relPathOf(req);
 
   try {
@@ -77,9 +73,9 @@ async function handleGet(req: express.Request, res: express.Response) {
     }
     problem(res, 500, "Internal Server Error", (error as Error).message);
   }
-}
+};
 
-async function handlePost(req: express.Request, res: express.Response) {
+const postFM = async (req: Request, res: Response) => {
   const relPath = relPathOf(req);
   if (!relPath) {
     problem(res, 400, "Bad Request", "path must not be empty.");
@@ -96,9 +92,9 @@ async function handlePost(req: express.Request, res: express.Response) {
     }
     problem(res, 500, "Internal Server Error", (error as Error).message);
   }
-}
+};
 
-async function handlePut(req: express.Request, res: express.Response) {
+const putFM = async (req: Request, res: Response) => {
   const relPath = relPathOf(req);
   if (!relPath) {
     problem(res, 400, "Bad Request", "path must not be empty.");
@@ -121,9 +117,9 @@ async function handlePut(req: express.Request, res: express.Response) {
     }
     problem(res, 500, "Internal Server Error", (error as Error).message);
   }
-}
+};
 
-async function handleDelete(req: express.Request, res: express.Response) {
+const deleteFM = async (req: Request, res: Response) => {
   const relPath = relPathOf(req);
   if (!relPath) {
     problem(res, 400, "Bad Request", "path must not be empty.");
@@ -149,13 +145,18 @@ async function handleDelete(req: express.Request, res: express.Response) {
     }
     problem(res, 500, "Internal Server Error", (error as Error).message);
   }
-}
+};
 
-fmRouter.get("/", handleGet);
-fmRouter.get("/*splat", handleGet);
-fmRouter.post("/", handlePost);
-fmRouter.post("/*splat", handlePost);
-fmRouter.put("/", handlePut);
-fmRouter.put("/*splat", handlePut);
-fmRouter.delete("/", handleDelete);
-fmRouter.delete("/*splat", handleDelete);
+const prefix = "/api/fm";
+export const fmRouter: Router = express.Router();
+fmRouter.use(`${prefix}`, authRequired);
+fmRouter.use(`${prefix}`, express.raw({ type: () => true, limit: "200mb" }));
+fmRouter
+  .get(`${prefix}/`, getFM)
+  .get(`${prefix}/*splat`, getFM)
+  .post(`${prefix}/`, postFM)
+  .post(`${prefix}/*splat`, postFM)
+  .put(`${prefix}/`, putFM)
+  .put(`${prefix}/*splat`, putFM)
+  .delete(`${prefix}/`, deleteFM)
+  .delete(`${prefix}/*splat`, deleteFM);

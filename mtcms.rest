@@ -1,0 +1,18 @@
+### Get API Root
+
+GET http://localhost:4210/api/ HTTP/1.1
+Content-Type: text/html
+
+### Get OpenAPI Specification
+
+GET http://localhost:4210/api/openapi.yaml
+
+### Authenticate User
+
+POST http://localhost:4210/api/auth HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+email=admin@example.com
+&password=admin@example.com
+
+

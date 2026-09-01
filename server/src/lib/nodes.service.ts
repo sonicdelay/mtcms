@@ -144,14 +144,6 @@ export async function getBreadcrumb(id: string): Promise<MiniNode[]> {
   return rows as MiniNode[];
 }
 
-export async function getNodesByType(type: string): Promise<Node[]> {
-  const { rows } = await pool.query<Node>(
-    "SELECT * FROM nodes WHERE type = LOWER($1)",
-    [type],
-  );
-  return rows;
-}
-
 export async function getUserByEmail(email: string): Promise<Node | null> {
   const {
     rows: [row],

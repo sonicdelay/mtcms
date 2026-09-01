@@ -4,14 +4,17 @@ description: A powerful library for automating web browsers (Chromium, Firefox, 
 ---
 
 ## What I do
+
 - Automate web browsers (Chromium, Firefox, WebKit) for testing and scraping
 - Perform actions like clicking buttons, filling forms, navigating pages, and taking screenshots
 - Extract and assert on page content, attributes, and network requests
 
 ## When to use me
+
 Use this skill when you need to interact with a live webpage — automating form submissions, scraping dynamic content, running browser tests, or capturing page state. Prefer this over static HTML analysis when JavaScript rendering is required.
 
 ## Capabilities
+
 - `page.goto(url)` — navigate to a URL
 - `page.click(selector)` — click an element
 - `page.fill(selector, value)` — fill a form field
@@ -22,13 +25,13 @@ Use this skill when you need to interact with a live webpage — automating form
 - `page.waitForSelector(selector)` — wait for an element to appear
 
 ## Example
+
 ```javascript
-const { chromium } = require('playwright');
+const { chromium } = require("playwright");
 const browser = await chromium.launch();
 const page = await browser.newPage();
-await page.goto('https://example.com');
+await page.goto("https://example.com");
 const title = await page.title();
 console.log(title);
 await browser.close();
 ```
-

@@ -11,7 +11,6 @@ import { iconAdd, iconSaveAll, iconTrashcan } from "@siemens/ix-icons/icons";
 import { useAppStore } from "../../lib/app.store";
 import { useEditStore } from "../../lib/edit.store";
 import NodeBreadcrumb from "../../components/edit/node-breadcrumb";
-import NodeTree from "../../components/edit/node-tree";
 import DynamicForm from "../../components/edit/dynamic-form";
 
 const ZERO_UUID = "00000000-0000-4000-8000-000000000000";
@@ -187,7 +186,7 @@ export default function EditPage() {
           className="admin-edit-layout__tree"
           style={{ width: `${tree.width}px` }}
         >
-          <NodeTree />
+          {/* <NodeTree /> */}
         </aside>
 
         <div

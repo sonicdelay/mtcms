@@ -8,8 +8,8 @@ import {
   IxKpi,
 } from "@siemens/ix-react";
 import { useAppStore } from "../../lib/app.store";
-import { getNodes, type FileItem } from "../../lib/admin.api";
-import type { Node } from "../../lib/types";
+import { getNodes } from "../../lib/admin.api";
+import type { FileItem, Node } from "../../lib/types";
 
 export default function DashboardPage() {
   const token = useAppStore((s) => s.token);

@@ -1,10 +1,9 @@
 import { randomBytes } from "node:crypto";
 import path from "node:path";
+import type { Request, Response, Router } from "express";
 import express from "express";
 
-export const apiRouter = express.Router();
-
-apiRouter.get("/", (_req, res) => {
+const getApi = (_req: Request, res: Response) => {
   const nonce = randomBytes(16).toString("base64");
   const CSP = [
     "default-src 'self'",
@@ -48,9 +47,16 @@ apiRouter.get("/", (_req, res) => {
     .set("Referrer-Policy", "no-referrer")
     .set("X-Frame-Options", "DENY")
     .send(html);
-});
+};
 
-apiRouter.get("/openapi.yaml", (_req, res) => {
+const getOpenAPIYaml = (_req: Request, res: Response) => {
   const yamlPath = path.resolve(process.cwd(), "public", "api", "openapi.yaml");
   res.type("application/yaml").sendFile(yamlPath);
-});
+};
+
+const prefix = "/api";
+export const apiRouter: Router = express.Router();
+export const apiController = { prefix, router: apiRouter };
+apiRouter
+  .get(`${prefix}/`, getApi)
+  .get(`${prefix}/openapi.yaml`, getOpenAPIYaml);

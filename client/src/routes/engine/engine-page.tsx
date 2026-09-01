@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 
-const EngineScene = lazy(() => import("./engine-scene"));
+const EngineScene = lazy(() => import("./engine-scene-lite"));
 
 export default function EnginePage() {
   return (
@@ -15,14 +15,6 @@ export default function EnginePage() {
         >
           <EngineScene />
         </Suspense>
-      </div>
-      <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 text-center text-white">
-        <p className="text-2xl font-semibold tracking-wide drop-shadow-lg">
-          Placeholder Overlay
-        </p>
-        <p className="text-sm text-white/70">
-          Full-size HTML overlay above the 3D scene
-        </p>
       </div>
     </div>
   );

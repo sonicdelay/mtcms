@@ -6,38 +6,14 @@ export interface EditorNode extends Node {
   breadcrumb: MiniNode[];
 }
 
-export interface AuthResponse {
-  token: string;
-  user: { id: string; email: string; role: string };
-}
-
 async function handle<T>(res: Response): Promise<T> {
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    const detail =
-      (body as { detail?: string } | null)?.detail ?? `HTTP ${res.status}`;
+    const detail = (body as { detail?: string } | null)?.detail ??
+      `HTTP ${res.status}`;
     throw new Error(detail);
   }
   return (await res.json()) as T;
-}
-
-export async function login(
-  email: string,
-  password: string,
-): Promise<AuthResponse> {
-  const res = await fetch("/api/auth", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
-  return handle<AuthResponse>(res);
-}
-
-export async function refreshToken(token: string): Promise<AuthResponse> {
-  const res = await fetch("/api/auth", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return handle<AuthResponse>(res);
 }
 
 export async function getNodes(token: string): Promise<Node[]> {
@@ -45,13 +21,6 @@ export async function getNodes(token: string): Promise<Node[]> {
     headers: { Authorization: `Bearer ${token}` },
   });
   return handle<Node[]>(res);
-}
-
-export async function getNode(token: string, id: string): Promise<Node> {
-  const res = await fetch(`/api/nodes/${id}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return handle<Node>(res);
 }
 
 export async function getNodeEditor(
@@ -102,8 +71,8 @@ export async function deleteNode(token: string, id: string): Promise<void> {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    const detail =
-      (body as { detail?: string } | null)?.detail ?? `HTTP ${res.status}`;
+    const detail = (body as { detail?: string } | null)?.detail ??
+      `HTTP ${res.status}`;
     throw new Error(detail);
   }
 }
@@ -137,8 +106,8 @@ export async function readMediaText(
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    const detail =
-      (body as { detail?: string } | null)?.detail ?? `HTTP ${res.status}`;
+    const detail = (body as { detail?: string } | null)?.detail ??
+      `HTTP ${res.status}`;
     throw new Error(detail);
   }
   const text = await res.text();
@@ -167,8 +136,8 @@ export async function writeMediaFile(
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    const detail =
-      (body as { detail?: string } | null)?.detail ?? `HTTP ${res.status}`;
+    const detail = (body as { detail?: string } | null)?.detail ??
+      `HTTP ${res.status}`;
     throw new Error(detail);
   }
 }
@@ -189,8 +158,8 @@ export async function uploadMediaFile(
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    const detail =
-      (body as { detail?: string } | null)?.detail ?? `HTTP ${res.status}`;
+    const detail = (body as { detail?: string } | null)?.detail ??
+      `HTTP ${res.status}`;
     throw new Error(detail);
   }
 }
@@ -206,8 +175,8 @@ export async function createMediaDirectory(
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    const detail =
-      (body as { detail?: string } | null)?.detail ?? `HTTP ${res.status}`;
+    const detail = (body as { detail?: string } | null)?.detail ??
+      `HTTP ${res.status}`;
     throw new Error(detail);
   }
 }
@@ -223,8 +192,8 @@ export async function deleteMediaPath(
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    const detail =
-      (body as { detail?: string } | null)?.detail ?? `HTTP ${res.status}`;
+    const detail = (body as { detail?: string } | null)?.detail ??
+      `HTTP ${res.status}`;
     throw new Error(detail);
   }
 }
@@ -232,9 +201,4 @@ export async function deleteMediaPath(
 export function nodeTitle(node: Node): string {
   const root = (node.data as { "0"?: { title?: string } } | null)?.["0"];
   return root?.title ?? node.type;
-}
-
-export function nodeParent(node: Node): string | null {
-  const root = (node.data as { "0"?: { parent?: string } } | null)?.["0"];
-  return root?.parent ?? null;
 }

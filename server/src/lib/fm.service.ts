@@ -2,7 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import type { FileItem } from "./types.ts";
 
-export const MEDIA_ROOT = path.join(process.cwd(), "media");
+const MEDIA_ROOT = path.join(process.cwd(), "media");
 
 export class MediaError extends Error {
   constructor(message: string) {
@@ -23,7 +23,7 @@ export function resolveMediaPath(relPath = ""): string {
   return absolute;
 }
 
-export function toFileItem(
+function toFileItem(
   relPath: string,
   name: string,
   type: "dir" | "file",
@@ -51,10 +51,6 @@ export function statMediaPath(relPath = "") {
 
 export function readMediaFile(relPath: string): Promise<Uint8Array> {
   return fs.readFile(resolveMediaPath(relPath));
-}
-
-export function readMediaText(relPath: string): Promise<string> {
-  return fs.readFile(resolveMediaPath(relPath), "utf-8");
 }
 
 export async function writeMediaFile(

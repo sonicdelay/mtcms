@@ -1,3 +1,4 @@
+import type { Request, Response, Router } from "express";
 import express from "express";
 import { authRequired } from "../lib/auth.ts";
 import { problem } from "../lib/http.ts";
@@ -12,11 +13,6 @@ import {
   removeNode,
   updateNode,
 } from "../lib/nodes.service.ts";
-
-export const nodesRouter = express.Router();
-
-nodesRouter.use(express.json());
-nodesRouter.use(authRequired);
 
 const MAX_LIMIT = 50;
 const MAX_OFFSET = 1000;
@@ -47,7 +43,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-nodesRouter.get("/", async (req, res) => {
+const getNodes = async (req: Request, res: Response) => {
   const type = typeof req.query.type === "string" ? req.query.type : undefined;
   const limit = parseRange(req.query.limit, MAX_LIMIT, 1, MAX_LIMIT);
   const offset = parseRange(req.query.offset, 0, 0, MAX_OFFSET);
@@ -77,9 +73,9 @@ nodesRouter.get("/", async (req, res) => {
   } catch (error) {
     problem(res, 500, "Internal Server Error", (error as Error).message);
   }
-});
+};
 
-nodesRouter.post("/", async (req, res) => {
+const postNode = async (req: Request, res: Response) => {
   const body = req.body as Record<string, unknown> | undefined;
 
   if (!isRecord(body)) {
@@ -115,10 +111,10 @@ nodesRouter.post("/", async (req, res) => {
   } catch (error) {
     problem(res, 500, "Internal Server Error", (error as Error).message);
   }
-});
+};
 
-nodesRouter.get("/:id", async (req, res) => {
-  const id = req.params.id;
+const getNode = async (req: Request, res: Response) => {
+  const id = req.params.id as string;
   if (!UUID_RE.test(id)) {
     problem(res, 400, "Bad Request", "id must be a valid UUID.");
     return;
@@ -160,10 +156,10 @@ nodesRouter.get("/:id", async (req, res) => {
     }
     problem(res, 500, "Internal Server Error", (error as Error).message);
   }
-});
+};
 
-nodesRouter.put("/:id", async (req, res) => {
-  const id = req.params.id;
+const putNode = async (req: Request, res: Response) => {
+  const id = req.params.id as string;
   if (!UUID_RE.test(id)) {
     problem(res, 400, "Bad Request", "id must be a valid UUID.");
     return;
@@ -213,10 +209,10 @@ nodesRouter.put("/:id", async (req, res) => {
     }
     problem(res, 500, "Internal Server Error", (error as Error).message);
   }
-});
+};
 
-nodesRouter.delete("/:id", async (req, res) => {
-  const id = req.params.id;
+const deleteNode = async (req: Request, res: Response) => {
+  const id = req.params.id as string;
   if (!UUID_RE.test(id)) {
     problem(res, 400, "Bad Request", "id must be a valid UUID.");
     return;
@@ -232,4 +228,16 @@ nodesRouter.delete("/:id", async (req, res) => {
     }
     problem(res, 500, "Internal Server Error", (error as Error).message);
   }
-});
+};
+
+const prefix = "/api/nodes";
+export const nodesRouter: Router = express.Router();
+
+nodesRouter.use(`${prefix}`, express.json());
+nodesRouter.use(`${prefix}`, authRequired);
+nodesRouter
+  .get(`${prefix}/`, getNodes)
+  .post(`${prefix}/`, postNode)
+  .get(`${prefix}/:id`, getNode)
+  .put(`${prefix}/:id`, putNode)
+  .delete(`${prefix}/:id`, deleteNode);

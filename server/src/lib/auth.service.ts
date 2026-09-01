@@ -21,7 +21,7 @@ interface UserNodeData {
  * Authenticates a user against a user node stored in the database.
  * Throws AuthError on failure.
  */
-export async function authenticate(
+async function authenticate(
   email: string,
   password: string,
 ): Promise<AuthUser> {

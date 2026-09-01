@@ -30,7 +30,7 @@ const navItems = [
   { href: "/admin/edit", label: "Edit", icon: iconObjectsTree },
 ];
 
-export default function AdminLayout() {
+const AdminLayout = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const token = useAppStore((s) => s.token);
@@ -116,4 +116,6 @@ export default function AdminLayout() {
       </IxApplication>
     </div>
   );
-}
+};
+
+export default AdminLayout;

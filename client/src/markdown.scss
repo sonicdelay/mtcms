@@ -107,6 +107,6 @@
   background: color-mix(in srgb, var(--theme-color-2) 85%, transparent);
 }
 
-.markdown-content div[id^="mermaid-container"]>svg {
+.markdown-content div[id^="mermaid-container"] > svg {
   margin: auto;
 }

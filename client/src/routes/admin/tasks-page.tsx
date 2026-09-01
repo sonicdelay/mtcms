@@ -71,8 +71,9 @@ export default function TasksPage() {
   }, [tasks]);
 
   const filtered = useMemo(() => {
-    const list =
-      filter === "all" ? tasks : tasks.filter((t) => t.node.type === filter);
+    const list = filter === "all"
+      ? tasks
+      : tasks.filter((t) => t.node.type === filter);
     return [...list].sort((a, b) => b.node.update.localeCompare(a.node.update));
   }, [tasks, filter]);
 
@@ -120,9 +121,7 @@ export default function TasksPage() {
         },
       });
       setTasks((prev) =>
-        prev.map((t) =>
-          t.node.id === task.node.id ? { ...t, done: next } : t,
-        ),
+        prev.map((t) => t.node.id === task.node.id ? { ...t, done: next } : t)
       );
     } catch (err) {
       setError((err as Error).message);
@@ -152,8 +151,7 @@ export default function TasksPage() {
           placeholder="New task title…"
           value={newTitle}
           onInput={(event) =>
-            setNewTitle((event.target as HTMLInputElement).value)
-          }
+            setNewTitle((event.target as HTMLInputElement).value)}
         />
         <IxSelect
           value={newType}

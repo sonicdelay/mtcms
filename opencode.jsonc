@@ -19,8 +19,8 @@
       "npm run *": "ask",
       "npx *": "ask",
       "node *": "ask",
-      "psql *": "ask",
-    },
+      "psql *": "ask"
+    }
   },
   "exclude": [
     "node_modules",

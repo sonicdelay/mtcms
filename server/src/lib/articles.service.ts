@@ -2,9 +2,9 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import type { FileItem } from "./types.ts";
 
-export const ARTICLES_ROOT = path.join(process.cwd(), "media", "articles");
+const ARTICLES_ROOT = path.join(process.cwd(), "media", "articles");
 
-export class ArticlesError extends Error {
+class ArticlesError extends Error {
   constructor(message: string) {
     super(message);
     this.name = "ArticlesError";
@@ -19,7 +19,7 @@ export interface ArticleItem extends FileItem {
  * Resolves a relative articles path against the articles root, guarding
  * against path traversal outside of it.
  */
-export function resolveArticlesPath(relPath = ""): string {
+function resolveArticlesPath(relPath = ""): string {
   const absolute = path.resolve(ARTICLES_ROOT, relPath);
   if (
     absolute !== ARTICLES_ROOT &&
@@ -30,7 +30,7 @@ export function resolveArticlesPath(relPath = ""): string {
   return absolute;
 }
 
-export function isValidSegment(segment: string): boolean {
+function isValidSegment(segment: string): boolean {
   return segment !== "" && /^[a-zA-Z0-9_-]+$/.test(segment);
 }
 
@@ -43,7 +43,7 @@ function stripMarkdown(title: string): string {
     .trim();
 }
 
-export function extractTitle(content: string, fallback: string): string {
+function extractTitle(content: string, fallback: string): string {
   const headings = content.split("\n").filter((l) => /^#{1,6}\s+/.test(l));
   if (headings.length === 0) {
     return fallback;
@@ -63,7 +63,7 @@ export function extractTitle(content: string, fallback: string): string {
 /**
  * Lists the directories and markdown files inside the given relative folder.
  */
-export async function listArticleDir(relPath = ""): Promise<FileItem[]> {
+async function listArticleDir(relPath = ""): Promise<FileItem[]> {
   const absolute = resolveArticlesPath(relPath);
   let entries;
   try {
@@ -128,17 +128,6 @@ export async function getArticleContent(
   } catch {
     return null;
   }
-}
-
-/**
- * Returns the article title for a given relative markdown path.
- */
-export async function getArticleTitle(relPath: string): Promise<string> {
-  const content = await getArticleContent(relPath);
-  return extractTitle(
-    content ?? "",
-    path.basename(relPath).replace(/\.md$/, ""),
-  );
 }
 
 /**

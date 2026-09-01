@@ -1,4 +1,4 @@
-import { rmSync, cpSync, mkdirSync, existsSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, rmSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -10,7 +10,9 @@ const clientDist = path.resolve(
 const serverDist = path.resolve(clientDist, "..", "..", "server", "dist");
 
 if (!existsSync(clientDist)) {
-  console.error("[sync-dist] client/dist does not exist. Run `vite build` first.");
+  console.error(
+    "[sync-dist] client/dist does not exist. Run `vite build` first.",
+  );
   process.exit(1);
 }
 

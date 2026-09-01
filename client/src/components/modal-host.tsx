@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { createElement, type ComponentType, type ReactNode } from "react";
+import { type ComponentType, createElement, type ReactNode } from "react";
 import { useAppStore } from "../lib/app.store";
 
 export default function ModalHost() {
@@ -25,10 +25,9 @@ export default function ModalHost() {
     return null;
   }
 
-  const node =
-    typeof content === "function"
-      ? createElement(content as ComponentType)
-      : (content as ReactNode);
+  const node = typeof content === "function"
+    ? createElement(content as ComponentType)
+    : (content as ReactNode);
 
   return (
     <div className="fixed inset-0 z-[1100] flex items-center justify-center p-4">

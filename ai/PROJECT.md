@@ -22,14 +22,14 @@ Content-management web app split into a React client and an Express API server.
 Server (run from `server/`):
 
 - `deno task dev` runs the server in watch mode.
-- `deno task start` runs the server on port 4000; `PORT` overrides it.
+- `deno task start` runs the server on port 8421; `PORT` overrides it.
 - `deno task check` type-checks `main.ts` and `main_test.ts`.
 - `deno task test` runs the integration suite (auth + auth-guard cases).
 
 Client (run from `client/`):
 
 - `npm run dev` starts the Vite dev server on port 4210, proxying `/api` to the
-  server (`API_TARGET` env overrides the target, default `http://localhost:4000`).
+  server (target hardcoded to `http://localhost:8421` in `vite.config.ts`).
 - `npm run build` runs `vite build` then `scripts/sync-dist.mjs`, copying
   `client/dist` into `server/dist` so the server can serve the app.
 - `npm run lint` runs ESLint; `npx tsc -b` type-checks.
@@ -39,14 +39,18 @@ Client (run from `client/`):
 - `server/main.ts` creates the Express app and starts listening only when
   `import.meta.main` is true. Tests import `createApp()` and bind an ephemeral
   port (see `main_test.ts`).
-- Middleware order in `server/src/app.ts` is load-bearing: `/api` routers
-  (`auth`, `nodes`, `fm`, `articles`, `content`, `api`), static serving of
-  `dist/`, then a `/*splat` catch-all that serves `dist/index.html` for non-API
-  paths and a JSON 404 for unknown `/api` paths. An error handler maps
-  body-parser errors to RFC 7807 responses.
+- Middleware order in `server/src/app.ts` is load-bearing: each route file's
+  router (`auth`, `nodes`, `fm`, `articles`, `api` — the `routers` array from
+  `routes/index.ts`) is mounted **at the root**, then static serving of `dist/`,
+  then a `/*splat` catch-all that serves `dist/index.html` for non-API paths and
+  a JSON 404 for unknown `/api` paths. An error handler maps body-parser errors
+  to RFC 7807 responses.
+- Because routers mount at root, all `router.use(...)` middleware must be scoped
+  to the router's absolute `${prefix}` (e.g. `router.use(`${prefix}`, authRequired)`)
+  or it applies to every request app-wide (including the public `/api` Swagger).
 - Body parsing is scoped per router: `express.json()` on the auth/nodes routers;
   `express.raw({ type: () => true, limit: "200mb" })` on the fm router so uploads
-  are never consumed by a JSON parser.
+  are never consumed by a JSON parser. No global `express.json()`.
 - `src/lib/auth.ts` issues/verifies HS256 JWTs via WebCrypto and provides the
   `authRequired` middleware (sets `req.user`, sends a 401 problem otherwise).
 - `src/lib/http.ts` provides the RFC 7807 `problem(res, status, title, detail)`

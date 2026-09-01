@@ -1,11 +1,7 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
 import express from "express";
-import { authRouter } from "./routes/auth.ts";
-import { nodesRouter } from "./routes/nodes.ts";
-import { fmRouter } from "./routes/fm.ts";
-import { articlesRouter } from "./routes/articles.ts";
-import { apiRouter } from "./routes/api.ts";
+import { routers } from "./routes/index.ts";
 import { problem } from "./lib/http.ts";
 
 const distDir = path.resolve(process.cwd(), "dist");
@@ -14,11 +10,9 @@ export function createApp() {
   const app = express();
   app.disable("x-powered-by");
 
-  app.use("/api/auth", authRouter);
-  app.use("/api/nodes", nodesRouter);
-  app.use("/api/fm", fmRouter);
-  app.use("/api/articles", articlesRouter);
-  app.use("/api", apiRouter);
+  for (const router of routers) {
+    app.use(router);
+  }
 
   if (existsSync(distDir)) {
     app.use(express.static(distDir));

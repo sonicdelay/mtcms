@@ -2,12 +2,7 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import type { TreeContext, TreeModel } from "@siemens/ix";
 import type { EditorNode } from "./admin.api";
-import {
-  createNode,
-  deleteNode,
-  getNodeEditor,
-  updateNode,
-} from "./admin.api";
+import { createNode, deleteNode, getNodeEditor, updateNode } from "./admin.api";
 import { useAppStore } from "./app.store";
 
 const ZERO_UUID = "00000000-0000-4000-8000-000000000000";
@@ -283,8 +278,8 @@ export const useEditStore = create<EditStore>()(
           }
 
           let nextData: Record<string, unknown>;
-          const isWholeData =
-            formFields.length === 1 && formFields[0].name === "nodeData";
+          const isWholeData = formFields.length === 1 &&
+            formFields[0].name === "nodeData";
 
           if (isWholeData) {
             try {
@@ -296,11 +291,11 @@ export const useEditStore = create<EditStore>()(
               nextData = node.data ?? {};
             }
           } else {
-            const currentRoot =
-              (node.data?.["0"] as Record<string, unknown>) ?? {};
+            const currentRoot = (node.data?.["0"] as Record<string, unknown>) ??
+              {};
             const currentValues =
               (currentRoot.values as Record<string, Record<string, unknown>>) ??
-              {};
+                {};
             const valuesFromForm = formFields.reduce<Record<string, unknown>>(
               (acc, field) => {
                 try {
@@ -346,7 +341,7 @@ export const useEditStore = create<EditStore>()(
 
           const parentId =
             (node.data?.["0"] as { parent?: string } | undefined)?.parent ??
-            ZERO_UUID;
+              ZERO_UUID;
 
           try {
             await deleteNode(token, node.id);
