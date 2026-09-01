@@ -371,7 +371,7 @@ export default function FilesPage() {
                 <a
                   href={`/api/fm/${
                     item.path.split("/").map(encodeURIComponent).join("/")
-                  }`}
+                  }?token=${encodeURIComponent(token ?? "")}`}
                   target="_blank"
                   rel="noreferrer"
                   title="Open raw"

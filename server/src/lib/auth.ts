@@ -146,7 +146,20 @@ export async function authRequired(
   next: NextFunction,
 ): Promise<void> {
   const authorization = req.get("authorization");
-  if (!authorization?.startsWith("Bearer ")) {
+  let token: string | null = null;
+  if (authorization?.startsWith("Bearer ")) {
+    token = authorization.slice(7).trim();
+  } else if (
+    req.method === "GET" &&
+    typeof req.query.token === "string" &&
+    req.query.token.trim()
+  ) {
+    // Anchor links (e.g. "Open raw" media downloads) cannot send headers,
+    // so read-only GET requests may authenticate via a query token.
+    token = req.query.token.trim();
+  }
+
+  if (!token) {
     problem(
       res,
       401,
@@ -156,7 +169,7 @@ export async function authRequired(
     return;
   }
 
-  const user = await verifyToken(authorization.slice(7).trim());
+  const user = await verifyToken(token);
   if (!user) {
     problem(
       res,
