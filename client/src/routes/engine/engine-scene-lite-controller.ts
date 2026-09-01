@@ -15,6 +15,9 @@ import {
   getPhysicsBodyLinearVelocity,
   onBeforeRender,
   registerScene,
+  setPhysicsBodyAngularVelocity,
+  setPhysicsBodyLinearVelocity,
+  setPhysicsBodyTransform,
   startEngine,
   stopEngine,
   type ArcRotateCamera,
@@ -121,6 +124,7 @@ export class EngineSceneController {
     onBeforeRender(scene, (deltaMs) => {
       camera.alpha += 0.2 * (deltaMs / 1000);
       this.sampleFps();
+      this.respawnEscaped();
     });
 
     const light = createHemisphericLight([0.6, 1, -0.4], 0.9);
@@ -148,7 +152,7 @@ export class EngineSceneController {
     });
     this.bodies.push(groundAggregate.body);
 
-    const groupOrigins = Array.from({ length: 26 }, () => ({
+    const groupOrigins = Array.from({ length: 300 }, () => ({
       x: Math.random() * 16,
       y: Math.random() * 16,
       z: Math.random() * 16,
@@ -179,6 +183,27 @@ export class EngineSceneController {
       this.frameCount = 0;
       this.fpsWindowStart = now;
     }
+  }
+
+  private respawnEscaped(): void {
+    for (const entry of this.entries) {
+      if (entry.mesh.position.z < -5) {
+        this.respawn(entry);
+      }
+    }
+  }
+
+  private respawn(entry: SpawnedEntry): void {
+    const world = this.world;
+    if (!world) return;
+    const position = {
+      x: Math.random() * 16,
+      y: Math.random() * 10 + 10,
+      z: Math.random() * 16,
+    };
+    setPhysicsBodyTransform(world, entry.body, position, { x: 0, y: 0, z: 16, w: 1 });
+    setPhysicsBodyLinearVelocity(world, entry.body, { x: 0, y: 0, z: 0 });
+    setPhysicsBodyAngularVelocity(world, entry.body, { x: 0, y: 0, z: 0 });
   }
 
   getSnapshot(): EngineSceneSnapshot {
