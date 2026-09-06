@@ -1,0 +1,19 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    ".git",
+    ".vscode",
+    ".idea",
+    ".claude",
+    ".cache",
+    ".next", 
+    ".fallow",
+    ".turbo",
+    ".yarn",
+    ".pnpm",
+    ".gitignore"
+  ]
+}

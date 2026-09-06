@@ -1,0 +1,9 @@
+@use './main.scss';
+
+@use './components.scss';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+

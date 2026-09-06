@@ -5,6 +5,7 @@ import { router } from "./router";
 import "./lib/i18n";
 import "./globals.css";
 import "./fonts.css";
+import "./actionhandler";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

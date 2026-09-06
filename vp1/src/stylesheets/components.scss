@@ -1,0 +1,41 @@
+
+.Editor {
+  border:solid 10px #073f07;
+  background-color:#000040;
+  padding:10px;
+  width:200px;
+
+  li[draggable="true"] {
+    cursor: grab;
+    padding: 5px;
+    border: solid 1px #FFFFFF;
+  }
+  
+  li[draggable="true"]:active {
+    cursor: grabbing;
+  }
+}
+
+.Config {
+  border:solid 10px #073f07;
+  background-color:#000040;
+  padding:10px;
+  width:200px;
+}
+
+.Pane {
+  border:solid 1px #FF3f07;
+  padding:5px;
+  // background-color:transparent;
+}
+
+.Wave {
+  border:solid 10px #127a69;
+  background-color:#0b473a;
+}
+
+.Gauge {
+  text-align: center;
+  padding:20px;
+}
+

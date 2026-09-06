@@ -1,0 +1,136 @@
+{
+  "type": "SdPane",
+  "className": "flex h-screen flex-col overflow-auto",
+  "children": [
+    {
+      "type": "SdPane",
+      "className": "flex h-screen flex-col bg-gray-900",
+      "children": [
+        {
+          "type": "h1",
+          "className": "box-border flex flex-1 items-center justify-center p-4 h-16 text-3xl font-bold text-cyan-800",
+          "children": "Simple Wave Monitor"
+        },
+        { "type": "img", "className": "h-72", "src": "https://assets.new.siemens.com/siemens/assets/api/uuid:30421a1e-396d-49e8-8f0d-00b5625f101e/width:1024/im2017010298pg_300dpi.jpg", "alt": "Logo" }
+      ]
+    },
+    {
+      "type": "SdPane",
+      "className": "flex h-screen flex-row bg-gray-800 items-center justify-center flex-wrap" ,
+      "children": [
+        {
+          "type": "SdGauge",
+          "title": "Cos Wave",
+          "source": "cos",
+          "min": -1,
+          "max": 1,
+          "className": "text-center m-4"
+        },
+        {
+          "type": "SdGauge",
+          "title": "Sin Wave",
+          "source": "sin",
+          "min": -1,
+          "max": 1,
+          "className": "text-center m-4"
+        },
+                {
+          "type": "SdGauge",
+          "title": "Cos Wave",
+          "source": "cos",
+          "min": -1,
+          "max": 1,
+          "className": "text-center m-4"
+        },
+        {
+          "type": "SdGauge",
+          "title": "Sin Wave 2",
+          "source": "sin",
+          "min": -2,
+          "max": 2,
+          "className": "text-center m-4"
+        },
+                {
+          "type": "SdGauge",
+          "title": "Cos Wave",
+          "source": "cos",
+          "min": -1,
+          "max": 1,
+          "className": "text-center m-4"
+        },
+        {
+          "type": "SdGauge",
+          "title": "Sin Wave",
+          "source": "sin",
+          "min": -1,
+          "max": 1,
+          "className": "text-center m-4"
+        },
+                {
+          "type": "SdGauge",
+          "title": "Cos Wave",
+          "source": "cos",
+          "min": -1,
+          "max": 1,
+          "className": "text-center m-4"
+        },
+        {
+          "type": "SdGauge",
+          "title": "Sin Wave",
+          "source": "sin",
+          "min": -1,
+          "max": 1,
+          "className": "text-center m-4"
+        }
+      ]
+    },
+    {
+      "type": "SdPane",
+      "className": "box-border flex flex-1 flex-row bg-gray-900",
+      "children": [
+        {
+          "type": "SdWave",
+          "title": "Sin Wave",
+          "source": "sin",
+          "className": "border border-gray-300"
+        },
+        {
+          "type": "SdWave",
+          "title": "Cos Wave",
+          "source": "cos",
+          "className": "border border-gray-300"
+        }
+      ]
+    },
+    {
+      "type": "SdPane",
+      "className": "box-border flex flex-1 flex-row bg-gray-800",
+      "children": [
+        {
+          "type": "SdWaveBar",
+          "title": "Sin Wave",
+          "source": "sin",
+          "className": "flex-1"
+        },
+        {
+          "type": "SdWaveBar",
+          "title": "Cos Wave",
+          "source": "cos",
+          "className": "flex-1"
+        },
+        {
+          "type": "SdWaveValue",
+          "title": "Data 0",
+          "source": "data.0",
+          "className": "text-sm text-green-200"
+        },
+        {
+          "type": "SdWaveValue",
+          "title": "Data 1",
+          "source": "data.1",
+          "className": "text-sm text-green-200"
+        }
+      ]
+    }
+  ]
+}

@@ -76,6 +76,10 @@ export default function EngineSceneLite() {
         <p className="text-2xl font-semibold tracking-wide drop-shadow-lg">
           Placeholder Overlay
         </p>
+        <p className="text-2xl font-semibold tracking-wide drop-shadow-lg">
+          <span class="loader"></span>
+        </p>
+
         <p className="text-sm text-white/70">
           Full-size HTML overlay above the 3D scene
         </p>
