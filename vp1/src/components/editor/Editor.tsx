@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { layouts, loadLayouts } from "../layoutTree";
+import { layouts, loadLayouts } from "../../layoutTree";
 
 const componentList = ["Editor", "Wave", "Gauge"];
+
+import { sdButtonObject } from "../SdButton";
 
 interface EditorProps {
   selectedLayout: string;
@@ -45,8 +47,17 @@ const Editor = ({ selectedLayout, onLayoutChange }: EditorProps) => {
   return (
     <div className="Editor bg-gray-700 border-none">
       <h3>Editor</h3>
-      <button onClick={() => sendAction("button_click", "Button clicked!")}>Clicked</button>
-      <button onClick={() => sendAction("button_click", "Button fired!")}>Fired </button>
+      <button onClick={() => sendAction("button_click", "Button clicked!")}>
+        Clicked
+      </button>
+      <button onClick={() => sendAction("button_click", "Button fired!")}>
+        Fired
+      </button>
+      <img
+        src={sdButtonObject.image}
+        alt={sdButtonObject.name}
+        title={sdButtonObject.tooltip}
+      />
 
       <button onClick={addHandler}>+ Handler</button>
       <button onClick={removeHandler}>- Handler</button>

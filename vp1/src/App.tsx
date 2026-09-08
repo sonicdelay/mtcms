@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { layouts, loadLayouts } from "./layoutTree";
-import type { LayoutNode } from "./layoutTypes";
+import type { Node } from "./layoutTypes";
 import renderNode from "./renderNode";
 import { useWaveStore } from "./store";
-import Editor from "./components/Editor";
-import Config from "./components/Config";
+import Editor from "./components/editor/Editor";
+import Config from "./components/editor/Config";
 import "./stylesheets/app.scss";
 
 export default function App() {
   const [selectedLayout, setSelectedLayout] = useState<string>("");
-  const [tree, setTree] = useState<LayoutNode | null>(null);
+  const [tree, setTree] = useState<Node | null>(null);
   const { start, stop, edit, toggleEdit } = useWaveStore();
 
   useEffect(() => {
@@ -18,6 +18,7 @@ export default function App() {
       if (names.length > 0) {
         setSelectedLayout(names[0]);
         setTree(layouts[names[0]]);
+        document.title = names[0];
       }
     });
   }, []);
@@ -42,15 +43,19 @@ export default function App() {
   return (
     <div className="flex w-full h-full min-h-0 flex-row">
       {edit && (
-        <Editor selectedLayout={selectedLayout} onLayoutChange={(name) => {
-          setSelectedLayout(name);
-          setTree(layouts[name]);
-        }} />
+        <Editor
+          selectedLayout={selectedLayout}
+          onLayoutChange={(name) => {
+            setSelectedLayout(name);
+            setTree(layouts[name]);
+            document.title = name;
+          }}
+        />
       )}
       <div className="flex min-w-0 w-full flex-1 flex-col overflow-auto">
         {tree ? renderNode(tree) : <p>Loading layouts...</p>}
       </div>
-           {edit && (<Config />)}
+      {edit && <Config />}
     </div>
   );
 }

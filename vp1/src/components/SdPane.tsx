@@ -7,8 +7,7 @@ interface SdPaneProps {
 }
 
 const SdPane = ({ data, className, children }: SdPaneProps) => {
-
-  const paneClassName = ["Pane", className].filter(Boolean).join(" ");
+  const paneClassName = ["Pane", className].join(" ");
 
   return (
     <div className={paneClassName}>
@@ -16,6 +15,6 @@ const SdPane = ({ data, className, children }: SdPaneProps) => {
       {children}
     </div>
   );
-}
+};
 
 export default SdPane;

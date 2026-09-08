@@ -11,12 +11,17 @@
           "className": "box-border flex flex-1 items-center justify-center p-4 h-16 text-3xl font-bold text-cyan-800",
           "children": "Simple Wave Monitor"
         },
-        { "type": "img", "className": "h-72", "src": "public/images/engine.jpg", "alt": "Logo" }
+        {
+          "type": "img",
+          "className": "h-72",
+          "src": "public/images/engine.jpg",
+          "alt": "Logo"
+        }
       ]
     },
     {
       "type": "SdPane",
-      "className": "flex flex-row bg-gray-800 items-center justify-center flex-wrap" ,
+      "className": "flex flex-row bg-gray-800 items-center justify-center flex-wrap overflow-auto",
       "children": [
         {
           "type": "SdGauge",
@@ -34,7 +39,7 @@
           "max": 1,
           "className": "text-center m-4"
         },
-                {
+        {
           "type": "SdGauge",
           "title": "Cos Wave",
           "source": "cos",
@@ -50,7 +55,7 @@
           "max": 2,
           "className": "text-center m-4"
         },
-                {
+        {
           "type": "SdGauge",
           "title": "Cos Wave",
           "source": "cos",
@@ -66,7 +71,7 @@
           "max": 1,
           "className": "text-center m-4"
         },
-                {
+        {
           "type": "SdGauge",
           "title": "Cos Wave",
           "source": "cos",

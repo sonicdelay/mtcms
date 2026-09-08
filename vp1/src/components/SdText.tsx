@@ -1,7 +1,7 @@
 import React from "react";
 
 interface TextProps {
-  title: string;
+  title?: string;
   className?: string;
   children?: React.ReactNode;
 }

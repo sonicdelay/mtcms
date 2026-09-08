@@ -23,12 +23,12 @@ export interface WaveState {
 export type DeepKeys<T, Prefix extends string = ""> = T extends (infer U)[]
   ? `${Prefix}${number}` | (U extends object ? DeepKeys<U, `${Prefix}${number}.`> : never)
   : T extends object
-    ? {
-        [K in keyof T & string]: T[K] extends object
-          ? `${Prefix}${K}` | DeepKeys<T[K], `${Prefix}${K}.`>
-          : `${Prefix}${K}`;
-      }[keyof T & string]
-    : never;
+  ? {
+    [K in keyof T & string]: T[K] extends object
+    ? `${Prefix}${K}` | DeepKeys<T[K], `${Prefix}${K}.`>
+    : `${Prefix}${K}`;
+  }[keyof T & string]
+  : never;
 
 function getByPath(obj: any, path: string): any {
   return path.split(".").reduce((acc, key) => {
@@ -63,20 +63,21 @@ export const useWaveStore = create<WaveState>()(
         set((state) => {
           const t = state.time + 0.05;
           return {
-             time: t,
-             sin: Math.sin(t),
-             cos: Math.cos(t),
-             tan: 1/Math.tan(t),
-             data: [
+            time: t,
+            sin: Math.sin(t),
+            cos: Math.cos(t),
+            tan: 1 / Math.tan(t),
+            data: [
               { time: t, sin: Math.sin(t) },
               { time: t, sin: Math.sin(t) },
-             ]};
+            ]
+          };
         }),
 
       start: () => {
         const id = window.setInterval(() => {
           useWaveStore.getState().tick();
-        },100);
+        }, 100);
         return id;
       },
 
