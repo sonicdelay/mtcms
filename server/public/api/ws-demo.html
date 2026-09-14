@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>mtCMS WebSocket Demo</title>
+  <style>
+    :root {
+      --bg: #f4f5f7;
+      --panel: #ffffff;
+      --ink: #1c1e21;
+      --muted: #6b7280;
+      --border: #d8dce1;
+      --accent: #007bff;
+      --ok: #16894a;
+      --warn: #b04508;
+      --err-bg: #fdecea;
+      --err-ink: #8a1c1c;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #16181d;
+        --panel: #1f2229;
+        --ink: #e6e8eb;
+        --muted: #9aa3af;
+        --border: #343a45;
+        --accent: #4d9fff;
+        --ok: #3fbf6f;
+        --warn: #ffa04d;
+        --err-bg: #3a1f1f;
+        --err-ink: #ff9c9c;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--panel);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    header code {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--bg);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 320px 1fr 1fr;
+      gap: 16px;
+      padding: 16px 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 1100px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .panel h2 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 10px 0 4px;
+    }
+
+    input[type=text],
+    input[type=password],
+    textarea,
+    select {
+      width: 100%;
+      font-family: inherit;
+      font-size: 13px;
+      padding: 7px 9px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    textarea {
+      font-family: var(--mono);
+      font-size: 12px;
+      min-height: 190px;
+      resize: vertical;
+    }
+
+    button {
+      font: inherit;
+      font-size: 13px;
+      padding: 7px 14px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: var(--panel);
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    button:hover {
+      border-color: var(--accent);
+    }
+
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    button.small {
+      padding: 3px 8px;
+      font-size: 12px;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .row>* {
+      flex: 0 0 auto;
+    }
+
+    .row .grow {
+      flex: 1 1 auto;
+    }
+
+    .connId {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ok);
+      word-break: break-all;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .state-open {
+      background: #e3f6ea;
+      color: var(--ok);
+      border-color: transparent;
+    }
+
+    .state-closed {
+      background: var(--err-bg);
+      color: var(--err-ink);
+      border-color: transparent;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 8px 0;
+    }
+
+    .presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 10px 0;
+    }
+
+    .presets button.used {
+      border-color: var(--ok);
+      color: var(--ok);
+    }
+
+    .log {
+      height: 380px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 4px 2px;
+    }
+
+    .entry {
+      border-left: 3px solid var(--border);
+      padding: 6px 10px;
+      background: var(--bg);
+      border-radius: 6px;
+    }
+
+    .entry .meta {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .entry .meta .dir-recv {
+      color: var(--accent);
+    }
+
+    .entry .meta .dir-send {
+      color: var(--ok);
+    }
+
+    .entry pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .entry.action-error {
+      border-left-color: var(--err-ink) !important;
+    }
+
+    .entry.action-error pre {
+      color: var(--err-ink);
+    }
+
+    .entry.action-connected,
+    .entry.action-joined,
+    .entry.action-left {
+      border-left-color: var(--ok);
+    }
+
+    .entry.action-message {
+      border-left-color: var(--accent);
+    }
+
+    .entry.action-llmStreamStart,
+    .entry.action-llmStreamChunk,
+    .entry.action-llmStreamEnd,
+    .entry.action-llmResponse {
+      border-left-color: #8b5cf6;
+    }
+
+    .tools {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tools button {
+      flex: 1 1 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>mtCMS WebSocket Demo</h1>
+    <div class="row">
+      <span class="badge" id="connState">disconnected</span>
+      <span class="connId" id="myId">id: —</span>
+      <code>ws://&lt;host&gt;/api/ws?token=&lt;jwt&gt;</code>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>1 &middot; Connection</h2>
+      <label for="wsOrigin">WS origin (host:port)</label>
+      <input type="text" id="wsOrigin" value="" placeholder="localhost:8421" />
+      <label for="token">JWT token</label>
+      <textarea id="token" rows="3" placeholder="Paste your JWT, or use the login form below."></textarea>
+      <label for="email">Or login (POST /api/auth)</label>
+      <div class="row">
+        <input type="text" id="email" class="grow" placeholder="email" />
+        <input type="password" id="password" placeholder="password" />
+        <button class="small" id="loginBtn">Get token</button>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button class="primary grow" id="connectBtn">Connect</button>
+        <button id="disconnectBtn">Disconnect</button>
+      </div>
+      <p class="hint">
+        To test <b>unicast (to)</b> and <b>group</b> routing, open this page in a
+        second browser tab and connect with the same token. Use that tab's client
+        id as the <i>to</i> target.
+      </p>
+      <p class="hint">
+        In the Vite dev setup the page is proxied at
+        <code>/api/ws-demo</code>, but WebSocket upgrades are <b>not</b> proxied.
+        Open it directly on the API server instead:
+        <code>http://localhost:8421/api/ws-demo</code>.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>2 &middot; Composer (send)</h2>
+      <p class="hint">Pick a preset, adjust the JSON, then <b>Send raw</b>.</p>
+      <div class="presets" id="presets">
+        <button data-preset="to">send → to</button>
+        <button data-preset="group">send → group</button>
+        <button data-preset="broadcast">send → broadcast</button>
+        <button data-preset="join">join group</button>
+        <button data-preset="leave">leave group</button>
+        <button data-preset="llmStream">llmChat (stream)</button>
+        <button data-preset="llmOnce">llmChat (one-shot)</button>
+        <button data-preset="llmClear">llmChat (clear)</button>
+        <button data-preset="raw">clear editor</button>
+      </div>
+      <label for="editor">Outgoing message (JSON)</label>
+      <textarea id="editor"></textarea>
+      <div class="row" style="margin-top:10px">
+        <button class="primary" id="sendBtn">Send raw</button>
+        <span class="hint" style="margin:0">&mdash; server actions: <code>sendWebsocket</code>, <code>joinGroup</code>,
+          <code>leaveGroup</code>, <code>llmChat</code></span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>3 &middot; Message log</h2>
+      <div class="tools">
+        <button id="clearLog">Clear log</button>
+      </div>
+      <div class="log" id="log"></div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const $ = (id) => document.getElementById(id);
+      const logEl = $("log");
+      const editor = $("editor");
+      const connState = $("connState");
+      const myId = $("myId");
+
+      let ws = null;
+      let reconnectTimer = null;
+
+      function endpoint() {
+        const origin = ($("wsOrigin").value.trim() || location.host).replace(
+          /^https?:\/\//,
+          "",
+        );
+        const proto = location.protocol === "https:" ? "wss" : "ws";
+        const token = $("token").value.replace(/\s/g, "").trim();
+        return `${proto}://${origin}/api/ws?token=${encodeURIComponent(token)}`;
+      }
+
+      function fmt(obj) {
+        try {
+          return JSON.stringify(obj, null, 2);
+        } catch {
+          return String(obj);
+        }
+      }
+
+      function addEntry(dir, action, obj, kind) {
+        const entry = document.createElement("div");
+        entry.className = `entry action-${action}`;
+        const time = new Date().toLocaleTimeString("en-GB", { hour12: false }) +
+          "." +
+          String(Date.now() % 1000).padStart(3, "0");
+        const arrow = dir === "send" ? "⇥" : "⇤";
+        const label = dir === "send" ? "SENT" : "RECV";
+        const metaEl = document.createElement("div");
+        metaEl.className = "meta";
+        metaEl.innerHTML =
+          `<span class="dir-${dir}">${label}</span> ${time} &mdash; ${action}${kind ? ` (${kind})` : ""
+          }`;
+        const pre = document.createElement("pre");
+        pre.textContent = typeof obj === "string" ? obj : fmt(obj);
+        entry.appendChild(metaEl);
+        entry.appendChild(pre);
+        logEl.appendChild(entry);
+        logEl.scrollTop = logEl.scrollHeight;
+      }
+
+      function highlightPreset(name) {
+        document.querySelectorAll("#presets button").forEach((b) =>
+          b.classList.toggle("used", b.dataset.preset === name)
+        );
+      }
+
+      const PRESETS = {
+        to: {
+          name: "send → to",
+          body: () =>
+            JSON.stringify(
+              {
+                action: "sendWebsocket",
+                data: {
+                  to: "PASTE-OTHER-TABS-CLIENT-ID",
+                  data: { text: "Hello, other tab!" },
+                },
+              },
+              null,
+              2,
+            ),
+        },
+        group: {
+          name: "send → group",
+          body: () =>
+            JSON.stringify(
+              {
+                action: "sendWebsocket",
+                data: {
+                  group: "room-demo",
+                  data: { text: "Hello, group members!" },
+                },
+              },
+              null,
+              2,
+            ),
+        },
+        broadcast: {
+          name: "send → broadcast",
+          body: () =>
+            JSON.stringify(
+              {
+                action: "sendWebsocket",
+                data: { broadcast: true, data: { text: "Hello, everybody!" } },
+              },
+              null,
+              2,
+            ),
+        },
+        join: {
+          name: "join group",
+          body: () =>
+            JSON.stringify(
+              { action: "joinGroup", data: { group: "room-demo" } },
+              null,
+              2,
+            ),
+        },
+        leave: {
+          name: "leave group",
+          body: () =>
+            JSON.stringify(
+              { action: "leaveGroup", data: { group: "room-demo" } },
+              null,
+              2,
+            ),
+        },
+        llmStream: {
+          name: "llmChat (stream)",
+          body: () =>
+            JSON.stringify(
+              {
+                action: "llmChat",
+                data: {
+                  systemPrompt: "You are a terse assistant.",
+                  messages: [{ role: "user", content: "Say hello in 5 words." }],
+                  stream: true,
+                },
+              },
+              null,
+              2,
+            ),
+        },
+        llmOnce: {
+          name: "llmChat (one-shot)",
+          body: () =>
+            JSON.stringify(
+              {
+                action: "llmChat",
+                data: {
+                  messages: [{ role: "user", content: "Reply with exactly: pong" }],
+                  stream: false,
+                },
+              },
+              null,
+              2,
+            ),
+        },
+        llmClear: {
+          name: "llmChat (clear)",
+          body: () =>
+            JSON.stringify(
+              { action: "llmChat", data: { clear: true, messages: [] } },
+              null,
+              2,
+            ),
+        },
+        raw: {
+          name: "clear editor",
+          body: () => "",
+        },
+      };
+
+      Object.entries(PRESETS).forEach(([key, preset]) => {
+        const btn = document.querySelector(`#presets button[data-preset="${key}"]`);
+        btn.addEventListener("click", () => {
+          editor.value = preset.body();
+          highlightPreset(key);
+        });
+      });
+
+      function connect() {
+        if (ws && ws.readyState === WebSocket.OPEN) return;
+        const token = $("token").value.replace(/\s/g, "").trim();
+        if (!token) {
+          addEntry("recv", "error", { message: "Enter a JWT token first." });
+          return;
+        }
+        connState.textContent = "connecting";
+        connState.className = "badge";
+        const url = endpoint();
+        addEntry("conn", "info", `Connecting to: ${url}`);
+        ws = new WebSocket(url);
+        ws.onopen = () => {
+          connState.textContent = "connected";
+          connState.className = "badge state-open";
+          addEntry("conn", "info", `WebSocket opened: ${url}`);
+        };
+        ws.onmessage = (ev) => {
+          let msg;
+          try {
+            msg = JSON.parse(ev.data);
+          } catch {
+            addEntry("recv", "raw", String(ev.data));
+            return;
+          }
+          if (msg.action === "connected") {
+            myId.textContent = `id: ${msg.data.id}`;
+            navigator.clipboard?.writeText(msg.data.id).catch(() => { });
+          }
+          addEntry("recv", msg.action, msg);
+        };
+        ws.onclose = (ev) => {
+          connState.textContent = "disconnected";
+          connState.className = "badge state-closed";
+          addEntry("conn", "info", `WebSocket closed (code=${ev.code})`);
+          ws = null;
+        };
+        ws.onerror = () =>
+          addEntry("conn", "error", "WebSocket error (is the server up?)");
+      }
+
+      function disconnect() {
+        if (ws) {
+          ws.close();
+          ws = null;
+        }
+        connState.textContent = "disconnected";
+        connState.className = "badge state-closed";
+      }
+
+      $("connectBtn").addEventListener("click", connect);
+      $("disconnectBtn").addEventListener("click", disconnect);
+
+      $("loginBtn").addEventListener("click", async () => {
+        const email = $("email").value.trim();
+        const password = $("password").value;
+        if (!email || !password) {
+          return addEntry("recv", "error", { message: "Enter email + password." });
+        }
+        try {
+          const res = await fetch("/api/auth", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+          const body = await res.json();
+          if (!res.ok) {
+            throw new Error(body.detail || body.message || res.statusText);
+          }
+          $("token").value = body.token;
+          try {
+            localStorage.setItem("mtcms-demo-token", body.token);
+          } catch { }
+          addEntry("conn", "info", "Token acquired via POST /api/auth");
+        } catch (err) {
+          addEntry("recv", "error", { message: err.message });
+        }
+      });
+
+      $("sendBtn").addEventListener("click", () => {
+        if (!ws || ws.readyState !== WebSocket.OPEN) {
+          addEntry("conn", "error", { message: "Not connected. Connect first." });
+          return;
+        }
+        const text = editor.value.trim();
+        if (!text) {
+          addEntry("conn", "error", { message: "Nothing to send." });
+          return;
+        }
+        let obj;
+        try {
+          obj = JSON.parse(text);
+        } catch (err) {
+          addEntry("conn", "error", { message: `Invalid JSON: ${err.message}` });
+          return;
+        }
+        try {
+          ws.send(text);
+          addEntry("send", obj.action || "?", obj);
+        } catch (err) {
+          addEntry("recv", "error", { message: err.message });
+        }
+      });
+
+      $("clearLog").addEventListener("click", () => {
+        logEl.innerHTML = "";
+      });
+
+      try {
+        const saved = localStorage.getItem("mtcms-demo-token");
+        if (saved) $("token").value = saved;
+      } catch { }
+      $("wsOrigin").value = location.host;
+    })();
+  </script>
+</body>
+
+</html>

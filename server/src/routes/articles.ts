@@ -12,8 +12,8 @@ const getArticles = async (req: Request, res: Response) => {
   const splat = Array.isArray(raw)
     ? raw.join("/")
     : typeof raw === "string"
-      ? raw
-      : "";
+    ? raw
+    : "";
   const segments = splat.split("/").filter(Boolean);
 
   const result = await resolveArticlePath(segments);

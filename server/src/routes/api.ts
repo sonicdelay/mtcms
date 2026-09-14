@@ -2,7 +2,7 @@ import { randomBytes } from "node:crypto";
 import path from "node:path";
 import { Request, Response, Router } from "express";
 
-const renderSwagger = async (_req: Request, res: Response) => {
+const renderSwagger = (_req: Request, res: Response) => {
   const cdn = "https://cdn.jsdelivr.net";
   const nonce = randomBytes(16).toString("base64");
   const CSP = [
@@ -48,9 +48,30 @@ const renderSwagger = async (_req: Request, res: Response) => {
     .send(html);
 };
 
-const getOpenApi = async (_req: Request, res: Response) => {
+const getOpenApi = (_req: Request, res: Response) => {
   const yamlPath = path.resolve(process.cwd(), "public", "api", "openapi.yaml");
   res.type("application/yaml").sendFile(yamlPath);
+};
+
+const getWsDemo = (_req: Request, res: Response) => {
+  const htmlPath = path.resolve(process.cwd(), "public", "api", "ws-demo.html");
+  const CSP = [
+    "default-src 'self'",
+    "script-src 'unsafe-inline'",
+    "style-src 'unsafe-inline'",
+    "connect-src 'self' ws: wss:",
+    "img-src 'self' data:",
+    "frame-ancestors 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+  ].join("; ");
+  res
+    .set("Content-Type", "text/html; charset=utf-8")
+    .set("Content-Security-Policy", CSP)
+    .set("X-Content-Type-Options", "nosniff")
+    .set("Referrer-Policy", "no-referrer")
+    .set("X-Frame-Options", "DENY")
+    .sendFile(htmlPath);
 };
 
 const prefix = "/api";
@@ -58,4 +79,5 @@ export const apiRouter: Router = Router();
 
 apiRouter
   .get(`${prefix}/`, renderSwagger)
-  .get(`${prefix}/openapi.yaml`, getOpenApi);
+  .get(`${prefix}/openapi.yaml`, getOpenApi)
+  .get(`${prefix}/ws-demo`, getWsDemo);

@@ -7,10 +7,12 @@
     "express": "^5",
     "pg": "^8",
     "@neondatabase/serverless": "^0.10",
-    "bcryptjs": "^2"
+    "bcryptjs": "^2",
+    "ws": "^8"
   },
   "devDependencies": {
     "@types/express": "^5",
-    "@types/pg": "^8"
+    "@types/pg": "^8",
+    "@types/ws": "^8"
   }
 }

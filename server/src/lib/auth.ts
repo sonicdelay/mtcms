@@ -82,7 +82,7 @@ export async function signToken(
 /**
  * Verifies a signed HS256 JWT and returns its user, or null when invalid.
  */
-async function verifyToken(token: string): Promise<AuthUser | null> {
+export async function verifyToken(token: string): Promise<AuthUser | null> {
   const secret = process.env.JWT_SECRET;
   if (!secret) {
     return null;

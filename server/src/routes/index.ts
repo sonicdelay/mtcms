@@ -5,7 +5,6 @@ import { authRouter } from "./auth.ts";
 import { fmRouter } from "./fm.ts";
 import { nodesRouter } from "./nodes.ts";
 
-
 export const routers: Router[] = [
   authRouter,
   nodesRouter,
