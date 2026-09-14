@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UI Builder Pro</title>
+    <style>
+      html, body, #root { height: 100%; margin: 0; }
+      .app-shell { height: 100%; display: grid; grid-template-rows: 44px 1fr; }
+      .toolbar { display: flex; gap: 8px; align-items: center; padding: 6px 10px; border-bottom: 1px solid #ddd; background:#fafafa; position: sticky; top:0; }
+      .layout { display: grid; grid-template-columns: 220px 1fr 320px; height: calc(100vh - 44px); }
+      .pane { border-right: 1px solid #eee; overflow: auto; }
+      .pane.right { border-left: 1px solid #eee; border-right: none; }
+      .btn { padding: 6px 10px; border: 1px solid #ccc; background: white; border-radius: 4px; cursor: pointer; }
+      .btn:disabled { opacity: .5; cursor: not-allowed; }
+      .palette-item { padding: 8px; border: 1px dashed #bbb; margin: 6px; border-radius: 6px; cursor: grab; background: #fff; }
+      .canvas { position: relative; min-height: 100%; background: #f9fafb; }
+      .drop-hint { outline: 2px dashed #5a9; outline-offset: 2px; }
+      .selected-outline { outline: 2px solid #4a90e2; outline-offset: 2px; }
+      .resize-handle { position:absolute; width:10px; height:10px; background:#4a90e2; bottom:-5px; right:-5px; cursor: nwse-resize; border-radius:2px; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
