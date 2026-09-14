@@ -28,7 +28,7 @@
   li[draggable="true"] {
     cursor: grab;
     padding: 5px;
-    border: solid 1px #FFFFFF;
+    border: var(--border-width) solid var(--border-color);
   }
 
   li[draggable="true"]:active {
@@ -44,7 +44,8 @@
 }
 
 .Pane {
-  border: solid 1px #FF3f07;
+  border: var(--border-width) solid #FF3f07;
+  border-radius: var(--border-radius);
   padding: 5px;
   // background-color:transparent;
 }
@@ -55,6 +56,7 @@
 }
 
 .Gauge {
+  border: var(--border-width) solid var(--border-color);
   text-align: center;
   padding: 20px;
 }

@@ -46,7 +46,7 @@ const Editor = ({ selectedLayout, onLayoutChange }: EditorProps) => {
 
   return (
     <div className="Editor bg-gray-700 border-none">
-      <h3>Editor</h3>
+      <h3>Editor (F8)</h3>
       <button onClick={() => sendAction("button_click", "Button clicked!")}>
         Clicked
       </button>

@@ -13,7 +13,13 @@
         },
         {
           "type": "img",
-          "className": "h-72",
+          "style": {
+            "border": "var(--border-width) solid var(--border-color)",
+            "borderRadius": "var(--border-radius)",
+            "backgroundColor": "var(--panel-background)",
+            "height": "200px",
+            "width": "300px"
+          },
           "src": "public/images/engine.jpg",
           "alt": "Logo"
         }

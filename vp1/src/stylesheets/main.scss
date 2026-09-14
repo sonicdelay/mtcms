@@ -1,12 +1,22 @@
 :root {
   --background-color: #FFFFFF;
   --color: #202020;
+  --border-color: #202020;
+  --border-width: 1px;
+  --border-radius: 4px;
+  --panel-background: #f5f5f5;
+  --accent-color: #127a69;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background-color: #202020;
     --color: #FFFFFF;
+    --border-color: #FFFFFF;
+    --border-width: 1px;
+    --border-radius: 4px;
+    --panel-background: #2b2b2b;
+    --accent-color: #4dd0b0;
   }
 }
 

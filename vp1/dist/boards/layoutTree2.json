@@ -1,22 +1,33 @@
 {
   "type": "SdPane",
-  "className": "flex h-screen flex-col overflow-auto",
+  "className": "flex flex-col",
   "children": [
     {
       "type": "SdPane",
-      "className": "flex h-screen flex-col bg-gray-900",
+      "className": "flex flex-col bg-gray-900",
       "children": [
         {
           "type": "h1",
           "className": "box-border flex flex-1 items-center justify-center p-4 h-16 text-3xl font-bold text-cyan-800",
           "children": "Simple Wave Monitor"
         },
-        { "type": "img", "className": "h-72", "src": "https://assets.new.siemens.com/siemens/assets/api/uuid:30421a1e-396d-49e8-8f0d-00b5625f101e/width:1024/im2017010298pg_300dpi.jpg", "alt": "Logo" }
+        {
+          "type": "img",
+          "style": {
+            "border": "var(--border-width) solid var(--border-color)",
+            "borderRadius": "var(--border-radius)",
+            "backgroundColor": "var(--panel-background)",
+            "height": "200px",
+            "width": "100%"
+          },
+          "src": "public/images/engine.jpg",
+          "alt": "Logo"
+        }
       ]
     },
     {
       "type": "SdPane",
-      "className": "flex h-screen flex-row bg-gray-800 items-center justify-center flex-wrap" ,
+      "className": "flex flex-row bg-gray-800 items-center justify-center flex-wrap overflow-auto",
       "children": [
         {
           "type": "SdGauge",
@@ -34,7 +45,7 @@
           "max": 1,
           "className": "text-center m-4"
         },
-                {
+        {
           "type": "SdGauge",
           "title": "Cos Wave",
           "source": "cos",
@@ -50,7 +61,7 @@
           "max": 2,
           "className": "text-center m-4"
         },
-                {
+        {
           "type": "SdGauge",
           "title": "Cos Wave",
           "source": "cos",
@@ -66,7 +77,7 @@
           "max": 1,
           "className": "text-center m-4"
         },
-                {
+        {
           "type": "SdGauge",
           "title": "Cos Wave",
           "source": "cos",
