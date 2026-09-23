@@ -6,16 +6,18 @@ interface WaveBarProps {
   className?: string;
   source?: DeepKeys<WaveState>;
   children?: React.ReactNode;
+  [key: string]: any;
 }
 
-export default function WaveBar({ title, className, source = "sin", children }: WaveBarProps) {
+export default function WaveBar(props: WaveBarProps) {
+  const { title, className, source = "sin", children, ...rest } = props;
   const value = useStoreValue(source) as number;
 
   const barWidth = ((value + 1) / 2) * 100;
   const hue = ((value + 1) / 2) * 360;
 
   return (
-    <div className={className}>
+    <div className={className} {...rest}>
       {title && <h2 className="mb-2 font-semibold">{title}</h2>}
       <div className="p-2 font-mono text-xs overflow-hidden">
         <div

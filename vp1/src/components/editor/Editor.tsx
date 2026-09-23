@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { layouts, loadLayouts } from "../../layoutTree";
-
-const componentList = ["Editor", "Wave", "Gauge"];
-
+import { palette } from "../../editor/registry";
 import { sdButtonObject } from "../SdButton";
 
 interface EditorProps {
   selectedLayout: string;
   onLayoutChange: (name: string) => void;
+  canUndo: boolean;
+  canRedo: boolean;
+  onUndo: () => void;
+  onRedo: () => void;
+  onResetLayout: () => void;
 }
 
 const sendAction = (type: string, payload?: unknown) => {
@@ -18,7 +21,15 @@ const onButtonClicked = (action: { type: string; payload?: unknown }) => {
   console.log("Action received:", action);
 };
 
-const Editor = ({ selectedLayout, onLayoutChange }: EditorProps) => {
+const Editor = ({
+  selectedLayout,
+  onLayoutChange,
+  canUndo,
+  canRedo,
+  onUndo,
+  onRedo,
+  onResetLayout,
+}: EditorProps) => {
   const [handlerCount, setHandlerCount] = useState(0);
   const [handlers, setHandlers] = useState(() => globalThis.sd.listHandlers());
   const [layoutNames, setLayoutNames] = useState<string[]>([]);
@@ -43,6 +54,8 @@ const Editor = ({ selectedLayout, onLayoutChange }: EditorProps) => {
     refreshHandlers();
     loadLayouts().then(() => setLayoutNames(Object.keys(layouts)));
   }, []);
+
+  const paletteItems = Object.values(palette);
 
   return (
     <div className="Editor bg-gray-700 border-none">
@@ -78,11 +91,28 @@ const Editor = ({ selectedLayout, onLayoutChange }: EditorProps) => {
           <option key={name} value={name}>{name}</option>
         ))}
       </select>
+      <hr />
+      <label className="block text-sm bg-gray-700">Components</label>
       <ul>
-        {componentList.map((component) => (
-          <li key={component} draggable="true">{component}</li>
+        {paletteItems.map((item) => (
+          <li
+            key={item.type}
+            draggable
+            onDragStart={(e) => {
+              e.dataTransfer.setData("component-type", item.type);
+              e.dataTransfer.effectAllowed = "copy";
+            }}
+          >
+            {item.title}
+          </li>
         ))}
       </ul>
+      <hr />
+      <div className="flex flex-col gap-1">
+        <button onClick={onUndo} disabled={!canUndo}>Undo</button>
+        <button onClick={onRedo} disabled={!canRedo}>Redo</button>
+        <button onClick={onResetLayout}>Reset Layout</button>
+      </div>
     </div>
   );
 };

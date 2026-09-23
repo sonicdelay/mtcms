@@ -18,7 +18,7 @@
             "borderRadius": "var(--border-radius)",
             "backgroundColor": "var(--panel-background)",
             "height": "200px",
-            "width": "100%"
+            "width": "300px"
           },
           "src": "public/images/engine.jpg",
           "alt": "Logo"

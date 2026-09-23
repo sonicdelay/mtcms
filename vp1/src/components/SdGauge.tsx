@@ -7,15 +7,18 @@ interface SdGaugeProps {
   source?: DeepKeys<WaveState>;
   min?: number;
   max?: number;
+  [key: string]: any;
 }
 
-const SdGauge = ({
-  title,
-  className,
-  source = "sin",
-  min = -1,
-  max = 1,
-}: SdGaugeProps) => {
+const SdGauge = (props: SdGaugeProps) => {
+  const {
+    title,
+    className,
+    source = "sin",
+    min = -1,
+    max = 1,
+    ...rest
+  } = props;
 
   const raw = useStoreValue(source) as number;
   const clamped = Math.max(min, Math.min(max, raw));
@@ -29,7 +32,7 @@ const SdGauge = ({
   const gaugeClassName = ["Gauge", className].filter(Boolean).join(" ");
 
   return (
-    <div className={gaugeClassName}>
+    <div className={gaugeClassName} {...rest}>
       {title && <h2 className="mb-2 font-semibold">{title}</h2>}
       <svg viewBox="0 0 110 110" width="150px">
         <circle

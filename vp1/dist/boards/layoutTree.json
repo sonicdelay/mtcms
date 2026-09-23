@@ -36,7 +36,7 @@
     },
     {
       "type": "SdPane",
-      "className": "flex flex-row bg-gray-800 items-center stretch justify-center",
+      "className": "flex  flex-row bg-gray-800 items-center stretch justify-center",
       "children": [
         {
           "type": "SdGauge",

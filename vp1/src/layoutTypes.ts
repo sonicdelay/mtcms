@@ -1,4 +1,5 @@
 export interface Node {
+  id?: string;
   type: string;
   source?: string;
   children?: LayoutChild[] | string;

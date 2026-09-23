@@ -6,9 +6,11 @@ interface WaveProps {
   className?: string;
   source?: DeepKeys<WaveState>;
   children?: React.ReactNode;
+  [key: string]: any;
 }
 
-export default function Wave({ title, className, source = "sin", children }: WaveProps) {
+export default function Wave(props: WaveProps) {
+  const { title, className, source = "sin", children, ...rest } = props;
   const value = useStoreValue(source) as number;
 
   const normalized = (value + 1) / 2;
@@ -17,7 +19,7 @@ export default function Wave({ title, className, source = "sin", children }: Wav
     const waveClassName = ["Wave", className].filter(Boolean).join(" ");
 
   return (
-    <div className={waveClassName}>
+    <div className={waveClassName} {...rest}>
       {title && <h2 className="mb-2 font-semibold">{title}</h2>}
       <div className="font-mono text-4xl font-bold" style={{ color: `hsl(${hue}, 90%, 45%)` }}>
         {value.toFixed(4)}

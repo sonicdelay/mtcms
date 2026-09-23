@@ -4,16 +4,16 @@ interface TextProps {
   title?: string;
   className?: string;
   children?: React.ReactNode;
+  [key: string]: any;
 }
 
-const Text = ({ className, children }: TextProps) => {
-    return (
-    <>
-     <span className={className}>
+const Text = (props: TextProps) => {
+  const { className, children, ...rest } = props;
+  return (
+    <span className={className} {...rest}>
       {children}
     </span>
-    </>
   );
-}
+};
 
 export default Text;

@@ -25,6 +25,12 @@
   padding: 10px;
   width: 200px;
 
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
   li[draggable="true"] {
     cursor: grab;
     padding: 5px;
@@ -34,13 +40,38 @@
   li[draggable="true"]:active {
     cursor: grabbing;
   }
+
+  hr {
+    border-color: rgba(255, 255, 255, 0.2);
+    margin: 10px 0;
+  }
 }
 
 .Config {
   border: solid 10px #2c2d2c;
   background-color: #000040;
   padding: 10px;
-  width: 200px;
+  width: 250px;
+  overflow: auto;
+}
+
+.ed-selected {
+  outline: 2px solid #4a90e2 !important;
+  outline-offset: 2px;
+}
+
+.ed-drop-target {
+  outline: 2px dashed #4ade80 !important;
+  outline-offset: 2px;
+}
+
+.ed-drop-placeholder {
+  border: 1px dashed #4ade80;
+  background: rgba(74, 222, 128, 0.15);
+  border-radius: 4px;
+  min-height: 24px;
+  margin: 2px;
+  display: block;
 }
 
 .Pane {

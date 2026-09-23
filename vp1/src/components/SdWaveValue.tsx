@@ -6,13 +6,15 @@ interface WaveValueProps {
   className?: string;
   source?: DeepKeys<WaveState>;
   children?: React.ReactNode;
+  [key: string]: any;
 }
 
-export default function WaveValue({ className, source = "sin", children }: WaveValueProps) {
+export default function WaveValue(props: WaveValueProps) {
+  const { className, source = "sin", children, ...rest } = props;
   const value = useStoreValue(source);
 
   return (
-    <div className={className}>
+    <div className={className} {...rest}>
         <pre>{JSON.stringify(value, null, 2)}</pre>
       {children}
     </div>
