@@ -52,13 +52,55 @@ export function updateNode(root: Node, id: string, updater: (n: Node) => void): 
   };
 }
 
-export function insertChild(root: Node, parentId: string, child: Node): Node {
+export function insertChildAt(
+  root: Node,
+  parentId: string,
+  index: number,
+  child: Node,
+): Node {
   return updateNode(root, parentId, (n) => {
-    const cur = n.children;
-    if (!cur) n.children = [child];
-    else if (Array.isArray(cur)) n.children = [...cur, child];
-    else n.children = [cur, child];
+    const arr = childrenOf(n.children);
+    const idx = Math.max(0, Math.min(index, arr.length));
+    arr.splice(idx, 0, child);
+    n.children = arr;
   });
+}
+
+export function isSelfOrDescendant(
+  root: Node,
+  ancestorId: string,
+  id: string,
+): boolean {
+  let current = findNode(root, id).node;
+  while (current) {
+    if (current.id === ancestorId) return true;
+    current = findNode(root, current.id ?? "").parent;
+  }
+  return false;
+}
+
+export function moveNode(
+  root: Node,
+  nodeId: string,
+  toParentId: string,
+  toIndex: number,
+): Node {
+  const { node, parent, index } = findNode(root, nodeId);
+  if (!node || index === undefined || parent?.id === undefined) return root;
+  const fromParentId = parent.id;
+  if (fromParentId === toParentId && index === toIndex) return root;
+  if (!findNode(root, toParentId).node) return root;
+
+  let next = updateNode(root, fromParentId, (p) => {
+    p.children = childrenOf(p.children).filter((_, i) => i !== index);
+  });
+
+  let target = toIndex;
+  if (fromParentId === toParentId && toIndex > index) target -= 1;
+  const limit = childrenOf(findNode(next, toParentId).node?.children).length;
+  target = Math.max(0, Math.min(target, limit));
+
+  return insertChildAt(next, toParentId, target, { ...node });
 }
 
 function filterChildren(

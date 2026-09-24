@@ -66,11 +66,13 @@ const Editor = ({
       <button onClick={() => sendAction("button_click", "Button fired!")}>
         Fired
       </button>
-      <img
+      {
+        /* <img
         src={sdButtonObject.image}
         alt={sdButtonObject.name}
         title={sdButtonObject.tooltip}
-      />
+      /> */
+      }
 
       <button onClick={addHandler}>+ Handler</button>
       <button onClick={removeHandler}>- Handler</button>

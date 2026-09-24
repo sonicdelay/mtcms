@@ -1,0 +1,5 @@
+{
+  "type": "SdPane",
+  "className": "flex flex-col overflow-auto",
+  "children": []
+}

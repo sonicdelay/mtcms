@@ -1,22 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
-import type { DragEvent } from "react";
+import { useEffect, useState } from "react";
 import { layouts, loadLayouts } from "./layoutTree";
 import type { Node } from "./layoutTypes";
 import renderNode from "./renderNode";
-import type { EditContext } from "./renderNode";
+import { renderEditable, useDragDrop } from "./editor/dragDrop";
 import { useWaveStore } from "./store";
 import Editor from "./components/editor/Editor";
 import Config from "./components/editor/Config";
 import { useHistory } from "./editor/History";
-import { isDroppable, palette } from "./editor/registry";
 import {
   childrenOf,
-  createNode,
   deleteNode,
   duplicateNode,
   ensureIds,
   findNode,
-  insertChild,
   moveChild,
   updateNode,
 } from "./editor/treeOps";
@@ -32,21 +28,29 @@ function loadTreeFor(name: string): Node {
 
 export default function App() {
   const [selectedLayout, setSelectedLayout] = useState<string>("");
-  const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
-  const [dropTargetId, setDropTargetId] = useState<string | undefined>(undefined);
   const { present: tree, setPresent, commit, undo, redo, canUndo, canRedo } =
     useHistory<Node | null>(null);
-  const { start, stop, edit } = useWaveStore();
+  const { start, stop, edit, toggleEdit } = useWaveStore();
+  const { selectedId, select, editCtx, canvasProps, reset } = useDragDrop(
+    tree,
+    commit,
+    edit,
+  );
 
   useEffect(() => {
-    const clearDropTarget = () => setDropTargetId(undefined);
-    document.addEventListener("drop", clearDropTarget);
-    document.addEventListener("dragend", clearDropTarget, true);
-    return () => {
-      document.removeEventListener("drop", clearDropTarget);
-      document.removeEventListener("dragend", clearDropTarget, true);
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "F8") {
+        event.preventDefault();
+        toggleEdit();
+      }
     };
-  }, []);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [toggleEdit]);
+
+  useEffect(() => {
+    if (!edit) reset();
+  }, [edit, reset]);
 
   useEffect(() => {
     loadLayouts().then(() => {
@@ -55,8 +59,6 @@ export default function App() {
         const name = names[0];
         setSelectedLayout(name);
         setPresent(loadTreeFor(name));
-        setSelectedId(undefined);
-        setDropTargetId(undefined);
         document.title = name;
       }
     });
@@ -76,42 +78,8 @@ export default function App() {
   const handleLayoutChange = (name: string) => {
     setSelectedLayout(name);
     setPresent(loadTreeFor(name));
-    setSelectedId(undefined);
-    setDropTargetId(undefined);
+    reset();
     document.title = name;
-  };
-
-  const select = useCallback((id?: string) => setSelectedId(id), []);
-
-  const insertNode = useCallback(
-    (parentId: string, e: DragEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setDropTargetId(undefined);
-      if (!tree) return;
-      const type = e.dataTransfer.getData("component-type");
-      const item = palette[type];
-      if (!item) return;
-      const child = createNode(type, item.defaultProps());
-      const next = insertChild(tree, parentId, child);
-      commit(next);
-    },
-    [tree, commit]
-  );
-
-  const setDropTarget = useCallback((id?: string) => {
-    setDropTargetId((prev) => (prev === id ? prev : id));
-  }, []);
-
-  const droppable = useCallback((node: Node) => isDroppable(node), []);
-
-  const editCtx: EditContext = {
-    selectedId,
-    select,
-    isDroppable: droppable,
-    insertNode,
-    dropTargetId,
-    setDropTarget,
   };
 
   const selInfo = selectedId && tree ? findNode(tree, selectedId) : undefined;
@@ -141,7 +109,7 @@ export default function App() {
   const deleteSelected = () => {
     if (!tree || !selectedId) return;
     commit(deleteNode(tree, selectedId));
-    setSelectedId(undefined);
+    select(undefined);
   };
 
   const applySelectedJson = (parsed: Record<string, unknown>) => {
@@ -166,8 +134,7 @@ export default function App() {
     clearOverride(selectedLayout);
     const base = ensureIds(layouts[selectedLayout]);
     setPresent(base);
-    setSelectedId(undefined);
-    setDropTargetId(undefined);
+    reset();
   };
 
   return (
@@ -185,32 +152,12 @@ export default function App() {
       )}
       <div
         className="flex min-w-0 w-full flex-1 flex-col overflow-auto"
-        onClick={() => select(undefined)}
-        onDragOver={
-          edit && tree
-            ? (e) => {
-                e.preventDefault();
-                setDropTarget(tree.id);
-              }
-            : undefined
-        }
-        onDragLeave={
-          edit
-            ? (e) => {
-                if (!e.currentTarget.contains(e.relatedTarget as Element | null)) {
-                  setDropTarget(undefined);
-                }
-              }
-            : undefined
-        }
-        onDrop={
-          edit && tree
-            ? (e) => insertNode(tree.id ?? "", e)
-            : undefined
-        }
+        {...canvasProps}
       >
         {tree
-          ? renderNode(tree, "0", {}, edit ? editCtx : undefined)
+          ? edit
+            ? renderEditable(tree, "0", {}, editCtx)
+            : renderNode(tree)
           : <p>Loading layouts...</p>}
       </div>
       {edit && tree && (
