@@ -1,5 +1,6 @@
 import { defineConfig, type Logger, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
 interface Timing {
   label: string;
@@ -18,7 +19,7 @@ const table = (title: string, entries: Timing[]) => {
 
 function bundleTiming(): Plugin {
   const chunks: Timing[] = [];
-  let logger: Logger = console;
+  let logger: Logger;
   let tBuild = 0;
   let tRender = 0;
   let tGenerated = 0;
@@ -71,7 +72,7 @@ function bundleTiming(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), bundleTiming()],
+  plugins: [react(), tailwindcss(), bundleTiming()],
   server: {
     host: "0.0.0.0",
   },

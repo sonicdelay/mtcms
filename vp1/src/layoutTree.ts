@@ -1,4 +1,4 @@
-import type { Node } from "./layoutTypes";
+import type { Node } from "./types.ts";
 
 const BOARD_NAMES = ["empty.json", "layoutTree.json", "layoutTree2.json"];
 

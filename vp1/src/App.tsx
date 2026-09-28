@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { layouts, loadLayouts } from "./layoutTree";
-import type { Node } from "./layoutTypes";
+import type { Node } from "./types";
 import renderNode from "./renderNode";
 import { renderEditable, useDragDrop } from "./editor/dragDrop";
 import { useWaveStore } from "./store";
 import Editor from "./components/editor/Editor";
 import Config from "./components/editor/Config";
+import SdSplitHandle, { HANDLE_WIDTH } from "./components/SdSplitHandle";
 import { useHistory } from "./editor/History";
 import {
   childrenOf,
@@ -13,10 +14,13 @@ import {
   duplicateNode,
   ensureIds,
   findNode,
+  isSelfOrDescendant,
   moveChild,
+  moveNode,
   updateNode,
 } from "./editor/treeOps";
 import { clearOverride, loadOverride, saveOverride } from "./editor/storage";
+import "./stylesheets/tailwind.css";
 import "./stylesheets/app.scss";
 
 function loadTreeFor(name: string): Node {
@@ -26,8 +30,22 @@ function loadTreeFor(name: string): Node {
   return ensureIds(override ?? base);
 }
 
+const MIN_PANEL_WIDTH = 120;
+const DEFAULT_EDITOR_WIDTH = 200;
+const DEFAULT_CONFIG_WIDTH = 250;
+
+interface PanelWidths {
+  editor: number;
+  config: number;
+}
+
 export default function App() {
   const [selectedLayout, setSelectedLayout] = useState<string>("");
+  const [panels, setPanels] = useState<PanelWidths>({
+    editor: DEFAULT_EDITOR_WIDTH,
+    config: DEFAULT_CONFIG_WIDTH,
+  });
+  const rowRef = useRef<HTMLDivElement>(null);
   const { present: tree, setPresent, commit, undo, redo, canUndo, canRedo } =
     useHistory<Node | null>(null);
   const { start, stop, edit, toggleEdit } = useWaveStore();
@@ -88,8 +106,8 @@ export default function App() {
     ? childrenOf(selInfo.parent.children)
     : [];
   const canMoveUp = selInfo?.index !== undefined && selInfo.index > 0;
-  const canMoveDown =
-    selInfo?.index !== undefined && selInfo.index < parentChildren.length - 1;
+  const canMoveDown = selInfo?.index !== undefined &&
+    selInfo.index < parentChildren.length - 1;
 
   const updateSelected = (patch: Partial<Node>) => {
     if (!tree || !selectedId) return;
@@ -97,7 +115,10 @@ export default function App() {
   };
 
   const moveSelected = (dir: -1 | 1) => {
-    if (!tree || !selInfo?.parent || selInfo.parent.id === undefined || selInfo.index === undefined) return;
+    if (
+      !tree || !selInfo?.parent || selInfo.parent.id === undefined ||
+      selInfo.index === undefined
+    ) return;
     commit(moveChild(tree, selInfo.parent.id, selInfo.index, dir));
   };
 
@@ -112,10 +133,23 @@ export default function App() {
     select(undefined);
   };
 
+  const moveNodeInTree = (
+    dragId: string,
+    target: { parentKey: string; index: number },
+  ) => {
+    if (!tree || dragId === target.parentKey) return;
+    if (isSelfOrDescendant(tree, dragId, target.parentKey)) return;
+    commit(moveNode(tree, dragId, target.parentKey, target.index));
+  };
+
   const applySelectedJson = (parsed: Record<string, unknown>) => {
     if (!tree || !selectedId) return;
     commit(
-      updateNode(tree, selectedId, (n) => Object.assign(n, parsed, { id: n.id }))
+      updateNode(
+        tree,
+        selectedId,
+        (n) => Object.assign(n, parsed, { id: n.id }),
+      ),
     );
   };
 
@@ -137,42 +171,101 @@ export default function App() {
     reset();
   };
 
+  const clampPanelWidth = (width: number, opposite: number) => {
+    const row = rowRef.current?.clientWidth ?? window.innerWidth;
+    const max = row - opposite - MIN_PANEL_WIDTH - 2 * HANDLE_WIDTH;
+    return Math.round(Math.max(MIN_PANEL_WIDTH, Math.min(width, max)));
+  };
+
+  const setPanelWidths = (next: Partial<PanelWidths>) =>
+    setPanels((prev) => {
+      const editor = next.editor ?? prev.editor;
+      const config = next.config ?? prev.config;
+      const clamped = {
+        editor: clampPanelWidth(editor, config),
+        config: clampPanelWidth(config, editor),
+      };
+      return clamped.editor === prev.editor && clamped.config === prev.config
+        ? prev
+        : clamped;
+    });
+
+  // Keep the canvas usable when the window itself gets narrower.
+  useEffect(() => {
+    const row = rowRef.current;
+    if (!row) return;
+    const observer = new ResizeObserver(() => setPanelWidths({}));
+    observer.observe(row);
+    return () => observer.disconnect();
+  }, []);
+
+  const resizeEditor = (deltaX: number) =>
+    setPanelWidths({ editor: panels.editor + deltaX });
+
+  const resizeConfig = (deltaX: number) =>
+    setPanelWidths({ config: panels.config + deltaX });
+
+  const handleEditorEvents = (...args: unknown[]) => {
+    console.log("Editor event:", ...args);
+  };
+
   return (
-    <div className="flex w-full h-full min-h-0 flex-row">
+    <div ref={rowRef} className="flex w-full h-full min-h-0 flex-row">
       {edit && (
-        <Editor
-          selectedLayout={selectedLayout}
-          onLayoutChange={handleLayoutChange}
-          canUndo={canUndo}
-          canRedo={canRedo}
-          onUndo={undo}
-          onRedo={redo}
-          onResetLayout={resetLayout}
-        />
+        <>
+          <Editor
+            onEvent={handleEditorEvents}
+            selectedLayout={selectedLayout}
+            onLayoutChange={handleLayoutChange}
+            style={{ width: panels.editor }}
+            tree={tree}
+            selectedId={selectedId}
+            onSelectNode={select}
+            onMoveNode={moveNodeInTree}
+            canUndo={canUndo}
+            canRedo={canRedo}
+            onUndo={undo}
+            onRedo={redo}
+            onResetLayout={resetLayout}
+          />
+          <SdSplitHandle
+            label="Resize editor panel"
+            sign={1}
+            onResize={resizeEditor}
+            onReset={() => setPanelWidths({ editor: DEFAULT_EDITOR_WIDTH })}
+          />
+        </>
       )}
       <div
         className="flex min-w-0 w-full flex-1 flex-col overflow-auto"
         {...canvasProps}
       >
         {tree
-          ? edit
-            ? renderEditable(tree, "0", {}, editCtx)
-            : renderNode(tree)
+          ? edit ? renderEditable(tree, "0", {}, editCtx) : renderNode(tree)
           : <p>Loading layouts...</p>}
       </div>
       {edit && tree && (
-        <Config
-          tree={tree}
-          selected={selected}
-          canMoveUp={canMoveUp}
-          canMoveDown={canMoveDown}
-          onMove={moveSelected}
-          onDuplicate={duplicateSelected}
-          onDelete={deleteSelected}
-          onUpdate={updateSelected}
-          onApplySelectedJson={applySelectedJson}
-          onApplyTreeJson={applyTreeJson}
-        />
+        <>
+          <SdSplitHandle
+            label="Resize config panel"
+            sign={-1}
+            onResize={resizeConfig}
+            onReset={() => setPanelWidths({ config: DEFAULT_CONFIG_WIDTH })}
+          />
+          <Config
+            tree={tree}
+            selected={selected}
+            style={{ width: panels.config }}
+            canMoveUp={canMoveUp}
+            canMoveDown={canMoveDown}
+            onMove={moveSelected}
+            onDuplicate={duplicateSelected}
+            onDelete={deleteSelected}
+            onUpdate={updateSelected}
+            onApplySelectedJson={applySelectedJson}
+            onApplyTreeJson={applyTreeJson}
+          />
+        </>
       )}
     </div>
   );

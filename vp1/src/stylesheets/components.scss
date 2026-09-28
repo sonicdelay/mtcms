@@ -1,17 +1,79 @@
-.Pane {
-  //border: var(--border-width) solid #FF3f07;
-  border-radius: var(--border-radius);
-  padding: 5px;
-  // background-color:transparent;
-}
+@layer components {
+  .Pane {
+    //border: var(--border-width) solid #FF3f07;
+    border-radius: var(--border-radius);
+    padding: 5px;
+    // background-color:transparent;
+  }
 
-.Wave {
-  border: solid 10px #127a69;
-  background-color: #0b473a;
-}
+  .Wave {
+    border: solid 10px #127a69;
+    background-color: #0b473a;
+  }
 
-.Gauge {
-  border: var(--border-width) solid var(--border-color);
-  text-align: center;
-  padding: 20px;
+  .Gauge {
+    border: var(--border-width) solid var(--border-color);
+    text-align: center;
+    padding: 20px;
+  }
+
+  .Tree {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+  }
+
+  .Tree-group {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .Tree-item {
+    cursor: pointer;
+    border-radius: 2px;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    &:focus {
+      outline: 1px solid #4a90e2;
+      outline-offset: -1px;
+    }
+  }
+
+  .Tree-item-selected {
+    background-color: rgba(74, 144, 226, 0.35);
+  }
+
+  .Tree-drop-before {
+    box-shadow: inset 0 2px 0 #4ade80;
+  }
+
+  .Tree-drop-after {
+    box-shadow: inset 0 -2px 0 #4ade80;
+  }
+
+  .Tree-drop-inside {
+    outline: 2px dashed #4ade80;
+    outline-offset: -2px;
+  }
+
+  .Tree-twisty {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    text-align: center;
+    opacity: 0.7;
+  }
+
+  .Tree-twisty-empty {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+  }
 }

@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import type { Node } from "../../layoutTypes";
-import { palette, type ConfigField } from "../../editor/registry";
+import { type CSSProperties, type ReactNode, useEffect, useState } from "react";
+import type { Node } from "../../types";
+import { type ConfigField, palette } from "../../editor/registry";
 
 interface ConfigProps {
   tree: Node;
   selected: Node | null;
+  style?: CSSProperties;
   canMoveUp: boolean;
   canMoveDown: boolean;
   onMove: (dir: -1 | 1) => void;
@@ -89,9 +90,83 @@ function IconScreen() {
   );
 }
 
+function IconChevron({ open }: { open: boolean }) {
+  return (
+    <svg
+      {...iconProps}
+      aria-hidden="true"
+      className={`transition-transform ${open ? "rotate-90" : ""}`}
+    >
+      <path d="M9 6l6 6-6 6" />
+    </svg>
+  );
+}
+
+interface JsonSectionProps {
+  label: string;
+  open: boolean;
+  onToggle: () => void;
+  rows: number;
+  value: string;
+  onChange: (value: string) => void;
+  onApply: () => void;
+  applyTitle: string;
+  applyIcon: ReactNode;
+  inputClass: string;
+  buttonClass: string;
+}
+
+function JsonSection({
+  label,
+  open,
+  onToggle,
+  rows,
+  value,
+  onChange,
+  onApply,
+  applyTitle,
+  applyIcon,
+  inputClass,
+  buttonClass,
+}: JsonSectionProps) {
+  return (
+    <div className="mt-2">
+      <button
+        type="button"
+        className="w-full flex items-center gap-1 text-sm text-left hover:text-white"
+        onClick={onToggle}
+        title={open ? `Collapse ${label}` : `Expand ${label}`}
+        aria-expanded={open}
+      >
+        <IconChevron open={open} />
+        {label}
+      </button>
+      {open && (
+        <div className="mt-1">
+          <textarea
+            className={inputClass}
+            rows={rows}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+          />
+          <button
+            className={`${buttonClass} mt-1`}
+            onClick={onApply}
+            title={applyTitle}
+            aria-label={applyTitle}
+          >
+            {applyIcon}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function FieldInput({ field, node, onPatch }: FieldProps) {
   const value = node[field.key];
-  const baseClass = "w-full p-1 bg-gray-800 text-white border border-gray-600 rounded";
+  const baseClass =
+    "w-full p-1 bg-gray-800 text-white border border-gray-600 rounded";
   switch (field.kind) {
     case "select": {
       const options = field.options ?? [];
@@ -101,13 +176,12 @@ function FieldInput({ field, node, onPatch }: FieldProps) {
         <select
           className={baseClass}
           value={str}
-          onChange={(e) => onPatch({ [field.key]: e.target.value } as Partial<Node>)}
+          onChange={(e) =>
+            onPatch({ [field.key]: e.target.value } as Partial<Node>)}
         >
           {value === undefined && <option value="">—</option>}
           {!known && <option value={str}>{str}</option>}
-          {options.map((o) => (
-            <option key={o} value={o}>{o}</option>
-          ))}
+          {options.map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
       );
     }
@@ -119,7 +193,9 @@ function FieldInput({ field, node, onPatch }: FieldProps) {
           value={value === undefined || value === "" ? "" : Number(value)}
           onChange={(e) => {
             const v = e.target.value;
-            onPatch({ [field.key]: v === "" ? "" : Number(v) } as Partial<Node>);
+            onPatch(
+              { [field.key]: v === "" ? "" : Number(v) } as Partial<Node>,
+            );
           }}
         />
       );
@@ -129,7 +205,8 @@ function FieldInput({ field, node, onPatch }: FieldProps) {
           className={baseClass}
           rows={3}
           value={typeof value === "string" ? value : ""}
-          onChange={(e) => onPatch({ [field.key]: e.target.value } as Partial<Node>)}
+          onChange={(e) =>
+            onPatch({ [field.key]: e.target.value } as Partial<Node>)}
         />
       );
     default:
@@ -138,7 +215,8 @@ function FieldInput({ field, node, onPatch }: FieldProps) {
           type="text"
           className={baseClass}
           value={typeof value === "string" ? value : ""}
-          onChange={(e) => onPatch({ [field.key]: e.target.value } as Partial<Node>)}
+          onChange={(e) =>
+            onPatch({ [field.key]: e.target.value } as Partial<Node>)}
         />
       );
   }
@@ -147,6 +225,7 @@ function FieldInput({ field, node, onPatch }: FieldProps) {
 export default function Config({
   tree,
   selected,
+  style,
   canMoveUp,
   canMoveDown,
   onMove,
@@ -158,6 +237,8 @@ export default function Config({
 }: ConfigProps) {
   const [nodeJson, setNodeJson] = useState("");
   const [treeJson, setTreeJson] = useState("");
+  const [nodeJsonOpen, setNodeJsonOpen] = useState(false);
+  const [treeJsonOpen, setTreeJsonOpen] = useState(false);
   const [jsonError, setJsonError] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -189,107 +270,103 @@ export default function Config({
     }
   };
 
-  const inputClass = "w-full p-1 bg-gray-800 text-white border border-gray-600 rounded";
+  const inputClass =
+    "w-full p-1 bg-gray-800 text-white border border-gray-600 rounded";
   const buttonClass =
     "p-1 bg-gray-800 text-white border border-gray-600 rounded flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed";
 
   return (
-    <div className="Config bg-gray-700 border-none">
+    <div className="Config bg-gray-700 border-none" style={style}>
       <h3>Config</h3>
-      {selected ? (
-        <>
-          <div className="text-sm"><b>Type:</b> {selected.type}</div>
-          {(item?.settings ?? []).map((field) => (
-            <label key={field.key} className="block text-sm mt-2">
-              {field.label}
-              <FieldInput field={field} node={selected} onPatch={onUpdate} />
+      {selected
+        ? (
+          <>
+            <div className="text-sm">
+              <b>Type:</b> {selected.type}
+            </div>
+            {(item?.settings ?? []).map((field) => (
+              <label key={field.key} className="block text-sm mt-2">
+                {field.label}
+                <FieldInput field={field} node={selected} onPatch={onUpdate} />
+              </label>
+            ))}
+            <label className="block text-sm mt-2">
+              className
+              <textarea
+                className={inputClass}
+                rows={3}
+                value={typeof selected.className === "string"
+                  ? selected.className
+                  : ""}
+                onChange={(e) => onUpdate({ className: e.target.value })}
+              />
             </label>
-          ))}
-          <label className="block text-sm mt-2">
-            className
-            <textarea
-              className={inputClass}
-              rows={3}
-              value={typeof selected.className === "string" ? selected.className : ""}
-              onChange={(e) => onUpdate({ className: e.target.value })}
-            />
-          </label>
-          <div className="flex gap-1 mt-2">
-            <button
-              className={buttonClass}
-              onClick={() => onMove(-1)}
-              disabled={!canMoveUp}
-              title="Move Up"
-              aria-label="Move Up"
-            >
-              <IconArrowUp />
-            </button>
-            <button
-              className={buttonClass}
-              onClick={() => onMove(1)}
-              disabled={!canMoveDown}
-              title="Move Down"
-              aria-label="Move Down"
-            >
-              <IconArrowDown />
-            </button>
-            <button
-              className={buttonClass}
-              onClick={onDuplicate}
-              title="Duplicate"
-              aria-label="Duplicate"
-            >
-              <IconCopy />
-            </button>
-            <button
-              className={buttonClass}
-              onClick={onDelete}
-              title="Delete"
-              aria-label="Delete"
-            >
-              <IconTrash />
-            </button>
-          </div>
-          <br />
-          <label className="block text-sm">
-            JSON (selected)
-            <textarea
-              className={inputClass}
+            <div className="flex gap-1 mt-2">
+              <button
+                className={buttonClass}
+                onClick={() => onMove(-1)}
+                disabled={!canMoveUp}
+                title="Move Up"
+                aria-label="Move Up"
+              >
+                <IconArrowUp />
+              </button>
+              <button
+                className={buttonClass}
+                onClick={() => onMove(1)}
+                disabled={!canMoveDown}
+                title="Move Down"
+                aria-label="Move Down"
+              >
+                <IconArrowDown />
+              </button>
+              <button
+                className={buttonClass}
+                onClick={onDuplicate}
+                title="Duplicate"
+                aria-label="Duplicate"
+              >
+                <IconCopy />
+              </button>
+              <button
+                className={buttonClass}
+                onClick={onDelete}
+                title="Delete"
+                aria-label="Delete"
+              >
+                <IconTrash />
+              </button>
+            </div>
+            <br />
+            <JsonSection
+              label="JSON (selected)"
+              open={nodeJsonOpen}
+              onToggle={() => setNodeJsonOpen((v) => !v)}
               rows={9}
               value={nodeJson}
-              onChange={(e) => setNodeJson(e.target.value)}
+              onChange={setNodeJson}
+              onApply={applyNodeJson}
+              applyTitle="Apply JSON"
+              applyIcon={<IconCheck />}
+              inputClass={inputClass}
+              buttonClass={buttonClass}
             />
-          </label>
-          <button
-            className={`${buttonClass} mt-1`}
-            onClick={applyNodeJson}
-            title="Apply JSON"
-            aria-label="Apply JSON"
-          >
-            <IconCheck />
-          </button>
-        </>
-      ) : (
-        <p className="text-sm mt-1">Select an element on the canvas.</p>
-      )}
-      <br />
-      <label className="block text-sm mt-2">
-        JSON (screen)
-        <textarea
-          className={inputClass}
-          rows={10}
-          value={treeJson}
-          onChange={(e) => setTreeJson(e.target.value)}
-        />
-      </label>
-      <button
-        className={`${buttonClass} mt-1`}
-        onClick={applyTreeJson}
-        title="Apply Screen JSON"
-        aria-label="Apply Screen JSON"
-      >
-        <IconScreen />
-      </button>
+          </>
+        )
+        : <p className="text-sm mt-1">Select an element on the canvas.</p>}
+      <JsonSection
+        label="JSON (screen)"
+        open={treeJsonOpen}
+        onToggle={() => setTreeJsonOpen((v) => !v)}
+        rows={10}
+        value={treeJson}
+        onChange={setTreeJson}
+        onApply={applyTreeJson}
+        applyTitle="Apply Screen JSON"
+        applyIcon={<IconScreen />}
+        inputClass={inputClass}
+        buttonClass={buttonClass}
+      />
       {jsonError && <p className="text-red-400 text-xs mt-1">{jsonError}</p>}
     </div>
   );
