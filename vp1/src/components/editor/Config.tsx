@@ -21,6 +21,74 @@ interface FieldProps {
   onPatch: (patch: Partial<Node>) => void;
 }
 
+const iconProps = {
+  viewBox: "0 0 24 24",
+  width: 16,
+  height: 16,
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+};
+
+function IconArrowUp() {
+  return (
+    <svg {...iconProps} aria-hidden="true">
+      <path d="M12 19V5" />
+      <path d="M5 12l7-7 7 7" />
+    </svg>
+  );
+}
+
+function IconArrowDown() {
+  return (
+    <svg {...iconProps} aria-hidden="true">
+      <path d="M12 5v14" />
+      <path d="M19 12l-7 7-7-7" />
+    </svg>
+  );
+}
+
+function IconCopy() {
+  return (
+    <svg {...iconProps} aria-hidden="true">
+      <rect x="9" y="9" width="12" height="12" rx="2" />
+      <path d="M5 15V5a2 2 0 0 1 2-2h8" />
+    </svg>
+  );
+}
+
+function IconTrash() {
+  return (
+    <svg {...iconProps} aria-hidden="true">
+      <path d="M4 7h16" />
+      <path d="M10 11v6" />
+      <path d="M14 11v6" />
+      <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12" />
+      <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
+    </svg>
+  );
+}
+
+function IconCheck() {
+  return (
+    <svg {...iconProps} aria-hidden="true">
+      <path d="M20 6L9 17l-5-5" />
+    </svg>
+  );
+}
+
+function IconScreen() {
+  return (
+    <svg {...iconProps} aria-hidden="true">
+      <rect x="2" y="4" width="20" height="14" rx="2" />
+      <path d="M8 22h8" />
+      <path d="M12 18v4" />
+    </svg>
+  );
+}
+
 function FieldInput({ field, node, onPatch }: FieldProps) {
   const value = node[field.key];
   const baseClass = "w-full p-1 bg-gray-800 text-white border border-gray-600 rounded";
@@ -122,7 +190,8 @@ export default function Config({
   };
 
   const inputClass = "w-full p-1 bg-gray-800 text-white border border-gray-600 rounded";
-  const buttonClass = "p-1 bg-gray-800 text-white border border-gray-600 rounded";
+  const buttonClass =
+    "p-1 bg-gray-800 text-white border border-gray-600 rounded flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed";
 
   return (
     <div className="Config bg-gray-700 border-none">
@@ -145,15 +214,41 @@ export default function Config({
               onChange={(e) => onUpdate({ className: e.target.value })}
             />
           </label>
-          <div className="flex flex-col gap-1 mt-2">
-            <button className={buttonClass} onClick={() => onMove(-1)} disabled={!canMoveUp}>
-              Move Up
+          <div className="flex gap-1 mt-2">
+            <button
+              className={buttonClass}
+              onClick={() => onMove(-1)}
+              disabled={!canMoveUp}
+              title="Move Up"
+              aria-label="Move Up"
+            >
+              <IconArrowUp />
             </button>
-            <button className={buttonClass} onClick={() => onMove(1)} disabled={!canMoveDown}>
-              Move Down
+            <button
+              className={buttonClass}
+              onClick={() => onMove(1)}
+              disabled={!canMoveDown}
+              title="Move Down"
+              aria-label="Move Down"
+            >
+              <IconArrowDown />
             </button>
-            <button className={buttonClass} onClick={onDuplicate}>Duplicate</button>
-            <button className={buttonClass} onClick={onDelete}>Delete</button>
+            <button
+              className={buttonClass}
+              onClick={onDuplicate}
+              title="Duplicate"
+              aria-label="Duplicate"
+            >
+              <IconCopy />
+            </button>
+            <button
+              className={buttonClass}
+              onClick={onDelete}
+              title="Delete"
+              aria-label="Delete"
+            >
+              <IconTrash />
+            </button>
           </div>
           <br />
           <label className="block text-sm">
@@ -165,7 +260,14 @@ export default function Config({
               onChange={(e) => setNodeJson(e.target.value)}
             />
           </label>
-          <button className={buttonClass} onClick={applyNodeJson}>Apply JSON</button>
+          <button
+            className={`${buttonClass} mt-1`}
+            onClick={applyNodeJson}
+            title="Apply JSON"
+            aria-label="Apply JSON"
+          >
+            <IconCheck />
+          </button>
         </>
       ) : (
         <p className="text-sm mt-1">Select an element on the canvas.</p>
@@ -180,7 +282,14 @@ export default function Config({
           onChange={(e) => setTreeJson(e.target.value)}
         />
       </label>
-      <button className={buttonClass} onClick={applyTreeJson}>Apply Screen JSON</button>
+      <button
+        className={`${buttonClass} mt-1`}
+        onClick={applyTreeJson}
+        title="Apply Screen JSON"
+        aria-label="Apply Screen JSON"
+      >
+        <IconScreen />
+      </button>
       {jsonError && <p className="text-red-400 text-xs mt-1">{jsonError}</p>}
     </div>
   );

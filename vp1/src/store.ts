@@ -68,8 +68,8 @@ export const useWaveStore = create<WaveState>()(
             cos: Math.cos(t),
             tan: 1 / Math.tan(t),
             data: [
-              { time: t, sin: Math.sin(t) },
-              { time: t, sin: Math.sin(t) },
+              { time: t.toPrecision(2), sin: Math.sin(t).toPrecision(2) },
+              { time: t.toPrecision(2), sin: Math.sin(t).toPrecision(2) },
             ]
           };
         }),
