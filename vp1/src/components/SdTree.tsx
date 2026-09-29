@@ -80,31 +80,28 @@ const INDENT = 12;
 const NODE_MIME = "tree-node-key";
 const EDGE_RATIO = 0.25;
 
-function toItemArray(value: unknown): TreeItem[] {
+const toItemArray = (value: unknown): TreeItem[] => {
   if (value === null || value === undefined) return [];
   const arr = Array.isArray(value) ? value : [value];
   return arr.filter((v): v is TreeItem => typeof v === "object" && v !== null);
-}
+};
 
-function childItems(item: TreeItem): TreeItem[] {
-  return toItemArray(item.children);
-}
+const childItems = (item: TreeItem): TreeItem[] => toItemArray(item.children);
 
 /** Children exactly as the data stores them, including plain string children. */
-function rawChildren(item: TreeItem): unknown[] {
+const rawChildren = (item: TreeItem): unknown[] => {
   const value = item.children;
   if (value === null || value === undefined) return [];
   return Array.isArray(value) ? value : [value];
-}
+};
 
-function titleOf(item: TreeItem): string {
+const titleOf = (item: TreeItem): string => {
   const raw = item.title ?? item.label ?? item.name ?? item.type ?? item.id;
   return raw === undefined || raw === null ? "" : String(raw);
-}
+};
 
-function keyOf(item: TreeItem, path: string): string {
-  return item.id === undefined || item.id === null ? path : String(item.id);
-}
+const keyOf = (item: TreeItem, path: string): string =>
+  item.id === undefined || item.id === null ? path : String(item.id);
 
 const defaultTemplate: TreeItemTemplate = (item) => <li>{titleOf(item)}</li>;
 

@@ -24,23 +24,21 @@ const MIME: Record<string, string> = {
   ".ttf": "font/ttf",
 };
 
-function contentType(filePath: string): string {
-  return MIME[extname(filePath).toLowerCase()] ?? "application/octet-stream";
-}
+const contentType = (filePath: string): string =>
+  MIME[extname(filePath).toLowerCase()] ?? "application/octet-stream";
 
-function isInside(root: string, candidate: string): boolean {
-  return candidate === root || candidate.startsWith(root + SEPARATOR);
-}
+const isInside = (root: string, candidate: string): boolean =>
+  candidate === root || candidate.startsWith(root + SEPARATOR);
 
-function decodePathname(pathname: string): string {
+const decodePathname = (pathname: string): string => {
   try {
     return decodeURIComponent(pathname);
   } catch {
     return pathname;
   }
-}
+};
 
-async function serveFile(req: Request, filePath: string): Promise<Response> {
+const serveFile = async (req: Request, filePath: string): Promise<Response> => {
   const data = await Deno.readFile(filePath);
   const isHtml = extname(filePath).toLowerCase() === ".html";
   return new Response(data, {
@@ -51,9 +49,9 @@ async function serveFile(req: Request, filePath: string): Promise<Response> {
         : "public, max-age=31536000, immutable",
     },
   });
-}
+};
 
-export async function handler(req: Request): Promise<Response> {
+export const handler = async (req: Request): Promise<Response> => {
   const url = new URL(req.url);
 
   if (url.pathname === "/api") {
@@ -83,7 +81,7 @@ export async function handler(req: Request): Promise<Response> {
   }
 
   return serveFile(req, filePath);
-}
+};
 
 if (import.meta.main) {
   Deno.serve(handler);

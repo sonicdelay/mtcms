@@ -29,7 +29,7 @@ export interface CanvasProps {
   onDrop?: (e: DragEvent) => void;
 }
 
-function insertionIndex(e: DragEvent): number {
+const insertionIndex = (e: DragEvent): number => {
   const container = e.currentTarget as HTMLElement;
   const children = Array.from(container.children).filter(
     (el) => !el.classList.contains("ed-drop-placeholder")
@@ -53,11 +53,11 @@ function insertionIndex(e: DragEvent): number {
   return rects.length;
 }
 
-export function useDragDrop(
+export const useDragDrop = (
   tree: Node | null,
   commit: (next: Node) => void,
   active: boolean,
-) {
+) => {
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
   const [dropTargetId, setDropTargetId] = useState<string | undefined>(undefined);
   const [dropIndex, setDropIndex] = useState(0);
@@ -146,14 +146,14 @@ export function useDragDrop(
     : { onClick: () => select(undefined) };
 
   return { selectedId, select, editCtx, canvasProps, reset };
-}
+};
 
-export function renderEditable(
+export const renderEditable = (
   node: LayoutChild,
   path = "0",
   inheritedProps: Record<string, unknown> = {},
   edit: EditContext,
-): ReactNode {
+): ReactNode => {
   if (typeof node === "string") {
     return createElement("span", { key: path, ...inheritedProps }, node);
   }
@@ -251,4 +251,4 @@ export function renderEditable(
     { key: path, ...props },
     childNodes,
   );
-}
+};

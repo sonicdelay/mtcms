@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export function useHistory<T>(initial: T) {
+export const useHistory = <T,>(initial: T) => {
   const [present, setPresent] = useState<T>(initial);
   const pastRef = useRef<T[]>([]);
   const futureRef = useRef<T[]>([]);
@@ -55,4 +55,4 @@ export function useHistory<T>(initial: T) {
   }, [undo, redo]);
 
   return { present, setPresent, commit, undo, redo, canUndo, canRedo };
-}
+};

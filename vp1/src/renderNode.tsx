@@ -2,11 +2,11 @@ import { createElement, Fragment, type ReactNode } from "react";
 import { components } from "./components";
 import type { LayoutChild } from "./layoutTypes";
 
-export default function renderNode(
+const renderNode = (
   node: LayoutChild,
   path = "0",
   inheritedProps: Record<string, unknown> = {},
-): ReactNode {
+): ReactNode => {
   if (typeof node === "string") {
     return createElement("span", { key: path, ...inheritedProps }, node);
   }
@@ -25,4 +25,6 @@ export default function renderNode(
       )
       : children,
   );
-}
+};
+
+export default renderNode;

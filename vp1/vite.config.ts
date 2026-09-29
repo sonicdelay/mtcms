@@ -17,7 +17,7 @@ const table = (title: string, entries: Timing[]) => {
   ];
 };
 
-function bundleTiming(): Plugin {
+const bundleTiming = (): Plugin => {
   const chunks: Timing[] = [];
   let logger: Logger;
   let tBuild = 0;
@@ -69,7 +69,7 @@ function bundleTiming(): Plugin {
       );
     },
   };
-}
+};
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), bundleTiming()],

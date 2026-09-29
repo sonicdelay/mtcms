@@ -30,22 +30,19 @@ export type DeepKeys<T, Prefix extends string = ""> = T extends (infer U)[]
   }[keyof T & string]
   : never;
 
-function getByPath(obj: any, path: string): any {
-  return path.split(".").reduce((acc, key) => {
+const getByPath = (obj: any, path: string): any =>
+  path.split(".").reduce((acc, key) => {
     const index = Number(key);
     return acc?.[Number.isNaN(index) ? key : index];
   }, obj);
-}
 
-export function useStoreValue<P extends DeepKeys<WaveState>>(path: P) {
-  return useWaveStore(useShallow((state) => getByPath(state, path)));
-}
+export const useStoreValue = <P extends DeepKeys<WaveState>>(path: P) =>
+  useWaveStore(useShallow((state) => getByPath(state, path)));
 
-export function useStoreValues<P extends DeepKeys<WaveState>>(...paths: P[]) {
-  return useWaveStore(
+export const useStoreValues = <P extends DeepKeys<WaveState>>(...paths: P[]) =>
+  useWaveStore(
     useShallow((state) => paths.map((p) => getByPath(state, p)))
   );
-}
 
 export const useWaveStore = create<WaveState>()(
   devtools(

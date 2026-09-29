@@ -9,7 +9,7 @@ interface WaveBarProps {
   [key: string]: any;
 }
 
-export default function WaveBar(props: WaveBarProps) {
+const WaveBar = (props: WaveBarProps) => {
   const { title, className, source = "sin", children, ...rest } = props;
   const value = useStoreValue(source) as number;
 
@@ -36,4 +36,6 @@ export default function WaveBar(props: WaveBarProps) {
       {children}
     </div>
   );
-}
+};
+
+export default WaveBar;

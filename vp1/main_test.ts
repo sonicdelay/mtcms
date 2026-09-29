@@ -6,9 +6,9 @@ const DIST_DIR = import.meta.dirname
   ? join(import.meta.dirname, "dist")
   : "./dist";
 
-function assertHtml(res: Response): void {
+const assertHtml = (res: Response): void => {
   assertEquals(res.headers.get("content-type")?.startsWith("text/html"), true);
-}
+};
 
 Deno.test("serves built index.html on /", async () => {
   const res = await handler(new Request("http://localhost/"));

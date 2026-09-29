@@ -2,7 +2,7 @@ import type { LayoutChild, Node } from "../layoutTypes";
 
 const webCrypto = typeof crypto !== "undefined" ? crypto : undefined;
 
-export function randomId(): string {
+export const randomId = (): string => {
   if (typeof webCrypto?.randomUUID === "function") return webCrypto.randomUUID();
   const bytes = new Uint8Array(16);
   if (typeof webCrypto?.getRandomValues === "function") {
@@ -20,21 +20,25 @@ export function randomId(): string {
     hex.slice(8, 10).join(""),
     hex.slice(10, 16).join(""),
   ].join("-");
-}
+};
 
-export function createNode(type: string, defaults: Partial<Node> = {}): Node {
-  return { id: randomId(), type, ...defaults };
-}
+export const createNode = (type: string, defaults: Partial<Node> = {}): Node => ({
+  id: randomId(),
+  type,
+  ...defaults,
+});
 
-export function childrenOf(children: LayoutChild[] | string | undefined): LayoutChild[] {
+export const childrenOf = (
+  children: LayoutChild[] | string | undefined,
+): LayoutChild[] => {
   if (!children) return [];
   return Array.isArray(children) ? children : [children];
-}
+};
 
-export function findNode(
+export const findNode = (
   root: Node,
-  id: string
-): { node?: Node; parent?: Node; index?: number } {
+  id: string,
+): { node?: Node; parent?: Node; index?: number } => {
   if (root.id === id) return { node: root };
   const children = childrenOf(root.children);
   for (let i = 0; i < children.length; i++) {
@@ -46,20 +50,24 @@ export function findNode(
     }
   }
   return {};
-}
+};
 
-function mapChildren(
+const mapChildren = (
   children: LayoutChild[] | string | undefined,
   fn: (c: LayoutChild) => LayoutChild,
-): LayoutChild[] | string | undefined {
+): LayoutChild[] | string | undefined => {
   if (children === undefined) return undefined;
   const arr = Array.isArray(children) ? children : [children];
   const mapped = arr.map(fn);
   if (!Array.isArray(children)) return mapped[0] as LayoutChild[] | string;
   return mapped;
-}
+};
 
-export function updateNode(root: Node, id: string, updater: (n: Node) => void): Node {
+export const updateNode = (
+  root: Node,
+  id: string,
+  updater: (n: Node) => void,
+): Node => {
   if (root.id === id) {
     const copy: Node = {
       ...root,
@@ -72,48 +80,47 @@ export function updateNode(root: Node, id: string, updater: (n: Node) => void): 
     ...root,
     children: mapChildren(root.children, (c) => (typeof c === "string" ? c : updateNode(c, id, updater))),
   };
-}
+};
 
-export function insertChildAt(
+export const insertChildAt = (
   root: Node,
   parentId: string,
   index: number,
   child: Node,
-): Node {
-  return updateNode(root, parentId, (n) => {
+): Node =>
+  updateNode(root, parentId, (n) => {
     const arr = childrenOf(n.children);
     const idx = Math.max(0, Math.min(index, arr.length));
     arr.splice(idx, 0, child);
     n.children = arr;
   });
-}
 
-export function isSelfOrDescendant(
+export const isSelfOrDescendant = (
   root: Node,
   ancestorId: string,
   id: string,
-): boolean {
+): boolean => {
   let current = findNode(root, id).node;
   while (current) {
     if (current.id === ancestorId) return true;
     current = findNode(root, current.id ?? "").parent;
   }
   return false;
-}
+};
 
-export function moveNode(
+export const moveNode = (
   root: Node,
   nodeId: string,
   toParentId: string,
   toIndex: number,
-): Node {
+): Node => {
   const { node, parent, index } = findNode(root, nodeId);
   if (!node || index === undefined || parent?.id === undefined) return root;
   const fromParentId = parent.id;
   if (fromParentId === toParentId && index === toIndex) return root;
   if (!findNode(root, toParentId).node) return root;
 
-  let next = updateNode(root, fromParentId, (p) => {
+  const next = updateNode(root, fromParentId, (p) => {
     p.children = childrenOf(p.children).filter((_, i) => i !== index);
   });
 
@@ -123,12 +130,12 @@ export function moveNode(
   target = Math.max(0, Math.min(target, limit));
 
   return insertChildAt(next, toParentId, target, { ...node });
-}
+};
 
-function filterChildren(
+const filterChildren = (
   children: LayoutChild[] | string | undefined,
   id: string,
-): LayoutChild[] | string | undefined {
+): LayoutChild[] | string | undefined => {
   const arr = childrenOf(children);
   const out: LayoutChild[] = [];
   for (const c of arr) {
@@ -142,21 +149,20 @@ function filterChildren(
   if (out.length === 0) return undefined;
   if (children !== undefined && !Array.isArray(children)) return out[0] as LayoutChild[] | string;
   return out;
-}
+};
 
-export function deleteNode(root: Node, id: string): Node {
-  return { ...root, children: filterChildren(root.children, id) };
-}
+export const deleteNode = (root: Node, id: string): Node => ({
+  ...root,
+  children: filterChildren(root.children, id),
+});
 
-function cloneWithNewIds(n: Node): Node {
-  return {
-    ...n,
-    id: randomId(),
-    children: childrenOf(n.children).map((c) => (typeof c === "string" ? c : cloneWithNewIds(c))),
-  };
-}
+const cloneWithNewIds = (n: Node): Node => ({
+  ...n,
+  id: randomId(),
+  children: childrenOf(n.children).map((c) => (typeof c === "string" ? c : cloneWithNewIds(c))),
+});
 
-export function duplicateNode(root: Node, id: string): Node {
+export const duplicateNode = (root: Node, id: string): Node => {
   const { node, parent, index } = findNode(root, id);
   if (!node || !parent || parent.id === undefined || index === undefined) return root;
   const clone = cloneWithNewIds(node);
@@ -165,9 +171,14 @@ export function duplicateNode(root: Node, id: string): Node {
     arr.splice(index + 1, 0, clone);
     p.children = arr;
   });
-}
+};
 
-export function moveChild(root: Node, parentId: string, index: number, dir: -1 | 1): Node {
+export const moveChild = (
+  root: Node,
+  parentId: string,
+  index: number,
+  dir: -1 | 1,
+): Node => {
   const { node: parent } = findNode(root, parentId);
   if (!parent) return root;
   const arr = childrenOf(parent.children);
@@ -178,9 +189,9 @@ export function moveChild(root: Node, parentId: string, index: number, dir: -1 |
   return updateNode(root, parentId, (p) => {
     p.children = arr;
   });
-}
+};
 
-export function ensureIds(node: Node): Node {
+export const ensureIds = (node: Node): Node => {
   const children = node.children;
   const nextChildren: LayoutChild[] | string | undefined =
     Array.isArray(children)
@@ -191,4 +202,4 @@ export function ensureIds(node: Node): Node {
     id: node.id ?? randomId(),
     children: nextChildren,
   };
-}
+};

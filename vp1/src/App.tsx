@@ -23,12 +23,12 @@ import { clearOverride, loadOverride, saveOverride } from "./editor/storage";
 import "./stylesheets/tailwind.css";
 import "./stylesheets/app.scss";
 
-function loadTreeFor(name: string): Node {
+const loadTreeFor = (name: string): Node => {
   const base = layouts[name];
   if (!base) throw new Error(`Unknown layout: ${name}`);
   const override = loadOverride(name);
   return ensureIds(override ?? base);
-}
+};
 
 const MIN_PANEL_WIDTH = 120;
 const DEFAULT_EDITOR_WIDTH = 200;
@@ -39,7 +39,7 @@ interface PanelWidths {
   config: number;
 }
 
-export default function App() {
+const App = () => {
   const [selectedLayout, setSelectedLayout] = useState<string>("");
   const [panels, setPanels] = useState<PanelWidths>({
     editor: DEFAULT_EDITOR_WIDTH,
@@ -269,4 +269,6 @@ export default function App() {
       )}
     </div>
   );
-}
+};
+
+export default App;

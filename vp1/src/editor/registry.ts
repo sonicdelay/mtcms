@@ -76,47 +76,43 @@ const TRACK_KINDS = [
   "metadata",
 ];
 
-function text(label = "Text"): ConfigField[] {
-  return [{ key: "children", label, kind: "textarea" }];
-}
+const text = (label = "Text"): ConfigField[] => [
+  { key: "children", label, kind: "textarea" },
+];
 
-function container(
+const container = (
   type: string,
   title: string,
   icon: IconName,
   group: PaletteGroupId,
   props: Partial<Node> = {},
   settings?: ConfigField[],
-): PaletteItem {
-  return {
-    type,
-    title,
-    icon,
-    group,
-    droppable: true,
-    defaultProps: () => ({ ...props }),
-    settings: settings ?? text(),
-  };
-}
+): PaletteItem => ({
+  type,
+  title,
+  icon,
+  group,
+  droppable: true,
+  defaultProps: () => ({ ...props }),
+  settings: settings ?? text(),
+});
 
-function leaf(
+const leaf = (
   type: string,
   title: string,
   icon: IconName,
   group: PaletteGroupId,
   props: Partial<Node> = {},
   settings?: ConfigField[],
-): PaletteItem {
-  return {
-    type,
-    title,
-    icon,
-    group,
-    droppable: false,
-    defaultProps: () => ({ ...props }),
-    settings: settings ?? text(),
-  };
-}
+): PaletteItem => ({
+  type,
+  title,
+  icon,
+  group,
+  droppable: false,
+  defaultProps: () => ({ ...props }),
+  settings: settings ?? text(),
+});
 
 const structural: ConfigField[] = [];
 
@@ -494,9 +490,9 @@ export const paletteGroups: PaletteGroup[] = Object.values(palette).reduce(
   [],
 );
 
-export function isDroppable(node: Node): boolean {
+export const isDroppable = (node: Node): boolean => {
   const item = palette[node.type];
   if (item?.droppable === true) return true;
   if (item?.droppable === false) return false;
   return Array.isArray(node.children);
-}
+};

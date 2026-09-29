@@ -9,7 +9,7 @@ interface WaveValueProps {
   [key: string]: any;
 }
 
-export default function WaveValue(props: WaveValueProps) {
+const WaveValue = (props: WaveValueProps) => {
   const { className, source = "sin", children, ...rest } = props;
   const value = useStoreValue(source);
 
@@ -19,4 +19,6 @@ export default function WaveValue(props: WaveValueProps) {
       {children}
     </div>
   );
-}
+};
+
+export default WaveValue;

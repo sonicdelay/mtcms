@@ -58,42 +58,34 @@ const iconProps = {
   strokeLinejoin: "round" as const,
 };
 
-function IconUndo() {
-  return (
-    <svg {...iconProps} aria-hidden="true">
-      <path d="M9 14 4 9l5-5" />
-      <path d="M20 20v-5a6 6 0 0 0-6-6H4" />
-    </svg>
-  );
-}
+const IconUndo = () => (
+  <svg {...iconProps} aria-hidden="true">
+    <path d="M9 14 4 9l5-5" />
+    <path d="M20 20v-5a6 6 0 0 0-6-6H4" />
+  </svg>
+);
 
-function IconRedo() {
-  return (
-    <svg {...iconProps} aria-hidden="true">
-      <path d="m15 14 5-5-5-5" />
-      <path d="M4 20v-5a6 6 0 0 1 6-6h10" />
-    </svg>
-  );
-}
+const IconRedo = () => (
+  <svg {...iconProps} aria-hidden="true">
+    <path d="m15 14 5-5-5-5" />
+    <path d="M4 20v-5a6 6 0 0 1 6-6h10" />
+  </svg>
+);
 
-function IconReset() {
-  return (
-    <svg {...iconProps} aria-hidden="true">
-      <path d="M3 12a9 9 0 1 0 3-6.7" />
-      <path d="M3 4v6h6" />
-    </svg>
-  );
-}
+const IconReset = () => (
+  <svg {...iconProps} aria-hidden="true">
+    <path d="M3 12a9 9 0 1 0 3-6.7" />
+    <path d="M3 4v6h6" />
+  </svg>
+);
 
-function IconExport() {
-  return (
-    <svg {...iconProps} aria-hidden="true">
-      <path d="M12 3v12" />
-      <path d="M7 11l5 5 5-5" />
-      <path d="M4 20h16" />
-    </svg>
-  );
-}
+const IconExport = () => (
+  <svg {...iconProps} aria-hidden="true">
+    <path d="M12 3v12" />
+    <path d="M7 11l5 5 5-5" />
+    <path d="M4 20h16" />
+  </svg>
+);
 
 const Editor = ({
   selectedLayout,

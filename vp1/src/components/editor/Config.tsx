@@ -33,74 +33,60 @@ const iconProps = {
   strokeLinejoin: "round" as const,
 };
 
-function IconArrowUp() {
-  return (
-    <svg {...iconProps} aria-hidden="true">
-      <path d="M12 19V5" />
-      <path d="M5 12l7-7 7 7" />
-    </svg>
-  );
-}
+const IconArrowUp = () => (
+  <svg {...iconProps} aria-hidden="true">
+    <path d="M12 19V5" />
+    <path d="M5 12l7-7 7 7" />
+  </svg>
+);
 
-function IconArrowDown() {
-  return (
-    <svg {...iconProps} aria-hidden="true">
-      <path d="M12 5v14" />
-      <path d="M19 12l-7 7-7-7" />
-    </svg>
-  );
-}
+const IconArrowDown = () => (
+  <svg {...iconProps} aria-hidden="true">
+    <path d="M12 5v14" />
+    <path d="M19 12l-7 7-7-7" />
+  </svg>
+);
 
-function IconCopy() {
-  return (
-    <svg {...iconProps} aria-hidden="true">
-      <rect x="9" y="9" width="12" height="12" rx="2" />
-      <path d="M5 15V5a2 2 0 0 1 2-2h8" />
-    </svg>
-  );
-}
+const IconCopy = () => (
+  <svg {...iconProps} aria-hidden="true">
+    <rect x="9" y="9" width="12" height="12" rx="2" />
+    <path d="M5 15V5a2 2 0 0 1 2-2h8" />
+  </svg>
+);
 
-function IconTrash() {
-  return (
-    <svg {...iconProps} aria-hidden="true">
-      <path d="M4 7h16" />
-      <path d="M10 11v6" />
-      <path d="M14 11v6" />
-      <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12" />
-      <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
-    </svg>
-  );
-}
+const IconTrash = () => (
+  <svg {...iconProps} aria-hidden="true">
+    <path d="M4 7h16" />
+    <path d="M10 11v6" />
+    <path d="M14 11v6" />
+    <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12" />
+    <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
+  </svg>
+);
 
-function IconCheck() {
-  return (
-    <svg {...iconProps} aria-hidden="true">
-      <path d="M20 6L9 17l-5-5" />
-    </svg>
-  );
-}
+const IconCheck = () => (
+  <svg {...iconProps} aria-hidden="true">
+    <path d="M20 6L9 17l-5-5" />
+  </svg>
+);
 
-function IconScreen() {
-  return (
-    <svg {...iconProps} aria-hidden="true">
-      <rect x="2" y="4" width="20" height="14" rx="2" />
-      <path d="M8 22h8" />
-      <path d="M12 18v4" />
-    </svg>
-  );
-}
+const IconScreen = () => (
+  <svg {...iconProps} aria-hidden="true">
+    <rect x="2" y="4" width="20" height="14" rx="2" />
+    <path d="M8 22h8" />
+    <path d="M12 18v4" />
+  </svg>
+);
 
-function IconChevron({ open }: { open: boolean }) {
-  return (
-    <svg
-      {...iconProps}
-      aria-hidden="true"
-      className={`transition-transform ${open ? "rotate-90" : ""}`}
-    >
-      <path d="M9 6l6 6-6 6" />
-    </svg>
-  );
-}
+const IconChevron = ({ open }: { open: boolean }) => (
+  <svg
+    {...iconProps}
+    aria-hidden="true"
+    className={`transition-transform ${open ? "rotate-90" : ""}`}
+  >
+    <path d="M9 6l6 6-6 6" />
+  </svg>
+);
 
 interface JsonSectionProps {
   label: string;
@@ -116,7 +102,7 @@ interface JsonSectionProps {
   buttonClass: string;
 }
 
-function JsonSection({
+const JsonSection = ({
   label,
   open,
   onToggle,
@@ -128,42 +114,40 @@ function JsonSection({
   applyIcon,
   inputClass,
   buttonClass,
-}: JsonSectionProps) {
-  return (
-    <div className="mt-2">
-      <button
-        type="button"
-        className="w-full flex items-center gap-1 text-sm text-left hover:text-white"
-        onClick={onToggle}
-        title={open ? `Collapse ${label}` : `Expand ${label}`}
-        aria-expanded={open}
-      >
-        <IconChevron open={open} />
-        {label}
-      </button>
-      {open && (
-        <div className="mt-1">
-          <textarea
-            className={inputClass}
-            rows={rows}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-          />
-          <button
-            className={`${buttonClass} mt-1`}
-            onClick={onApply}
-            title={applyTitle}
-            aria-label={applyTitle}
-          >
-            {applyIcon}
-          </button>
-        </div>
-      )}
-    </div>
-  );
-}
+}: JsonSectionProps) => (
+  <div className="mt-2">
+    <button
+      type="button"
+      className="w-full flex items-center gap-1 text-sm text-left hover:text-white"
+      onClick={onToggle}
+      title={open ? `Collapse ${label}` : `Expand ${label}`}
+      aria-expanded={open}
+    >
+      <IconChevron open={open} />
+      {label}
+    </button>
+    {open && (
+      <div className="mt-1">
+        <textarea
+          className={inputClass}
+          rows={rows}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+        <button
+          className={`${buttonClass} mt-1`}
+          onClick={onApply}
+          title={applyTitle}
+          aria-label={applyTitle}
+        >
+          {applyIcon}
+        </button>
+      </div>
+    )}
+  </div>
+);
 
-function FieldInput({ field, node, onPatch }: FieldProps) {
+const FieldInput = ({ field, node, onPatch }: FieldProps) => {
   const value = node[field.key];
   const baseClass =
     "w-full p-1 bg-gray-800 text-white border border-gray-600 rounded";
@@ -220,9 +204,9 @@ function FieldInput({ field, node, onPatch }: FieldProps) {
         />
       );
   }
-}
+};
 
-export default function Config({
+const Config = ({
   tree,
   selected,
   style,
@@ -234,7 +218,7 @@ export default function Config({
   onUpdate,
   onApplySelectedJson,
   onApplyTreeJson,
-}: ConfigProps) {
+}: ConfigProps) => {
   const [nodeJson, setNodeJson] = useState("");
   const [treeJson, setTreeJson] = useState("");
   const [nodeJsonOpen, setNodeJsonOpen] = useState(false);
@@ -370,4 +354,6 @@ export default function Config({
       {jsonError && <p className="text-red-400 text-xs mt-1">{jsonError}</p>}
     </div>
   );
-}
+};
+
+export default Config;

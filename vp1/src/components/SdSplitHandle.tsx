@@ -13,9 +13,13 @@ interface SdSplitHandleProps {
   onReset: () => void;
 }
 
-export default function SdSplitHandle(
-  { label, sign, orientation = "vertical", onResize, onReset }: SdSplitHandleProps,
-) {
+const SdSplitHandle = ({
+  label,
+  sign,
+  orientation = "vertical",
+  onResize,
+  onReset,
+}: SdSplitHandleProps) => {
   const [dragging, setDragging] = useState(false);
   const lastPos = useRef(0);
   const horizontal = orientation === "horizontal";
@@ -72,4 +76,6 @@ export default function SdSplitHandle(
       }`}
     />
   );
-}
+};
+
+export default SdSplitHandle;
