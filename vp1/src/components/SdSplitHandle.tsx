@@ -5,32 +5,41 @@ const KEYBOARD_STEP = 16;
 
 interface SdSplitHandleProps {
   label: string;
-  /** +1 when dragging right widens the panel, -1 when it narrows it */
+  /** +1 when dragging along the axis widens the first area, -1 when it narrows it */
   sign: 1 | -1;
-  onResize: (deltaX: number) => void;
+  /** "vertical" splits left/right areas, "horizontal" splits top/bottom ones. */
+  orientation?: "vertical" | "horizontal";
+  onResize: (delta: number) => void;
   onReset: () => void;
 }
 
 export default function SdSplitHandle(
-  { label, sign, onResize, onReset }: SdSplitHandleProps,
+  { label, sign, orientation = "vertical", onResize, onReset }: SdSplitHandleProps,
 ) {
   const [dragging, setDragging] = useState(false);
-  const lastX = useRef(0);
+  const lastPos = useRef(0);
+  const horizontal = orientation === "horizontal";
+  const cursor = horizontal ? "row-resize" : "col-resize";
+  const plusKey = horizontal ? "ArrowDown" : "ArrowRight";
+  const minusKey = horizontal ? "ArrowUp" : "ArrowLeft";
 
   useEffect(() => {
     if (!dragging) return;
     document.body.style.userSelect = "none";
-    document.body.style.cursor = "col-resize";
+    document.body.style.cursor = cursor;
     return () => {
       document.body.style.userSelect = "";
       document.body.style.cursor = "";
     };
-  }, [dragging]);
+  }, [dragging, cursor]);
+
+  const positionOf = (event: React.PointerEvent<HTMLElement>) =>
+    horizontal ? event.clientY : event.clientX;
 
   return (
     <div
       role="separator"
-      aria-orientation="vertical"
+      aria-orientation={horizontal ? "horizontal" : "vertical"}
       aria-label={label}
       title="Drag to resize, double-click to reset"
       tabIndex={0}
@@ -38,13 +47,14 @@ export default function SdSplitHandle(
       onPointerDown={(event) => {
         event.preventDefault();
         event.currentTarget.setPointerCapture(event.pointerId);
-        lastX.current = event.clientX;
+        lastPos.current = positionOf(event);
         setDragging(true);
       }}
       onPointerMove={(event) => {
         if (!dragging) return;
-        const delta = event.clientX - lastX.current;
-        lastX.current = event.clientX;
+        const pos = positionOf(event);
+        const delta = pos - lastPos.current;
+        lastPos.current = pos;
         if (delta !== 0) onResize(sign * delta);
       }}
       onPointerUp={() => setDragging(false)}
@@ -52,14 +62,14 @@ export default function SdSplitHandle(
       onLostPointerCapture={() => setDragging(false)}
       onDoubleClick={onReset}
       onKeyDown={(event) => {
-        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+        if (event.key !== plusKey && event.key !== minusKey) return;
         event.preventDefault();
-        onResize(
-          sign * (event.key === "ArrowRight" ? KEYBOARD_STEP : -KEYBOARD_STEP),
-        );
+        onResize(sign * (event.key === plusKey ? KEYBOARD_STEP : -KEYBOARD_STEP));
       }}
-      style={{ width: HANDLE_WIDTH }}
-      className="shrink-0 touch-none select-none cursor-col-resize bg-gray-800 hover:bg-teal-600 focus:bg-teal-600 data-[dragging=true]:bg-teal-500"
+      style={horizontal ? { height: HANDLE_WIDTH } : { width: HANDLE_WIDTH }}
+      className={`shrink-0 touch-none select-none bg-gray-800 hover:bg-teal-600 focus:bg-teal-600 data-[dragging=true]:bg-teal-500 ${
+        horizontal ? "cursor-row-resize" : "cursor-col-resize"
+      }`}
     />
   );
 }

@@ -60,6 +60,8 @@ interface ItemElementProps {
 interface SdTreeProps {
   data?: TreeItem | (TreeItem | string)[] | string | null;
   children?: ReactNode | TreeItemTemplate;
+  /** Renders a leading icon per item, before its template content. */
+  renderIcon?: (item: TreeItem, state: TreeItemState) => ReactNode;
   className?: string;
   selectedId?: string;
   onSelect?: (item: TreeItem, key: string) => void;
@@ -109,6 +111,7 @@ const defaultTemplate: TreeItemTemplate = (item) => <li>{titleOf(item)}</li>;
 const SdTree = ({
   data,
   children,
+  renderIcon,
   className,
   selectedId,
   onSelect,
@@ -298,8 +301,13 @@ const SdTree = ({
       <span className="Tree-twisty Tree-twisty-empty" />
     );
 
+    const iconNode = renderIcon?.(item, state);
+    const leading = iconNode ? (
+      <span className="Tree-icon">{iconNode}</span>
+    ) : null;
+
     const group = isExpanded ? (
-      <ul role="group" className="Tree-group">
+      <ul role="group" className="Tree-group" style={{ paddingLeft: INDENT }}>
         {kids.map((child, index) =>
           renderItem(child, keyOf(child, `${key}.${index}`), depth + 1),
         )}
@@ -320,7 +328,6 @@ const SdTree = ({
       ]
         .filter(Boolean)
         .join(" "),
-      style: { paddingLeft: depth * INDENT },
     };
 
     const rendered = template(item, state);
@@ -402,7 +409,6 @@ const SdTree = ({
           className: [itemProps.className, element.props.className]
             .filter(Boolean)
             .join(" "),
-          style: { ...element.props.style, paddingLeft: depth * INDENT },
           onClick: (e: MouseEvent<HTMLElement>) => {
             element.props.onClick?.(e);
             if (e.defaultPrevented) return;
@@ -410,6 +416,7 @@ const SdTree = ({
           },
         },
         <Fragment key="twisty">{twisty}</Fragment>,
+        <Fragment key="icon">{leading}</Fragment>,
         <Fragment key="content">{element.props.children}</Fragment>,
         <Fragment key="group">{group}</Fragment>,
       );
@@ -418,6 +425,7 @@ const SdTree = ({
     return (
       <li key={key} {...itemProps} {...dragHandlers} onClick={activate}>
         {twisty}
+        {leading}
         {rendered}
         {group}
       </li>

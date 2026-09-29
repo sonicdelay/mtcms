@@ -1,4 +1,4 @@
-import { type CSSProperties, useEffect, useState } from "react";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { layouts, loadLayouts } from "../../layoutTree";
 import type { Node } from "../../types";
 import { palette, paletteGroups } from "../../editor/registry";
@@ -11,6 +11,9 @@ import SdTree, {
 import { isDroppable } from "../../editor/registry";
 import { sdButtonObject } from "../SdButton";
 import SdSplitHandle from "../SdSplitHandle";
+
+const DEFAULT_TREE_SHARE = 0.5;
+const MIN_TREE_SHARE = 0.15;
 
 interface EditorProps {
   selectedLayout: string;
@@ -82,6 +85,16 @@ function IconReset() {
   );
 }
 
+function IconExport() {
+  return (
+    <svg {...iconProps} aria-hidden="true">
+      <path d="M12 3v12" />
+      <path d="M7 11l5 5 5-5" />
+      <path d="M4 20h16" />
+    </svg>
+  );
+}
+
 const Editor = ({
   selectedLayout,
   onLayoutChange,
@@ -99,6 +112,18 @@ const Editor = ({
   const [handlerCount, setHandlerCount] = useState(0);
   const [handlers, setHandlers] = useState(() => globalThis.sd.listHandlers());
   const [layoutNames, setLayoutNames] = useState<string[]>([]);
+  const [treeShare, setTreeShare] = useState(DEFAULT_TREE_SHARE);
+  const columnRef = useRef<HTMLDivElement>(null);
+
+  const resizeTree = (deltaY: number) => {
+    const height = columnRef.current?.clientHeight;
+    if (!height) return;
+    setTreeShare((prev) => {
+      const next = prev + deltaY / height;
+      const clamped = Math.min(1 - MIN_TREE_SHARE, Math.max(MIN_TREE_SHARE, next));
+      return Math.abs(clamped - prev) < 0.001 ? prev : clamped;
+    });
+  };
 
   const refreshHandlers = () => {
     setHandlerCount(globalThis.sd.getHandlerCount());
@@ -115,6 +140,21 @@ const Editor = ({
     globalThis.sd.removeHandler();
   };
 
+  const exportModel = () => {
+    if (!tree) return;
+    const blob = new Blob([JSON.stringify(tree, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${selectedLayout || "layout"}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
+
   useEffect(() => {
     globalThis.sd.resetHandlerState();
     refreshHandlers();
@@ -123,12 +163,13 @@ const Editor = ({
 
   return (
     <div
+      ref={columnRef}
       className="Editor bg-gray-700 border-none flex h-full min-h-0 flex-col"
       style={style}
     >
-      <div className="shrink-0">
+      <div className="flex shrink-0 items-center gap-1">
         <select
-          className="w-full p-1 bg-gray-800 text-white border border-gray-600 rounded"
+          className="min-w-0 flex-1 rounded border border-gray-600 bg-gray-800 p-1 text-white"
           value={selectedLayout}
           onChange={(event) => onLayoutChange(event.target.value)}
         >
@@ -136,6 +177,16 @@ const Editor = ({
             <option key={name} value={name}>{name}</option>
           ))}
         </select>
+        <button
+          type="button"
+          onClick={exportModel}
+          disabled={!tree}
+          aria-label="Export model"
+          title={`Export ${selectedLayout || "layout"} as JSON`}
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-gray-600 bg-gray-800 p-1 text-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <IconExport />
+        </button>
         {
           /* <h3>Editor (F8)</h3>
         <button onClick={() => sendAction("button_click", "Button clicked!")}>
@@ -192,7 +243,9 @@ const Editor = ({
         }
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col border-t border-white/20">
+      <div className="flex min-h-0 flex-col overflow-hidden border-t border-white/20"
+        style={{ flexBasis: `${treeShare * 100}%`, flexGrow: 0, flexShrink: 0 }}
+      >
         {/* <label className="block text-sm bg-gray-700">Layout Tree</label> */}
         <div className="min-h-0 flex-1 overflow-auto">
           {tree
@@ -211,6 +264,11 @@ const Editor = ({
                 }}
                 canDropInside={(item) =>
                   typeof item.type === "string" && isDroppable(item as Node)}
+                renderIcon={(item) => {
+                  const type = typeof item.type === "string" ? item.type : "";
+                  const name = palette[type]?.icon;
+                  return name ? icons[name]() : null;
+                }}
               >
                 {(item: TreeItem, state: TreeItemState) => (
                   <li
@@ -218,9 +276,9 @@ const Editor = ({
                       ? "text-yellow-200"
                       : "text-gray-300"}
                   >
-                    <span className="truncate">{labelOf(item)}</span>
+                    <span className="align-middle">{labelOf(item)}</span>
                     {shortId(item) && (
-                      <span className="text-gray-500 text-[10px] ml-1">
+                      <span className="ml-1 align-middle text-[10px] text-gray-500">
                         {shortId(item)}
                       </span>
                     )}
@@ -232,12 +290,13 @@ const Editor = ({
         </div>
       </div>
       <SdSplitHandle
-        label="Resize panel"
+        label="Resize tree and component list"
         sign={1}
-        onResize={() => {}}
-        onReset={() => {}}
+        orientation="horizontal"
+        onResize={resizeTree}
+        onReset={() => setTreeShare(DEFAULT_TREE_SHARE)}
       />
-      <div className="flex min-h-0 flex-1 flex-col ">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
         <div className="min-h-0 flex-1 overflow-auto py-1">
           {paletteGroups.map((group) => (
             <div key={group.id} className="mb-1">

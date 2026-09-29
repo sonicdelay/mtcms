@@ -1,7 +1,29 @@
 import type { LayoutChild, Node } from "../layoutTypes";
 
+const webCrypto = typeof crypto !== "undefined" ? crypto : undefined;
+
+export function randomId(): string {
+  if (typeof webCrypto?.randomUUID === "function") return webCrypto.randomUUID();
+  const bytes = new Uint8Array(16);
+  if (typeof webCrypto?.getRandomValues === "function") {
+    webCrypto.getRandomValues(bytes);
+  } else {
+    for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+  }
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const hex = Array.from(bytes, (b) => b.toString(16).padStart(2, "0"));
+  return [
+    hex.slice(0, 4).join(""),
+    hex.slice(4, 6).join(""),
+    hex.slice(6, 8).join(""),
+    hex.slice(8, 10).join(""),
+    hex.slice(10, 16).join(""),
+  ].join("-");
+}
+
 export function createNode(type: string, defaults: Partial<Node> = {}): Node {
-  return { id: crypto.randomUUID(), type, ...defaults };
+  return { id: randomId(), type, ...defaults };
 }
 
 export function childrenOf(children: LayoutChild[] | string | undefined): LayoutChild[] {
@@ -129,7 +151,7 @@ export function deleteNode(root: Node, id: string): Node {
 function cloneWithNewIds(n: Node): Node {
   return {
     ...n,
-    id: crypto.randomUUID(),
+    id: randomId(),
     children: childrenOf(n.children).map((c) => (typeof c === "string" ? c : cloneWithNewIds(c))),
   };
 }
@@ -166,7 +188,7 @@ export function ensureIds(node: Node): Node {
       : children;
   return {
     ...node,
-    id: node.id ?? crypto.randomUUID(),
+    id: node.id ?? randomId(),
     children: nextChildren,
   };
 }
