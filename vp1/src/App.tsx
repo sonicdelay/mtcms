@@ -4,7 +4,7 @@ import type { Node } from "./types";
 import renderNode from "./renderNode";
 import { renderEditable, useDragDrop } from "./editor/dragDrop";
 import { useWaveStore } from "./store";
-import Editor from "./components/editor/Editor";
+import Editor, { type EditorEvent } from "./components/editor/Editor";
 import Config from "./components/editor/Config";
 import SdSplitHandle, { HANDLE_WIDTH } from "./components/SdSplitHandle";
 import { useHistory } from "./editor/History";
@@ -205,8 +205,27 @@ const App = () => {
   const resizeConfig = (deltaX: number) =>
     setPanelWidths({ config: panels.config + deltaX });
 
-  const handleEditorEvents = (...args: unknown[]) => {
-    console.log("Editor event:", ...args);
+  const handleEditorEvent = (event: EditorEvent) => {
+    switch (event.type) {
+      case "layoutChange":
+        handleLayoutChange(event.payload);
+        break;
+      case "selectNode":
+        select(event.payload);
+        break;
+      case "moveNode":
+        moveNodeInTree(event.payload.dragId, event.payload.target);
+        break;
+      case "undo":
+        undo();
+        break;
+      case "redo":
+        redo();
+        break;
+      case "resetLayout":
+        resetLayout();
+        break;
+    }
   };
 
   return (
@@ -214,19 +233,13 @@ const App = () => {
       {edit && (
         <>
           <Editor
-            onEvent={handleEditorEvents}
+            onEvent={handleEditorEvent}
             selectedLayout={selectedLayout}
-            onLayoutChange={handleLayoutChange}
             style={{ width: panels.editor }}
             tree={tree}
             selectedId={selectedId}
-            onSelectNode={select}
-            onMoveNode={moveNodeInTree}
             canUndo={canUndo}
             canRedo={canRedo}
-            onUndo={undo}
-            onRedo={redo}
-            onResetLayout={resetLayout}
           />
           <SdSplitHandle
             label="Resize editor panel"
