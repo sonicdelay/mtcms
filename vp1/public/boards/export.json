@@ -1,0 +1,168 @@
+{
+  "type": "SdPane",
+  "className": "flex flex-col flex-1 border-red-400 border-40",
+  "children": [
+    {
+      "type": "SdPane",
+      "className": "flex flex-col bg-gray-900",
+      "children": [
+        {
+          "type": "h1",
+          "className": "box-border flex flex-1 items-center justify-center p-4 h-16 text-3xl font-bold text-cyan-800",
+          "children": "Simple Wave Monitor",
+          "id": "6adcd131-ac60-4fca-b701-d6b6b86a04c0"
+        },
+        {
+          "type": "img",
+          "style": {
+            "border": "var(--border-width) solid var(--border-color)",
+            "borderRadius": "var(--border-radius)",
+            "backgroundColor": "var(--panel-background)",
+            "height": "200px",
+            "width": "300px"
+          },
+          "src": "public/images/engine.jpg",
+          "alt": "Logo",
+          "id": "4cd8cefc-725d-48ca-9ea8-f0e68fc10e53"
+        }
+      ],
+      "id": "ff49ad7c-3a73-407c-9ea0-1a6cb8446423"
+    },
+    {
+      "type": "SdPane",
+      "className": "flex flex-row bg-gray-800 items-center justify-center flex-wrap overflow-auto",
+      "children": [
+        {
+          "type": "SdWave",
+          "title": "Cos Wave",
+          "source": "cos",
+          "className": "border border-gray-300",
+          "id": "25fb40bc-246f-4d5e-87c8-5b6b6d517172"
+        },
+        {
+          "type": "SdWave",
+          "title": "Sin Wave",
+          "source": "sin",
+          "className": "border border-gray-300",
+          "id": "6ca0a4c5-1600-45ed-a4c7-3c1f66fcec34"
+        },
+        {
+          "type": "SdGauge",
+          "title": "Cos Wave",
+          "source": "cos",
+          "min": -1,
+          "max": 1,
+          "className": "text-center m-4",
+          "id": "78aee6b4-619b-4d36-9a42-2110c9ad995c"
+        },
+        {
+          "type": "SdGauge",
+          "title": "Sin Wave",
+          "source": "sin",
+          "min": -1,
+          "max": 1,
+          "className": "text-center m-4",
+          "id": "6586fc44-db43-4d8d-8269-d09b87e1be9d"
+        },
+        {
+          "type": "SdGauge",
+          "title": "Cos Wave",
+          "source": "cos",
+          "min": -1,
+          "max": 1,
+          "className": "text-center m-4",
+          "id": "dc6b01f9-ce6d-4df9-93f6-26eb64d2420c"
+        },
+        {
+          "type": "SdGauge",
+          "title": "Sin Wave 2",
+          "source": "sin",
+          "min": -2,
+          "max": 2,
+          "className": "text-center m-4",
+          "id": "7dbe296b-b60e-4695-b4e0-8cab222909d3"
+        },
+        {
+          "type": "SdGauge",
+          "title": "Cos Wave",
+          "source": "cos",
+          "min": -1,
+          "max": 1,
+          "className": "text-center m-4",
+          "id": "1b79548c-8c40-4b52-a9a2-94d7b701721e"
+        },
+        {
+          "type": "SdGauge",
+          "title": "Sin Wave",
+          "source": "sin",
+          "min": -1,
+          "max": 1,
+          "className": "text-center m-4",
+          "id": "74b124c0-edf7-4545-8146-204896ff0bf1"
+        },
+        {
+          "type": "SdGauge",
+          "title": "Cos Wave",
+          "source": "cos",
+          "min": -1,
+          "max": 1,
+          "className": "text-center m-4",
+          "id": "3019f706-a3e6-42fc-850c-e3c549456977"
+        },
+        {
+          "type": "SdGauge",
+          "title": "Sin Wave",
+          "source": "sin",
+          "min": -1,
+          "max": 1,
+          "className": "text-center m-4",
+          "id": "2e9af1af-475a-41b7-adba-bfb708b2338e"
+        }
+      ],
+      "id": "439ce7e9-3163-48ed-b004-8aa96ef6d4d8"
+    },
+    {
+      "type": "SdPane",
+      "className": "box-border flex flex-1 flex-row bg-gray-800",
+      "children": [
+        {
+          "type": "SdWaveBar",
+          "title": "Sin Wave",
+          "source": "sin",
+          "className": "flex-1",
+          "id": "32434ecd-6932-472e-a8d9-103fcd82fb3a"
+        },
+        {
+          "type": "SdWaveBar",
+          "title": "Cos Wave",
+          "source": "cos",
+          "className": "flex-1",
+          "id": "046a4a7b-7d43-401c-a05f-187fa793d9db"
+        },
+        {
+          "type": "SdPane",
+          "className": "box-border flex flex-1 flex-row bg-gray-900",
+          "children": [
+            {
+              "type": "SdWaveValue",
+              "title": "Data 0",
+              "source": "data.0",
+              "className": "text-sm text-green-200",
+              "id": "65a5e626-3d14-40dd-87f0-1da571dab9fa"
+            },
+            {
+              "type": "SdWaveValue",
+              "title": "Data 1",
+              "source": "data.1",
+              "className": "text-sm text-green-200",
+              "id": "9343a218-65bb-4cfb-9395-111a99640518"
+            }
+          ],
+          "id": "ea046fa0-a365-4cf2-b027-c8ddd742b87e"
+        }
+      ],
+      "id": "4eff5f7b-7217-4459-89d3-c7cccc6a8df2"
+    }
+  ],
+  "id": "92b032f1-ca3b-4aa4-be8f-dd7a19b10602"
+}

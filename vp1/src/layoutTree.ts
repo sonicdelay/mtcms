@@ -1,6 +1,6 @@
 import type { Node } from "./types.ts";
 
-const BOARD_NAMES = ["empty.json", "layoutTree.json", "layoutTree2.json"];
+const BOARD_NAMES = ["empty.json", "layoutTree.json", "layoutTree2.json", "export.json"];
 
 export const layouts: Record<string, Node> = {};
 
