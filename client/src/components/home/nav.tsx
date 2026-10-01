@@ -19,6 +19,7 @@ export default function Nav() {
   const links = [
     { href: "/home", label: t("nav.home") },
     { href: "/home/articles", label: t("nav.articles") },
+    { href: "/dashboard", label: t("nav.dashboard") },
     { href: "/home/content/engine", label: t("nav.engine") },
     { href: "/home/content/about", label: t("nav.about") },
     { href: "/home/content/contact", label: t("nav.contact") },

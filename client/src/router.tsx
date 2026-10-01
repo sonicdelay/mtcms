@@ -33,6 +33,13 @@ export const router = createBrowserRouter([
         }),
       },
       {
+        path: "dashboard",
+        lazy: async () => ({
+          Component:
+            (await import("./routes/dashboard/dashboard-layout")).default,
+        }),
+      },
+      {
         path: "admin",
         lazy: async () => ({
           Component: (await import("./routes/admin/admin-layout")).default,
