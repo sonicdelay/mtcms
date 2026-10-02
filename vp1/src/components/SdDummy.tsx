@@ -55,8 +55,8 @@ const SdDummy = (props: SdDummyProps) => {
   const display = Array.isArray(value)
     ? value.join(", ")
     : typeof value === "object"
-      ? JSON.stringify(value)
-      : value;
+    ? JSON.stringify(value)
+    : value;
 
   return (
     <div
@@ -67,11 +67,9 @@ const SdDummy = (props: SdDummyProps) => {
     >
       {settings.title && <h2>{settings.title}</h2>}
       {settings.label && <p>{settings.label}</p>}
-      {children ? (
-        <div className="Dummy-children">{children}</div>
-      ) : (
-        <span className="Dummy-value">{display}</span>
-      )}
+      {children
+        ? <div className="Dummy-children">{children}</div>
+        : <span className="Dummy-value">{display}</span>}
     </div>
   );
 };
