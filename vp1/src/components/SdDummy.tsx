@@ -17,7 +17,8 @@ import type { ComponentProps } from "../models/component-props";
  * A generic passthrough component. It:
  *   - accepts `value` (string/object/array) and a `config` object,
  *     both with defaults that are overridden by the inputs;
- *   - forwards `eventIn` to `onEvent` once;
+ *   - forwards `eventIn` to `onEvent` once, or to the `config.actions`
+ *     handler whose key matches the event's type;
  *   - captures `{type, payload}` events emitted by nested children and
  *     re-routes them through its own `onEvent` (failsafe);
  *   - renders `children` when provided, otherwise a formatted `value`.
@@ -34,7 +35,6 @@ export type SdDummyAction = (event: ComponentEvent) => void;
 
 export interface SdDummyConfig {
   title?: string;
-  label?: string;
   /** Maps `eventIn.type` to the function that should handle that event. */
   actions?: Record<string, SdDummyAction>;
   [key: string]: unknown;
@@ -46,7 +46,14 @@ export interface SdDummyConfig {
 
 const DEFAULT_CONFIG: SdDummyConfig = {
   title: "Dummy",
-  label: "Default label",
+  actions: {
+    "test": (...args: any[]) => {
+      console.log("SdDummy: test action received event", args[0]);
+    },
+    "test2": (...args: any[]) => {
+      alert("SdDummy: test2 action received event " + JSON.stringify(args[0]));
+    },
+  },
 };
 
 const DEFAULT_VALUE: SdDummyValue = "default value";
@@ -143,8 +150,34 @@ const format = (value: SdDummyValue) =>
   Array.isArray(value)
     ? value.join(", ")
     : typeof value === "object"
-    ? JSON.stringify(value)
-    : value;
+      ? JSON.stringify(value)
+      : value;
+
+// ---------------------------------------------------------------------------
+// Variants
+// ---------------------------------------------------------------------------
+// SdDummy has two shapes: "nested" (renders its captured children) and "leaf"
+// (renders a formatted value). Splitting them keeps each branch small and
+// lets the outer component simply delegate.
+
+interface SdDummyNestedProps {
+  children: ReactNode;
+  onEvent?: EventHandler;
+}
+
+/** Nested variant: renders children and routes their events to onEvent. */
+const SdDummyNested = ({ children, onEvent }: SdDummyNestedProps) => (
+  <div className="Dummy-children">{capture(children, onEvent)}</div>
+);
+
+interface SdDummyLeafProps {
+  value: SdDummyValue;
+}
+
+/** Leaf variant: renders the value as a formatted string. */
+const SdDummyLeaf = ({ value }: SdDummyLeafProps) => (
+  <span className="Dummy-value">{format(value)}</span>
+);
 
 // ---------------------------------------------------------------------------
 // Component
@@ -153,7 +186,7 @@ const format = (value: SdDummyValue) =>
 const SdDummy = (props: SdDummyProps) => {
   const { value, config, eventIn, onEvent, children, ...rest } = props;
 
-// Resolve inputs against their defaults.
+  // Resolve inputs against their defaults.
   const settings = { ...DEFAULT_CONFIG, ...config };
   const resolvedValue = value ?? DEFAULT_VALUE;
 
@@ -195,10 +228,9 @@ const SdDummy = (props: SdDummyProps) => {
         onEvent?.({ type: "change", payload: { value: resolvedValue } })}
     >
       {settings.title && <h2>{settings.title}</h2>}
-      {settings.label && <p>{settings.label}</p>}
       {children
-        ? <div className="Dummy-children">{capture(children, onEvent)}</div>
-        : <span className="Dummy-value">{format(resolvedValue)}</span>}
+        ? <SdDummyNested children={children} onEvent={onEvent} />
+        : <SdDummyLeaf value={resolvedValue} />}
     </div>
   );
 };

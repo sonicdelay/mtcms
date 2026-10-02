@@ -376,6 +376,17 @@ const Config = ({
       >
         Test
       </button>
+      <button
+        className={buttonClass}
+        onClick={() => {
+          console.log("Button clicked");
+          setDummyEvent({ type: "test2", payload: { value: "WTF !!!" } });
+        }}
+        title="Test Button"
+        aria-label="Test Button"
+      >
+        Test2
+      </button>
     </div>
   );
 };
