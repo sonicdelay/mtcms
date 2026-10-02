@@ -1,4 +1,11 @@
-import { type ReactNode, useEffect, useRef } from "react";
+import {
+  cloneElement,
+  isValidElement,
+  type ReactElement,
+  type ReactNode,
+  useEffect,
+  useRef,
+} from "react";
 import type { ComponentEvent } from "../models/component-event";
 import type { ComponentProps } from "../models/component-props";
 
@@ -25,6 +32,27 @@ interface SdDummyProps extends ComponentProps<SdDummyValue, SdDummyConfig> {
   children?: ReactNode;
   [key: string]: any;
 }
+
+type EventSink = (event: ComponentEvent) => void;
+
+const captureChild = (node: ReactNode, sink: EventSink): ReactNode => {
+  if (!isValidElement(node)) return node;
+  const element = node as ReactElement<ComponentProps>;
+  const original = element.props.onEvent;
+  const wrapped: EventSink = (event) => {
+    if (original && original !== sink) original(event);
+    sink(event);
+  };
+  return cloneElement(element, {
+    onEvent: wrapped,
+    children: captureChildren(element.props.children as ReactNode | undefined, sink),
+  });
+};
+
+const captureChildren = (children: ReactNode, sink: EventSink): ReactNode => {
+  if (Array.isArray(children)) return children.map((child) => captureChild(child, sink));
+  return captureChild(children, sink);
+};
 
 const SdDummy = (props: SdDummyProps) => {
   const { value, config, eventIn, onEvent, children, ...rest } = props;
@@ -68,7 +96,7 @@ const SdDummy = (props: SdDummyProps) => {
       {settings.title && <h2>{settings.title}</h2>}
       {settings.label && <p>{settings.label}</p>}
       {children
-        ? <div className="Dummy-children">{children}</div>
+        ? <div className="Dummy-children">{captureChildren(children, (event) => onEvent?.(event))}</div>
         : <span className="Dummy-value">{display}</span>}
     </div>
   );
