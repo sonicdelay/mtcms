@@ -1,6 +1,8 @@
 import { type CSSProperties, type ReactNode, useEffect, useState } from "react";
 import type { Node } from "../../types";
 import { type ConfigField, palette } from "../../editor/registry";
+import SdDummy from "../SdDummy";
+import type { ComponentEvent } from "../../models/component-event";
 
 interface ConfigProps {
   tree: Node;
@@ -224,6 +226,7 @@ const Config = ({
   const [nodeJsonOpen, setNodeJsonOpen] = useState(false);
   const [treeJsonOpen, setTreeJsonOpen] = useState(false);
   const [jsonError, setJsonError] = useState<string | undefined>(undefined);
+  const [dummyEvent, setDummyEvent] = useState<ComponentEvent>();
 
   useEffect(() => {
     setNodeJson(selected ? JSON.stringify(selected, null, 2) : "");
@@ -352,6 +355,27 @@ const Config = ({
         buttonClass={buttonClass}
       />
       {jsonError && <p className="text-red-400 text-xs mt-1">{jsonError}</p>}
+
+      <SdDummy
+        value="someValue"
+        config={{ type: "experimental" }}
+        eventIn={dummyEvent}
+        onEvent={(e) => console.log("Event triggered", e)}
+        className="border-2"
+      >
+        <span>Hallo Welt</span>
+      </SdDummy>
+      <button
+        className={buttonClass}
+        onClick={() => {
+          console.log("Button clicked");
+          setDummyEvent({ type: "test", payload: { value: "someValue" } });
+        }}
+        title="Test Button"
+        aria-label="Test Button"
+      >
+        Test
+      </button>
     </div>
   );
 };

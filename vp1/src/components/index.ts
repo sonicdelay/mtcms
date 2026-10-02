@@ -8,6 +8,7 @@ import SdWaveValue from "./SdWaveValue";
 import SdGauge from "./SdGauge";
 import SdText from "./SdText";
 import SdButton from "./SdButton";
+import SdDummy from "./SdDummy";
 
 export const components: Record<string, React.ElementType> = {
   SdPane,
@@ -18,4 +19,5 @@ export const components: Record<string, React.ElementType> = {
   SdGauge,
   SdText,
   SdButton,
+  SdDummy,
 };
