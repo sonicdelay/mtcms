@@ -126,6 +126,15 @@ export const palette: Record<string, PaletteItem> = {
     defaultProps: () => ({ className: "flex flex-row" }),
     settings: [],
   },
+  SdDummy: {
+    type: "SdDummy",
+    title: "Dummy",
+    icon: "box",
+    group: "components",
+    droppable: true,
+    defaultProps: () => ({ value: "default value" }),
+    settings: [{ key: "value", label: "Value", kind: "textarea" }],
+  },
   SdWave: {
     type: "SdWave",
     title: "Wave",

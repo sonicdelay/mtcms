@@ -2,7 +2,7 @@ import { type ReactNode, useEffect, useRef } from "react";
 import type { ComponentEvent } from "../models/component-event";
 import type { ComponentProps } from "../models/component-props";
 
-export type SdDummyData = string | Record<string, unknown> | unknown[];
+export type SdDummyValue = string | Record<string, unknown> | unknown[];
 
 export interface SdDummyConfig {
   title?: string;
@@ -15,10 +15,10 @@ const DEFAULT_CONFIG: SdDummyConfig = {
   label: "Default label",
 };
 
-const DEFAULT_DATA: SdDummyData = "default data";
+const DEFAULT_VALUE: SdDummyValue = "default value";
 
-interface SdDummyProps extends ComponentProps<SdDummyData, SdDummyConfig> {
-  data?: SdDummyData;
+interface SdDummyProps extends ComponentProps<SdDummyValue, SdDummyConfig> {
+  value?: SdDummyValue;
   config?: SdDummyConfig;
   eventIn?: ComponentEvent;
   onEvent?: (event: ComponentEvent) => void;
@@ -27,8 +27,8 @@ interface SdDummyProps extends ComponentProps<SdDummyData, SdDummyConfig> {
 }
 
 const SdDummy = (props: SdDummyProps) => {
-  const { data, config, eventIn, onEvent, children, ...rest } = props;
-  const lastEvent = useRef<ComponentEvent>();
+  const { value, config, eventIn, onEvent, children, ...rest } = props;
+  const lastEvent = useRef<ComponentEvent | undefined>(undefined);
 
   useEffect(() => {
     if (!eventIn || lastEvent.current === eventIn) return;
@@ -36,34 +36,34 @@ const SdDummy = (props: SdDummyProps) => {
     onEvent?.(eventIn);
   }, [eventIn, onEvent]);
 
-  const value: SdDummyData = data ?? DEFAULT_DATA;
+  const resolvedValue: SdDummyValue = value ?? DEFAULT_VALUE;
   const settings: SdDummyConfig = { ...DEFAULT_CONFIG, ...config };
 
   const emit = (type: string, payload: Record<string, unknown> = {}) => {
     onEvent?.({ type, payload });
   };
 
-  const handleChange = (next: SdDummyData) => {
+  const handleChange = (next: SdDummyValue) => {
     emit("change", { value: next });
   };
 
   const handleClick = () => {
     if (typeof rest.onClick === "function") rest.onClick();
-    emit("click", { value });
+    emit("click", { value: resolvedValue });
   };
 
-  const display = Array.isArray(value)
-    ? value.join(", ")
-    : typeof value === "object"
-    ? JSON.stringify(value)
-    : value;
+  const display = Array.isArray(resolvedValue)
+    ? resolvedValue.join(", ")
+    : typeof resolvedValue === "object"
+    ? JSON.stringify(resolvedValue)
+    : resolvedValue;
 
   return (
     <div
       {...rest}
       className={["Dummy", rest.className].filter(Boolean).join(" ")}
       onClick={handleClick}
-      onInput={() => handleChange(value)}
+      onInput={() => handleChange(resolvedValue)}
     >
       {settings.title && <h2>{settings.title}</h2>}
       {settings.label && <p>{settings.label}</p>}

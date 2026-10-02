@@ -125,24 +125,24 @@ export const useDragDrop = (
 
   const canvasProps: CanvasProps = tree
     ? {
-        onClick: () => select(undefined),
-        onDragOver: active
-          ? (e) => {
-              e.preventDefault();
-              setDropTarget(tree.id, childrenOf(tree.children).length);
-            }
-          : undefined,
-        onDragLeave: active
-          ? (e) => {
-              if (!e.currentTarget.contains(e.relatedTarget as Element | null)) {
-                setDropTarget(undefined);
-              }
-            }
-          : undefined,
-        onDrop: active
-          ? (e) => dropNode(tree.id ?? "", e, childrenOf(tree.children).length)
-          : undefined,
-      }
+      onClick: () => select(undefined),
+      onDragOver: active
+        ? (e) => {
+          e.preventDefault();
+          setDropTarget(tree.id, childrenOf(tree.children).length);
+        }
+        : undefined,
+      onDragLeave: active
+        ? (e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Element | null)) {
+            setDropTarget(undefined);
+          }
+        }
+        : undefined,
+      onDrop: active
+        ? (e) => dropNode(tree.id ?? "", e, childrenOf(tree.children).length)
+        : undefined,
+    }
     : { onClick: () => select(undefined) };
 
   return { selectedId, select, editCtx, canvasProps, reset };

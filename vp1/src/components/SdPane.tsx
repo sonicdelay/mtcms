@@ -3,9 +3,9 @@ import type { SdProps } from "../types";
 
 interface SdPaneProps extends SdProps {
   data?: string;
-  className?: string;
   children?: React.ReactNode;
   eventIn?: (payload?: unknown) => void;
+  className?: string;
   [key: string]: any;
 }
 
