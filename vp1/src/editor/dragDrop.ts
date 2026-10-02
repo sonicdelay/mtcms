@@ -2,7 +2,7 @@ import { createElement, type ReactNode } from "react";
 import { useCallback, useEffect, useState } from "react";
 import type { DragEvent, MouseEvent } from "react";
 import { components } from "../components";
-import type { LayoutChild, Node } from "../layoutTypes";
+import type { LayoutChild, Node } from "../types";
 import { isDroppable, palette } from "./registry";
 import {
   childrenOf,
