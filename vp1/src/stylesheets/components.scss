@@ -1,7 +1,7 @@
 @layer components {
   .Pane {
     //border: var(--border-width) solid #FF3f07;
-    border-radius: var(--border-radius);
+    //border-radius: var(--border-radius);
     padding: 5px;
     // background-color:transparent;
   }
@@ -12,7 +12,7 @@
   }
 
   .Gauge {
-    border: var(--border-width) solid var(--border-color);
+    // border: var(--border-width) solid var(--border-color);
     text-align: center;
     padding: 20px;
   }
