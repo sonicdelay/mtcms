@@ -9,6 +9,8 @@ import SdGauge from "./SdGauge";
 import SdText from "./SdText";
 import SdButton from "./SdButton";
 import SdDummy from "./SdDummy";
+import SdDummyLeafComponent from "./SdDummyLeafComponent";
+import SdDummyContainerComponent from "./SdDummyContainerComponent";
 
 export const components: Record<string, React.ElementType> = {
   SdPane,
@@ -20,4 +22,6 @@ export const components: Record<string, React.ElementType> = {
   SdText,
   SdButton,
   SdDummy,
+  SdDummyLeafComponent,
+  SdDummyContainerComponent,
 };

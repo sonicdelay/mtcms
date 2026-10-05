@@ -220,7 +220,7 @@ const Editor = ({
         {tree
           ? (
             <SdTree
-              data={tree}
+              value={tree}
               selectedId={selectedId}
               onSelect={(item) =>
                 onEvent({

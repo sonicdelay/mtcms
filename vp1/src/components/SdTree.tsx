@@ -14,6 +14,8 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
+import type { ComponentProps } from "../models/component-props";
+import type { ComponentEvent } from "../models/component-event";
 
 export interface TreeItem {
   id?: string | number;
@@ -57,12 +59,16 @@ interface ItemElementProps {
   onDrop?: (e: DragEvent<HTMLElement>) => void;
 }
 
-interface SdTreeProps {
-  data?: TreeItem | (TreeItem | string)[] | string | null;
-  children?: ReactNode | TreeItemTemplate;
+interface SdTreeProps
+  extends ComponentProps<
+    TreeItem | (TreeItem | string)[] | string | null,
+    unknown,
+    ComponentEvent,
+    ReactNode | TreeItemTemplate
+  > {
+  value?: TreeItem | (TreeItem | string)[] | string | null;
   /** Renders a leading icon per item, before its template content. */
   renderIcon?: (item: TreeItem, state: TreeItemState) => ReactNode;
-  className?: string;
   selectedId?: string;
   onSelect?: (item: TreeItem, key: string) => void;
   defaultExpandedIds?: string[];
@@ -73,7 +79,7 @@ interface SdTreeProps {
   onMove?: (dragKey: string, target: TreeDropTarget) => void;
   /** Whether a node may be dropped *into* an item. Defaults to "has children". */
   canDropInside?: (item: TreeItem) => boolean;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 const INDENT = 12;
@@ -106,7 +112,7 @@ const keyOf = (item: TreeItem, path: string): string =>
 const defaultTemplate: TreeItemTemplate = (item) => <li>{titleOf(item)}</li>;
 
 const SdTree = ({
-  data,
+  value,
   children,
   renderIcon,
   className,
@@ -117,7 +123,7 @@ const SdTree = ({
   canDropInside,
   ...rest
 }: SdTreeProps) => {
-  const items = useMemo(() => toItemArray(data), [data]);
+  const items = useMemo(() => toItemArray(value), [value]);
   const template: TreeItemTemplate =
     typeof children === "function" ? (children as TreeItemTemplate) : defaultTemplate;
   const [expanded, setExpanded] = useState<Set<string>>(

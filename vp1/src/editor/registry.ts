@@ -194,7 +194,7 @@ export const palette: Record<string, PaletteItem> = {
     title: "Button",
     icon: "buttonPointer",
     group: "components",
-    defaultProps: () => ({ data: "Button", className: "bg-gray-700 p-4", actions: [] }),
+    defaultProps: () => ({ value: "Button", className: "bg-gray-700 p-4", actions: [] }),
     settings: [{ key: "data", label: "Label" }],
   },
 

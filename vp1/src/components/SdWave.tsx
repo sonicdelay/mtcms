@@ -1,12 +1,11 @@
 import { useStoreValue } from "../store";
 import type { DeepKeys, WaveState } from "../store";
+import type { ComponentProps } from "../models/component-props";
 
-interface WaveProps {
+interface WaveProps extends ComponentProps {
   title?: string;
-  className?: string;
   source?: DeepKeys<WaveState>;
-  children?: React.ReactNode;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 const Wave = (props: WaveProps) => {

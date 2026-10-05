@@ -4,10 +4,20 @@
   "$schema": "https://opencode.ai/config.json",
   // Loaded in addition to the built-in AGENTS.md rules.
   "instructions": [
-    "ai/PROJECT.md"
+    "ai/PROJECT.md",
+    "ai/rules/*.md"
+  ],
+  // Superpowers plugin. OpenCode V1 uses the `plugin` key (plural `plugins`
+  // is V2 2.0.4+). Also registered in the global config.
+  "plugin": [
+    "superpowers@git+https://github.com/obra/superpowers.git"
   ],
   // Permissions: allow common safe git commands, ask for anything else.
   "permission": {
+    "edit": {
+      "*": "allow",
+      "ai/config/production.json": "deny"
+    },
     "bash": {
       "git add *": "allow",
       "git commit *": "ask",

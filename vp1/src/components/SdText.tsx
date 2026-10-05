@@ -1,10 +1,9 @@
-import React from "react";
+import type { ComponentProps } from "../models/component-props";
 
-interface TextProps {
+interface TextProps extends ComponentProps {
   title?: string;
   className?: string;
-  children?: React.ReactNode;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 const Text = (props: TextProps) => {

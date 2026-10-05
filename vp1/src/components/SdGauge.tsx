@@ -1,13 +1,13 @@
 import { useStoreValue } from "../store";
 import type { DeepKeys, WaveState } from "../store";
+import type { ComponentProps } from "../models/component-props";
 
-interface SdGaugeProps {
+interface SdGaugeProps extends ComponentProps {
   title?: string;
-  className?: string;
   source?: DeepKeys<WaveState>;
   min?: number;
   max?: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 const SdGauge = (props: SdGaugeProps) => {

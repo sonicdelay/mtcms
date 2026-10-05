@@ -1,28 +1,34 @@
-import React from "react";
-import type { SdProps } from "../types";
+import { useEffect, useRef, type MouseEvent } from "react";
+import type { ComponentEvent } from "../models/component-event";
+import type { ComponentProps } from "../models/component-props";
 
-interface SdPaneProps extends SdProps {
-  data?: string;
-  children?: React.ReactNode;
-  eventIn?: (payload?: unknown) => void;
-  className?: string;
-  [key: string]: any;
+interface SdPaneProps extends ComponentProps<string> {
+  value?: string;
+  [key: string]: unknown;
 }
 
 const SdPane = (props: SdPaneProps) => {
-  const { data, className, children, eventIn, ...rest } = props;
+  const { value, className, children, eventIn, onEvent, ...rest } = props;
   const paneClassName = ["Pane", className].join(" ");
 
-  const handleClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
-    eventIn?.(event);
-    if (typeof rest.onClick === "function") {
-      rest.onClick(event);
-    }
+  // Inbound channel: each distinct eventIn is handled once, dispatched to the
+  // global action handler and forwarded to onEvent.
+  const lastEvent = useRef<ComponentEvent | undefined>(undefined);
+  useEffect(() => {
+    if (!eventIn || lastEvent.current === eventIn) return;
+    lastEvent.current = eventIn;
+    globalThis.sd?.dispatchAction?.({ ...eventIn });
+    onEvent?.(eventIn);
+  }, [eventIn, onEvent]);
+
+  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (typeof rest.onClick === "function") rest.onClick(event);
+    onEvent?.({ type: "click", payload: { value } });
   };
 
   return (
     <div className={paneClassName} {...rest} onClick={handleClick}>
-      {data && <h2>{data}</h2>}
+      {value && <h2>{value}</h2>}
       {children}
     </div>
   );

@@ -1,16 +1,17 @@
-interface SdButtonProps {
-  data?: string;
-  className?: string;
-  [key: string]: any;
+import type { ComponentProps } from "../models/component-props";
+
+interface SdButtonProps extends ComponentProps<string> {
+  value?: string;
+  [key: string]: unknown;
 }
 
 const SdButton = (props: SdButtonProps) => {
-  const { data, className, ...rest } = props;
+  const { value, className, ...rest } = props;
   const buttonClassName = ["Button1", className].join(" ");
 
   return (
     <div className={buttonClassName} {...rest}>
-      <button>{data ?? "Button2"}</button>
+      <button>{value ?? "Button2"}</button>
     </div>
   );
 };
