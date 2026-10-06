@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { layouts, loadLayouts } from "../../components/layoutTree";
 import type { Node } from "../../models/types";
-import renderNode from "../../components/renderNode";
+import renderNode from "../../components/internal/renderNode";
 import { renderEditable, useDragDrop } from "./dragDrop";
 import { useWaveStore } from "./store";
 import Editor, { type EditorEvent } from "../../components/editor/Editor";

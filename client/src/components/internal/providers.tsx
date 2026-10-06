@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useAppStore } from "../lib/app.store";
-import i18n from "../lib/i18n";
+import { useAppStore } from "../../lib/app.store";
+import i18n from "../../lib/i18n";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const theme = useAppStore((s) => s.theme);

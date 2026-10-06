@@ -1,6 +1,6 @@
 import { createElement, Fragment, type ReactNode } from "react";
-import { components } from ".";
-import type { LayoutChild } from "../models/types";
+import { components } from "..";
+import type { LayoutChild } from "../../models/types";
 
 const renderNode = (
   node: LayoutChild,

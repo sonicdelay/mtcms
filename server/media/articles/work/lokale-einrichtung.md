@@ -108,6 +108,7 @@ Wechsle dann in diesen Ordner:
 
 ```bash
 packages\es-developer-tools\e2e-test-framework\packages\end-to-end-test-framework\source\
+packages\engineering-studio-developer-tools\end-to-end-test-framework\packages\end-to-end-test-framework\source\
 ```
 
 ### Kompletter Testlauf
