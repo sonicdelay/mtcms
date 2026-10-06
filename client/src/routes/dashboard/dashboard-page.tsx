@@ -1,40 +1,13 @@
-// import { Outlet } from "react-router";
-// import Nav from "../../components/home/nav";
-
-//import App from "../../../../vp1/src/App";
-
-// export default function DashboardLayout() {
-//   return (
-//     <div className="flex flex-1 flex-col">
-//       Dashboard Layout
-//       <App />
-//       {
-//         /* <Nav />
-//       <main className="flex flex-1 flex-col">
-//         <Outlet />
-//       </main> */
-//       }
-//     </div>
-//   );
-// }
-
 import { useEffect, useRef, useState } from "react";
-import { layouts, loadLayouts } from "../../../../vp1/src/layoutTree";
-import type { Node } from "../../../../vp1/src/types";
-import renderNode from "../../../../vp1/src/renderNode";
-import {
-  renderEditable,
-  useDragDrop,
-} from "../../../../vp1/src/editor/dragDrop";
+import { layouts, loadLayouts } from "../../components/layoutTree";
+import type { Node } from "../../models/types";
+import renderNode from "../../components/renderNode";
+import { renderEditable, useDragDrop } from "./dragDrop";
 import { useWaveStore } from "./store";
-import Editor, {
-  type EditorEvent,
-} from "../../../../vp1/src/components/editor/Editor";
-import Config from "../../../../vp1/src/components/editor/Config";
-import SdSplitHandle, {
-  HANDLE_WIDTH,
-} from "../../../../vp1/src/components/SdSplitHandle";
-import { useHistory } from "../../../../vp1/src/editor/History";
+import Editor, { type EditorEvent } from "../../components/editor/Editor";
+import Config from "../../components/editor/Config";
+import SdSplitHandle, { HANDLE_WIDTH } from "../../components/SdSplitHandle";
+import { useHistory } from "./History";
 import {
   childrenOf,
   deleteNode,
@@ -45,12 +18,8 @@ import {
   moveChild,
   moveNode,
   updateNode,
-} from "../../../../vp1/src/editor/treeOps";
-import {
-  clearOverride,
-  loadOverride,
-  saveOverride,
-} from "../../../../vp1/src/editor/storage";
+} from "./treeOps";
+import { clearOverride, loadOverride, saveOverride } from "./storage";
 import "../../stylesheets/tailwind.css";
 import "../../stylesheets/app.scss";
 
