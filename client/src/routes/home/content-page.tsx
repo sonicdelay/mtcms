@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import MarkdownIt from "markdown-it";
-import "../../markdown.scss";
+import "../../stylesheets/markdown.scss";
 
 const md = new MarkdownIt({ html: true });
 

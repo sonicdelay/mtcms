@@ -5,7 +5,7 @@
   // Loaded in addition to the built-in AGENTS.md rules.
   "instructions": [
     "ai/PROJECT.md",
-    "ai/rules/*.md"
+    "ai/rules/**/*.md"
   ],
   // Superpowers plugin. OpenCode V1 uses the `plugin` key (plural `plugins`
   // is V2 2.0.4+). Also registered in the global config.
@@ -16,7 +16,8 @@
   "permission": {
     "edit": {
       "*": "allow",
-      "ai/config/production.json": "deny"
+      ".env": "deny",
+      "ai/rules/**/*.md": "deny"
     },
     "bash": {
       "git add *": "allow",
@@ -33,6 +34,7 @@
     }
   },
   "exclude": [
+    "build",
     "node_modules",
     "media",
     "dist",
@@ -40,6 +42,13 @@
     ".git",
     ".vscode",
     ".idea",
-    ".cache"
+    ".cache",
+    ".claude",
+    ".next",
+    ".fallow",
+    ".turbo",
+    ".yarn",
+    ".pnpm",
+    ".gitignore"
   ]
 }

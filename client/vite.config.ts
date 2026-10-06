@@ -27,6 +27,16 @@ export default defineConfig({
         new URL("./app/components", import.meta.url),
       ),
     },
+    dedupe: [
+      "react",
+      "react/jsx-runtime",
+      "react/jsx-dev-runtime",
+      "react-dom",
+      "react-dom/client",
+      "zustand",
+      "zustand/shallow",
+      "zustand/middleware",
+    ],
   },
   optimizeDeps: {
     include: ["react/jsx-runtime"],

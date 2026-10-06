@@ -1,5 +1,8 @@
-import { useStoreValue } from "../store";
-import type { DeepKeys, WaveState } from "../store";
+import { useStoreValue } from "../../../client/src/routes/dashboard/store";
+import type {
+  DeepKeys,
+  WaveState,
+} from "../../../client/src/routes/dashboard/store";
 import type { ComponentProps } from "../models/component-props";
 
 interface WaveValueProps extends ComponentProps {
@@ -15,7 +18,7 @@ const WaveValue = (props: WaveValueProps) => {
 
   return (
     <div className={className} {...rest}>
-        <pre>{JSON.stringify(value, null, 2)}</pre>
+      <pre>{JSON.stringify(value, null, 2)}</pre>
       {children}
     </div>
   );

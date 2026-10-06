@@ -36,7 +36,7 @@ export const router = createBrowserRouter([
         path: "dashboard",
         lazy: async () => ({
           Component:
-            (await import("./routes/dashboard/dashboard-layout")).default,
+            (await import("./routes/dashboard/dashboard-page")).default,
         }),
       },
       {

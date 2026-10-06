@@ -1,5 +1,8 @@
-import { useStoreValue } from "../store";
-import type { DeepKeys, WaveState } from "../store";
+import { useStoreValue } from "../../../client/src/routes/dashboard/store";
+import type {
+  DeepKeys,
+  WaveState,
+} from "../../../client/src/routes/dashboard/store";
 import type { ComponentProps } from "../models/component-props";
 
 interface SdGaugeProps extends ComponentProps {
@@ -22,7 +25,7 @@ const SdGauge = (props: SdGaugeProps) => {
 
   const raw = useStoreValue(source) as number;
   const clamped = Math.max(min, Math.min(max, raw));
-  
+
   const percent = Math.max(0, Math.min(1, (clamped - min) / (max - min)));
   const display = Math.round(percent * 100);
 
@@ -46,7 +49,8 @@ const SdGauge = (props: SdGaugeProps) => {
           strokeDashoffset="0"
           pathLength="360"
           strokeLinecap="round"
-          transform="rotate(135 55 55)" />
+          transform="rotate(135 55 55)"
+        />
         <circle
           r="50"
           cx="55"
@@ -54,25 +58,26 @@ const SdGauge = (props: SdGaugeProps) => {
           fill="none"
           stroke={`${color}`}
           strokeWidth="10"
-          strokeDasharray={`${270*percent} ${360-(270*percent)}`}
+          strokeDasharray={`${270 * percent} ${360 - (270 * percent)}`}
           strokeDashoffset="0"
           strokeLinecap="round"
           pathLength="360"
           transform="rotate(135 55 55)"
-          id="knobinsidering" />
+          id="knobinsidering"
+        />
         <text
           x="55"
           y="55"
           textAnchor="middle"
           alignmentBaseline="middle"
           stroke={`${color}`}
-          id="knobval">
+          id="knobval"
+        >
           {display}%
         </text>
-      </svg>      
+      </svg>
     </div>
   );
-}
+};
 
 export default SdGauge;
- 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import MarkdownIt from "markdown-it";
-import "../../markdown.scss";
+import "../../stylesheets/markdown.scss";
 
 interface ArticleItem {
   name: string;

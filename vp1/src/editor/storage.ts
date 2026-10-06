@@ -1,4 +1,4 @@
-import type { Node } from "../layoutTypes";
+import type { Node } from "../types";
 
 const STORAGE_KEY = "vp1_layout_overrides_v1";
 

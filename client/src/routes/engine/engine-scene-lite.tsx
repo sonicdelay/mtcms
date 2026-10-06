@@ -77,7 +77,7 @@ export default function EngineSceneLite() {
           Placeholder Overlay
         </p>
         <p className="text-2xl font-semibold tracking-wide drop-shadow-lg">
-          <span class="loader"></span>
+          <span className="loader"></span>
         </p>
 
         <p className="text-sm text-white/70">

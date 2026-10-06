@@ -1,5 +1,8 @@
-import { useStoreValue } from "../store";
-import type { DeepKeys, WaveState } from "../store";
+import { useStoreValue } from "../../../client/src/routes/dashboard/store";
+import type {
+  DeepKeys,
+  WaveState,
+} from "../../../client/src/routes/dashboard/store";
 import type { ComponentProps } from "../models/component-props";
 
 interface WaveProps extends ComponentProps {

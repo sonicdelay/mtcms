@@ -20,7 +20,7 @@ import {
 import { useAppStore } from "../../lib/app.store";
 import { useMounted } from "../../components/use-mounted";
 import LoginForm from "../../components/login-form";
-import "../../admin.scss";
+import "../../stylesheets/admin.scss";
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: iconHome },

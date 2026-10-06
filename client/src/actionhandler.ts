@@ -91,7 +91,7 @@ const removeAllHandlers = () => {
 };
 
 declare global {
-  let sd: {
+  var sd: {
     dispatchAction: (action: Action) => void;
     onAction: (listener: ActionListener) => () => void;
     addActionHandler: (type: string, handler: ActionHandler) => () => void;

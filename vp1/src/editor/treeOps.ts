@@ -1,4 +1,4 @@
-import type { LayoutChild, Node } from "../layoutTypes";
+import type { LayoutChild, Node } from "../types";
 
 const webCrypto = typeof crypto !== "undefined" ? crypto : undefined;
 
