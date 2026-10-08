@@ -8,22 +8,22 @@ interface SdPaneProps extends ComponentProps<string> {
 }
 
 const SdPane = (props: SdPaneProps) => {
-  const { value, className, children, eventIn, onEvent, ...rest } = props;
+  const { value, className, children, eventIn, onChange, ...rest } = props;
   const paneClassName = ["Pane", className].join(" ");
 
   // Inbound channel: each distinct eventIn is handled once, dispatched to the
-  // global action handler and forwarded to onEvent.
+  // global action handler and forwarded to onChange.
   const lastEvent = useRef<ComponentEvent | undefined>(undefined);
   useEffect(() => {
     if (!eventIn || lastEvent.current === eventIn) return;
     lastEvent.current = eventIn;
     globalThis.sd?.dispatchAction?.({ ...eventIn });
-    onEvent?.(eventIn);
-  }, [eventIn, onEvent]);
+    onChange?.(eventIn);
+  }, [eventIn, onChange]);
 
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
     if (typeof rest.onClick === "function") rest.onClick(event);
-    onEvent?.({ type: "click", payload: { value } });
+    onChange?.({ type: "click", payload: { value } });
   };
 
   return (

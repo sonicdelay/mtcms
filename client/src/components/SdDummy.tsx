@@ -10,7 +10,7 @@ import SdDummyLeafComponent from "./SdDummyLeafComponent";
  * A generic passthrough component. It:
  *   - accepts `value` (string/object/array) and a `config` object,
  *     both with defaults that are overridden by the inputs;
- *   - forwards `eventIn` to `onEvent` once, or to the `config.actions`
+ *   - forwards `eventIn` to `onChange` once, or to the `config.actions`
  *     handler whose key matches the event's type;
  *   - delegates rendering to SdDummyContainerComponent when it has children
  *     (which captures nested child events) or SdDummyLeafComponent otherwise.
@@ -59,7 +59,7 @@ interface SdDummyProps extends ComponentProps<SdDummyValue, SdDummyConfig> {
 // ---------------------------------------------------------------------------
 
 const SdDummy = (props: SdDummyProps) => {
-  const { value, config, eventIn, onEvent, children, ...rest } = props;
+  const { value, config, eventIn, onChange, children, ...rest } = props;
 
   // Resolve inputs against their defaults.
   const settings = { ...DEFAULT_CONFIG, ...config };
@@ -68,7 +68,7 @@ const SdDummy = (props: SdDummyProps) => {
   // Inbound events: each distinct eventIn is handled once. If the config
   // defines an action for the event's type, that function handles it; events
   // without a matching action are dispatched to the global actionhandler
-  // (sd.dispatchAction). Either way the event is still forwarded to onEvent.
+  // (sd.dispatchAction). Either way the event is still forwarded to onChange.
   const actions = settings.actions;
   const lastEvent = useRef<ComponentEvent | undefined>(undefined);
   useEffect(() => {
@@ -84,14 +84,14 @@ const SdDummy = (props: SdDummyProps) => {
     } else {
       globalThis.sd?.dispatchAction?.({ ...eventIn });
     }
-    onEvent?.(eventIn);
-  }, [eventIn, onEvent, actions]);
+    onChange?.(eventIn);
+  }, [eventIn, onChange, actions]);
 
   // Clicking emits a "click" event, but first lets the editor's own onClick
   // handler run (it needs the event for stopPropagation / selection).
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
     if (typeof rest.onClick === "function") rest.onClick(event);
-    onEvent?.({ type: "click", payload: { value: resolvedValue } });
+    onChange?.({ type: "click", payload: { value: resolvedValue } });
   };
 
   return (
@@ -100,11 +100,11 @@ const SdDummy = (props: SdDummyProps) => {
       className={["Dummy", rest.className].filter(Boolean).join(" ")}
       onClick={handleClick}
       onInput={() =>
-        onEvent?.({ type: "change", payload: { value: resolvedValue } })}
+        onChange?.({ type: "change", payload: { value: resolvedValue } })}
     >
       {settings.title && <h2>{settings.title}</h2>}
       {children
-        ? <SdDummyContainerComponent children={children} onEvent={onEvent} />
+        ? <SdDummyContainerComponent children={children} onChange={onChange} />
         : <SdDummyLeafComponent value={resolvedValue} />}
     </div>
   );

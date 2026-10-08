@@ -1,33 +1,16 @@
 import { Outlet, useLocation, useNavigate } from "react-router";
-import {
-  IxApplication,
-  IxApplicationHeader,
-  IxAvatar,
-  IxContent,
-  IxDropdownItem,
-  IxMenu,
-  IxMenuItem,
-} from "@siemens/ix-react";
-import {
-  iconAddTaskList,
-  iconElement,
-  iconFolderApplicationScreen,
-  iconHome,
-  iconLogOut,
-  iconObjectsTree,
-  iconUser,
-} from "@siemens/ix-icons/icons";
 import { useAppStore } from "../../lib/app.store";
 import { useMounted } from "../../components/use-mounted";
 import LoginForm from "../../components/login-form";
+import SdApplication, { type SdNavNavItem } from "../../components/SdApplication";
 import "../../stylesheets/admin.scss";
 
-const navItems = [
-  { href: "/admin", label: "Dashboard", icon: iconHome },
-  { href: "/admin/tasks", label: "Tasklist", icon: iconAddTaskList },
-  { href: "/admin/tools", label: "Tools", icon: iconElement },
-  { href: "/admin/files", label: "Files", icon: iconFolderApplicationScreen },
-  { href: "/admin/edit", label: "Edit", icon: iconObjectsTree },
+const navItems: SdNavNavItem[] = [
+  { href: "/admin", label: "Dashboard", icon: "home" },
+  { href: "/admin/tasks", label: "Tasklist", icon: "tasks" },
+  { href: "/admin/tools", label: "Tools", icon: "tools" },
+  { href: "/admin/files", label: "Files", icon: "folder" },
+  { href: "/admin/edit", label: "Edit", icon: "tree" },
 ];
 
 const AdminLayout = () => {
@@ -37,6 +20,7 @@ const AdminLayout = () => {
   const user = useAppStore((s) => s.user);
   const logout = useAppStore((s) => s.logout);
   const theme = useAppStore((s) => s.theme);
+  const toggleTheme = useAppStore((s) => s.toggleTheme);
 
   const mounted = useMounted();
 
@@ -53,68 +37,18 @@ const AdminLayout = () => {
   const role = user?.role ?? "Guest";
 
   return (
-    <div className="ix-admin">
-      <IxApplication
-        theme={theme === "dark" ? "classic-dark" : "classic-light"}
-      >
-        <IxApplicationHeader name="mtCMS">
-          <div
-            slot="logo"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              padding: "0 0.75rem",
-            }}
-          >
-            <span style={{ fontSize: "1.25rem" }}>mtCMS</span>
-          </div>
-          {token && (
-            <IxAvatar slot="bottom" username={username} extra={role}>
-              <IxDropdownItem
-                icon={iconUser}
-                label={`${username} (${role})`}
-                disabled
-              />
-              <IxDropdownItem
-                icon={iconLogOut}
-                label="Logout"
-                onClick={handleLogout}
-              />
-            </IxAvatar>
-          )}
-        </IxApplicationHeader>
-
-        {token
-          ? (
-            <>
-              <IxMenu enableToggleTheme i18nToggleTheme="Toggle theme">
-                {navItems.map((item) => {
-                  const active = pathname === item.href;
-                  return (
-                    <IxMenuItem
-                      key={item.href}
-                      label={item.label}
-                      icon={item.icon}
-                      active={active}
-                      href={item.href}
-                      onClick={() => navigate(item.href)}
-                    />
-                  );
-                })}
-              </IxMenu>
-              <IxContent>
-                <Outlet />
-              </IxContent>
-            </>
-          )
-          : (
-            <IxContent>
-              <LoginForm />
-            </IxContent>
-          )}
-      </IxApplication>
-    </div>
+    <SdApplication
+      brand="mtCMS"
+      navItems={token ? navItems : undefined}
+      activeHref={pathname}
+      user={token ? { username, role } : null}
+      theme={theme}
+      onToggleTheme={toggleTheme}
+      onNavigate={(href) => navigate(href)}
+      onLogout={handleLogout}
+    >
+      {token ? <Outlet /> : <LoginForm />}
+    </SdApplication>
   );
 };
 

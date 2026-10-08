@@ -80,6 +80,12 @@ interface SdTreeProps extends
    * resolved destination; the tree never mutates its data itself.
    */
   onMove?: (dragKey: string, target: TreeDropTarget) => void;
+  /**
+   * Handles a drop of an external drag source (a palette item carrying
+   * "component-type" in its DataTransfer). The tree never mutates its data
+   * itself; the host inserts the node and re-renders.
+   */
+  onDropExternal?: (componentType: string, target: TreeDropTarget) => void;
   /** Whether a node may be dropped *into* an item. Defaults to "has children". */
   canDropInside?: (item: TreeItem) => boolean;
   [key: string]: unknown;
@@ -87,6 +93,7 @@ interface SdTreeProps extends
 
 const INDENT = 12;
 const NODE_MIME = "tree-node-key";
+const EXTERNAL_MIME = "component-type";
 const EDGE_RATIO = 0.25;
 
 const toItemArray = (value: unknown): TreeItem[] => {
@@ -123,6 +130,7 @@ const SdTree = ({
   onSelect,
   defaultExpandedIds,
   onMove,
+  onDropExternal,
   canDropInside,
   ...rest
 }: SdTreeProps) => {
@@ -175,10 +183,32 @@ const SdTree = ({
     return { keys: order, itemsByKey: byKey, parents: parentMap };
   }, [items, expanded]);
 
+  // Selection and auto-reveal must see every node, even ones hidden behind
+  // a collapsed ancestor; rendering and drop resolution stay gated on
+  // `expanded` via the memo above.
+  const fullIndex = useMemo(() => {
+    const byKey = new Map<string, TreeItem>();
+    const parentMap = new Map<string, string>();
+    const walk = (
+      list: TreeItem[],
+      parentKey: string | undefined,
+      path: string,
+    ) => {
+      list.forEach((item, index) => {
+        const key = keyOf(item, path ? `${path}.${index}` : String(index));
+        byKey.set(key, item);
+        if (parentKey !== undefined) parentMap.set(key, parentKey);
+        walk(childItems(item), key, key);
+      });
+    };
+    walk(items, undefined, "");
+    return { byKey, parentMap };
+  }, [items]);
+
   const selectedKey = useMemo(() => {
     if (selectedId === undefined) return undefined;
-    if (itemsByKey.has(selectedId)) return selectedId;
-    for (const [key, item] of itemsByKey) {
+    if (fullIndex.byKey.has(selectedId)) return selectedId;
+    for (const [key, item] of fullIndex.byKey) {
       if (
         item.id !== undefined && item.id !== null &&
         String(item.id) === selectedId
@@ -187,7 +217,7 @@ const SdTree = ({
       }
     }
     return undefined;
-  }, [selectedId, itemsByKey]);
+  }, [selectedId, fullIndex]);
 
   useEffect(() => {
     if (selectedKey === undefined) return;
@@ -200,11 +230,11 @@ const SdTree = ({
           next.add(cursor);
           changed = true;
         }
-        cursor = parents.get(cursor);
+        cursor = fullIndex.parentMap.get(cursor);
       }
       return changed ? next : prev;
     });
-  }, [selectedKey, parents]);
+  }, [selectedKey, fullIndex]);
 
   useEffect(() => {
     if (selectedKey === undefined) return;
@@ -367,7 +397,7 @@ const SdTree = ({
       selectItem(item, key);
     };
 
-    const dragHandlers: ItemElementProps = onMove
+    const dragHandlers: ItemElementProps = onMove || onDropExternal
       ? {
         draggable: true,
         onDragStart: (e: DragEvent<HTMLElement>) => {
@@ -382,21 +412,26 @@ const SdTree = ({
           setDropAt(undefined);
         },
         onDragEnter: (e: DragEvent<HTMLElement>) => {
+          const external = e.dataTransfer.types.includes(EXTERNAL_MIME);
           e.preventDefault();
-          e.dataTransfer.dropEffect = "move";
+          e.dataTransfer.dropEffect = external ? "copy" : "move";
         },
         onDragOver: (e: DragEvent<HTMLElement>) => {
           const origin = (e.target as HTMLElement | null)?.closest?.(
             "[data-tree-key]",
           );
           if (origin?.getAttribute("data-tree-key") !== key) return;
+          const external = e.dataTransfer.types.includes(EXTERNAL_MIME);
           const dragged = dragKey.current;
-          if (!dragged || dragged === key) return;
+          if (external) {
+            if (!onDropExternal) return;
+          } else if (!dragged || dragged === key) return;
           const position = dropPosition(e, item);
           const target = resolveTarget(key, position);
-          if (!canDrop(dragged, target)) return;
+          if (!target) return;
+          if (!external && (!dragged || !canDrop(dragged, target))) return;
           e.preventDefault();
-          e.dataTransfer.dropEffect = "move";
+          e.dataTransfer.dropEffect = external ? "copy" : "move";
           setDropAt((prev) =>
             prev && prev.key === key && prev.position === position
               ? prev
@@ -414,12 +449,18 @@ const SdTree = ({
           if (origin?.getAttribute("data-tree-key") !== key) return;
           e.preventDefault();
           e.stopPropagation();
+          const externalType = e.dataTransfer.getData(EXTERNAL_MIME);
           const dragged = dragKey.current ?? e.dataTransfer.getData(NODE_MIME);
           const position = dropPosition(e, item);
           const target = resolveTarget(key, position);
           setDropAt(undefined);
           dragKey.current = undefined;
-          if (!dragged || !canDrop(dragged, target) || !target) return;
+          if (!target) return;
+          if (externalType && !dragged) {
+            onDropExternal?.(externalType, target);
+            return;
+          }
+          if (!dragged || !canDrop(dragged, target)) return;
           onMove?.(dragged, target);
         },
       }

@@ -1,9 +1,14 @@
-@import "@siemens/ix/dist/siemens-ix/siemens-ix.css";
-@import "@siemens/ix/dist/siemens-ix/theme/classic-dark.css";
-@import "@siemens/ix/dist/siemens-ix/theme/classic-light.css";
+:root {
+  --admin-border: #d4d4d8;
+  --admin-primary: #00bde3;
+  --admin-field-bg: #ffffff;
+  --admin-text: #171717;
+}
 
-.ix-admin {
-  --theme-color-primary: #00bde3;
+.dark {
+  --admin-border: #3f3f46;
+  --admin-field-bg: #09090b;
+  --admin-text: #ededed;
 }
 
 .admin-page {
@@ -48,7 +53,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.6rem 0.75rem;
-  border: 1px solid var(--theme-color-soft-bdr);
+  border: 1px solid var(--admin-border);
   border-radius: 0.375rem;
 }
 
@@ -93,7 +98,7 @@
   display: grid;
   gap: 0.5rem;
   padding: 0.75rem;
-  border: 1px solid var(--theme-color-soft-bdr);
+  border: 1px solid var(--admin-border);
   border-radius: 0.375rem;
   overflow: auto;
 }
@@ -124,14 +129,14 @@
   content: "";
   width: 3px;
   height: 100%;
-  background: var(--theme-color-soft-bdr);
+  background: var(--admin-border);
   border-radius: 2px;
   transition: background 0.15s ease;
 }
 
 .admin-file-manager__splitter:hover::before,
 .admin-file-manager__splitter.active::before {
-  background: var(--theme-color-primary);
+  background: var(--admin-primary);
 }
 
 .admin-file-manager__nav {
@@ -168,7 +173,7 @@
   border-radius: 0.25rem;
   font: inherit;
   font-weight: 600;
-  color: var(--theme-color-primary);
+  color: var(--admin-primary);
   cursor: pointer;
 }
 
@@ -191,7 +196,7 @@
   flex-shrink: 0;
   width: 280px;
   padding: 0.75rem;
-  border: 1px solid var(--theme-color-soft-bdr);
+  border: 1px solid var(--admin-border);
   border-radius: 0.375rem;
   overflow: auto;
 }
@@ -221,19 +226,6 @@
   min-height: 0;
 }
 
-.admin-edit__field ix-textarea {
-  width: 100%;
-  flex: 1;
-  min-height: 0;
-  display: block;
-  height: 100%;
-}
-
-.admin-edit__field ix-textarea textarea {
-  height: 100%;
-  resize: none;
-}
-
 .admin-page--edit {
   display: flex;
   flex-direction: column;
@@ -244,7 +236,7 @@
 
 .admin-node-breadcrumb {
   padding: 0.35rem 0;
-  border-bottom: 1px solid var(--theme-color-soft-bdr);
+  border-bottom: 1px solid var(--admin-border);
   margin-bottom: 0.75rem;
 }
 
@@ -259,7 +251,7 @@
   flex-shrink: 0;
   width: 300px;
   padding: 0.75rem;
-  border: 1px solid var(--theme-color-soft-bdr);
+  border: 1px solid var(--admin-border);
   border-radius: 0.375rem;
   overflow: auto;
 }
@@ -280,13 +272,13 @@
   bottom: 0;
   left: 3px;
   width: 2px;
-  background: var(--theme-color-soft-bdr);
+  background: var(--admin-border);
   transition: background-color 0.15s ease;
 }
 
 .admin-edit-layout__splitter:hover::after,
 .admin-edit-layout__splitter:active::after {
-  background: var(--theme-color-primary);
+  background: var(--admin-primary);
 }
 
 .admin-edit-layout__content {
@@ -324,10 +316,10 @@
   width: 100%;
   flex: 1;
   resize: none;
-  border: 1px solid var(--theme-color-soft-bdr);
+  border: 1px solid var(--admin-border);
   border-radius: 0.375rem;
-  background: var(--theme-color-inv-std-bdr);
-  color: var(--theme-color-std-text);
+  background: var(--admin-field-bg);
+  color: var(--admin-text);
   padding: 0.5rem 0.625rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.8125rem;
@@ -335,6 +327,6 @@
 }
 
 .admin-dynamic-form__textarea:focus {
-  outline: 2px solid var(--theme-color-primary);
+  outline: 2px solid var(--admin-primary);
   outline-offset: 1px;
 }

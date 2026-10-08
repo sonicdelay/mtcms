@@ -19,26 +19,26 @@ import type { ComponentProps } from "../models/component-props";
 interface SdThingProps extends ComponentProps<ThingValue, ThingConfig> {
   // Component-specific props go here, each optional.
   title?: string;
-  // MANDATORY wildcard: lets unknown props reach the root element.
-  [key: string]: unknown;
+  // // MANDATORY wildcard: lets unknown props reach the root element.
+  // [key: string]: unknown;
 }
 ```
 
 Narrow the generics to describe what the component accepts. `ComponentProps` is
 generic over four parameters, in this order:
 
-| Parameter     | Default       | Purpose                                              |
-| ------------- | ------------- | ---------------------------------------------------- |
-| `TValue`      | `unknown`     | type of `value`                                       |
-| `TConfig`     | `unknown`     | type of `config`                                      |
-| `TEvent`      | `ComponentEvent` | type of `onEvent` / `eventIn`                      |
-| `TChildren`   | `ReactNode`   | type of `children` — widen only for a render prop     |
+| Parameter   | Default          | Purpose                                           |
+| ----------- | ---------------- | ------------------------------------------------- |
+| `TValue`    | `unknown`        | type of `value`                                   |
+| `TConfig`   | `unknown`        | type of `config`                                  |
+| `TEvent`    | `ComponentEvent` | type of `onChange` / `eventIn`                    |
+| `TChildren` | `ReactNode`      | type of `children` — widen only for a render prop |
 
-## 2. The wildcard MUST be `[key: string]: unknown`, never `any`
+<!-- ## 2. The wildcard MUST be `[key: string]: unknown`, never `any`
 
 `[key: string]: unknown` is what makes `{...rest}` forwardable to a DOM element
 without disabling type checking across the whole props object. Under `unknown`,
-reading an arbitrary key still yields `unknown`, so any prop you actually *use*
+reading an arbitrary key still yields `unknown`, so any prop you actually _use_
 must be declared explicitly (e.g. `className?: string`).
 
 ```tsx
@@ -52,29 +52,29 @@ interface SdThingProps extends ComponentProps {
 interface SdThingProps {
   [key: string]: any;
 }
-```
+``` -->
 
 ## 3. The four mandatory props, and what they mean
 
 All four come from the base. A component MUST NOT redeclare them with an
 incompatible type.
 
-| Prop       | Direction        | Meaning                                                        |
-| ---------- | ---------------- | -------------------------------------------------------------- |
-| `value`    | inbound          | the data the component renders. Never call it `data`.            |
-| `config`   | inbound          | configuration object; merge over your defaults with a spread.    |
-| `onEvent`  | **outbound**     | the component **sends** events with `onEvent({ type, payload })`. |
-| `eventIn`  | **inbound**      | a `ComponentEvent` the component **receives** and reacts to.     |
-| `children` | inbound          | nested content.                                                 |
+| Prop       | Direction    | Meaning                                                            |
+| ---------- | ------------ | ------------------------------------------------------------------ |
+| `value`    | inbound      | the data the component renders. Never call it `data`.              |
+| `config`   | inbound      | configuration object; merge over your defaults with a spread.      |
+| `onChange` | **outbound** | the component **sends** events with `onChange({ type, payload })`. |
+| `eventIn`  | **inbound**  | a `ComponentEvent` the component **receives** and reacts to.       |
+| `children` | inbound      | nested content.                                                    |
 
-## 4. Events travel over `eventIn` / `onEvent`
+## 4. Events travel over `eventIn` / `onChange`
 
-There is no `emit()`. Send with `onEvent`, receive with `eventIn`.
+There is no `emit()`. Send with `onChange`, receive with `eventIn`.
 
-**Sending** — call `onEvent` whenever something happens:
+**Sending** — call `onChange` whenever something happens:
 
 ```tsx
-onEvent?.({ type: "click", payload: { value } });
+onChange?.({ type: "click", payload: { value } });
 ```
 
 **Receiving** — handle each distinct `eventIn` exactly once. Guard on identity
@@ -87,8 +87,8 @@ useEffect(() => {
   if (!eventIn || lastEvent.current === eventIn) return;
   lastEvent.current = eventIn;
   globalThis.sd?.dispatchAction?.({ ...eventIn });
-  onEvent?.(eventIn);
-}, [eventIn, onEvent]);
+  onChange?.(eventIn);
+}, [eventIn, onChange]);
 ```
 
 **Composing** — a component MUST let an existing DOM handler run before it
@@ -97,12 +97,12 @@ sends its own event, so the editor can still select and stop propagation:
 ```tsx
 const handleClick = (event: MouseEvent<HTMLDivElement>) => {
   if (typeof rest.onClick === "function") rest.onClick(event);
-  onEvent?.({ type: "click", payload: { value } });
+  onChange?.({ type: "click", payload: { value } });
 };
 ```
 
 `SdDummyContainerComponent.tsx` shows how to capture nested child events by
-re-cloning children that already declare an `onEvent`.
+re-cloning children that already declare an `onChange`.
 
 ## 5. Forward unknown props to the root element
 
@@ -110,7 +110,7 @@ Destructure the props you consume, spread the remainder, and compose
 `className` rather than overwriting it:
 
 ```tsx
-const { value, config, eventIn, onEvent, children, ...rest } = props;
+const { value, config, eventIn, onChange, children, ...rest } = props;
 
 return (
   <div
@@ -131,6 +131,6 @@ in `vp1/src/editor/registry.ts` so it can be dropped in the editor.
 
 ## Not in scope
 
-Editor chrome is exempt: `SdSplitHandle.tsx`, `components/editor/*`. Those are
+Editor chrome is exempt: `components/editor/*`. Those are
 internal to the editor shell, are not registered in `components/index.ts`, and
 are not droppable content components.

@@ -18,8 +18,8 @@ interface SdDummyContainerComponentProps extends ComponentProps {
 // Nested event capture
 // ---------------------------------------------------------------------------
 // Children are rendered outside of this component by the layout renderer, so
-// their events would normally bypass `onEvent`. `capture` re-clones the child
-// tree and installs a forwarding `onEvent` on every node that already has one.
+// their events would normally bypass `onChange`. `capture` re-clones the child
+// tree and installs a forwarding `onChange` on every node that already has one.
 
 const MAX_CAPTURE_DEPTH = 20;
 
@@ -30,14 +30,14 @@ const list = (children: ReactNode): ReactNode[] | null =>
     : (Array.isArray(children) ? children : [children]);
 
 /**
- * Recursively wires nested child events back to SdDummy's own `onEvent`.
+ * Recursively wires nested child events back to SdDummy's own `onChange`.
  * Failsafe: bounded depth, host/fragment nodes are ignored, a child handler
  * that throws is caught so forwarding still happens, and a `cloneElement`
  * failure falls back to the untouched node.
  */
 const capture = (
   node: ReactNode,
-  onEvent?: EventHandler,
+  onChange?: EventHandler,
   depth = 0,
 ): ReactNode => {
   if (
@@ -50,28 +50,31 @@ const capture = (
   }
 
   const element = node as ReactElement<ComponentProps>;
-  const original = element.props.onEvent;
+  const original = element.props.onChange;
   // Only wrap children that already participate in the event bus; injecting a
-  // fresh onEvent into a component that ignores it would leak onto the DOM.
-  if (typeof original !== "function" && original !== onEvent) return node;
+  // fresh onChange into a component that ignores it would leak onto the DOM.
+  if (typeof original !== "function" && original !== onChange) return node;
 
   const childList = list(element.props.children as ReactNode | undefined);
   try {
     return cloneElement(element, {
-      onEvent: (event: ComponentEvent) => {
-        // Preserve the child's own handler, unless it IS our onEvent (avoids
+      onChange: (event: ComponentEvent) => {
+        // Preserve the child's own handler, unless it IS our onChange (avoids
         // firing the same handler twice via inheritance).
-        if (typeof original === "function" && original !== onEvent) {
+        if (typeof original === "function" && original !== onChange) {
           try {
             original(event);
           } catch (error) {
-            console.error("SdDummy: nested child onEvent handler threw", error);
+            console.error(
+              "SdDummy: nested child onChange handler threw",
+              error,
+            );
           }
         }
-        onEvent?.(event);
+        onChange?.(event);
       },
       children: childList
-        ? childList.map((child) => capture(child, onEvent, depth + 1))
+        ? childList.map((child) => capture(child, onChange, depth + 1))
         : element.props.children,
     });
   } catch (error) {
@@ -80,12 +83,12 @@ const capture = (
   }
 };
 
-/** Nested variant of SdDummy: renders children and routes their events to onEvent. */
+/** Nested variant of SdDummy: renders children and routes their events to onChange. */
 const SdDummyContainerComponent = ({
   children,
-  onEvent,
+  onChange,
 }: SdDummyContainerComponentProps) => (
-  <div className="Dummy-children">{capture(children, onEvent)}</div>
+  <div className="Dummy-children">{capture(children, onChange)}</div>
 );
 
 export default SdDummyContainerComponent;

@@ -263,7 +263,7 @@ const Config = ({
     "p-1 bg-gray-800 text-white border border-gray-600 rounded flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed";
 
   return (
-    <div className="Config bg-gray-700 border-none" style={style}>
+    <div className="Config bg-neutral-700 border-none text-white" style={style}>
       <h3>Config</h3>
       {selected
         ? (
@@ -291,7 +291,8 @@ const Config = ({
             <div className="flex gap-1 mt-2">
               <button
                 className={buttonClass}
-                onClick={() => onMove(-1)}
+                onClick={() =>
+                  onMove(-1)}
                 disabled={!canMoveUp}
                 title="Move Up"
                 aria-label="Move Up"
@@ -300,7 +301,8 @@ const Config = ({
               </button>
               <button
                 className={buttonClass}
-                onClick={() => onMove(1)}
+                onClick={() =>
+                  onMove(1)}
                 disabled={!canMoveDown}
                 title="Move Down"
                 aria-label="Move Down"
@@ -360,7 +362,7 @@ const Config = ({
         value="someValue"
         config={{ type: "experimental" }}
         eventIn={dummyEvent}
-        onEvent={(e) => console.log("Event triggered", e)}
+        onChange={(e) => console.log("Event triggered", e)}
         className="border-2"
       >
         <span>Hallo Welt</span>

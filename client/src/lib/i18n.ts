@@ -5,25 +5,29 @@ const resources = {
   en: {
     translation: {
       nav: {
+        beWelcome: "Welcome",
         home: "Home",
         articles: "Articles",
-        engine: "3D",
+        engine: "Engine",
         about: "About",
         contact: "Contact",
         admin: "Admin",
       },
+      homePageDescription: "Home of mtCMS.",
     },
   },
   de: {
     translation: {
       nav: {
+        beWelcome: "Willkommen",
         home: "Startseite",
         articles: "Artikel",
-        engine: "3D",
+        engine: "Engine",
         about: "Über",
         contact: "Kontakt",
         admin: "Admin",
       },
+      homePageDescription: "Heimat von mtCMS.",
     },
   },
 };

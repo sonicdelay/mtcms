@@ -1,14 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  IxButton,
-  IxCheckbox,
-  IxContentHeader,
-  IxInput,
-  IxSelect,
-  IxSelectItem,
-  showToast,
-} from "@siemens/ix-react";
-import { iconAdd, iconTrashcan } from "@siemens/ix-icons/icons";
 import { useAppStore } from "../../lib/app.store";
 import {
   createNode,
@@ -18,6 +8,12 @@ import {
   updateNode,
 } from "../../lib/admin.api";
 import type { Node } from "../../lib/types";
+import { toast } from "../../lib/toast.store";
+import SdPageHeader from "../../components/SdPageHeader";
+import SdInput from "../../components/SdInput";
+import SdSelect from "../../components/SdSelect";
+import SdCheckbox from "../../components/SdCheckbox";
+import SdButton from "../../components/SdButton";
 
 const PROTECTED = new Set([
   "00000000-0000-4000-8000-000000000000",
@@ -98,7 +94,7 @@ export default function TasksPage() {
       });
       setNewTitle("");
       setReloadKey((k) => k + 1);
-      showToast({ title: "Task created", type: "success" });
+      toast("Task created", "success");
     } catch (err) {
       setError((err as Error).message);
     }
@@ -133,7 +129,7 @@ export default function TasksPage() {
     try {
       await deleteNode(token, task.node.id);
       setTasks((prev) => prev.filter((t) => t.node.id !== task.node.id));
-      showToast({ title: "Task deleted", type: "info" });
+      toast("Task deleted", "info");
     } catch (err) {
       setError((err as Error).message);
     }
@@ -141,58 +137,60 @@ export default function TasksPage() {
 
   return (
     <div className="admin-page">
-      <IxContentHeader
-        headerTitle="Tasklist"
-        headerSubtitle={`${filtered.length} of ${tasks.length} nodes`}
+      <SdPageHeader
+        value="Tasklist"
+        subtitle={`${filtered.length} of ${tasks.length} nodes`}
       />
 
       <div className="admin-page__toolbar">
-        <IxInput
+        <SdInput
           placeholder="New task title…"
           value={newTitle}
-          onInput={(event) =>
-            setNewTitle((event.target as HTMLInputElement).value)}
+          onChange={(ev) =>
+            setNewTitle(
+              String((ev.payload as { value?: string } | undefined)?.value ?? ""),
+            )}
         />
-        <IxSelect
+        <SdSelect
           value={newType}
-          onValueChange={(value) => setNewType(String(value))}
-        >
-          {types.map((type) => (
-            <IxSelectItem key={type} value={type}>
-              {type}
-            </IxSelectItem>
-          ))}
-          {types.length === 0 && <IxSelectItem value="node">node</IxSelectItem>}
-        </IxSelect>
-        <IxButton icon={iconAdd} onClick={addTask}>
+          options={(types.length > 0 ? types : ["node"]).map((type) => ({
+            value: type,
+            label: type,
+          }))}
+          onChange={(ev) =>
+            setNewType(
+              String((ev.payload as { value?: string } | undefined)?.value ?? ""),
+            )}
+        />
+        <SdButton icon="plus" onClick={addTask}>
           Add
-        </IxButton>
+        </SdButton>
       </div>
 
       <div className="admin-page__toolbar">
-        <IxSelect
+        <SdSelect
           value={filter}
-          onValueChange={(value) => setFilter(String(value))}
-        >
-          <IxSelectItem value="all">All types</IxSelectItem>
-          {types.map((type) => (
-            <IxSelectItem key={type} value={type}>
-              {type}
-            </IxSelectItem>
-          ))}
-        </IxSelect>
+          options={[
+            { value: "all", label: "All types" },
+            ...types.map((type) => ({ value: type, label: type })),
+          ]}
+          onChange={(ev) =>
+            setFilter(
+              String((ev.payload as { value?: string } | undefined)?.value ?? ""),
+            )}
+        />
       </div>
 
       {error && (
-        <p style={{ color: "var(--theme-color-alarm-text)" }}>{error}</p>
+        <p className="text-red-600 dark:text-red-400">{error}</p>
       )}
 
       <div>
         {filtered.map((task) => (
           <div key={task.node.id} className="admin-row">
-            <IxCheckbox
-              checked={task.done}
-              onCheckedChange={() => toggleDone(task)}
+            <SdCheckbox
+              value={task.done}
+              onChange={() => toggleDone(task)}
             />
             <div className="admin-row__main">
               <div
@@ -209,13 +207,13 @@ export default function TasksPage() {
               </div>
             </div>
             {!PROTECTED.has(task.node.id) && (
-              <IxButton
+              <SdButton
                 variant="secondary"
-                icon={iconTrashcan}
+                icon="trash"
                 onClick={() => removeTask(task)}
               >
                 Delete
-              </IxButton>
+              </SdButton>
             )}
           </div>
         ))}

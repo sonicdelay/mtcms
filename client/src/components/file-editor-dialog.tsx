@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { IxButton, IxIconButton, showToast } from "@siemens/ix-react";
-import { iconClose, iconSaveAll } from "@siemens/ix-icons/icons";
 import { useAppStore } from "../lib/app.store";
 import { writeMediaFile } from "../lib/admin.api";
+import { toast } from "../lib/toast.store";
+import SdButton from "./SdButton";
+import SdIconButton from "./SdIconButton";
 
 interface FileEditorDialogProps {
   path: string;
@@ -32,7 +33,7 @@ export default function FileEditorDialog({
       await writeMediaFile(token, path, content);
       onSaved?.();
       closeModal();
-      showToast({ title: "File saved", type: "success" });
+      toast("File saved", "success");
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -50,18 +51,18 @@ export default function FileEditorDialog({
           <div className="truncate text-sm opacity-70">{path}</div>
         </div>
         <div className="flex shrink-0 items-center gap-2">
-          <IxButton
-            icon={iconSaveAll}
+          <SdButton
+            icon="save"
             disabled={!dirty || busy}
             onClick={() => void save()}
           >
             Save
-          </IxButton>
-          <IxIconButton icon={iconClose} title="Close" onClick={closeModal} />
+          </SdButton>
+          <SdIconButton value="close" title="Close" onClick={closeModal} />
         </div>
       </div>
       {error && (
-        <p style={{ color: "var(--theme-color-alarm-text)" }}>{error}</p>
+        <p className="text-red-600 dark:text-red-400">{error}</p>
       )}
       <textarea
         aria-label={`Content of ${name}`}

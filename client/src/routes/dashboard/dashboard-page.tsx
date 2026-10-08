@@ -10,15 +10,19 @@ import SdSplitHandle, { HANDLE_WIDTH } from "../../components/SdSplitHandle";
 import { useHistory } from "./History";
 import {
   childrenOf,
+  createNode,
   deleteNode,
   duplicateNode,
   ensureIds,
   findNode,
+  insertChildAt,
   isSelfOrDescendant,
   moveChild,
   moveNode,
+  successorOf,
   updateNode,
 } from "./treeOps";
+import { palette } from "./registry";
 import { clearOverride, loadOverride, saveOverride } from "./storage";
 import "../../stylesheets/tailwind.css";
 import "../../stylesheets/app.scss";
@@ -31,7 +35,7 @@ const loadTreeFor = (name: string): Node => {
 };
 
 const MIN_PANEL_WIDTH = 120;
-const DEFAULT_EDITOR_WIDTH = 200;
+const DEFAULT_EDITOR_WIDTH = 250;
 const DEFAULT_CONFIG_WIDTH = 250;
 
 interface PanelWidths {
@@ -129,8 +133,9 @@ const DashboardPage = () => {
 
   const deleteSelected = () => {
     if (!tree || !selectedId) return;
+    const next = successorOf(tree, selectedId);
     commit(deleteNode(tree, selectedId));
-    select(undefined);
+    select(next);
   };
 
   const moveNodeInTree = (
@@ -216,6 +221,23 @@ const DashboardPage = () => {
       case "moveNode":
         moveNodeInTree(event.payload.dragId, event.payload.target);
         break;
+      case "insertNode": {
+        const item = palette[event.payload.componentType];
+        if (!tree || !item) break;
+        const child = createNode(
+          event.payload.componentType,
+          item.defaultProps(),
+        );
+        const next = insertChildAt(
+          tree,
+          event.payload.target.parentKey,
+          event.payload.target.index,
+          child,
+        );
+        if (next !== tree) commit(next);
+        if (child.id !== undefined) select(child.id);
+        break;
+      }
       case "undo":
         undo();
         break;
@@ -233,7 +255,7 @@ const DashboardPage = () => {
       {edit && (
         <>
           <Editor
-            onEvent={handleEditorEvent}
+            onChange={handleEditorEvent}
             selectedLayout={selectedLayout}
             style={{ width: panels.editor }}
             tree={tree}
@@ -250,7 +272,7 @@ const DashboardPage = () => {
         </>
       )}
       <div
-        className="flex min-w-0 w-full flex-1 flex-col overflow-auto"
+        className="flex min-w-0 w-full flex-1 flex-col overflow-auto bg-zinc-800"
         {...canvasProps}
       >
         {tree

@@ -2,7 +2,7 @@
   max-width: 860px;
   margin: 0 auto;
   line-height: 1.65;
-  color: var(--theme-color-std-text);
+  color: var(--color);
 }
 
 .markdown-content h1,
@@ -41,8 +41,7 @@
 }
 
 .markdown-content a {
-  // color: var(--theme-color-primary);
-  color: var(--color-blue-400);
+  color: var(--link-color);
   text-decoration: underline;
 }
 
@@ -83,7 +82,7 @@
 .markdown-content hr {
   margin: 1.5rem 0;
   border: 0;
-  border-top: 1px solid var(--theme-color-soft-bdr);
+  border-top: 1px solid var(--border-color);
 }
 
 .markdown-content img {
@@ -93,7 +92,7 @@
 }
 
 .markdown-content pre {
-  color: var(--theme-color-std-text);
+  color: var(--color);
   padding: 0.75rem;
   border-radius: 0.45rem;
   overflow-x: auto;
@@ -103,8 +102,8 @@
 .markdown-content blockquote {
   margin: 1rem 0;
   padding: 0.75rem 1rem;
-  border-left: 3px solid var(--theme-color-primary);
-  background: color-mix(in srgb, var(--theme-color-2) 85%, transparent);
+  border-left: 3px solid var(--accent-color);
+  background: color-mix(in srgb, var(--panel-background) 85%, transparent);
 }
 
 .markdown-content div[id^="mermaid-container"] > svg {

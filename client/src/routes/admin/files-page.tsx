@@ -5,15 +5,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { IxContentHeader, IxIconButton, showToast } from "@siemens/ix-react";
-import {
-  iconChevronRightSmall,
-  iconDocument,
-  iconFolder,
-  iconRefresh,
-  iconTrashcan,
-  iconUpload,
-} from "@siemens/ix-icons/icons";
 import { useAppStore } from "../../lib/app.store";
 import {
   createMediaDirectory,
@@ -24,7 +15,10 @@ import {
   writeMediaFile,
 } from "../../lib/admin.api";
 import type { FileItem } from "../../lib/types";
+import { toast } from "../../lib/toast.store";
 import FileEditorDialog from "../../components/file-editor-dialog";
+import SdPageHeader from "../../components/SdPageHeader";
+import SdIconButton from "../../components/SdIconButton";
 
 export default function FilesPage() {
   const token = useAppStore((s) => s.token);
@@ -121,7 +115,7 @@ export default function FilesPage() {
       const path = currentPath ? `${currentPath}/${name.trim()}` : name.trim();
       await createMediaDirectory(token, path);
       refresh();
-      showToast({ title: "Directory created", type: "success" });
+      toast("Directory created", "success");
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -138,7 +132,7 @@ export default function FilesPage() {
       const path = currentPath ? `${currentPath}/${name.trim()}` : name.trim();
       await writeMediaFile(token, path, "");
       refresh();
-      showToast({ title: "File created", type: "success" });
+      toast("File created", "success");
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -155,10 +149,10 @@ export default function FilesPage() {
         await uploadMediaFile(token, path, file);
       }
       refresh();
-      showToast({
-        title: `${files.length} file${files.length > 1 ? "s" : ""} uploaded`,
-        type: "success",
-      });
+      toast(
+        `${files.length} file${files.length > 1 ? "s" : ""} uploaded`,
+        "success",
+      );
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -200,7 +194,7 @@ export default function FilesPage() {
       await deleteMediaPath(token, item.path);
       closeModal();
       refresh();
-      showToast({ title: "Deleted", type: "info" });
+      toast("Deleted", "info");
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -210,9 +204,9 @@ export default function FilesPage() {
 
   return (
     <div className="admin-page admin-page--files">
-      <IxContentHeader
-        headerTitle="Files"
-        headerSubtitle={`media / ${segments.join(" / ") || "…"}`}
+      <SdPageHeader
+        value="Files"
+        subtitle={`media / ${segments.join(" / ") || "…"}`}
       />
 
       <div className="admin-file-manager" ref={containerRef}>
@@ -267,12 +261,10 @@ export default function FilesPage() {
                   key={`${index}-${segment}`}
                   className="admin-file-manager__crumb-group"
                 >
-                  <IxIconButton
-                    icon={iconChevronRightSmall}
+                  <SdIconButton
+                    value="chevronRight"
                     title=""
                     disabled
-                    slot="end"
-                    size="16"
                   />
                   <button
                     type="button"
@@ -286,20 +278,20 @@ export default function FilesPage() {
               ))}
             </div>
             <div className="admin-file-manager__actions">
-              <IxIconButton
-                icon={iconFolder}
+              <SdIconButton
+                value="folder"
                 title="New folder"
                 onClick={() => void createDir()}
                 disabled={busy}
               />
-              <IxIconButton
-                icon={iconDocument}
+              <SdIconButton
+                value="file"
                 title="New file"
                 onClick={() => void createFile()}
                 disabled={busy}
               />
-              <IxIconButton
-                icon={iconUpload}
+              <SdIconButton
+                value="upload"
                 title="Upload files"
                 onClick={() => uploadInputRef.current?.click()}
                 disabled={busy}
@@ -311,23 +303,18 @@ export default function FilesPage() {
                 hidden
                 onChange={(event) => void uploadFiles(event.target.files)}
               />
-              <IxIconButton icon={iconRefresh} onClick={refresh} />
+              <SdIconButton value="refresh" title="Refresh" onClick={refresh} />
             </div>
           </div>
 
           {error && (
-            <p style={{ color: "var(--theme-color-alarm-text)" }}>{error}</p>
+            <p className="text-red-600 dark:text-red-400">{error}</p>
           )}
 
           <div className="admin-file-list">
             {directories.map((item) => (
               <div key={item.path} className="admin-row">
-                <IxIconButton
-                  icon={iconFolder}
-                  title="Directory"
-                  disabled
-                  slot="start"
-                />
+                <SdIconButton value="folder" title="Directory" disabled />
                 <a
                   href="#"
                   onClick={(event) => {
@@ -340,8 +327,8 @@ export default function FilesPage() {
                   <div className="admin-row__title">{item.name}</div>
                   <div className="admin-row__meta">{item.path}</div>
                 </a>
-                <IxIconButton
-                  icon={iconTrashcan}
+                <SdIconButton
+                  value="trash"
                   title="Delete"
                   onClick={() =>
                     removeItem(item)}
@@ -350,12 +337,7 @@ export default function FilesPage() {
             ))}
             {files.map((item) => (
               <div key={item.path} className="admin-row">
-                <IxIconButton
-                  icon={iconDocument}
-                  title="File"
-                  disabled
-                  slot="start"
-                />
+                <SdIconButton value="file" title="File" disabled />
                 <a
                   href="#"
                   onClick={(event) => {
@@ -377,10 +359,10 @@ export default function FilesPage() {
                   title="Open raw"
                   style={{ color: "inherit" }}
                 >
-                  <IxIconButton icon={iconUpload} title="Open raw" />
+                  <SdIconButton value="upload" title="Open raw" />
                 </a>
-                <IxIconButton
-                  icon={iconTrashcan}
+                <SdIconButton
+                  value="trash"
                   title="Delete"
                   onClick={() => removeItem(item)}
                 />

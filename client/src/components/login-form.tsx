@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { IxButton, IxContentHeader, IxInput } from "@siemens/ix-react";
 import { useAppStore } from "../lib/app.store";
+import SdPageHeader from "./SdPageHeader";
+import SdInput from "./SdInput";
+import SdButton from "./SdButton";
 
 export default function LoginForm() {
   const login = useAppStore((s) => s.login);
@@ -17,32 +19,34 @@ export default function LoginForm() {
 
   return (
     <div style={{ maxWidth: "360px", margin: "2rem auto" }}>
-      <IxContentHeader headerTitle="Sign in" />
+      <SdPageHeader value="Sign in" />
       <form onSubmit={handleSubmit} style={{ display: "grid", gap: "0.75rem" }}>
-        <IxInput
+        <SdInput
           label="Email"
           value={email}
           type="email"
           required
-          onInput={(event) =>
-            setEmail((event.target as HTMLInputElement).value)}
+          onChange={(ev) =>
+            setEmail(
+              String((ev.payload as { value?: string } | undefined)?.value ?? ""),
+            )}
         />
-        <IxInput
+        <SdInput
           label="Password"
           value={password}
           type="password"
           required
-          onInput={(event) =>
-            setPassword((event.target as HTMLInputElement).value)}
+          onChange={(ev) =>
+            setPassword(
+              String((ev.payload as { value?: string } | undefined)?.value ?? ""),
+            )}
         />
         {error && (
-          <p style={{ margin: 0, color: "var(--theme-color-alarm-text)" }}>
-            {error}
-          </p>
+          <p className="m-0 text-red-600 dark:text-red-400">{error}</p>
         )}
-        <IxButton type="submit" disabled={loading}>
+        <SdButton type="submit" disabled={loading}>
           {loading ? "Signing in…" : "Sign in"}
-        </IxButton>
+        </SdButton>
       </form>
     </div>
   );

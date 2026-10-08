@@ -41,11 +41,11 @@ export default function Nav() {
   };
 
   return (
-    <header className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+    <header className="border-b border-[var(--border)] bg-[var(--surface)]">
       <nav className="mx-auto flex h-14 max-w-5xl items-center gap-6 px-6">
         <Link
           to="/home"
-          className="text-lg font-semibold text-zinc-900 dark:text-zinc-50"
+          className="text-lg font-semibold text-[var(--fg)]"
         >
           SonicDelay
         </Link>
@@ -54,10 +54,10 @@ export default function Nav() {
             .filter((link) => !link.requiresAuth || (mounted && isLoggedIn))
             .map((link) => {
               const className =
-                `text-sm font-medium transition-colors hover:text-zinc-900 dark:hover:text-zinc-50 ${
+                `text-sm font-medium transition-colors hover:text-[var(--fg)] ${
                   pathname === link.href
-                    ? "text-zinc-900 dark:text-zinc-50"
-                    : "text-zinc-500 dark:text-zinc-400"
+                    ? "text-[var(--fg)]"
+                    : "text-[var(--fg-muted)]"
                 }`;
 
               return (
@@ -85,7 +85,7 @@ export default function Nav() {
               <>
                 <Link
                   to="/admin"
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-900 text-sm font-medium text-white dark:bg-zinc-50 dark:text-zinc-900"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--fg)] text-sm font-medium text-[var(--surface)]"
                   title={email ?? "Admin"}
                 >
                   {email ? email.charAt(0).toUpperCase() : "A"}
@@ -93,7 +93,7 @@ export default function Nav() {
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="text-xs font-medium text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
+                  className="text-xs font-medium text-[var(--fg-muted)] transition-colors hover:text-[var(--fg)]"
                   title="Logout"
                 >
                   Logout
@@ -105,7 +105,7 @@ export default function Nav() {
               <button
                 type="button"
                 onClick={handleLoginClick}
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-300 text-sm font-medium text-zinc-500 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border-strong)] text-sm font-medium text-[var(--fg-muted)] transition-colors hover:bg-[var(--surface-hover)]"
                 title="Login"
               >
                 <svg

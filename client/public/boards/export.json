@@ -21,7 +21,7 @@
             "height": "200px",
             "width": "300px"
           },
-          "src": "public/images/engine.jpg",
+          "src": "/images/engine.jpg",
           "alt": "Logo",
           "id": "4cd8cefc-725d-48ca-9ea8-f0e68fc10e53"
         }

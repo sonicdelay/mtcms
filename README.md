@@ -2,9 +2,10 @@
 
 A content-management web app split into a React client and an Express API server.
 
-- `client/` — Vite + React 19 + React Router 7 + Tailwind CSS 4. Includes the
-  home site, the admin UI (Siemens iX), and a BabylonJS 3D engine view that is
-  lazy-loaded (loaded only when navigating to `/engine`).
+- `client/` — Vite + React 19 + React Router 7 + Tailwind CSS 4 with the
+  in-repo `Sd*` component library. Includes the home site, the admin UI, and a
+  BabylonJS 3D engine view that is lazy-loaded (loaded only when navigating to
+  `/engine`).
 - `server/` — Express 5 running on Deno, backed by PostgreSQL (Neon or `pg`).
   Serves the `/api/*` routes, Swagger documentation, and the built client from
   `dist/`.

@@ -1,11 +1,18 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import type { TreeContext, TreeModel } from "@siemens/ix";
 import type { EditorNode } from "./admin.api";
 import { createNode, deleteNode, getNodeEditor, updateNode } from "./admin.api";
 import { useAppStore } from "./app.store";
 
 const ZERO_UUID = "00000000-0000-4000-8000-000000000000";
+
+export interface EditTreeNode {
+  id: string;
+  data: { name: string };
+  hasChildren: boolean;
+  children: string[];
+}
+export type EditTreeModel = Record<string, EditTreeNode>;
 
 export interface FormField {
   name: string;
@@ -14,20 +21,15 @@ export interface FormField {
   data?: Array<{ value: string; label: string }>;
 }
 
-interface TreeData {
-  name: string;
-}
-
 type LineageItem = { id: string; label: string };
 
 type TreeState = {
-  model: TreeModel<TreeData>;
-  context: TreeContext;
+  model: EditTreeModel;
 };
 
 type Language = "en" | "de";
 
-const EMPTY_TREE_MODEL: TreeModel<TreeData> = {
+const EMPTY_TREE_MODEL: EditTreeModel = {
   [ZERO_UUID]: {
     id: ZERO_UUID,
     data: { name: "Root" },
@@ -38,7 +40,6 @@ const EMPTY_TREE_MODEL: TreeModel<TreeData> = {
 
 const EMPTY_TREE_STATE: TreeState = {
   model: EMPTY_TREE_MODEL,
-  context: {},
 };
 
 const mergeIds = (left: string[], right: string[]) => [
@@ -61,12 +62,7 @@ const buildTreeState = (
   const lineage = getLineage(node);
   const nodeChildren = node.children ?? [];
 
-  const treeModel: TreeModel<TreeData> = { ...previousTree.model };
-  const treeContext: TreeContext = { ...previousTree.context };
-
-  Object.entries(treeContext).forEach(([key, value]) => {
-    treeContext[key] = { ...value, isSelected: false };
-  });
+  const treeModel: EditTreeModel = { ...previousTree.model };
 
   if (lineage.length > 0) {
     const firstId = lineage[0].id;
@@ -78,12 +74,6 @@ const buildTreeState = (
       data: { name: rootNode?.data?.name ?? "Root" },
       hasChildren: rootChildren.length > 0,
       children: rootChildren,
-    };
-
-    treeContext[ZERO_UUID] = {
-      ...treeContext[ZERO_UUID],
-      isExpanded: true,
-      isSelected: false,
     };
   }
 
@@ -101,12 +91,6 @@ const buildTreeState = (
       hasChildren: (currentItem?.hasChildren ?? false) || children.length > 0,
       children,
     };
-
-    treeContext[item.id] = {
-      ...treeContext[item.id],
-      isExpanded: true,
-      isSelected: item.id === node.id,
-    };
   });
 
   nodeChildren.forEach((child) => {
@@ -117,13 +101,9 @@ const buildTreeState = (
       hasChildren: existingChild?.hasChildren ?? false,
       children: existingChild?.children ?? [],
     };
-    treeContext[child.id] = {
-      ...treeContext[child.id],
-      isSelected: false,
-    };
   });
 
-  return { model: treeModel, context: treeContext };
+  return { model: treeModel };
 };
 
 const buildFormModel = (node: EditorNode, language: Language): FormField[] => {
@@ -157,7 +137,6 @@ interface EditStore {
   language: Language;
   tree: TreeState;
   formFields: FormField[];
-  setTreeContext: (context: TreeContext) => void;
   setLanguage: (language: Language) => void;
   setFormFields: (fields: FormField[]) => void;
   fetchNode: (nodeId: string, force?: boolean) => Promise<EditorNode | null>;
@@ -181,12 +160,6 @@ export const useEditStore = create<EditStore>()(
         language: "en",
         tree: EMPTY_TREE_STATE,
         formFields: [],
-        setTreeContext: (context) =>
-          set(
-            (state) => ({ tree: { ...state.tree, context } }),
-            false,
-            "edit/setTreeContext",
-          ),
         setLanguage: (language) => {
           const node = get().node;
           set(

@@ -1,4 +1,10 @@
-﻿# Über
+﻿---
+title: Demo,
+published_at: 2026-04-30,
+snippet: MArkdown example
+---
+
+# Markdown
 
 ## Einleitung
 

@@ -62,7 +62,7 @@ const baseInterface = interfacesIn(base).find((i) => i.name === "ComponentProps"
 if (!baseInterface) {
   fail("src/models/component-props.ts", 0, "ComponentProps interface not found");
 } else {
-  for (const prop of ["value", "config", "onEvent", "eventIn", "children"]) {
+  for (const prop of ["value", "config", "onChange", "eventIn", "children"]) {
     if (!new RegExp(`\\b${prop}\\s*\\?\\s*:`).test(baseInterface.body)) {
       fail("src/models/component-props.ts", baseInterface.line, `base is missing \`${prop}\``);
     }

@@ -181,6 +181,21 @@ export const palette: Record<string, PaletteItem> = {
       { key: "max", label: "Max", kind: "number" },
     ],
   },
+  SdD3Graph: {
+    type: "SdD3Graph",
+    title: "D3 Graph",
+    icon: "activity",
+    group: "components",
+    defaultProps: () => ({ title: "D3 Graph", className: "" }),
+    settings: [
+      { key: "title", label: "Title" },
+      { key: "width", label: "Width", kind: "number" },
+      { key: "height", label: "Height", kind: "number" },
+      { key: "r", label: "Point radius", kind: "number" },
+      { key: "xLabel", label: "X label" },
+      { key: "yLabel", label: "Y label" },
+    ],
+  },
   SdText: {
     type: "SdText",
     title: "Text",
@@ -194,8 +209,126 @@ export const palette: Record<string, PaletteItem> = {
     title: "Button",
     icon: "buttonPointer",
     group: "components",
-    defaultProps: () => ({ value: "Button", className: "bg-gray-700 p-4", actions: [] }),
-    settings: [{ key: "data", label: "Label" }],
+    defaultProps: () => ({ value: "Button" }),
+    settings: [{ key: "value", label: "Label" }],
+  },
+  SdIconButton: {
+    type: "SdIconButton",
+    title: "Icon Button",
+    icon: "buttonPointer",
+    group: "form",
+    droppable: true,
+    defaultProps: () => ({ value: "check", title: "Action" }),
+    settings: [
+      { key: "value", label: "Icon" },
+      { key: "title", label: "Tooltip" },
+    ],
+  },
+  SdInput: {
+    type: "SdInput",
+    title: "Input",
+    icon: "input",
+    group: "form",
+    droppable: true,
+    defaultProps: () => ({ label: "Label", placeholder: "" }),
+    settings: [
+      { key: "label", label: "Label" },
+      { key: "placeholder", label: "Placeholder" },
+    ],
+  },
+  SdTextarea: {
+    type: "SdTextarea",
+    title: "Textarea",
+    icon: "textarea",
+    group: "form",
+    droppable: true,
+    defaultProps: () => ({ label: "Label", value: "" }),
+    settings: [{ key: "label", label: "Label" }],
+  },
+  SdSelect: {
+    type: "SdSelect",
+    title: "Select",
+    icon: "select",
+    group: "form",
+    droppable: true,
+    defaultProps: () => ({
+      label: "Label",
+      options: [
+        { value: "a", label: "Option A" },
+        { value: "b", label: "Option B" },
+      ],
+    }),
+    settings: [{ key: "label", label: "Label" }],
+  },
+  SdCheckbox: {
+    type: "SdCheckbox",
+    title: "Checkbox",
+    icon: "label",
+    group: "form",
+    droppable: true,
+    defaultProps: () => ({ label: "Checkbox", value: false }),
+    settings: [{ key: "label", label: "Label" }],
+  },
+
+  SdCard: {
+    type: "SdCard",
+    title: "Card",
+    icon: "box",
+    group: "components",
+    droppable: true,
+    defaultProps: () => ({ value: "Card title", children: [] }),
+    settings: [{ key: "value", label: "Title" }],
+  },
+  SdPageHeader: {
+    type: "SdPageHeader",
+    title: "Page Header",
+    icon: "header",
+    group: "components",
+    droppable: true,
+    defaultProps: () => ({ value: "Page", subtitle: "" }),
+    settings: [
+      { key: "value", label: "Title" },
+      { key: "subtitle", label: "Subtitle" },
+    ],
+  },
+  SdKpi: {
+    type: "SdKpi",
+    title: "KPI",
+    icon: "meter",
+    group: "components",
+    droppable: false,
+    defaultProps: () => ({ value: "0", label: "Label" }),
+    settings: [
+      { key: "value", label: "Value" },
+      { key: "label", label: "Label" },
+    ],
+  },
+  SdBreadcrumb: {
+    type: "SdBreadcrumb",
+    title: "Breadcrumb",
+    icon: "listItem",
+    group: "components",
+    droppable: false,
+    defaultProps: () => ({ value: { current: [] } }),
+    settings: [],
+  },
+  SdToast: {
+    type: "SdToast",
+    title: "Toast",
+    icon: "dialog",
+    group: "components",
+    droppable: false,
+    defaultProps: () => ({ value: { title: "Notification", type: "info" } }),
+    settings: [],
+  },
+  SdApplication: {
+    type: "SdApplication",
+    title: "Application",
+    icon: "layout",
+    group: "layout",
+    droppable: true,
+    defaultProps: () => ({ brand: "mtCMS" }),
+    settings: [{ key: "brand", label: "Brand" }],
   },
 
   div: container("div", "Div Box", "box", "layout", { className: "flex flex-col" }),
@@ -358,7 +491,7 @@ export const palette: Record<string, PaletteItem> = {
     icon: "image",
     group: "media",
     droppable: false,
-    defaultProps: () => ({ src: "public/images/engine.jpg", alt: "image", className: "" }),
+    defaultProps: () => ({ src: "/images/engine.jpg", alt: "image", className: "" }),
     settings: [
       { key: "src", label: "Src" },
       { key: "alt", label: "Alt" },
@@ -489,15 +622,22 @@ export const palette: Record<string, PaletteItem> = {
   ),
 };
 
-export const paletteGroups: PaletteGroup[] = Object.values(palette).reduce(
-  (groups: PaletteGroup[], item) => {
-    const last = groups[groups.length - 1];
-    if (last && last.id === item.group) last.items.push(item);
-    else groups.push({ id: item.group, title: paletteGroupTitles[item.group], items: [item] });
-    return groups;
-  },
-  [],
-);
+const GROUP_ORDER: PaletteGroupId[] = [
+  "components",
+  "layout",
+  "headings",
+  "text",
+  "inline",
+  "media",
+  "table",
+  "form",
+];
+
+export const paletteGroups: PaletteGroup[] = GROUP_ORDER.map((id) => ({
+  id,
+  title: paletteGroupTitles[id],
+  items: Object.values(palette).filter((item) => item.group === id),
+})).filter((group) => group.items.length > 0);
 
 export const isDroppable = (node: Node): boolean => {
   const item = palette[node.type];

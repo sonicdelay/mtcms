@@ -28,6 +28,10 @@ export type EditorEvent =
   | { type: "layoutChange"; payload: string }
   | { type: "selectNode"; payload: string | undefined }
   | { type: "moveNode"; payload: { dragId: string; target: TreeDropTarget } }
+  | {
+    type: "insertNode";
+    payload: { componentType: string; target: TreeDropTarget };
+  }
   | { type: "undo" | "redo" | "resetLayout" };
 
 interface EditorProps {
@@ -37,7 +41,7 @@ interface EditorProps {
   selectedId?: string;
   canUndo: boolean;
   canRedo: boolean;
-  onEvent: (event: EditorEvent) => void;
+  onChange: (event: EditorEvent) => void;
 }
 
 interface IconButton {
@@ -49,7 +53,7 @@ interface IconButton {
 }
 
 const panelClass =
-  "Editor bg-gray-700 border-none flex h-full min-h-0 flex-col";
+  "Editor bg-neutral-700 border-none flex h-full min-h-0 flex-col";
 const toolbarClass = "flex shrink-0 items-center gap-1";
 const selectClass =
   "min-w-0 flex-1 rounded border border-gray-600 bg-gray-800 p-1 text-white";
@@ -117,7 +121,7 @@ const Editor = ({
   selectedId,
   canUndo,
   canRedo,
-  onEvent,
+  onChange,
 }: EditorProps) => {
   const [layoutNames, setLayoutNames] = useState<string[]>([]);
   const [treeShare, setTreeShare] = useState(DEFAULT_TREE_SHARE);
@@ -164,20 +168,20 @@ const Editor = ({
       label: "Undo",
       Icon: IconUndo,
       disabled: !canUndo,
-      run: () => onEvent({ type: "undo" }),
+      run: () => onChange({ type: "undo" }),
     },
     {
       key: "redo",
       label: "Redo",
       Icon: IconRedo,
       disabled: !canRedo,
-      run: () => onEvent({ type: "redo" }),
+      run: () => onChange({ type: "redo" }),
     },
     {
       key: "reset",
       label: "Reset layout",
       Icon: IconReset,
-      run: () => onEvent({ type: "resetLayout" }),
+      run: () => onChange({ type: "resetLayout" }),
     },
   ];
 
@@ -192,12 +196,14 @@ const Editor = ({
           className={selectClass}
           value={selectedLayout}
           onChange={(event) =>
-            onEvent({ type: "layoutChange", payload: event.target.value })}
+            onChange({ type: "layoutChange", payload: event.target.value })}
         >
           {layoutNames.map((name) => (
             <option key={name} value={name}>{name}</option>
           ))}
         </select>
+      </div>
+      <div className="flex ">
         {iconButtons.map(({ key, label, Icon, disabled, run }) => (
           <button
             key={key}
@@ -223,18 +229,23 @@ const Editor = ({
               value={tree}
               selectedId={selectedId}
               onSelect={(item) =>
-                onEvent({
+                onChange({
                   type: "selectNode",
                   payload: typeof item.id === "string" ? item.id : undefined,
                 })}
               onMove={(dragKey, target) => {
                 if (dragKey !== target.parentKey) {
-                  onEvent({
+                  onChange({
                     type: "moveNode",
                     payload: { dragId: dragKey, target },
                   });
                 }
               }}
+              onDropExternal={(componentType, target) =>
+                onChange({
+                  type: "insertNode",
+                  payload: { componentType, target },
+                })}
               canDropInside={(item) =>
                 typeof item.type === "string" && isDroppable(item as Node)}
               renderIcon={(item) => {
@@ -246,7 +257,7 @@ const Editor = ({
               {(item: TreeItem, state: TreeItemState) => (
                 <li
                   className={state.hasChildren
-                    ? "text-yellow-200"
+                    ? "text-sky-300"
                     : "text-gray-300"}
                 >
                   <span className="align-middle">{labelOf(item)}</span>

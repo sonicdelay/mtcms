@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { type ComponentType, createElement, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { useAppStore } from "../lib/app.store";
 
 export default function ModalHost() {
@@ -29,7 +30,7 @@ export default function ModalHost() {
     ? createElement(content as ComponentType)
     : (content as ReactNode);
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[1100] flex items-center justify-center p-4">
       <div
         className="absolute inset-0 bg-black/50"
@@ -64,6 +65,7 @@ export default function ModalHost() {
         </button>
         {node}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

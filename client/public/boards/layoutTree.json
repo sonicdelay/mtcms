@@ -8,7 +8,7 @@
       "children": [
         {
           "type": "img",
-          "src": "public/images/engine.jpg",
+          "src": "/images/engine.jpg",
           "style": {
             "width": "100px",
             "height": "100px"
@@ -26,7 +26,7 @@
         },
         {
           "type": "img",
-          "src": "public/images/engine.jpg",
+          "src": "/images/engine.jpg",
           "style": {
             "width": "100px",
             "height": "100px"
@@ -48,7 +48,7 @@
         },
         {
           "type": "img",
-          "src": "public/images/engine.jpg",
+          "src": "/images/engine.jpg",
           "style": {
             "width": "100px",
             "height": "100px"
@@ -112,7 +112,7 @@
             {
               "type": "SdButton",
               "data  ": "Click Me",
-              "className": "bg-blue-500 text-white p-2 rounded",
+              "className": "bg-gray-800 text-white p-2 rounded",
               "actions": [
                 {
                   "type": "Sdclick",

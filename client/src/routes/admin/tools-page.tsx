@@ -1,45 +1,36 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
-import {
-  IxActionCard,
-  IxContentHeader,
-  IxSelect,
-  IxSelectItem,
-} from "@siemens/ix-react";
-import {
-  iconCircle,
-  iconDocument,
-  iconElement,
-  iconTrashcan,
-  iconUser,
-} from "@siemens/ix-icons/icons";
 import { useAppStore } from "../../lib/app.store";
 import { getNodes, nodeTitle } from "../../lib/admin.api";
 import type { Node } from "../../lib/types";
+import SdPageHeader from "../../components/SdPageHeader";
+import SdSelect from "../../components/SdSelect";
+import SdCard from "../../components/SdCard";
+import { SdIcon, type SdIconName } from "../../components/icons";
 
-const ICON_BY_NAME: Record<string, string> = {
-  root: iconCircle,
-  node: iconElement,
-  trash: iconTrashcan,
-  user: iconUser,
+const ICON_BY_NAME: Record<string, SdIconName> = {
+  root: "circle",
+  node: "node",
+  trash: "trash",
+  user: "user",
 };
 
-const ICON_BY_TYPE: Record<string, string> = {
-  node: iconElement,
-  system: iconElement,
-  type: iconCircle,
-  area: iconElement,
-  facility: iconDocument,
-  language: iconDocument,
-  user: iconUser,
-  users: iconUser,
-  root: iconCircle,
-  trash: iconTrashcan,
+const ICON_BY_TYPE: Record<string, SdIconName> = {
+  node: "node",
+  system: "node",
+  type: "circle",
+  area: "node",
+  facility: "file",
+  language: "file",
+  user: "user",
+  users: "user",
+  root: "circle",
+  trash: "trash",
 };
 
-function iconFor(node: Node): string {
+function iconFor(node: Node): SdIconName {
   const name = (node.data as { "0"?: { icon?: string } })?.["0"]?.icon;
-  return ICON_BY_NAME[name ?? ""] ?? ICON_BY_TYPE[node.type] ?? iconDocument;
+  return ICON_BY_NAME[name ?? ""] ?? ICON_BY_TYPE[node.type] ?? "file";
 }
 
 export default function ToolsPage() {
@@ -77,27 +68,27 @@ export default function ToolsPage() {
 
   return (
     <div className="admin-page">
-      <IxContentHeader
-        headerTitle="Tools"
-        headerSubtitle={`${tools.length} tools derived from node data`}
+      <SdPageHeader
+        value="Tools"
+        subtitle={`${tools.length} tools derived from node data`}
       />
 
       <div className="admin-page__toolbar">
-        <IxSelect
+        <SdSelect
           value={selectedType}
-          onValueChange={(value) => setSelectedType(String(value))}
-        >
-          <IxSelectItem value="all">All types</IxSelectItem>
-          {types.map((type) => (
-            <IxSelectItem key={type} value={type}>
-              {type}
-            </IxSelectItem>
-          ))}
-        </IxSelect>
+          options={[
+            { value: "all", label: "All types" },
+            ...types.map((type) => ({ value: type, label: type })),
+          ]}
+          onChange={(ev) =>
+            setSelectedType(
+              String((ev.payload as { value?: string } | undefined)?.value ?? ""),
+            )}
+        />
       </div>
 
       {error && (
-        <p style={{ color: "var(--theme-color-alarm-text)" }}>{error}</p>
+        <p className="text-red-600 dark:text-red-400">{error}</p>
       )}
 
       <div className="admin-grid">
@@ -107,15 +98,15 @@ export default function ToolsPage() {
             to={`/admin/tasks`}
             style={{ textDecoration: "none", color: "inherit" }}
           >
-            <IxActionCard
-              icon={iconFor(node)}
-              heading={nodeTitle(node)}
-              subheading={node.type}
-            >
+            <SdCard value={nodeTitle(node)}>
+              <div className="mb-1 flex items-center gap-1.5 text-sm opacity-75">
+                <SdIcon name={iconFor(node)} size={14} />
+                {node.type}
+              </div>
               <p style={{ margin: 0, opacity: 0.75 }}>
                 Updated {new Date(node.update).toLocaleDateString()}
               </p>
-            </IxActionCard>
+            </SdCard>
           </Link>
         ))}
         {tools.length === 0 && <p style={{ opacity: 0.7 }}>No tools found.</p>}

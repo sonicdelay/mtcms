@@ -11,7 +11,7 @@ import type { ComponentEvent } from "./component-event";
  *
  * - `value`   inbound data for the component to render.
  * - `config`  inbound configuration object.
- * - `onEvent` outbound event channel: send events with `onEvent({ type, payload })`.
+ * - `onChange` outbound event channel: send events with `onChange({ type, payload })`.
  * - `eventIn` inbound event channel: receive a `ComponentEvent` and react to it.
  * - `children` nested content. Narrow the fourth type parameter when a component
  *   accepts a render prop instead of plain nodes.
@@ -24,8 +24,9 @@ export interface ComponentProps<
 > {
   value?: TValue | undefined;
   config?: TConfig | undefined;
-  onEvent?: ((event: TEvent) => void) | undefined;
+  onChange?: ((event: TEvent) => void) | undefined;
   eventIn?: TEvent | undefined;
   children?: TChildren | undefined;
+  className?: string | undefined;
   [key: string]: unknown;
 }

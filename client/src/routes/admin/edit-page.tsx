@@ -1,17 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import {
-  IxButton,
-  IxContentHeader,
-  IxSelect,
-  IxSelectItem,
-  showToast,
-} from "@siemens/ix-react";
-import { iconAdd, iconSaveAll, iconTrashcan } from "@siemens/ix-icons/icons";
 import { useAppStore } from "../../lib/app.store";
 import { useEditStore } from "../../lib/edit.store";
+import { toast } from "../../lib/toast.store";
 import NodeBreadcrumb from "../../components/edit/node-breadcrumb";
+import NodeTree from "../../components/edit/node-tree";
 import DynamicForm from "../../components/edit/dynamic-form";
+import SdPageHeader from "../../components/SdPageHeader";
+import SdSelect from "../../components/SdSelect";
+import SdButton from "../../components/SdButton";
 
 const ZERO_UUID = "00000000-0000-4000-8000-000000000000";
 const MIN_TREE_WIDTH = 180;
@@ -87,9 +84,6 @@ export default function EditPage() {
 
   const isRoot = node?.id === ZERO_UUID;
 
-  const toast = (title: string, type: "success" | "error" | "info") =>
-    showToast({ title, type });
-
   const handleAddChild = async () => {
     if (!node?.id || busy) return;
     const childName = globalThis.prompt("New node name:");
@@ -149,35 +143,40 @@ export default function EditPage() {
 
   return (
     <div className="admin-page admin-page--edit">
-      <IxContentHeader headerTitle={`Edit ( id=${node?.id ?? ""} )`}>
+      <SdPageHeader value={`Edit ( id=${node?.id ?? ""} )`}>
         <div className="admin-page__toolbar">
-          <IxSelect
+          <SdSelect
             value={language}
-            onValueChange={(value) => setLanguage(String(value) as "en" | "de")}
-          >
-            <IxSelectItem value="en">English</IxSelectItem>
-            <IxSelectItem value="de">Deutsch</IxSelectItem>
-          </IxSelect>
-          <IxButton
-            icon={iconAdd}
+            options={[
+              { value: "en", label: "English" },
+              { value: "de", label: "Deutsch" },
+            ]}
+            onChange={(ev) =>
+              setLanguage(
+                ((ev.payload as { value?: string } | undefined)?.value ??
+                  "") as "en" | "de",
+              )}
+          />
+          <SdButton
+            icon="plus"
             onClick={() => void handleAddChild()}
             disabled={busy}
           />
-          <IxButton
-            icon={iconSaveAll}
+          <SdButton
+            icon="save"
             onClick={() => void handleSave()}
             disabled={busy}
           />
           {!isRoot && (
-            <IxButton
-              variant="secondary"
-              icon={iconTrashcan}
+            <SdButton
+              variant="danger"
+              icon="trash"
               onClick={() => void handleDelete()}
               disabled={busy}
             />
           )}
         </div>
-      </IxContentHeader>
+      </SdPageHeader>
 
       <NodeBreadcrumb />
 
@@ -186,7 +185,7 @@ export default function EditPage() {
           className="admin-edit-layout__tree"
           style={{ width: `${tree.width}px` }}
         >
-          {/* <NodeTree /> */}
+          <NodeTree />
         </aside>
 
         <div

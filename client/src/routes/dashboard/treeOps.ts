@@ -203,3 +203,32 @@ export const ensureIds = (node: Node): Node => {
     children: nextChildren,
   };
 };
+
+/** Every node in pre-order (parent before its subtree) with its depth. */
+const treeOrder = (root: Node): { id: string; depth: number }[] => {
+  const out: { id: string; depth: number }[] = [];
+  const walk = (n: Node, depth: number) => {
+    if (n.id !== undefined && n.id !== null) out.push({ id: String(n.id), depth });
+    for (const c of childrenOf(n.children)) {
+      if (typeof c !== "string") walk(c, depth + 1);
+    }
+  };
+  walk(root, 0);
+  return out;
+};
+
+/**
+ * The node that should receive selection after `id` is deleted: the first
+ * row after the deleted subtree, falling back to the row immediately above,
+ * else undefined (root or missing id).
+ */
+export const successorOf = (root: Node, id: string): string | undefined => {
+  const order = treeOrder(root);
+  const at = order.findIndex((e) => e.id === id);
+  if (at < 0) return undefined;
+  const depth = order[at].depth;
+  for (let i = at + 1; i < order.length; i++) {
+    if (order[i].depth <= depth) return order[i].id;
+  }
+  return at > 0 ? order[at - 1].id : undefined;
+};

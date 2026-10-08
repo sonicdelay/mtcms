@@ -1,0 +1,16 @@
+{
+  "name": "mtcms",
+  "version": "1.0.0",
+  "description": "A content-management web app split into a React client and an Express API server.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "postinstall": "deno run install",
+    "dev": "deno run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
