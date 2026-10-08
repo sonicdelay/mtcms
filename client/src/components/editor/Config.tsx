@@ -120,7 +120,7 @@ const JsonSection = ({
   <div className="mt-2">
     <button
       type="button"
-      className="w-full flex items-center gap-1 text-sm text-left hover:text-white"
+      className="w-full flex items-center gap-1 text-sm text-left hover:text-[var(--fg)]"
       onClick={onToggle}
       title={open ? `Collapse ${label}` : `Expand ${label}`}
       aria-expanded={open}
@@ -152,7 +152,7 @@ const JsonSection = ({
 const FieldInput = ({ field, node, onPatch }: FieldProps) => {
   const value = node[field.key];
   const baseClass =
-    "w-full p-1 bg-gray-800 text-white border border-gray-600 rounded";
+    "w-full p-1 bg-[var(--input-bg)] text-[var(--input-fg)] border border-[var(--border-strong)] rounded";
   switch (field.kind) {
     case "select": {
       const options = field.options ?? [];
@@ -258,12 +258,15 @@ const Config = ({
   };
 
   const inputClass =
-    "w-full p-1 bg-gray-800 text-white border border-gray-600 rounded";
+    "w-full p-1 bg-[var(--input-bg)] text-[var(--input-fg)] border border-[var(--border-strong)] rounded";
   const buttonClass =
-    "p-1 bg-gray-800 text-white border border-gray-600 rounded flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed";
+    "p-1 bg-[var(--input-bg)] text-[var(--input-fg)] border border-[var(--border-strong)] rounded flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed";
 
   return (
-    <div className="Config bg-neutral-700 border-none text-white" style={style}>
+    <div
+      className="Config border-none bg-[var(--panel-background)] text-[var(--fg-base)]"
+      style={style}
+    >
       <h3>Config</h3>
       {selected
         ? (
@@ -356,7 +359,9 @@ const Config = ({
         inputClass={inputClass}
         buttonClass={buttonClass}
       />
-      {jsonError && <p className="text-red-400 text-xs mt-1">{jsonError}</p>}
+      {jsonError && (
+        <p className="text-[var(--danger-fg)] text-xs mt-1">{jsonError}</p>
+      )}
 
       <SdDummy
         value="someValue"

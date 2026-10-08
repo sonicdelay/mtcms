@@ -38,7 +38,7 @@ export default function ModalHost() {
         aria-hidden
       />
       <div
-        className={`relative w-full rounded-xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-900 ${
+        className={`relative w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-xl ${
           modalSize === "wide"
             ? "flex h-[92vh] max-h-[92vh] max-w-[95vw] flex-col"
             : "max-w-md"
@@ -47,7 +47,7 @@ export default function ModalHost() {
         <button
           type="button"
           onClick={closeModal}
-          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800"
+          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-[var(--fg-muted)] transition-colors hover:bg-[var(--surface-hover)]"
           aria-label="Close dialog"
         >
           <svg

@@ -45,7 +45,7 @@ export default function FileEditorDialog({
     <div className="flex h-full min-h-0 flex-1 flex-col gap-3">
       <div className="flex items-center justify-between gap-4 pr-10">
         <div className="min-w-0">
-          <div className="truncate text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+          <div className="truncate text-lg font-semibold text-[var(--fg)]">
             {name}
           </div>
           <div className="truncate text-sm opacity-70">{path}</div>
@@ -62,14 +62,14 @@ export default function FileEditorDialog({
         </div>
       </div>
       {error && (
-        <p className="text-red-600 dark:text-red-400">{error}</p>
+        <p className="text-[var(--danger-fg)]">{error}</p>
       )}
       <textarea
         aria-label={`Content of ${name}`}
         spellCheck={false}
         value={content}
         onChange={(event) => setContent(event.target.value)}
-        className="w-full min-h-0 flex-1 resize-none rounded-lg border border-zinc-300 bg-zinc-50 p-3 font-mono text-sm leading-relaxed text-zinc-900 outline-none focus:border-blue-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50"
+        className="w-full min-h-0 flex-1 resize-none rounded-lg border border-[var(--border-strong)] bg-[var(--input-bg)] p-3 font-mono text-sm leading-relaxed text-[var(--input-fg)] outline-none focus:border-[var(--focus)]"
       />
     </div>
   );

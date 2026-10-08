@@ -13,15 +13,12 @@ const SdCard = (props: SdCardProps) => {
     <div
       {...rest}
       className={[
-        "rounded-lg border border-zinc-200 bg-white p-4 text-sm",
-        "dark:border-zinc-700 dark:bg-zinc-900",
+        "rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 text-sm",
         className,
       ].filter(Boolean).join(" ")}
     >
       {value && (
-        <h3 className="mb-2 font-semibold text-zinc-900 dark:text-zinc-100">
-          {value}
-        </h3>
+        <h3 className="mb-2 font-semibold text-[var(--fg)]">{value}</h3>
       )}
       {children}
     </div>

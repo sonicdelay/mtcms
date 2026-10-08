@@ -43,24 +43,24 @@ const SdApplication = (props: SdApplicationProps) => {
     <div
       {...rest}
       className={[
-        "flex h-screen flex-col bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50",
+        "flex h-screen flex-col bg-[var(--background)] text-[var(--foreground)]",
         className,
       ].filter(Boolean).join(" ")}
     >
-      <header className="flex h-12 shrink-0 items-center justify-between border-b border-zinc-200 px-4 dark:border-zinc-800">
+      <header className="flex h-12 shrink-0 items-center justify-between border-b border-[var(--border)] px-4">
         <span className="text-base font-semibold">{brand ?? "mtCMS"}</span>
         <div className="flex items-center gap-3 text-sm">
           <button
             type="button"
             aria-label="Toggle theme"
             title="Toggle theme"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-md text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-md text-[var(--fg-muted)] hover:bg-[var(--surface-hover)]"
             onClick={onToggleTheme}
           >
             <SdIcon name={theme === "dark" ? "moon" : "sun"} size={16} />
           </button>
           {user && (
-            <span className="text-zinc-600 dark:text-zinc-300">
+            <span className="text-[var(--fg-muted)]">
               {user.username} ({user.role})
             </span>
           )}
@@ -69,7 +69,7 @@ const SdApplication = (props: SdApplicationProps) => {
               type="button"
               aria-label="Logout"
               title="Logout"
-              className="inline-flex h-8 w-8 items-center justify-center rounded-md text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-md text-[var(--fg-muted)] hover:bg-[var(--surface-hover)]"
               onClick={onLogout}
             >
               <SdIcon name="logout" size={16} />
@@ -79,7 +79,7 @@ const SdApplication = (props: SdApplicationProps) => {
       </header>
       <div className="flex min-h-0 flex-1">
         {navItems && (
-          <nav className="w-56 shrink-0 overflow-auto border-r border-zinc-200 py-2 dark:border-zinc-800">
+          <nav className="w-56 shrink-0 overflow-auto border-r border-[var(--border)] py-2">
             {navItems.map((item) => {
               const active = activeHref !== undefined &&
                 (item.href === "/admin"
@@ -92,8 +92,8 @@ const SdApplication = (props: SdApplicationProps) => {
                   className={[
                     "flex w-full items-center gap-2 px-4 py-2 text-left text-sm transition-colors",
                     active
-                      ? "bg-sky-50 font-medium text-sky-700 dark:bg-zinc-800 dark:text-sky-400"
-                      : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800",
+                      ? "bg-[var(--accent-subtle-bg)] font-medium text-[var(--accent-subtle-fg)]"
+                      : "text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
                   ].join(" ")}
                   onClick={() => onNavigate?.(item.href)}
                 >

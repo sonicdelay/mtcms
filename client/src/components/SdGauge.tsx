@@ -39,7 +39,7 @@ const SdGauge = (props: SdGaugeProps) => {
           r="50"
           cx="55"
           cy="55"
-          stroke="#404040"
+          stroke="var(--border-strong)"
           strokeWidth="10"
           fill="none"
           strokeDasharray="270 90"

@@ -53,17 +53,17 @@ interface IconButton {
 }
 
 const panelClass =
-  "Editor bg-neutral-700 border-none flex h-full min-h-0 flex-col";
+  "Editor border-none bg-[var(--panel-background)] flex h-full min-h-0 flex-col";
 const toolbarClass = "flex shrink-0 items-center gap-1";
 const selectClass =
-  "min-w-0 flex-1 rounded border border-gray-600 bg-gray-800 p-1 text-white";
+  "min-w-0 flex-1 rounded border border-[var(--border-strong)] bg-[var(--input-bg)] p-1 text-[var(--input-fg)]";
 const iconButtonClass =
-  "flex size-7 shrink-0 cursor-grab items-center justify-center rounded border border-gray-600 bg-gray-800 text-gray-200 hover:bg-gray-700 active:cursor-grabbing disabled:cursor-not-allowed disabled:opacity-40";
+  "flex size-7 shrink-0 cursor-grab items-center justify-center rounded border border-[var(--border-strong)] bg-[var(--input-bg)] text-[var(--fg-base)] hover:bg-[var(--surface-hover)] active:cursor-grabbing disabled:cursor-not-allowed disabled:opacity-40";
 const paletteItemClass =
-  "flex min-w-0 cursor-grab items-center gap-1.5 rounded border border-transparent px-1.5 py-0.5 text-left text-sm text-gray-200 hover:border-gray-600 hover:bg-gray-800 active:cursor-grabbing";
+  "flex min-w-0 cursor-grab items-center gap-1.5 rounded border border-transparent px-1.5 py-0.5 text-left text-sm text-[var(--fg-base)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-hover)] active:cursor-grabbing";
 const paletteClass = "flex flex-col gap-0.5 px-1";
 const groupTitleClass =
-  "px-2 py-1 text-[10px] uppercase tracking-wider text-gray-400";
+  "px-2 py-1 text-[10px] uppercase tracking-wider text-[var(--fg-muted)]";
 
 const labelOf = (item: TreeItem): string => {
   const type = typeof item.type === "string" ? item.type : undefined;
@@ -220,7 +220,7 @@ const Editor = ({
       </div>
 
       <div
-        className="flex min-h-0 flex-1 flex-col overflow-auto border-t border-white/20"
+        className="flex min-h-0 flex-1 flex-col overflow-auto border-t border-[var(--border)]"
         style={{ flexBasis: `${treeShare * 100}%`, flexGrow: 0, flexShrink: 0 }}
       >
         {tree
@@ -257,12 +257,12 @@ const Editor = ({
               {(item: TreeItem, state: TreeItemState) => (
                 <li
                   className={state.hasChildren
-                    ? "text-sky-300"
-                    : "text-gray-300"}
+                    ? "text-[var(--link-color)]"
+                    : "text-[var(--fg-base)]"}
                 >
                   <span className="align-middle">{labelOf(item)}</span>
                   {shortId(item) && (
-                    <span className="ml-1 align-middle text-[10px] text-gray-500">
+                    <span className="ml-1 align-middle text-[10px] text-[var(--fg-subtle)]">
                       {shortId(item)}
                     </span>
                   )}

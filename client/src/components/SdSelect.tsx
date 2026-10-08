@@ -16,7 +16,7 @@ interface SdSelectProps extends ComponentProps<string> {
 }
 
 const FIELD_CLASSES =
-  "w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1.5 text-sm text-zinc-900 outline-none transition-colors focus:border-blue-500 disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50";
+  "w-full rounded-md border border-[var(--border-strong)] bg-[var(--input-bg)] px-3 py-1.5 text-sm text-[var(--input-fg)] outline-none transition-colors focus:border-[var(--focus)] disabled:opacity-50";
 
 const SdSelect = (props: SdSelectProps) => {
   const {
@@ -50,7 +50,7 @@ const SdSelect = (props: SdSelectProps) => {
         .join(" ")}
     >
       {label && (
-        <span className="font-medium text-zinc-700 dark:text-zinc-300">
+        <span className="font-medium text-[var(--fg-base)]">
           {label}
         </span>
       )}

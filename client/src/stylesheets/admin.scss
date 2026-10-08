@@ -1,14 +1,15 @@
 :root {
-  --admin-border: #d4d4d8;
-  --admin-primary: #00bde3;
+  --admin-border: #cecece;
+  --admin-primary: #007acc;
   --admin-field-bg: #ffffff;
-  --admin-text: #171717;
+  --admin-text: #000000;
 }
 
 .dark {
-  --admin-border: #3f3f46;
-  --admin-field-bg: #09090b;
-  --admin-text: #ededed;
+  --admin-border: #3c3c3c;
+  --admin-primary: #007acc;
+  --admin-field-bg: #3c3c3c;
+  --admin-text: #d4d4d4;
 }
 
 .admin-page {

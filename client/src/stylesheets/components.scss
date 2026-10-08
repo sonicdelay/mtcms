@@ -7,8 +7,9 @@
   }
 
   .Wave {
-    border: solid 10px #127a69;
-    background-color: #0b473a;
+    border: solid 10px var(--accent);
+    background-color: var(--accent-subtle-bg);
+    color: var(--accent-subtle-fg);
   }
 
   .Gauge {
@@ -40,7 +41,7 @@
     }
 
     &:focus {
-      outline: 1px solid #4a90e2;
+      outline: 1px solid var(--focus);
       outline-offset: -1px;
     }
   }
@@ -56,19 +57,20 @@
   }
 
   .Tree-item-selected {
-    background-color: rgba(74, 144, 226, 0.35);
+    background-color: var(--accent-subtle-bg);
+    color: var(--accent-subtle-fg);
   }
 
   .Tree-drop-before {
-    box-shadow: inset 0 2px 0 #4ade80;
+    box-shadow: inset 0 2px 0 var(--success);
   }
 
   .Tree-drop-after {
-    box-shadow: inset 0 -2px 0 #4ade80;
+    box-shadow: inset 0 -2px 0 var(--success);
   }
 
   .Tree-drop-inside {
-    outline: 2px dashed #4ade80;
+    outline: 2px dashed var(--success);
     outline-offset: -2px;
   }
 

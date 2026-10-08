@@ -37,7 +37,7 @@ const SdCheckbox = (props: SdCheckboxProps) => {
   return (
     <label
       className={[
-        "flex items-center gap-2 text-sm text-zinc-800 dark:text-zinc-200",
+        "flex items-center gap-2 text-sm text-[var(--fg-base)]",
         disabled ? "opacity-50" : undefined,
         className,
       ].filter(Boolean).join(" ")}
@@ -47,7 +47,7 @@ const SdCheckbox = (props: SdCheckboxProps) => {
         type="checkbox"
         checked={value ?? false}
         disabled={disabled}
-        className="h-4 w-4 rounded border-zinc-300 text-sky-600 focus:ring-sky-500 dark:border-zinc-600 dark:bg-zinc-900"
+        className="h-4 w-4 rounded border-[var(--border-strong)] bg-[var(--input-bg)] text-[var(--accent)] focus:ring-[var(--accent)]"
         onChange={handleChange}
       />
       {label && <span>{label}</span>}

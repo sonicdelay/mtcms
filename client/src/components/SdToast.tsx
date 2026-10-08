@@ -14,9 +14,9 @@ interface SdToastProps extends ComponentProps<SdToastValue> {
 }
 
 const BORDER: Record<ToastType, string> = {
-  success: "border-l-green-500",
-  error: "border-l-red-500",
-  info: "border-l-blue-500",
+  success: "border-l-[var(--success)]",
+  error: "border-l-[var(--danger)]",
+  info: "border-l-[var(--accent)]",
 };
 
 const SdToast = (props: SdToastProps) => {
@@ -35,20 +35,19 @@ const SdToast = (props: SdToastProps) => {
     <div
       {...rest}
       className={[
-        "flex w-80 items-start gap-2 rounded-md border border-zinc-200 border-l-4 bg-white px-3 py-2 text-sm shadow-lg",
-        "dark:border-zinc-700 dark:border-l-4 dark:bg-zinc-900",
+        "flex w-80 items-start gap-2 rounded-md border border-[var(--border)] border-l-4 bg-[var(--surface)] px-3 py-2 text-sm shadow-lg",
         BORDER[value.type],
         className,
       ].filter(Boolean).join(" ")}
       role="status"
     >
-      <span className="flex-1 text-zinc-800 dark:text-zinc-100">
+      <span className="flex-1 text-[var(--fg)]">
         {value.title}
       </span>
       <button
         type="button"
         aria-label="Dismiss"
-        className="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200"
+        className="text-[var(--fg-muted)] hover:text-[var(--fg)]"
         onClick={handleDismiss}
       >
         <SdIcon name="close" size={14} />

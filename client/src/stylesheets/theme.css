@@ -1,84 +1,96 @@
 /* Single source of truth for light/dark theme tokens.
    Flip is driven by the .dark class on <html> (Providers + app.store),
    NOT by prefers-color-scheme — the store seeds the initial value from
-   the OS but the user toggle always wins. */
+   the OS but the user toggle always wins.
+
+   Palette: VS Code Light+ (:root) and VS Code Dark+ (.dark). */
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000000;
 
   --background-color: #ffffff;
-  --color: #202020;
-  --border-color: #d4d4d8;
+  --color: #333333;
+  --border-color: #cecece;
   --border-width: 1px;
   --border-radius: 4px;
-  --panel-background: #f5f5f5;
-  --accent-color: #127a69;
+  --panel-background: #f3f3f3;
+  --accent-color: #007acc;
 
-  --bg-code: #f4f4f5;
-  --link-color: #2563eb;
+  --bg-code: #f3f3f3;
+  --link-color: #006ab1;
   --hover-overlay: rgba(0, 0, 0, 0.05);
 
+  --success: #388a34;
+  --input-bg: #ffffff;
+  --input-fg: #000000;
+
   /* Chrome DevTools-style scrollbars */
-  --scrollbar-thumb: #bdc1c6;
-  --scrollbar-thumb-hover: #9aa0a6;
+  --scrollbar-thumb: #c1c1c1;
+  --scrollbar-thumb-hover: #a6a6a6;
 
   /* Component vocabulary — spec docs/superpowers/specs/2026-10-08-sd-component-styling.md §1 */
   --surface: #ffffff;
   --surface-raised: #ffffff;
-  --surface-sunken: #fafafa;
-  --surface-hover: #f4f4f5;
-  --fg: #18181b;
-  --fg-base: #3f3f46;
-  --fg-muted: #71717a;
-  --fg-subtle: #a1a1aa;
-  --border: #e4e4e7;
-  --border-strong: #d4d4d8;
-  --focus: #3b82f6;
-  --accent: #0284c7;
-  --accent-hover: #0369a1;
-  --accent-subtle-bg: #f0f9ff;
-  --accent-subtle-fg: #0369a1;
-  --danger: #dc2626;
-  --danger-fg: #dc2626;
+  --surface-sunken: #f3f3f3;
+  --surface-hover: #eeeeee;
+  --fg: #000000;
+  --fg-base: #333333;
+  --fg-muted: #616161;
+  --fg-subtle: #8a8a8a;
+  --border: #e0e0e0;
+  --border-strong: #cecece;
+  --focus: #007fd4;
+  --accent: #007acc;
+  --accent-hover: #005a9e;
+  --accent-subtle-bg: #d6ebff;
+  --accent-subtle-fg: #006ab1;
+  --danger: #e51400;
+  --danger-hover: #cc1100;
+  --danger-fg: #e51400;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --background: #1e1e1e;
+  --foreground: #d4d4d4;
 
-  --background-color: #202020;
+  --background-color: #1e1e1e;
   --color: #ffffff;
-  --border-color: #ffffff;
+  --border-color: #3c3c3c;
   --border-width: 1px;
   --border-radius: 4px;
-  --panel-background: #2b2b2b;
-  --accent-color: #4dd0b0;
+  --panel-background: #252526;
+  --accent-color: #007acc;
 
-  --bg-code: #27272a;
-  --link-color: #60a5fa;
-  --hover-overlay: rgba(255, 255, 255, 0.08);
+  --bg-code: #252526;
+  --link-color: #3794ff;
+  --hover-overlay: rgba(255, 255, 255, 0.07);
+
+  --success: #73c991;
+  --input-bg: #3c3c3c;
+  --input-fg: #d4d4d4;
 
   /* Chrome DevTools-style scrollbars */
-  --scrollbar-thumb: #5f6368;
-  --scrollbar-thumb-hover: #80868b;
+  --scrollbar-thumb: #424242;
+  --scrollbar-thumb-hover: #4f4f4f;
 
   /* Component vocabulary — spec docs/superpowers/specs/2026-10-08-sd-component-styling.md §1 */
-  --surface: #09090b;
-  --surface-raised: #18181b;
-  --surface-sunken: #09090b;
-  --surface-hover: #27272a;
-  --fg: #fafafa;
-  --fg-base: #d4d4d8;
-  --fg-muted: #a1a1aa;
-  --fg-subtle: #a1a1aa;
-  --border: #3f3f46;
-  --border-strong: #52525b;
-  --focus: #3b82f6;
-  --accent: #0ea5e9;
-  --accent-hover: #38bdf8;
-  --accent-subtle-bg: #27272a;
-  --accent-subtle-fg: #38bdf8;
-  --danger: #ef4444;
-  --danger-fg: #f87171;
+  --surface: #252526;
+  --surface-raised: #252526;
+  --surface-sunken: #1e1e1e;
+  --surface-hover: #2a2d2e;
+  --fg: #ffffff;
+  --fg-base: #d4d4d4;
+  --fg-muted: #9d9d9d;
+  --fg-subtle: #6e6e6e;
+  --border: #3c3c3c;
+  --border-strong: #454545;
+  --focus: #007fd4;
+  --accent: #0e639c;
+  --accent-hover: #1177bb;
+  --accent-subtle-bg: #094771;
+  --accent-subtle-fg: #ffffff;
+  --danger: #f14c4c;
+  --danger-hover: #ff6a6a;
+  --danger-fg: #f14c4c;
 }

@@ -272,7 +272,7 @@ const DashboardPage = () => {
         </>
       )}
       <div
-        className="flex min-w-0 w-full flex-1 flex-col overflow-auto bg-zinc-800"
+        className="flex min-w-0 w-full flex-1 flex-col overflow-auto bg-[var(--background)]"
         {...canvasProps}
       >
         {tree

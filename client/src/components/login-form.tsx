@@ -42,7 +42,7 @@ export default function LoginForm() {
             )}
         />
         {error && (
-          <p className="m-0 text-red-600 dark:text-red-400">{error}</p>
+          <p className="m-0 text-[var(--danger-fg)]">{error}</p>
         )}
         <SdButton type="submit" disabled={loading}>
           {loading ? "Signing in…" : "Sign in"}

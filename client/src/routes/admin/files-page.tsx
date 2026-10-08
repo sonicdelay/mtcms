@@ -308,7 +308,7 @@ export default function FilesPage() {
           </div>
 
           {error && (
-            <p className="text-red-600 dark:text-red-400">{error}</p>
+            <p className="text-[var(--danger-fg)]">{error}</p>
           )}
 
           <div className="admin-file-list">

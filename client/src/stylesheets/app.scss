@@ -6,8 +6,8 @@
   //
 
   .Editor {
-    border: solid 10px #073f07;
-    background-color: #404040;
+    border: solid 10px var(--border-strong);
+    background-color: var(--panel-background);
     padding: 0px;
     width: 200px;
 
@@ -28,33 +28,33 @@
     }
 
     hr {
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: var(--border);
       margin: 10px 0;
     }
   }
 
   .Config {
-    border: solid 10px #2c2d2c;
-    background-color: #000040;
+    border: solid 10px var(--border-strong);
+    background-color: var(--input-bg);
     padding: 10px;
     width: 250px;
     overflow: auto;
   }
 
   .ed-selected {
-    outline: 1px solid #4a90e2 !important;
+    outline: 1px solid var(--focus) !important;
     outline-offset: 2px;
   }
 
   .ed-drop-target {
-    outline: 2px dashed #4ade80 !important;
+    outline: 2px dashed var(--success) !important;
     outline-offset: 2px;
   }
 
   .ed-drop-placeholder {
     pointer-events: none;
     box-sizing: border-box;
-    background: rgba(74, 222, 128, 0.5);
+    background: color-mix(in srgb, var(--success) 50%, transparent);
     border-radius: 2px;
     flex: 0 0 5px;
     align-self: stretch;

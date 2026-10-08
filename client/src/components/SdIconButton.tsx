@@ -12,11 +12,11 @@ interface SdIconButtonProps extends ComponentProps<SdIconName> {
 }
 
 const VARIANTS = {
-  primary: "bg-sky-600 text-white hover:bg-sky-700",
+  primary: "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)]",
   secondary:
-    "border border-zinc-300 bg-white text-zinc-700 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800",
+    "border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
   ghost:
-    "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-50",
+    "text-[var(--fg-muted)] hover:bg-[var(--surface-hover)] hover:text-[var(--fg)]",
 } as const;
 
 const SdIconButton = (props: SdIconButtonProps) => {

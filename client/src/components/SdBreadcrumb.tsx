@@ -48,7 +48,7 @@ const SdBreadcrumb = (props: SdBreadcrumbProps) => {
           {index > 0 && <SdIcon name="chevronRight" size={12} />}
           <button
             type="button"
-            className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-50"
+            className="text-[var(--fg-muted)] hover:text-[var(--fg)]"
             onClick={() =>
               handleSelect(item.id)}
           >
@@ -59,12 +59,12 @@ const SdBreadcrumb = (props: SdBreadcrumbProps) => {
       {value?.next && value.next.length > 0 && (
         <span className="flex items-center gap-1">
           <SdIcon name="chevronRight" size={12} />
-          <span className="text-zinc-400">››</span>
+          <span className="text-[var(--fg-subtle)]">››</span>
           {value.next.map((item) => (
             <span key={item.id} className="flex items-center gap-1">
               <button
                 type="button"
-                className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-50"
+                className="text-[var(--fg-muted)] hover:text-[var(--fg)]"
                 onClick={() =>
                   handleSelect(item.id)}
               >

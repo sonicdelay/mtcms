@@ -15,14 +15,12 @@ interface SdButtonProps extends ComponentProps<string> {
 }
 
 const VARIANTS: Record<SdButtonVariant, string> = {
-  primary:
-    "bg-sky-600 text-white hover:bg-sky-700 dark:bg-sky-500 dark:hover:bg-sky-400",
+  primary: "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)]",
   secondary:
-    "border border-zinc-300 bg-white text-zinc-800 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800",
+    "border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
   danger:
-    "bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-400",
-  ghost:
-    "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800",
+    "bg-[var(--danger)] text-white hover:bg-[var(--danger-hover)]",
+  ghost: "text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
 };
 
 const SdButton = (props: SdButtonProps) => {

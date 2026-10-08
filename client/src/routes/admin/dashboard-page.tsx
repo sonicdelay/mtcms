@@ -55,7 +55,7 @@ export default function DashboardPage() {
   if (error) {
     return (
       <div className="admin-page">
-        <p className="text-red-600 dark:text-red-400">{error}</p>
+        <p className="text-[var(--danger-fg)]">{error}</p>
       </div>
     );
   }

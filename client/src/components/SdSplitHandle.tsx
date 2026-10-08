@@ -71,7 +71,7 @@ const SdSplitHandle = ({
         onResize(sign * (event.key === plusKey ? KEYBOARD_STEP : -KEYBOARD_STEP));
       }}
       style={horizontal ? { height: HANDLE_WIDTH } : { width: HANDLE_WIDTH }}
-      className={`shrink-0 touch-none select-none bg-gray-800 hover:bg-teal-600 focus:bg-teal-600 data-[dragging=true]:bg-teal-500 ${
+      className={`shrink-0 touch-none select-none bg-[var(--border-strong)] hover:bg-[var(--accent)] focus:bg-[var(--accent)] data-[dragging=true]:bg-[var(--accent-hover)] ${
         horizontal ? "cursor-row-resize" : "cursor-col-resize"
       }`}
     />
