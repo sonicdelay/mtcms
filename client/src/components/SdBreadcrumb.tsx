@@ -1,4 +1,4 @@
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentProps } from "../models/sd-component-props";
 import { SdIcon } from "./icons";
 
 export interface SdBreadcrumbItem {
@@ -11,7 +11,7 @@ export interface SdBreadcrumbValue {
   next?: SdBreadcrumbItem[] | undefined;
 }
 
-interface SdBreadcrumbProps extends ComponentProps<SdBreadcrumbValue> {
+interface SdBreadcrumbProps extends SdComponentProps<SdBreadcrumbValue> {
   value?: SdBreadcrumbValue | undefined;
   onSelect?: ((id: string) => void) | undefined;
   [key: string]: unknown;

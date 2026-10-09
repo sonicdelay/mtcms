@@ -22,7 +22,7 @@ const MIN_TREE_SHARE = 0.15;
 
 /**
  * Every interaction the Editor reports to its host, shaped like a
- * `ComponentEvent`. The host switches on `type` to decide what to do.
+ * `SdComponentEvent`. The host switches on `type` to decide what to do.
  */
 export type EditorEvent =
   | { type: "layoutChange"; payload: string }

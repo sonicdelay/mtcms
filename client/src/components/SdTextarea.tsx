@@ -1,8 +1,8 @@
 import { type ChangeEvent, useEffect, useRef } from "react";
-import type { ComponentEvent } from "../models/component-event";
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentEvent } from "../models/component-event";
+import type { SdComponentProps } from "../models/sd-component-props";
 
-interface SdTextareaProps extends ComponentProps<string> {
+interface SdTextareaProps extends SdComponentProps<string> {
   value?: string;
   label?: string | undefined;
   rows?: number | undefined;
@@ -26,7 +26,7 @@ const SdTextarea = (props: SdTextareaProps) => {
     ...rest
   } = props;
 
-  const lastEvent = useRef<ComponentEvent | undefined>(undefined);
+  const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
     if (!eventIn || lastEvent.current === eventIn) return;
     lastEvent.current = eventIn;

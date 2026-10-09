@@ -1,8 +1,8 @@
 import { type ChangeEvent, useEffect, useRef } from "react";
-import type { ComponentEvent } from "../models/component-event";
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentEvent } from "../models/component-event";
+import type { SdComponentProps } from "../models/sd-component-props";
 
-interface SdInputProps extends ComponentProps<string> {
+interface SdInputProps extends SdComponentProps<string> {
   value?: string;
   type?: string | undefined;
   label?: string | undefined;
@@ -30,7 +30,7 @@ const SdInput = (props: SdInputProps) => {
     ...rest
   } = props;
 
-  const lastEvent = useRef<ComponentEvent | undefined>(undefined);
+  const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
     if (!eventIn || lastEvent.current === eventIn) return;
     lastEvent.current = eventIn;

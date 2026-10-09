@@ -1,6 +1,6 @@
 import { type MouseEvent, useEffect, useRef } from "react";
-import type { ComponentEvent } from "../models/component-event";
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentEvent } from "../models/component-event";
+import type { SdComponentProps } from "../models/sd-component-props";
 import SdDummyContainerComponent from "./SdDummyContainerComponent";
 import SdDummyLeafComponent from "./SdDummyLeafComponent";
 
@@ -23,7 +23,7 @@ import SdDummyLeafComponent from "./SdDummyLeafComponent";
 export type SdDummyValue = string | Record<string, unknown> | unknown[];
 
 /** Handler invoked when an inbound event's type matches an action key. */
-export type SdDummyAction = (event: ComponentEvent) => void;
+export type SdDummyAction = (event: SdComponentEvent) => void;
 
 export interface SdDummyConfig {
   title?: string;
@@ -35,10 +35,10 @@ export interface SdDummyConfig {
 const DEFAULT_CONFIG: SdDummyConfig = {
   title: "Dummy",
   actions: {
-    test: (event: ComponentEvent) => {
+    test: (event: SdComponentEvent) => {
       console.log("SdDummy: test action received event", event);
     },
-    test2: (event: ComponentEvent) => {
+    test2: (event: SdComponentEvent) => {
       alert("SdDummy: test2 action received event " + JSON.stringify(event));
     },
   },
@@ -46,11 +46,11 @@ const DEFAULT_CONFIG: SdDummyConfig = {
 
 const DEFAULT_VALUE: SdDummyValue = "default value";
 
-interface SdDummyProps extends ComponentProps<SdDummyValue, SdDummyConfig> {
+interface SdDummyProps extends SdComponentProps<SdDummyValue, SdDummyConfig> {
   value?: SdDummyValue;
   config?: SdDummyConfig;
   /** One inbound event, handled once per distinct identity, then forwarded. */
-  eventIn?: ComponentEvent;
+  eventIn?: SdComponentEvent;
   [key: string]: unknown;
 }
 
@@ -70,7 +70,7 @@ const SdDummy = (props: SdDummyProps) => {
   // without a matching action are dispatched to the global actionhandler
   // (sd.dispatchAction). Either way the event is still forwarded to onChange.
   const actions = settings.actions;
-  const lastEvent = useRef<ComponentEvent | undefined>(undefined);
+  const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
     if (!eventIn || lastEvent.current === eventIn) return;
     lastEvent.current = eventIn;

@@ -1,4 +1,4 @@
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentProps } from "../models/sd-component-props";
 import type { ToastType } from "../lib/toast.store";
 import { SdIcon } from "./icons";
 
@@ -7,7 +7,7 @@ export interface SdToastValue {
   type: ToastType;
 }
 
-interface SdToastProps extends ComponentProps<SdToastValue> {
+interface SdToastProps extends SdComponentProps<SdToastValue> {
   value?: SdToastValue | undefined;
   onDismiss?: (() => void) | undefined;
   [key: string]: unknown;

@@ -1,6 +1,6 @@
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentProps } from "../models/sd-component-props";
 
-interface SdCardProps extends ComponentProps {
+interface SdCardProps extends SdComponentProps {
   value?: string;
   [key: string]: unknown;
 }

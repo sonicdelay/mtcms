@@ -1,8 +1,8 @@
 import { useStoreValue } from "../routes/dashboard/store";
 import type { DeepKeys, WaveState } from "../routes/dashboard/store";
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentProps } from "../models/sd-component-props";
 
-interface SdGaugeProps extends ComponentProps {
+interface SdGaugeProps extends SdComponentProps {
   title?: string;
   source?: DeepKeys<WaveState>;
   min?: number;
@@ -17,6 +17,10 @@ const SdGauge = (props: SdGaugeProps) => {
     source = "sin",
     min = -1,
     max = 1,
+    value,
+    config,
+    eventIn,
+    onChange,
     ...rest
   } = props;
 

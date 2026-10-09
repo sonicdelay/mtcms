@@ -266,8 +266,8 @@ export const palette: Record<string, PaletteItem> = {
     icon: "label",
     group: "form",
     droppable: true,
-    defaultProps: () => ({ label: "Checkbox", value: false }),
-    settings: [{ key: "label", label: "Label" }],
+    defaultProps: () => ({ value: false, config: { label: "Checkbox" } }),
+    settings: [{ key: "config.label", label: "Label" }],
   },
 
   SdCard: {

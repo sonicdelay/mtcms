@@ -1,6 +1,6 @@
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentProps } from "../models/sd-component-props";
 
-interface SdKpiProps extends ComponentProps<string | number> {
+interface SdKpiProps extends SdComponentProps<string | number> {
   value?: string | number;
   label?: string | undefined;
   [key: string]: unknown;

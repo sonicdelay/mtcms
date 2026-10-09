@@ -2,7 +2,7 @@ import { type CSSProperties, type ReactNode, useEffect, useState } from "react";
 import type { Node } from "../../models/types";
 import { type ConfigField, palette } from "../../routes/dashboard/registry";
 import SdDummy from "../SdDummy";
-import type { ComponentEvent } from "../../models/component-event";
+import type { SdComponentEvent } from "../../models/component-event";
 
 interface ConfigProps {
   tree: Node;
@@ -149,8 +149,30 @@ const JsonSection = ({
   </div>
 );
 
+const readPath = (node: Node, path: string): unknown =>
+  path.split(".").reduce<unknown>((acc, key) => {
+    if (acc === null || typeof acc !== "object") return undefined;
+    return (acc as Record<string, unknown>)[key];
+  }, node);
+
+const writePath = (node: Node, path: string, value: unknown): Partial<Node> => {
+  const keys = path.split(".");
+  const root = { ...node } as Record<string, unknown>;
+  let cursor = root;
+  for (const key of keys.slice(0, -1)) {
+    const current = cursor[key];
+    const next = current !== null && typeof current === "object"
+      ? { ...(current as Record<string, unknown>) }
+      : {};
+    cursor[key] = next;
+    cursor = next;
+  }
+  cursor[keys[keys.length - 1]] = value;
+  return root as Partial<Node>;
+};
+
 const FieldInput = ({ field, node, onPatch }: FieldProps) => {
-  const value = node[field.key];
+  const value = readPath(node, field.key);
   const baseClass =
     "w-full p-1 bg-[var(--input-bg)] text-[var(--input-fg)] border border-[var(--border-strong)] rounded";
   switch (field.kind) {
@@ -163,7 +185,7 @@ const FieldInput = ({ field, node, onPatch }: FieldProps) => {
           className={baseClass}
           value={str}
           onChange={(e) =>
-            onPatch({ [field.key]: e.target.value } as Partial<Node>)}
+            onPatch(writePath(node, field.key, e.target.value))}
         >
           {value === undefined && <option value="">—</option>}
           {!known && <option value={str}>{str}</option>}
@@ -180,7 +202,7 @@ const FieldInput = ({ field, node, onPatch }: FieldProps) => {
           onChange={(e) => {
             const v = e.target.value;
             onPatch(
-              { [field.key]: v === "" ? "" : Number(v) } as Partial<Node>,
+              writePath(node, field.key, v === "" ? "" : Number(v)),
             );
           }}
         />
@@ -192,7 +214,7 @@ const FieldInput = ({ field, node, onPatch }: FieldProps) => {
           rows={3}
           value={typeof value === "string" ? value : ""}
           onChange={(e) =>
-            onPatch({ [field.key]: e.target.value } as Partial<Node>)}
+            onPatch(writePath(node, field.key, e.target.value))}
         />
       );
     default:
@@ -202,7 +224,7 @@ const FieldInput = ({ field, node, onPatch }: FieldProps) => {
           className={baseClass}
           value={typeof value === "string" ? value : ""}
           onChange={(e) =>
-            onPatch({ [field.key]: e.target.value } as Partial<Node>)}
+            onPatch(writePath(node, field.key, e.target.value))}
         />
       );
   }
@@ -226,7 +248,7 @@ const Config = ({
   const [nodeJsonOpen, setNodeJsonOpen] = useState(false);
   const [treeJsonOpen, setTreeJsonOpen] = useState(false);
   const [jsonError, setJsonError] = useState<string | undefined>(undefined);
-  const [dummyEvent, setDummyEvent] = useState<ComponentEvent>();
+  const [dummyEvent, setDummyEvent] = useState<SdComponentEvent>();
 
   useEffect(() => {
     setNodeJson(selected ? JSON.stringify(selected, null, 2) : "");

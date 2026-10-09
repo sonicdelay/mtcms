@@ -1,15 +1,25 @@
 import { useStoreValue } from "../routes/dashboard/store";
 import type { DeepKeys, WaveState } from "../routes/dashboard/store";
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentProps } from "../models/sd-component-props";
 
-interface WaveProps extends ComponentProps {
+interface WaveProps extends SdComponentProps {
   title?: string;
   source?: DeepKeys<WaveState>;
   [key: string]: unknown;
 }
 
 const Wave = (props: WaveProps) => {
-  const { title, className, source = "sin", children, ...rest } = props;
+  const {
+    title,
+    className,
+    source = "sin",
+    children,
+    value: _value,
+    config,
+    eventIn,
+    onChange,
+    ...rest
+  } = props;
   const value = useStoreValue(source) as number;
 
   const normalized = (value + 1) / 2;

@@ -2,7 +2,7 @@
  * Enforces ai/rules/components.md.
  *
  * Every component in src/components/Sd*.tsx (except the documented exemptions)
- * MUST declare its props by extending ComponentProps and MUST declare the
+ * MUST declare its props by extending SdComponentProps and MUST declare the
  * wildcard as `[key: string]: unknown`. Exits non-zero on any violation.
  *
  *   node scripts/check-component-props.mjs
@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const componentsDir = join(root, "src", "components");
-const basePath = join(root, "src", "models", "component-props.ts");
+const basePath = join(root, "src", "models", "sd-component-props.ts");
 
 /** Editor chrome: not registered in components/index.ts, not droppable content. */
 const EXEMPT = new Map([
@@ -48,9 +48,9 @@ const interfacesIn = (source) => {
   return found;
 };
 
-/** The component's props interface: the one extending ComponentProps, else any *Props. */
+/** The component's props interface: the one extending SdComponentProps, else any *Props. */
 const propsInterfaceOf = (all) =>
-  all.find((i) => /\bextends\s+[\w<>,\s.]*ComponentProps\b/.test(i.heritage)) ??
+  all.find((i) => /\bextends\s+[\w<>,\s.]*SdComponentProps\b/.test(i.heritage)) ??
   all.find((i) => i.name.endsWith("Props"));
 
 const violations = [];
@@ -58,23 +58,23 @@ const fail = (file, line, message) => violations.push({ file, line, message });
 
 // --- the base contract must not be weakened -------------------------------
 const base = stripComments(readFileSync(basePath, "utf8"));
-const baseInterface = interfacesIn(base).find((i) => i.name === "ComponentProps");
+const baseInterface = interfacesIn(base).find((i) => i.name === "SdComponentProps");
 if (!baseInterface) {
-  fail("src/models/component-props.ts", 0, "ComponentProps interface not found");
+  fail("src/models/sd-component-props.ts", 0, "SdComponentProps interface not found");
 } else {
   for (const prop of ["value", "config", "onChange", "eventIn", "children"]) {
     if (!new RegExp(`\\b${prop}\\s*\\?\\s*:`).test(baseInterface.body)) {
-      fail("src/models/component-props.ts", baseInterface.line, `base is missing \`${prop}\``);
+      fail("src/models/sd-component-props.ts", baseInterface.line, `base is missing \`${prop}\``);
     }
   }
   if (!/\[key:\s*string\]\s*:\s*unknown\s*;/.test(baseInterface.body)) {
-    fail("src/models/component-props.ts", baseInterface.line, "base wildcard must be `[key: string]: unknown`");
+    fail("src/models/sd-component-props.ts", baseInterface.line, "base wildcard must be `[key: string]: unknown`");
   }
   if (/\[key:\s*string\]\s*:\s*any\s*;/.test(baseInterface.body)) {
-    fail("src/models/component-props.ts", baseInterface.line, "base wildcard must not be `any`");
+    fail("src/models/sd-component-props.ts", baseInterface.line, "base wildcard must not be `any`");
   }
   if (/(^|[\s;])data\s*\?\s*:/.test(baseInterface.body)) {
-    fail("src/models/component-props.ts", baseInterface.line, "base still declares `data`; the data prop is named `value`");
+    fail("src/models/sd-component-props.ts", baseInterface.line, "base still declares `data`; the data prop is named `value`");
   }
 }
 
@@ -99,8 +99,8 @@ for (const file of files) {
     continue;
   }
 
-  if (!/\bextends\s+[\w<>,\s.]*ComponentProps\b/.test(props.heritage)) {
-    fail(rel, props.line, `${props.name} must extend ComponentProps from ../models/component-props`);
+  if (!/\bextends\s+[\w<>,\s.]*SdComponentProps\b/.test(props.heritage)) {
+    fail(rel, props.line, `${props.name} must extend SdComponentProps from ../models/sd-component-props`);
   }
   if (!/\[key:\s*string\]\s*:\s*unknown\s*;/.test(props.body)) {
     fail(rel, props.line, `${props.name} must declare the wildcard \`[key: string]: unknown\``);

@@ -1,6 +1,6 @@
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentProps } from "../models/sd-component-props";
 
-interface SdPageHeaderProps extends ComponentProps {
+interface SdPageHeaderProps extends SdComponentProps {
   value?: string;
   subtitle?: string | undefined;
   [key: string]: unknown;

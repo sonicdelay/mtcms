@@ -14,8 +14,8 @@ import {
   useRef,
   useState,
 } from "react";
-import type { ComponentProps } from "../models/component-props";
-import type { ComponentEvent } from "../models/component-event";
+import type { SdComponentProps } from "../models/sd-component-props";
+import type { SdComponentEvent } from "../models/component-event";
 
 export interface TreeItem {
   id?: string | number;
@@ -63,10 +63,10 @@ interface ItemElementProps {
 }
 
 interface SdTreeProps extends
-  ComponentProps<
+  SdComponentProps<
     TreeItem | (TreeItem | string)[] | string | null,
     unknown,
-    ComponentEvent,
+    SdComponentEvent,
     ReactNode | TreeItemTemplate
   > {
   value?: TreeItem | (TreeItem | string)[] | string | null;
@@ -132,6 +132,9 @@ const SdTree = ({
   onMove,
   onDropExternal,
   canDropInside,
+  config,
+  eventIn,
+  onChange,
   ...rest
 }: SdTreeProps) => {
   const items = useMemo(() => toItemArray(value), [value]);

@@ -1,9 +1,9 @@
 import { type MouseEvent, useEffect, useRef } from "react";
-import type { ComponentEvent } from "../models/component-event";
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentEvent } from "../models/component-event";
+import type { SdComponentProps } from "../models/sd-component-props";
 import { SdIcon, type SdIconName } from "./icons";
 
-interface SdIconButtonProps extends ComponentProps<SdIconName> {
+interface SdIconButtonProps extends SdComponentProps<SdIconName> {
   value?: SdIconName;
   title?: string;
   variant?: "primary" | "secondary" | "ghost" | undefined;
@@ -32,7 +32,7 @@ const SdIconButton = (props: SdIconButtonProps) => {
     ...rest
   } = props;
 
-  const lastEvent = useRef<ComponentEvent | undefined>(undefined);
+  const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
     if (!eventIn || lastEvent.current === eventIn) return;
     lastEvent.current = eventIn;

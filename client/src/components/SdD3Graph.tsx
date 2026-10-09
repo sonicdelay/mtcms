@@ -5,8 +5,8 @@ import {
   useRef,
 } from "react";
 import * as d3 from "d3";
-import type { ComponentEvent } from "../models/component-event";
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentEvent } from "../models/component-event";
+import type { SdComponentProps } from "../models/sd-component-props";
 
 export interface SdD3GraphPoint {
   x: number;
@@ -56,7 +56,7 @@ const DEFAULT_CONFIG = {
   scaleExtent: [0.5, 20] as [number, number],
 };
 
-interface SdD3GraphProps extends ComponentProps<SdD3GraphValue, SdD3GraphConfig> {
+interface SdD3GraphProps extends SdComponentProps<SdD3GraphValue, SdD3GraphConfig> {
   title?: string;
   width?: number;
   height?: number;
@@ -101,7 +101,7 @@ const SdD3Graph = (props: SdD3GraphProps) => {
     ...rest
   } = props;
 
-  const lastEvent = useRef<ComponentEvent | undefined>(undefined);
+  const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
     if (!eventIn || lastEvent.current === eventIn) return;
     lastEvent.current = eventIn;

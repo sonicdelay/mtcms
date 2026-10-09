@@ -1,8 +1,8 @@
 import { useStoreValue } from "../routes/dashboard/store";
 import type { DeepKeys, WaveState } from "../routes/dashboard/store";
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentProps } from "../models/sd-component-props";
 
-interface WaveBarProps extends ComponentProps {
+interface WaveBarProps extends SdComponentProps {
   title?: string;
   className?: string;
   source?: DeepKeys<WaveState>;
@@ -10,7 +10,17 @@ interface WaveBarProps extends ComponentProps {
 }
 
 const WaveBar = (props: WaveBarProps) => {
-  const { title, className, source = "sin", children, ...rest } = props;
+  const {
+    title,
+    className,
+    source = "sin",
+    children,
+    value: _value,
+    config,
+    eventIn,
+    onChange,
+    ...rest
+  } = props;
   const value = useStoreValue(source) as number;
 
   const barWidth = ((value + 1) / 2) * 100;

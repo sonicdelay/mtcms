@@ -1,7 +1,7 @@
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentProps } from "../models/sd-component-props";
 import type { SdDummyValue } from "./SdDummy";
 
-interface SdDummyLeafComponentProps extends ComponentProps<SdDummyValue> {
+interface SdDummyLeafComponentProps extends SdComponentProps<SdDummyValue> {
   value: SdDummyValue;
   [key: string]: unknown;
 }

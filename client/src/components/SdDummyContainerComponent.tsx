@@ -5,12 +5,12 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-import type { ComponentEvent } from "../models/component-event";
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentEvent } from "../models/component-event";
+import type { SdComponentProps } from "../models/sd-component-props";
 
-type EventHandler = (event: ComponentEvent) => void;
+type EventHandler = (event: SdComponentEvent) => void;
 
-interface SdDummyContainerComponentProps extends ComponentProps {
+interface SdDummyContainerComponentProps extends SdComponentProps {
   [key: string]: unknown;
 }
 
@@ -49,7 +49,7 @@ const capture = (
     return node;
   }
 
-  const element = node as ReactElement<ComponentProps>;
+  const element = node as ReactElement<SdComponentProps>;
   const original = element.props.onChange;
   // Only wrap children that already participate in the event bus; injecting a
   // fresh onChange into a component that ignores it would leak onto the DOM.
@@ -58,7 +58,7 @@ const capture = (
   const childList = list(element.props.children as ReactNode | undefined);
   try {
     return cloneElement(element, {
-      onChange: (event: ComponentEvent) => {
+      onChange: (event: SdComponentEvent) => {
         // Preserve the child's own handler, unless it IS our onChange (avoids
         // firing the same handler twice via inheritance).
         if (typeof original === "function" && original !== onChange) {

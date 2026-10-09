@@ -1,13 +1,13 @@
 import { type ChangeEvent, useEffect, useRef } from "react";
-import type { ComponentEvent } from "../models/component-event";
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentEvent } from "../models/component-event";
+import type { SdComponentProps } from "../models/sd-component-props";
 
 export interface SdSelectOption {
   value: string;
   label: string;
 }
 
-interface SdSelectProps extends ComponentProps<string> {
+interface SdSelectProps extends SdComponentProps<string> {
   value?: string;
   options?: SdSelectOption[] | undefined;
   label?: string | undefined;
@@ -31,7 +31,7 @@ const SdSelect = (props: SdSelectProps) => {
     ...rest
   } = props;
 
-  const lastEvent = useRef<ComponentEvent | undefined>(undefined);
+  const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
     if (!eventIn || lastEvent.current === eventIn) return;
     lastEvent.current = eventIn;

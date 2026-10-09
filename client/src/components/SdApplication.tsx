@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentProps } from "../models/sd-component-props";
 import { SdIcon, type SdIconName } from "./icons";
 
 export interface SdNavNavItem {
@@ -8,7 +8,7 @@ export interface SdNavNavItem {
   icon: SdIconName;
 }
 
-interface SdApplicationProps extends ComponentProps<ReactNode> {
+interface SdApplicationProps extends SdComponentProps<ReactNode> {
   brand?: string | undefined;
   navItems?: SdNavNavItem[] | undefined;
   activeHref?: string | undefined;
