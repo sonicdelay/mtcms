@@ -1,7 +1,6 @@
 @layer base {
   * {
     box-sizing: border-box;
-    // border: solid 1px red;
     transition: all .1s ease-in-out;
     margin: 0;
     padding: 0;
@@ -15,8 +14,6 @@
     height: 100%;
   }
 
-  // Main
-
   body {
     font-family: 'Arial', sans-serif;
     background-color: var(--background-color, #202020);
@@ -29,7 +26,4 @@
     overflow: hidden;
   }
 
-  #root {
-    // overflow: auto;
-  }
 }

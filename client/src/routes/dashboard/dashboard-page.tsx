@@ -24,7 +24,6 @@ import {
 } from "./treeOps";
 import { palette } from "./registry";
 import { clearOverride, loadOverride, saveOverride } from "./storage";
-import "../../stylesheets/tailwind.css";
 import "../../stylesheets/app.scss";
 
 const loadTreeFor = (name: string): Node => {

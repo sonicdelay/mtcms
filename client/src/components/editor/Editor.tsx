@@ -9,11 +9,8 @@ import { layouts, loadLayouts } from "../layoutTree";
 import type { Node } from "../../models/types";
 import { palette, paletteGroups } from "../../routes/dashboard/registry";
 import { icons } from "../../routes/dashboard/icons";
-import SdTree, {
-  type TreeDropTarget,
-  type TreeItem,
-  type TreeItemState,
-} from "../SdTree";
+import SdTree from "../SdTree";
+import type { TreeDropTarget, TreeItem, TreeItemState } from "../../models/sd-tree";
 import { isDroppable } from "../../routes/dashboard/registry";
 import SdSplitHandle from "../SdSplitHandle";
 
@@ -227,31 +224,33 @@ const Editor = ({
           ? (
             <SdTree
               value={tree}
-              selectedId={selectedId}
-              onSelect={(item) =>
-                onChange({
-                  type: "selectNode",
-                  payload: typeof item.id === "string" ? item.id : undefined,
-                })}
-              onMove={(dragKey, target) => {
-                if (dragKey !== target.parentKey) {
+              config={{
+                selectedId,
+                onSelect: (item) =>
                   onChange({
-                    type: "moveNode",
-                    payload: { dragId: dragKey, target },
-                  });
-                }
-              }}
-              onDropExternal={(componentType, target) =>
-                onChange({
-                  type: "insertNode",
-                  payload: { componentType, target },
-                })}
-              canDropInside={(item) =>
-                typeof item.type === "string" && isDroppable(item as Node)}
-              renderIcon={(item) => {
-                const type = typeof item.type === "string" ? item.type : "";
-                const name = palette[type]?.icon;
-                return name ? icons[name]() : null;
+                    type: "selectNode",
+                    payload: typeof item.id === "string" ? item.id : undefined,
+                  }),
+                onMove: (dragKey, target) => {
+                  if (dragKey !== target.parentKey) {
+                    onChange({
+                      type: "moveNode",
+                      payload: { dragId: dragKey, target },
+                    });
+                  }
+                },
+                onDropExternal: (componentType, target) =>
+                  onChange({
+                    type: "insertNode",
+                    payload: { componentType, target },
+                  }),
+                canDropInside: (item) =>
+                  typeof item.type === "string" && isDroppable(item as Node),
+                renderIcon: (item) => {
+                  const type = typeof item.type === "string" ? item.type : "";
+                  const name = palette[type]?.icon;
+                  return name ? icons[name]() : null;
+                },
               }}
             >
               {(item: TreeItem, state: TreeItemState) => (

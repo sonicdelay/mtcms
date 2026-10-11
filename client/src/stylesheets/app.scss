@@ -1,10 +1,6 @@
 @use './main.scss';
 
-@use './components.scss';
-
 @layer components {
-  //
-
   .Editor {
     border: solid 10px var(--border-strong);
     background-color: var(--panel-background);
@@ -20,7 +16,6 @@
     li[draggable="true"] {
       cursor: grab;
       padding: 5px;
-      //border: var(--border-width) solid var(--border-color);
     }
 
     li[draggable="true"]:active {

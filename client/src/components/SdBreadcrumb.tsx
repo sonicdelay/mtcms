@@ -1,79 +1,44 @@
+import { useEffect, useRef } from "react";
+import type { SdComponentEvent } from "../models/component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
-import { SdIcon } from "./icons";
+import type { SdBreadcrumbConfig, SdBreadcrumbItem, SdBreadcrumbValue } from "../models/sd-breadcrumb";
 
-export interface SdBreadcrumbItem {
-  id: string;
-  label: string;
-}
-
-export interface SdBreadcrumbValue {
-  current: SdBreadcrumbItem[];
-  next?: SdBreadcrumbItem[] | undefined;
-}
-
-interface SdBreadcrumbProps extends SdComponentProps<SdBreadcrumbValue> {
-  value?: SdBreadcrumbValue | undefined;
-  onSelect?: ((id: string) => void) | undefined;
+interface SdBreadcrumbProps extends SdComponentProps<SdBreadcrumbValue, SdBreadcrumbConfig> {
   [key: string]: unknown;
 }
 
+const DEFAULT_CONFIG: SdBreadcrumbConfig = {};
+
 const SdBreadcrumb = (props: SdBreadcrumbProps) => {
-  const {
-    value,
-    config,
-    eventIn,
-    onChange,
-    children,
-    className,
-    onSelect,
-    ...rest
-  } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const settings = { ...DEFAULT_CONFIG, ...config };
+  const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
+  useEffect(() => {
+    if (!eventIn || lastEvent.current === eventIn) return;
+    lastEvent.current = eventIn;
+    globalThis.sd?.dispatchAction?.({ ...eventIn });
+    onChange?.(eventIn);
+  }, [eventIn, onChange]);
 
-  const handleSelect = (id: string) => {
-    onSelect?.(id);
-    onChange?.({ type: "select", payload: { value: id } });
-  };
-
-  const crumbs = value?.current ?? [];
+  const items = Array.isArray(value) ? value : [];
 
   return (
-    <nav
-      {...rest}
-      className={["flex flex-wrap items-center gap-1 text-sm", className]
-        .filter(Boolean).join(" ")}
-      aria-label="Breadcrumb"
-    >
-      {crumbs.map((item, index) => (
-        <span key={item.id} className="flex items-center gap-1">
-          {index > 0 && <SdIcon name="chevronRight" size={12} />}
-          <button
-            type="button"
-            className="text-[var(--fg-muted)] hover:text-[var(--fg)]"
-            onClick={() =>
-              handleSelect(item.id)}
+    <nav {...rest} className={["sd-breadcrumb", className].filter(Boolean).join(" ")}>
+      {items.map((item: SdBreadcrumbItem, index: number) => (
+        <span key={item.id} className="sd-breadcrumb__item">
+          <span
+            className="sd-breadcrumb__link"
+            onClick={() => {
+              settings.onSelect?.(item);
+              onChange?.({ type: "select", payload: { item } });
+            }}
           >
             {item.label}
-          </button>
+          </span>
+          {index < items.length - 1 && <span className="sd-breadcrumb__separator">/</span>}
         </span>
       ))}
-      {value?.next && value.next.length > 0 && (
-        <span className="flex items-center gap-1">
-          <SdIcon name="chevronRight" size={12} />
-          <span className="text-[var(--fg-subtle)]">››</span>
-          {value.next.map((item) => (
-            <span key={item.id} className="flex items-center gap-1">
-              <button
-                type="button"
-                className="text-[var(--fg-muted)] hover:text-[var(--fg)]"
-                onClick={() =>
-                  handleSelect(item.id)}
-              >
-                {item.label}
-              </button>
-            </span>
-          ))}
-        </span>
-      )}
+      {children}
     </nav>
   );
 };

@@ -1,36 +1,23 @@
 import { type MouseEvent, useEffect, useRef } from "react";
 import type { SdComponentEvent } from "../models/component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
-import { SdIcon, type SdIconName } from "./icons";
+import type { SdIconButtonConfig } from "../models/sd-icon-button";
+import { SdIcon } from "./icons";
 
-interface SdIconButtonProps extends SdComponentProps<SdIconName> {
-  value?: SdIconName;
-  title?: string;
-  variant?: "primary" | "secondary" | "ghost" | undefined;
-  disabled?: boolean | undefined;
+interface SdIconButtonProps extends SdComponentProps<any, SdIconButtonConfig> {
   [key: string]: unknown;
 }
 
-const VARIANTS = {
+const VARIANTS: Record<string, string> = {
   primary: "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)]",
-  secondary:
-    "border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
-  ghost:
-    "text-[var(--fg-muted)] hover:bg-[var(--surface-hover)] hover:text-[var(--fg)]",
-} as const;
+  secondary: "border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
+  danger: "bg-[var(--danger)] text-white hover:bg-[var(--danger-hover)]",
+  ghost: "text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
+};
 
 const SdIconButton = (props: SdIconButtonProps) => {
-  const {
-    value,
-    config,
-    eventIn,
-    onChange,
-    className,
-    variant,
-    title,
-    disabled,
-    ...rest
-  } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const settings = { variant: "ghost" as const, ...config };
 
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
@@ -41,28 +28,26 @@ const SdIconButton = (props: SdIconButtonProps) => {
   }, [eventIn, onChange]);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (typeof rest.onClick === "function") rest.onClick(event);
+    if (typeof (rest as any).onClick === "function") (rest as any).onClick(event);
     onChange?.({ type: "click", payload: { value } });
   };
-
-  const resolvedVariant = variant ?? "ghost";
 
   return (
     <button
       {...rest}
-      type="button"
-      disabled={disabled}
-      title={title}
-      aria-label={title}
+      title={settings.title}
+      disabled={settings.disabled}
       className={[
-        "inline-flex h-8 w-8 items-center justify-center rounded-md transition-colors",
+        "inline-flex items-center justify-center rounded p-1 transition-colors",
         "disabled:cursor-not-allowed disabled:opacity-50",
-        VARIANTS[resolvedVariant],
+        VARIANTS[settings.variant ?? "ghost"],
+        "sd-icon-button",
         className,
       ].filter(Boolean).join(" ")}
       onClick={handleClick}
     >
       <SdIcon name={value} size={16} />
+      {children}
     </button>
   );
 };

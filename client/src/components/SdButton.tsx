@@ -1,42 +1,23 @@
 import { type MouseEvent, useEffect, useRef } from "react";
 import type { SdComponentEvent } from "../models/component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
-import { SdIcon, type SdIconName } from "./icons";
+import type { SdButtonConfig } from "../models/sd-button";
+import { SdIcon } from "./icons";
 
-export type SdButtonVariant = "primary" | "secondary" | "danger" | "ghost";
-
-interface SdButtonProps extends SdComponentProps<string> {
-  value?: string;
-  variant?: SdButtonVariant | undefined;
-  icon?: SdIconName | undefined;
-  disabled?: boolean | undefined;
-  type?: "button" | "submit" | "reset" | undefined;
+interface SdButtonProps extends SdComponentProps<string, SdButtonConfig> {
   [key: string]: unknown;
 }
 
-const VARIANTS: Record<SdButtonVariant, string> = {
+const VARIANTS: Record<"primary" | "secondary" | "danger" | "ghost", string> = {
   primary: "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)]",
-  secondary:
-    "border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
-  danger:
-    "bg-[var(--danger)] text-white hover:bg-[var(--danger-hover)]",
+  secondary: "border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
+  danger: "bg-[var(--danger)] text-white hover:bg-[var(--danger-hover)]",
   ghost: "text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
 };
 
 const SdButton = (props: SdButtonProps) => {
-  const {
-    value,
-    config,
-    eventIn,
-    onChange,
-    children,
-    className,
-    variant,
-    icon,
-    disabled,
-    type,
-    ...rest
-  } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const settings = { variant: "primary" as const, ...config };
 
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
@@ -47,26 +28,25 @@ const SdButton = (props: SdButtonProps) => {
   }, [eventIn, onChange]);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (typeof rest.onClick === "function") rest.onClick(event);
+    if (typeof (rest as any).onClick === "function") (rest as any).onClick(event);
     onChange?.({ type: "click", payload: { value } });
   };
-
-  const resolvedVariant = variant ?? "primary";
 
   return (
     <button
       {...rest}
-      type={type ?? "button"}
-      disabled={disabled}
+      type={settings.type ?? "button"}
+      disabled={settings.disabled}
       className={[
         "inline-flex items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
         "disabled:cursor-not-allowed disabled:opacity-50",
-        VARIANTS[resolvedVariant],
+        VARIANTS[settings.variant ?? "primary"],
+        "sd-button",
         className,
       ].filter(Boolean).join(" ")}
       onClick={handleClick}
     >
-      {icon && <SdIcon name={icon} size={16} />}
+      {settings.icon && <SdIcon name={settings.icon} size={16} />}
       {children ?? value ?? "Button"}
     </button>
   );

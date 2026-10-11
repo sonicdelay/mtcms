@@ -608,6 +608,20 @@ export const palette: Record<string, PaletteItem> = {
     { key: "min", label: "Min", kind: "number" },
     { key: "max", label: "Max", kind: "number" },
   ]),
+  SdTree: {
+    type: "SdTree",
+    title: "Tree",
+    icon: "listItem",
+    group: "components",
+    droppable: false,
+    defaultProps: () => ({
+      value: [
+        { id: "root", label: "Root", children: [{ id: "child", label: "Child" }] },
+      ],
+      config: {},
+    }),
+    settings: [],
+  },
   fieldset: container("fieldset", "Fieldset", "fieldset", "form", {
     children: "Fieldset",
   }),

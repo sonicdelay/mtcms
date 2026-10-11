@@ -1,34 +1,17 @@
-import { type ChangeEvent, useEffect, useRef } from "react";
+import { useEffect, useRef, type ChangeEvent } from "react";
 import type { SdComponentEvent } from "../models/component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
+import type { SdInputConfig } from "../models/sd-input";
 
-interface SdInputProps extends SdComponentProps<string> {
-  value?: string;
-  type?: string | undefined;
-  label?: string | undefined;
-  placeholder?: string | undefined;
-  disabled?: boolean | undefined;
-  required?: boolean | undefined;
+interface SdInputProps extends SdComponentProps<string, SdInputConfig> {
   [key: string]: unknown;
 }
 
-const FIELD_CLASSES =
-  "w-full rounded-md border border-[var(--border-strong)] bg-[var(--input-bg)] px-3 py-1.5 text-sm text-[var(--input-fg)] outline-none transition-colors focus:border-[var(--focus)] disabled:opacity-50";
+const DEFAULT_CONFIG: SdInputConfig = {};
 
 const SdInput = (props: SdInputProps) => {
-  const {
-    value,
-    config,
-    eventIn,
-    onChange,
-    className,
-    type,
-    label,
-    placeholder,
-    disabled,
-    required,
-    ...rest
-  } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const settings = { ...DEFAULT_CONFIG, ...config };
 
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
@@ -39,31 +22,25 @@ const SdInput = (props: SdInputProps) => {
   }, [eventIn, onChange]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (typeof rest.onChange === "function") rest.onChange(event);
-    onChange?.({ type: "change", payload: { value: event.target.value } });
+    const val = event.target.value;
+    onChange?.({ type: "change", payload: { value: val } });
   };
 
   return (
-    <label
-      className={["flex flex-col gap-1 text-sm", className].filter(Boolean)
-        .join(" ")}
-    >
-      {label && (
-        <span className="font-medium text-[var(--fg-base)]">
-          {label}
-        </span>
-      )}
+    <div className={["sd-input-wrapper", className].filter(Boolean).join(" ")}>
+      {settings.label && <label className="sd-input__label">{settings.label}</label>}
       <input
         {...rest}
-        type={type ?? "text"}
+        type={settings.type ?? "text"}
         value={value ?? ""}
-        placeholder={placeholder}
-        disabled={disabled}
-        required={required}
-        className={FIELD_CLASSES}
+        placeholder={settings.placeholder}
+        disabled={settings.disabled}
+        required={settings.required}
+        className="sd-input"
         onChange={handleChange}
       />
-    </label>
+      {children}
+    </div>
   );
 };
 

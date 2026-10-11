@@ -1,51 +1,40 @@
+import { useEffect, useRef } from "react";
 import { useStoreValue } from "../routes/dashboard/store";
-import type { DeepKeys, WaveState } from "../routes/dashboard/store";
+import type { SdComponentEvent } from "../models/component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
+import type { SdWaveBarConfig } from "../models/sd-wave";
 
-interface WaveBarProps extends SdComponentProps {
-  title?: string;
-  className?: string;
-  source?: DeepKeys<WaveState>;
+interface SdWaveBarProps extends SdComponentProps<unknown, SdWaveBarConfig> {
   [key: string]: unknown;
 }
 
-const WaveBar = (props: WaveBarProps) => {
-  const {
-    title,
-    className,
-    source = "sin",
-    children,
-    value: _value,
-    config,
-    eventIn,
-    onChange,
-    ...rest
-  } = props;
-  const value = useStoreValue(source) as number;
+const DEFAULT_CONFIG: SdWaveBarConfig = { source: "sin" };
 
-  const barWidth = ((value + 1) / 2) * 100;
-  const hue = ((value + 1) / 2) * 360;
+const SdWaveBar = (props: SdWaveBarProps) => {
+  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const settings = { ...DEFAULT_CONFIG, ...config };
+  const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
+  useEffect(() => {
+    if (!eventIn || lastEvent.current === eventIn) return;
+    lastEvent.current = eventIn;
+    globalThis.sd?.dispatchAction?.({ ...eventIn });
+    onChange?.(eventIn);
+  }, [eventIn, onChange]);
+
+  const source = settings.source ?? "sin";
+  const val = useStoreValue(source as any) as number;
+  const v = typeof val === "number" ? val : 0;
+  const hue = ((v + 1) / 2) * 120;
 
   return (
-    <div className={className} {...rest}>
-      {title && <h2 className="mb-2 font-semibold">{title}</h2>}
-      <div className="p-2 font-mono text-xs overflow-hidden">
-        <div
-          style={{
-            width: `${barWidth}%`,
-            height: 8,
-            backgroundColor: `hsl(${hue}, 80%, 50%)`,
-            borderRadius: 4,
-            transition: "width 100ms linear",
-          }}
-        />
-        <p className="mt-1 opacity-70">
-          {source} = {value.toFixed(4)}
-        </p>
+    <div {...rest} className={["sd-wavebar", "WaveBar", className].filter(Boolean).join(" ")}>
+      {settings.title && <h2 className="mb-2 font-semibold">{settings.title}</h2>}
+      <div className="h-4 w-full rounded bg-gray-200">
+        <div className="h-4 rounded" style={{ width: `${((v + 1) / 2) * 100}%`, backgroundColor: `hsl(${hue}, 90%, 45%)` }} />
       </div>
       {children}
     </div>
   );
 };
 
-export default WaveBar;
+export default SdWaveBar;

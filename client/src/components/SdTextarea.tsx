@@ -1,30 +1,17 @@
-import { type ChangeEvent, useEffect, useRef } from "react";
+import { useEffect, useRef, type ChangeEvent } from "react";
 import type { SdComponentEvent } from "../models/component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
+import type { SdTextareaConfig } from "../models/sd-textarea";
 
-interface SdTextareaProps extends SdComponentProps<string> {
-  value?: string;
-  label?: string | undefined;
-  rows?: number | undefined;
-  disabled?: boolean | undefined;
+interface SdTextareaProps extends SdComponentProps<string, SdTextareaConfig> {
   [key: string]: unknown;
 }
 
-const FIELD_CLASSES =
-  "w-full rounded-md border border-[var(--border-strong)] bg-[var(--input-bg)] px-3 py-1.5 text-sm text-[var(--input-fg)] outline-none transition-colors focus:border-[var(--focus)] disabled:opacity-50";
+const DEFAULT_CONFIG: SdTextareaConfig = {};
 
 const SdTextarea = (props: SdTextareaProps) => {
-  const {
-    value,
-    config,
-    eventIn,
-    onChange,
-    className,
-    label,
-    rows,
-    disabled,
-    ...rest
-  } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const settings = { ...DEFAULT_CONFIG, ...config };
 
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
@@ -35,29 +22,22 @@ const SdTextarea = (props: SdTextareaProps) => {
   }, [eventIn, onChange]);
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    if (typeof rest.onChange === "function") rest.onChange(event);
     onChange?.({ type: "change", payload: { value: event.target.value } });
   };
 
   return (
-    <label
-      className={["flex flex-col gap-1 text-sm", className].filter(Boolean)
-        .join(" ")}
-    >
-      {label && (
-        <span className="font-medium text-[var(--fg-base)]">
-          {label}
-        </span>
-      )}
+    <div className={["sd-textarea-wrapper", className].filter(Boolean).join(" ")}>
+      {settings.label && <label className="sd-textarea__label">{settings.label}</label>}
       <textarea
         {...rest}
-        rows={rows}
         value={value ?? ""}
-        disabled={disabled}
-        className={FIELD_CLASSES}
+        rows={settings.rows}
+        disabled={settings.disabled}
+        className="sd-textarea"
         onChange={handleChange}
       />
-    </label>
+      {children}
+    </div>
   );
 };
 

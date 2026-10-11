@@ -1,57 +1,39 @@
+import { useEffect, useRef } from "react";
+import type { SdComponentEvent } from "../models/component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
-import type { ToastType } from "../lib/toast.store";
-import { SdIcon } from "./icons";
+import type { SdToastConfig, SdToastValue } from "../models/sd-toast";
 
-export interface SdToastValue {
-  title: string;
-  type: ToastType;
-}
-
-interface SdToastProps extends SdComponentProps<SdToastValue> {
-  value?: SdToastValue | undefined;
-  onDismiss?: (() => void) | undefined;
+interface SdToastProps extends SdComponentProps<SdToastValue, SdToastConfig> {
   [key: string]: unknown;
 }
 
-const BORDER: Record<ToastType, string> = {
-  success: "border-l-[var(--success)]",
-  error: "border-l-[var(--danger)]",
-  info: "border-l-[var(--accent)]",
-};
+const DEFAULT_CONFIG: SdToastConfig = {};
 
 const SdToast = (props: SdToastProps) => {
-  const { value, config, eventIn, onChange, className, onDismiss, ...rest } =
-    props;
+  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const settings = { ...DEFAULT_CONFIG, ...config };
+  const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
+  useEffect(() => {
+    if (!eventIn || lastEvent.current === eventIn) return;
+    lastEvent.current = eventIn;
+    globalThis.sd?.dispatchAction?.({ ...eventIn });
+    onChange?.(eventIn);
+  }, [eventIn, onChange]);
 
-  const handleDismiss = () => {
-    if (typeof rest.onClick === "function") rest.onClick();
-    onChange?.({ type: "click" });
-    onDismiss?.();
-  };
-
-  if (!value) return null;
+  const toast = value;
+  if (!toast) return null;
 
   return (
     <div
       {...rest}
-      className={[
-        "flex w-80 items-start gap-2 rounded-md border border-[var(--border)] border-l-4 bg-[var(--surface)] px-3 py-2 text-sm shadow-lg",
-        BORDER[value.type],
-        className,
-      ].filter(Boolean).join(" ")}
-      role="status"
+      className={["sd-toast", `sd-toast--${toast.type ?? "info"}`, className].filter(Boolean).join(" ")}
+      onClick={() => {
+        settings.onDismiss?.(toast.id);
+        onChange?.({ type: "dismiss", payload: { id: toast.id } });
+      }}
     >
-      <span className="flex-1 text-[var(--fg)]">
-        {value.title}
-      </span>
-      <button
-        type="button"
-        aria-label="Dismiss"
-        className="text-[var(--fg-muted)] hover:text-[var(--fg)]"
-        onClick={handleDismiss}
-      >
-        <SdIcon name="close" size={14} />
-      </button>
+      {toast.message}
+      {children}
     </div>
   );
 };

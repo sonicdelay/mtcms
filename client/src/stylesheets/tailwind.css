@@ -1,5 +1,0 @@
-@import "tailwindcss";
-
-@source "../../index.html";
-@source "../**/*.{ts,tsx}";
-@source "../../public/boards/*.json";

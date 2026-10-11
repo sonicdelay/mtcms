@@ -1,28 +1,30 @@
+import { useEffect, useRef } from "react";
+import type { SdComponentEvent } from "../models/component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
+import type { SdKpiConfig } from "../models/sd-kpi";
 
-interface SdKpiProps extends SdComponentProps<string | number> {
-  value?: string | number;
-  label?: string | undefined;
+interface SdKpiProps extends SdComponentProps<string | number, SdKpiConfig> {
   [key: string]: unknown;
 }
 
+const DEFAULT_CONFIG: SdKpiConfig = {};
+
 const SdKpi = (props: SdKpiProps) => {
-  const { value, config, eventIn, onChange, className, label, ...rest } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const settings = { ...DEFAULT_CONFIG, ...config };
+  const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
+  useEffect(() => {
+    if (!eventIn || lastEvent.current === eventIn) return;
+    lastEvent.current = eventIn;
+    globalThis.sd?.dispatchAction?.({ ...eventIn });
+    onChange?.(eventIn);
+  }, [eventIn, onChange]);
 
   return (
-    <div
-      {...rest}
-      className={[
-        "rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4",
-        className,
-      ].filter(Boolean).join(" ")}
-    >
-      <div className="text-2xl font-semibold text-[var(--fg)]">
-        {value}
-      </div>
-      {label && (
-        <div className="text-sm text-[var(--fg-muted)]">{label}</div>
-      )}
+    <div {...rest} className={["sd-kpi", className].filter(Boolean).join(" ")}>
+      {settings.label && <div className="sd-kpi__label">{settings.label}</div>}
+      <div className="sd-kpi__value">{value}</div>
+      {children}
     </div>
   );
 };

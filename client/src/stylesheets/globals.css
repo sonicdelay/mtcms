@@ -1,5 +1,10 @@
 @import "tailwindcss";
-@import "./theme.css";
+
+@source "../../index.html";
+@source "../**/*.{ts,tsx}";
+@source "../../public/boards/*.json";
+
+@import "./theme.scss";
 
 @custom-variant dark (&:is(.dark *));
 

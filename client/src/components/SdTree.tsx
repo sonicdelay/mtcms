@@ -16,37 +16,16 @@ import {
 } from "react";
 import type { SdComponentProps } from "../models/sd-component-props";
 import type { SdComponentEvent } from "../models/component-event";
+import type {
+  TreeItem,
+  TreeItemState,
+  TreeItemTemplate,
+  TreeDropPosition,
+  TreeDropTarget,
+  SdTreeConfig,
+} from "../models/sd-tree";
 
-export interface TreeItem {
-  id?: string | number;
-  title?: string;
-  children?: TreeItem | (TreeItem | string)[] | string;
-  [key: string]: unknown;
-}
 
-export interface TreeItemState {
-  key: string;
-  depth: number;
-  hasChildren: boolean;
-  expanded: boolean;
-  selected: boolean;
-  toggle: () => void;
-  select: () => void;
-}
-
-export type TreeItemTemplate = (
-  item: TreeItem,
-  state: TreeItemState,
-) => ReactNode;
-
-/** Where a dragged node would land, relative to the hovered item. */
-export type TreeDropPosition = "before" | "after" | "inside";
-
-/** Resolved destination of a drop: the item to insert into and the child index. */
-export interface TreeDropTarget {
-  parentKey: string;
-  index: number;
-}
 
 interface ItemElementProps {
   className?: string;
@@ -65,29 +44,10 @@ interface ItemElementProps {
 interface SdTreeProps extends
   SdComponentProps<
     TreeItem | (TreeItem | string)[] | string | null,
-    unknown,
+    SdTreeConfig,
     SdComponentEvent,
     ReactNode | TreeItemTemplate
   > {
-  value?: TreeItem | (TreeItem | string)[] | string | null;
-  /** Renders a leading icon per item, before its template content. */
-  renderIcon?: (item: TreeItem, state: TreeItemState) => ReactNode;
-  selectedId?: string;
-  onSelect?: (item: TreeItem, key: string) => void;
-  defaultExpandedIds?: string[];
-  /**
-   * Enables drag and drop reordering. Called with the dragged key and the
-   * resolved destination; the tree never mutates its data itself.
-   */
-  onMove?: (dragKey: string, target: TreeDropTarget) => void;
-  /**
-   * Handles a drop of an external drag source (a palette item carrying
-   * "component-type" in its DataTransfer). The tree never mutates its data
-   * itself; the host inserts the node and re-renders.
-   */
-  onDropExternal?: (componentType: string, target: TreeDropTarget) => void;
-  /** Whether a node may be dropped *into* an item. Defaults to "has children". */
-  canDropInside?: (item: TreeItem) => boolean;
   [key: string]: unknown;
 }
 
@@ -124,25 +84,27 @@ const defaultTemplate: TreeItemTemplate = (item) => <li>{titleOf(item)}</li>;
 const SdTree = ({
   value,
   children,
-  renderIcon,
   className,
-  selectedId,
-  onSelect,
-  defaultExpandedIds,
-  onMove,
-  onDropExternal,
-  canDropInside,
   config,
   eventIn,
   onChange,
   ...rest
 }: SdTreeProps) => {
+  const {
+    renderIcon,
+    selectedId,
+    onSelect,
+    defaultExpandedIds,
+    onMove,
+    onDropExternal,
+    canDropInside,
+  } = config ?? {};
   const items = useMemo(() => toItemArray(value), [value]);
   const template: TreeItemTemplate = typeof children === "function"
     ? (children as TreeItemTemplate)
     : defaultTemplate;
   const [expanded, setExpanded] = useState<Set<string>>(
-    () => new Set(defaultExpandedIds),
+    () => new Set(defaultExpandedIds ?? config?.defaultExpandedIds ?? []),
   );
   const [activeKey, setActiveKey] = useState<string | undefined>(undefined);
   const [dropAt, setDropAt] = useState<
@@ -151,6 +113,13 @@ const SdTree = ({
   const dragKey = useRef<string | undefined>(undefined);
   const rootRef = useRef<HTMLUListElement>(null);
   const pendingFocus = useRef(false);
+  const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
+  useEffect(() => {
+    if (!eventIn || lastEvent.current === eventIn) return;
+    lastEvent.current = eventIn;
+    globalThis.sd?.dispatchAction?.({ ...eventIn });
+    onChange?.(eventIn);
+  }, [eventIn, onChange]);
   const acceptsChildren = useCallback(
     (item: TreeItem) => canDropInside?.(item) ?? childItems(item).length > 0,
     [canDropInside],

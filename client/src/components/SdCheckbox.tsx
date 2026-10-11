@@ -1,15 +1,17 @@
 import { type ChangeEvent, useEffect, useRef } from "react";
 import type { SdComponentEvent } from "../models/component-event";
-import type { SdCheckboxConfig } from "../models/sd-checkbox-config";
 import type { SdComponentProps } from "../models/sd-component-props";
+import type { SdCheckboxConfig } from "../models/sd-checkbox";
 
 interface SdCheckboxProps extends SdComponentProps<boolean, SdCheckboxConfig> {
   [key: string]: unknown;
 }
 
+const DEFAULT_CONFIG: SdCheckboxConfig = {};
+
 const SdCheckbox = (props: SdCheckboxProps) => {
-  const { value, config, eventIn, onChange, className, ...rest } = props;
-  const { label, disabled } = config ?? {};
+  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const settings = { ...DEFAULT_CONFIG, ...config };
 
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
@@ -25,23 +27,24 @@ const SdCheckbox = (props: SdCheckboxProps) => {
 
   return (
     <label
+      {...rest}
       className={[
-        "Checkbox",
-        disabled ? "Checkbox-disabled" : undefined,
+        "sd-checkbox",
+        settings.disabled ? "sd-checkbox--disabled" : "",
         className,
       ]
         .filter(Boolean)
         .join(" ")}
     >
       <input
-        {...rest}
         type="checkbox"
-        checked={value ?? false}
-        disabled={disabled}
-        className="Checkbox-input"
+        checked={Boolean(value)}
+        disabled={settings.disabled}
         onChange={handleChange}
+        className="sd-checkbox__input"
       />
-      {label && <span className="Checkbox-label">{label}</span>}
+      {settings.label && <span className="sd-checkbox__label">{settings.label}</span>}
+      {children}
     </label>
   );
 };

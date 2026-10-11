@@ -1,0 +1,92 @@
+/* Consolidated theme tokens. VS Code Light+ / Dark+ (controlled by .dark). */
+
+:root {
+  --bg: #ffffff;
+  --fg: #000000;
+  --fg-base: #333333;
+  --fg-muted: #616161;
+  --fg-subtle: #8a8a8a;
+
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f3f3f3;
+  --surface-hover: #eeeeee;
+
+  --border: #e0e0e0;
+  --border-strong: #cecece;
+
+  --focus: #007fd4;
+  --accent: #007acc;
+  --accent-hover: #005a9e;
+  --accent-subtle-bg: #d6ebff;
+  --accent-subtle-fg: #006ab1;
+
+  --danger: #e51400;
+  --danger-hover: #cc1100;
+  --danger-fg: #e51400;
+  --success: #388a34;
+
+  --overlay: rgba(0, 0, 0, 0.05);
+
+  --scrollbar-thumb: #c1c1c1;
+  --scrollbar-thumb-hover: #a6a6a6;
+
+  /* Legacy aliases kept temporarily to avoid breaking non-updated code outside Sd*; remove later if unused */
+  --background: var(--bg);
+  --foreground: var(--fg);
+  --background-color: var(--surface-sunken);
+  --color: var(--fg-base);
+  --border-color: var(--border-strong);
+  --accent-color: var(--accent);
+  --panel-background: var(--surface-sunken);
+  --bg-code: var(--surface-sunken);
+  --link-color: var(--accent-subtle-fg);
+  --hover-overlay: var(--overlay);
+  --input-bg: var(--surface-raised);
+  --input-fg: var(--fg);
+}
+
+.dark {
+  --bg: #1e1e1e;
+  --fg: #d4d4d4;
+  --fg-base: #d4d4d4;
+  --fg-muted: #9d9d9d;
+  --fg-subtle: #6e6e6e;
+
+  --surface: #252526;
+  --surface-raised: #252526;
+  --surface-sunken: #1e1e1e;
+  --surface-hover: #2a2d2e;
+
+  --border: #3c3c3c;
+  --border-strong: #454545;
+
+  --focus: #007fd4;
+  --accent: #0e639c;
+  --accent-hover: #1177bb;
+  --accent-subtle-bg: #094771;
+  --accent-subtle-fg: #ffffff;
+
+  --danger: #f14c4c;
+  --danger-hover: #ff6a6a;
+  --danger-fg: #f14c4c;
+  --success: #73c991;
+
+  --overlay: rgba(255, 255, 255, 0.07);
+
+  --scrollbar-thumb: #424242;
+  --scrollbar-thumb-hover: #4f4f4f;
+
+  --background: var(--bg);
+  --foreground: var(--fg);
+  --background-color: var(--surface-sunken);
+  --color: var(--fg-base);
+  --border-color: var(--border-strong);
+  --accent-color: var(--accent);
+  --panel-background: var(--surface);
+  --bg-code: var(--surface);
+  --link-color: var(--accent-subtle-fg);
+  --hover-overlay: var(--overlay);
+  --input-bg: var(--surface-raised);
+  --input-fg: var(--fg);
+}

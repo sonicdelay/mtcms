@@ -1,7 +1,8 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router";
 import { useEditStore, type EditTreeModel } from "../../lib/edit.store";
-import SdTree, { type TreeItem } from "../SdTree";
+import SdTree from "../SdTree";
+import type { TreeItem } from "../../models/sd-tree";
 
 const ZERO_UUID = "00000000-0000-4000-8000-000000000000";
 
@@ -34,14 +35,16 @@ export default function NodeTree() {
   return (
     <SdTree
       value={items}
-      selectedId={selectedNodeId ?? undefined}
-      defaultExpandedIds={[ZERO_UUID]}
-      onSelect={(item) => {
-        const id = String(item.id);
-        if (id && id !== selectedNodeId) {
-          navigate(`/admin/edit/${encodeURIComponent(id)}`);
-          void fetchNode(id);
-        }
+      config={{
+        selectedId: selectedNodeId ?? undefined,
+        defaultExpandedIds: [ZERO_UUID],
+        onSelect: (item: any) => {
+          const id = String(item.id);
+          if (id && id !== selectedNodeId) {
+            navigate(`/admin/edit/${encodeURIComponent(id)}`);
+            void fetchNode(id);
+          }
+        },
       }}
     />
   );

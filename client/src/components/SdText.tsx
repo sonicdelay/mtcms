@@ -1,19 +1,28 @@
+import { useEffect, useRef } from "react";
+import type { SdComponentEvent } from "../models/component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
+import type { SdTextConfig } from "../models/sd-text";
 
-interface TextProps extends SdComponentProps {
-  title?: string;
-  className?: string;
+interface SdTextProps extends SdComponentProps<unknown, SdTextConfig> {
   [key: string]: unknown;
 }
 
-const Text = (props: TextProps) => {
-  const { className, children, value, config, eventIn, onChange, ...rest } =
-    props;
+
+const SdText = (props: SdTextProps) => {
+  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
+  useEffect(() => {
+    if (!eventIn || lastEvent.current === eventIn) return;
+    lastEvent.current = eventIn;
+    globalThis.sd?.dispatchAction?.({ ...eventIn });
+    onChange?.(eventIn);
+  }, [eventIn, onChange]);
+
   return (
-    <span className={className} {...rest}>
+    <span {...rest} className={["sd-text", className].filter(Boolean).join(" ")}>
       {children}
     </span>
   );
 };
 
-export default Text;
+export default SdText;

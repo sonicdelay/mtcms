@@ -3,7 +3,8 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router";
 import { router } from "./router";
 import "./stylesheets/globals.css";
-import "./stylesheets/fonts.css";
+import "./stylesheets/fonts.scss";
+import "./stylesheets/components.scss";
 import "./lib/actionhandler";
 import "./lib/i18n";
 
@@ -16,4 +17,3 @@ createRoot(document.getElementById("root")!).render(
 // Compile Tailwind utilities for classes that only exist in the DOM at runtime
 // (classNames typed in the editor, classes coming from boards/*.json). Loaded
 // after the first render so it does not delay initial paint.
-void import("@tailwindcss/browser");

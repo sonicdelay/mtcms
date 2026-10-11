@@ -22,7 +22,7 @@
 * outgoing use "onChange" prop
 * "config" argument holds the setup and 
 * should not contain css classes from tailwindcss, but can receive "className" input
-* css for a component is stored in "client/src/stylesheets/components.scss"
+* css for components is stored in "client/src/stylesheets/components.scss"
 
 ## Actions
 {"type": string, ...rest}
