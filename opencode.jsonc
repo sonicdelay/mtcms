@@ -2,37 +2,33 @@
   // mtCMS project configuration for opencode.
   // Schema: https://opencode.ai/config.json
   "$schema": "https://opencode.ai/config.json",
-  // Loaded in addition to the built-in AGENTS.md rules.
-  "instructions": [
-    "ai/PROJECT.md",
-    "ai/rules/**/*.md"
-  ],
-  // Superpowers plugin. OpenCode V1 uses the `plugin` key (plural `plugins`
-  // is V2 2.0.4+). Also registered in the global config.
-  "plugin": [
+  // Project instructions live in ai/. OpenCode V2 only auto-loads files named
+  // `AGENTS.md` (the `instructions` field is accepted but not resolved), so
+  // `ai/AGENTS.md` loads when the agent first reads under ai/.
+  // Superpowers plugin (V2 2.0.4+ key). Also registered in the global config.
+  "plugins": [
     "superpowers@git+https://github.com/obra/superpowers.git"
   ],
-  // Permissions: allow common safe git commands, ask for anything else.
-  "permission": {
-    "edit": {
-      "*": "allow",
-      ".env": "deny",
-      "ai/rules/**/*.md": "deny"
-    },
-    "bash": {
-      "git add *": "allow",
-      "git commit *": "ask",
-      "git push *": "ask",
-      "git pull *": "ask",
-      "git status": "allow",
-      "git diff *": "allow",
-      "git log *": "allow",
-      "npm run *": "ask",
-      "npx *": "ask",
-      "node *": "ask",
-      "psql *": "ask"
-    }
-  },
+  // Project skills. OpenCode discovers `.opencode/skills` automatically, not
+  // `ai/skills`, so register the location explicitly.
+  "skills": [
+    "./ai/skills"
+  ],
+  // Default free model provided by OpenCode Zen (opencode provider).
+  "model": "opencode/big-pickle",
+  // Permissions (V2): ordered rules, last match wins. The built-in base policy
+  // allows everything, so the broad `shell` ask re-establishes "ask before
+  // running commands"; the git rules below allow routine inspection.
+  "permissions": [
+    { "action": "edit", "resource": "*", "effect": "allow" },
+    { "action": "edit", "resource": "*.env", "effect": "deny" },
+    { "action": "edit", "resource": "ai/rules/*.md", "effect": "deny" },
+    { "action": "shell", "resource": "*", "effect": "ask" },
+    { "action": "shell", "resource": "git add *", "effect": "allow" },
+    { "action": "shell", "resource": "git status *", "effect": "allow" },
+    { "action": "shell", "resource": "git diff *", "effect": "allow" },
+    { "action": "shell", "resource": "git log *", "effect": "allow" }
+  ],
   "exclude": [
     "build",
     "node_modules",
@@ -43,7 +39,6 @@
     ".vscode",
     ".idea",
     ".cache",
-    ".claude",
     ".next",
     ".fallow",
     ".turbo",

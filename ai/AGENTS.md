@@ -1,8 +1,13 @@
 # mtCMS
 
 Content-management web app: React client (`client/`) + Express 5 API running on
-**Deno** (`server/`). `ai/PROJECT.md` (loaded via `opencode.jsonc`) has the fuller
-architecture reference; this file is the compact quickstart and repo gotchas.
+**Deno** (`server/`). `ai/PROJECT.md` has the fuller architecture reference and
+`ai/rules/*.md` the code conventions; this file is the compact quickstart and
+repo gotchas.
+
+> OpenCode auto-loads files named `AGENTS.md`: the project root at startup, then
+> any `AGENTS.md` between a file you read and the workspace. This file loads when
+> `ai/` is first read; `ai/PROJECT.md` and `ai/rules/*` are read on demand.
 
 ## Commands
 
@@ -39,7 +44,7 @@ default.
   (e.g. `router.use(`${prefix}`, authRequired)`); an unscoped `router.use(...)`
   applies to *every* request app-wide.
 - Follow the structure of `server/src/routes/api.ts` (handlers as `const` fns,
-  then `prefix`, then the chained router). See `.claude/rules/controller-structure.md`.
+  then `prefix`, then the chained router). See `ai/rules/controller-structure.md`.
 - Don't add a global `express.json()` — body parsing is router-scoped. `fm`
   needs `express.raw` so uploads are never consumed by a JSON parser.
 - Public: Swagger at `/api/` + `/api/openapi.yaml`. Protected (JWT required):

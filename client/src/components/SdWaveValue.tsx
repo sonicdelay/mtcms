@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useStoreValue } from "../routes/dashboard/store";
-import type { SdComponentEvent } from "../models/component-event";
+import type { SdComponentEvent } from "../models/sd-component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
 import type { SdWaveValueConfig } from "../models/sd-wave";
 

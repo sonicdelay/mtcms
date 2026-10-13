@@ -1,5 +1,5 @@
 import { useEffect, useRef, type ChangeEvent } from "react";
-import type { SdComponentEvent } from "../models/component-event";
+import type { SdComponentEvent } from "../models/sd-component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
 import type { SdTextareaConfig } from "../models/sd-textarea";
 

@@ -1,5 +1,5 @@
 import { type ChangeEvent, useEffect, useRef } from "react";
-import type { SdComponentEvent } from "../models/component-event";
+import type { SdComponentEvent } from "../models/sd-component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
 import type { SdCheckboxConfig } from "../models/sd-checkbox";
 

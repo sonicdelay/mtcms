@@ -5,7 +5,7 @@ import {
   useRef,
 } from "react";
 import * as d3 from "d3";
-import type { SdComponentEvent } from "../models/component-event";
+import type { SdComponentEvent } from "../models/sd-component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
 
 export interface SdD3GraphPoint {

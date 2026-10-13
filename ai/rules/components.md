@@ -1,22 +1,23 @@
 # Component props contract (MANDATORY)
 
-Scope: `vp1/src/components/Sd*.tsx` — every component registered in
-`vp1/src/components/index.ts`. The reference implementation is
+Scope: `client/src/components/Sd*.tsx` — every component registered in
+`client/src/components/index.ts`. The reference implementation is
 `SdDummy.tsx`.
 
-This rule is enforced mechanically. Run `npm run check:components` from `vp1/`
-before you claim a component task is done; it exits non-zero on any violation.
+This rule is enforced mechanically. Run `npm run check:components` from
+`client/` before you claim a component task is done; it exits non-zero on any
+violation.
 
-## 1. Every component MUST declare its props by extending `ComponentProps`
+## 1. Every component MUST declare its props by extending `SdComponentProps`
 
-Import the base from `vp1/src/models/component-props.ts`. Do NOT declare a
+Import the base from `client/src/models/sd-component-props.ts`. Do NOT declare a
 standalone props object from scratch, and do NOT reintroduce a `data` prop — the
 base's data prop is named `value`.
 
 ```tsx
-import type { ComponentProps } from "../models/component-props";
+import type { SdComponentProps } from "../models/sd-component-props";
 
-interface SdThingProps extends ComponentProps<ThingValue, ThingConfig> {
+interface SdThingProps extends SdComponentProps<ThingValue, ThingConfig> {
   // Component-specific props go here, each optional.
   title?: string;
   // // MANDATORY wildcard: lets unknown props reach the root element.
@@ -24,8 +25,8 @@ interface SdThingProps extends ComponentProps<ThingValue, ThingConfig> {
 }
 ```
 
-Narrow the generics to describe what the component accepts. `ComponentProps` is
-generic over four parameters, in this order:
+Narrow the generics to describe what the component accepts. `SdComponentProps`
+is generic over four parameters, in this order:
 
 | Parameter   | Default          | Purpose                                           |
 | ----------- | ---------------- | ------------------------------------------------- |
@@ -34,7 +35,7 @@ generic over four parameters, in this order:
 | `TEvent`    | `ComponentEvent` | type of `onChange` / `eventIn`                    |
 | `TChildren` | `ReactNode`      | type of `children` — widen only for a render prop |
 
-<!-- ## 2. The wildcard MUST be `[key: string]: unknown`, never `any`
+## 2. The wildcard MUST be `[key: string]: unknown`, never `any`
 
 `[key: string]: unknown` is what makes `{...rest}` forwardable to a DOM element
 without disabling type checking across the whole props object. Under `unknown`,
@@ -43,7 +44,7 @@ must be declared explicitly (e.g. `className?: string`).
 
 ```tsx
 // correct
-interface SdThingProps extends ComponentProps {
+interface SdThingProps extends SdComponentProps {
   className?: string;
   [key: string]: unknown;
 }
@@ -52,7 +53,7 @@ interface SdThingProps extends ComponentProps {
 interface SdThingProps {
   [key: string]: any;
 }
-``` -->
+```
 
 ## 3. The four mandatory props, and what they mean
 
@@ -126,8 +127,8 @@ return (
 ## 6. Register new components
 
 Add the component to the `components` record in
-`vp1/src/components/index.ts`, and give it a palette entry with `defaultProps`
-in `vp1/src/editor/registry.ts` so it can be dropped in the editor.
+`client/src/components/index.ts`, and give it a palette entry with `defaultProps`
+in `client/src/routes/dashboard/registry.ts` so it can be dropped in the editor.
 
 ## Not in scope
 

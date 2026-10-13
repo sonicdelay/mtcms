@@ -14,7 +14,7 @@ import {
   useState,
 } from "react";
 import type { SdComponentProps } from "../models/sd-component-props";
-import type { SdComponentEvent } from "../models/component-event";
+import type { SdComponentEvent } from "../models/sd-component-event";
 import type {
   SdTreeConfig,
   TreeDropPosition,

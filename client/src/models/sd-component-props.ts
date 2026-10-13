@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { SdComponentEvent } from "./component-event";
+import type { SdComponentEvent } from "./sd-component-event";
 
 /**
  * The mandatory prop contract shared by every component registered in

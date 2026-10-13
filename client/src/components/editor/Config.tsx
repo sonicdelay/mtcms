@@ -2,7 +2,7 @@ import { type CSSProperties, type ReactNode, useEffect, useState } from "react";
 import type { Node } from "../../models/types";
 import { type ConfigField, palette } from "../../routes/dashboard/registry";
 import SdDummy from "../SdDummy";
-import type { SdComponentEvent } from "../../models/component-event";
+import type { SdComponentEvent } from "../../models/sd-component-event";
 
 interface ConfigProps {
   tree: Node;
