@@ -123,7 +123,7 @@ export const palette: Record<string, PaletteItem> = {
     icon: "layout",
     group: "components",
     droppable: true,
-    defaultProps: () => ({ className: "flex flex-row" }),
+    defaultProps: () => ({ config: {} }),
     settings: [],
   },
   SdDummy: {
@@ -132,7 +132,7 @@ export const palette: Record<string, PaletteItem> = {
     icon: "box",
     group: "components",
     droppable: true,
-    defaultProps: () => ({ value: "default value" }),
+    defaultProps: () => ({ value: "default value", config: {} }),
     settings: [{ key: "value", label: "Value", kind: "textarea" }],
   },
   SdWave: {
@@ -140,10 +140,10 @@ export const palette: Record<string, PaletteItem> = {
     title: "Wave",
     icon: "activity",
     group: "components",
-    defaultProps: () => ({ title: "Wave", source: "sin", className: "border border-gray-300" }),
+    defaultProps: () => ({ config: { title: "Wave", source: "sin" } }),
     settings: [
-      { key: "title", label: "Title" },
-      { key: "source", label: "Source", kind: "select", options: SOURCE_OPTIONS },
+      { key: "config.title", label: "Title" },
+      { key: "config.source", label: "Source", kind: "select", options: SOURCE_OPTIONS },
     ],
   },
   SdWaveValue: {
@@ -151,10 +151,10 @@ export const palette: Record<string, PaletteItem> = {
     title: "Wave Value",
     icon: "trendingUp",
     group: "components",
-    defaultProps: () => ({ title: "Value", source: "sin", className: "text-sm text-green-200" }),
+    defaultProps: () => ({ config: { title: "Value", source: "sin" } }),
     settings: [
-      { key: "title", label: "Title" },
-      { key: "source", label: "Source", kind: "select", options: SOURCE_OPTIONS },
+      { key: "config.title", label: "Title" },
+      { key: "config.source", label: "Source", kind: "select", options: SOURCE_OPTIONS },
     ],
   },
   SdWaveBar: {
@@ -162,10 +162,10 @@ export const palette: Record<string, PaletteItem> = {
     title: "Wave Bar",
     icon: "barChart",
     group: "components",
-    defaultProps: () => ({ title: "Bar", source: "sin", className: "" }),
+    defaultProps: () => ({ config: { title: "Bar", source: "sin" } }),
     settings: [
-      { key: "title", label: "Title" },
-      { key: "source", label: "Source", kind: "select", options: SOURCE_OPTIONS },
+      { key: "config.title", label: "Title" },
+      { key: "config.source", label: "Source", kind: "select", options: SOURCE_OPTIONS },
     ],
   },
   SdGauge: {
@@ -173,12 +173,12 @@ export const palette: Record<string, PaletteItem> = {
     title: "Gauge",
     icon: "gauge",
     group: "components",
-    defaultProps: () => ({ title: "Gauge", source: "sin", min: -1, max: 1, className: "" }),
+    defaultProps: () => ({ config: { title: "Gauge", source: "sin", min: -1, max: 1 } }),
     settings: [
-      { key: "title", label: "Title" },
-      { key: "source", label: "Source", kind: "select", options: SOURCE_OPTIONS },
-      { key: "min", label: "Min", kind: "number" },
-      { key: "max", label: "Max", kind: "number" },
+      { key: "config.title", label: "Title" },
+      { key: "config.source", label: "Source", kind: "select", options: SOURCE_OPTIONS },
+      { key: "config.min", label: "Min", kind: "number" },
+      { key: "config.max", label: "Max", kind: "number" },
     ],
   },
   SdD3Graph: {
@@ -186,14 +186,18 @@ export const palette: Record<string, PaletteItem> = {
     title: "D3 Graph",
     icon: "activity",
     group: "components",
-    defaultProps: () => ({ title: "D3 Graph", className: "" }),
+    defaultProps: () => ({
+      title: "D3 Graph",
+      value: { points: [{ x: 0, y: 0 }, { x: 1, y: 1 }] },
+      config: { width: 460, height: 400, r: 8 },
+    }),
     settings: [
       { key: "title", label: "Title" },
-      { key: "width", label: "Width", kind: "number" },
-      { key: "height", label: "Height", kind: "number" },
-      { key: "r", label: "Point radius", kind: "number" },
-      { key: "xLabel", label: "X label" },
-      { key: "yLabel", label: "Y label" },
+      { key: "config.width", label: "Width", kind: "number" },
+      { key: "config.height", label: "Height", kind: "number" },
+      { key: "config.r", label: "Point radius", kind: "number" },
+      { key: "config.xLabel", label: "X label" },
+      { key: "config.yLabel", label: "Y label" },
     ],
   },
   SdText: {
@@ -201,7 +205,7 @@ export const palette: Record<string, PaletteItem> = {
     title: "Text",
     icon: "textBlock",
     group: "components",
-    defaultProps: () => ({ children: "Some text here", className: "text-red-500" }),
+    defaultProps: () => ({ children: "Some text here", config: {} }),
     settings: [{ key: "children", label: "Text", kind: "textarea" }],
   },
   SdButton: {
@@ -209,7 +213,7 @@ export const palette: Record<string, PaletteItem> = {
     title: "Button",
     icon: "buttonPointer",
     group: "components",
-    defaultProps: () => ({ value: "Button" }),
+    defaultProps: () => ({ value: "Button", config: {} }),
     settings: [{ key: "value", label: "Label" }],
   },
   SdIconButton: {
@@ -218,10 +222,10 @@ export const palette: Record<string, PaletteItem> = {
     icon: "buttonPointer",
     group: "form",
     droppable: true,
-    defaultProps: () => ({ value: "check", title: "Action" }),
+    defaultProps: () => ({ value: "check", config: { title: "Action" } }),
     settings: [
       { key: "value", label: "Icon" },
-      { key: "title", label: "Tooltip" },
+      { key: "config.title", label: "Tooltip" },
     ],
   },
   SdInput: {
@@ -230,10 +234,10 @@ export const palette: Record<string, PaletteItem> = {
     icon: "input",
     group: "form",
     droppable: true,
-    defaultProps: () => ({ label: "Label", placeholder: "" }),
+    defaultProps: () => ({ value: "", config: { label: "Label", placeholder: "" } }),
     settings: [
-      { key: "label", label: "Label" },
-      { key: "placeholder", label: "Placeholder" },
+      { key: "config.label", label: "Label" },
+      { key: "config.placeholder", label: "Placeholder" },
     ],
   },
   SdTextarea: {
@@ -242,8 +246,8 @@ export const palette: Record<string, PaletteItem> = {
     icon: "textarea",
     group: "form",
     droppable: true,
-    defaultProps: () => ({ label: "Label", value: "" }),
-    settings: [{ key: "label", label: "Label" }],
+    defaultProps: () => ({ value: "", config: { label: "Label" } }),
+    settings: [{ key: "config.label", label: "Label" }],
   },
   SdSelect: {
     type: "SdSelect",
@@ -252,13 +256,16 @@ export const palette: Record<string, PaletteItem> = {
     group: "form",
     droppable: true,
     defaultProps: () => ({
-      label: "Label",
-      options: [
-        { value: "a", label: "Option A" },
-        { value: "b", label: "Option B" },
-      ],
+      value: "a",
+      config: {
+        label: "Label",
+        options: [
+          { value: "a", label: "Option A" },
+          { value: "b", label: "Option B" },
+        ],
+      },
     }),
-    settings: [{ key: "label", label: "Label" }],
+    settings: [{ key: "config.label", label: "Label" }],
   },
   SdCheckbox: {
     type: "SdCheckbox",
@@ -276,8 +283,8 @@ export const palette: Record<string, PaletteItem> = {
     icon: "box",
     group: "components",
     droppable: true,
-    defaultProps: () => ({ value: "Card title", children: [] }),
-    settings: [{ key: "value", label: "Title" }],
+    defaultProps: () => ({ children: [], config: {} }),
+    settings: [],
   },
   SdPageHeader: {
     type: "SdPageHeader",
@@ -285,10 +292,10 @@ export const palette: Record<string, PaletteItem> = {
     icon: "header",
     group: "components",
     droppable: true,
-    defaultProps: () => ({ value: "Page", subtitle: "" }),
+    defaultProps: () => ({ value: "Page", config: { subtitle: "" } }),
     settings: [
       { key: "value", label: "Title" },
-      { key: "subtitle", label: "Subtitle" },
+      { key: "config.subtitle", label: "Subtitle" },
     ],
   },
   SdKpi: {
@@ -297,10 +304,10 @@ export const palette: Record<string, PaletteItem> = {
     icon: "meter",
     group: "components",
     droppable: false,
-    defaultProps: () => ({ value: "0", label: "Label" }),
+    defaultProps: () => ({ value: "0", config: { label: "Label" } }),
     settings: [
       { key: "value", label: "Value" },
-      { key: "label", label: "Label" },
+      { key: "config.label", label: "Label" },
     ],
   },
   SdBreadcrumb: {
@@ -309,7 +316,7 @@ export const palette: Record<string, PaletteItem> = {
     icon: "listItem",
     group: "components",
     droppable: false,
-    defaultProps: () => ({ value: { current: [] } }),
+    defaultProps: () => ({ value: [{ id: "home", label: "Home" }], config: {} }),
     settings: [],
   },
   SdToast: {
@@ -318,7 +325,10 @@ export const palette: Record<string, PaletteItem> = {
     icon: "dialog",
     group: "components",
     droppable: false,
-    defaultProps: () => ({ value: { title: "Notification", type: "info" } }),
+    defaultProps: () => ({
+      value: { id: "toast", message: "Notification", type: "info" },
+      config: {},
+    }),
     settings: [],
   },
   SdApplication: {
@@ -327,7 +337,7 @@ export const palette: Record<string, PaletteItem> = {
     icon: "layout",
     group: "layout",
     droppable: true,
-    defaultProps: () => ({ brand: "mtCMS" }),
+    defaultProps: () => ({ brand: "mtCMS", config: {} }),
     settings: [{ key: "brand", label: "Brand" }],
   },
 

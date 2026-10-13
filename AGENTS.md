@@ -20,7 +20,9 @@ Client (from `client/`):
 - `npm run dev` — Vite on port 4210, proxies `/api` to the server.
 - `npm run build` — `vite build` + `scripts/sync-dist.mjs` (copies
   `client/dist` → `server/dist` so the server serves the app).
-- `npm run lint`; `npm run typecheck` (`tsc -b`).
+- `npm run typecheck` — `tsc --noEmit`.
+- `deno task lint` / `deno task fmt` — from the **repo root**; formatting and
+  linting are Deno-only (no ESLint/Prettier).
 
 Ports: server default **8421** (`PORT` overrides, `server/main.ts`); Vite dev
 **4210**. Verify any README/plan claiming 4000 — it's stale. Set `API_TARGET`

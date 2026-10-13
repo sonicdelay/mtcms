@@ -33,7 +33,9 @@ Client (run from `client/`):
   server (target hardcoded to `http://localhost:8421` in `vite.config.ts`).
 - `npm run build` runs `vite build` then `scripts/sync-dist.mjs`, copying
   `client/dist` into `server/dist` so the server can serve the app.
-- `npm run lint` runs ESLint; `npx tsc -b` type-checks.
+- `npm run typecheck` runs `tsc --noEmit`. Formatting and linting are Deno-only:
+  run `deno task lint` / `deno task fmt` from the **repo root** (no ESLint or
+  Prettier).
 
 ## Architecture
 

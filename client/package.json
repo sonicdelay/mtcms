@@ -7,10 +7,6 @@
     "dev": "vite",
     "build": "vite build && node scripts/sync-dist.mjs",
     "preview": "vite preview",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "check:components": "node scripts/check-component-props.mjs"
   },
@@ -37,7 +33,6 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^5.0.0",
-    "postcss": "^8.5.28",
     "sass-embedded": "^1.102.0",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.9.0",

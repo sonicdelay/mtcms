@@ -1,6 +1,5 @@
 import {
   cloneElement,
-  type CSSProperties,
   type DragEvent,
   Fragment,
   isValidElement,
@@ -17,29 +16,14 @@ import {
 import type { SdComponentProps } from "../models/sd-component-props";
 import type { SdComponentEvent } from "../models/component-event";
 import type {
-  TreeItem,
-  TreeItemState,
-  TreeItemTemplate,
+  SdTreeConfig,
   TreeDropPosition,
   TreeDropTarget,
-  SdTreeConfig,
+  TreeItem,
+  TreeItemElementProps,
+  TreeItemState,
+  TreeItemTemplate,
 } from "../models/sd-tree";
-
-
-
-interface ItemElementProps {
-  className?: string;
-  style?: CSSProperties;
-  children?: ReactNode;
-  onClick?: (e: MouseEvent<HTMLElement>) => void;
-  draggable?: boolean;
-  onDragStart?: (e: DragEvent<HTMLElement>) => void;
-  onDragEnd?: (e: DragEvent<HTMLElement>) => void;
-  onDragEnter?: (e: DragEvent<HTMLElement>) => void;
-  onDragOver?: (e: DragEvent<HTMLElement>) => void;
-  onDragLeave?: (e: DragEvent<HTMLElement>) => void;
-  onDrop?: (e: DragEvent<HTMLElement>) => void;
-}
 
 interface SdTreeProps extends
   SdComponentProps<
@@ -56,6 +40,8 @@ const NODE_MIME = "tree-node-key";
 const EXTERNAL_MIME = "component-type";
 const EDGE_RATIO = 0.25;
 
+const DEFAULT_CONFIG: SdTreeConfig = {};
+
 const toItemArray = (value: unknown): TreeItem[] => {
   if (value === null || value === undefined) return [];
   const arr = Array.isArray(value) ? value : [value];
@@ -64,7 +50,6 @@ const toItemArray = (value: unknown): TreeItem[] => {
 
 const childItems = (item: TreeItem): TreeItem[] => toItemArray(item.children);
 
-/** Children exactly as the data stores them, including plain string children. */
 const rawChildren = (item: TreeItem): unknown[] => {
   const value = item.children;
   if (value === null || value === undefined) return [];
@@ -81,15 +66,10 @@ const keyOf = (item: TreeItem, path: string): string =>
 
 const defaultTemplate: TreeItemTemplate = (item) => <li>{titleOf(item)}</li>;
 
-const SdTree = ({
-  value,
-  children,
-  className,
-  config,
-  eventIn,
-  onChange,
-  ...rest
-}: SdTreeProps) => {
+const SdTree = (props: SdTreeProps) => {
+  const { value, children, config, eventIn, onChange, className, ...rest } =
+    props;
+  const settings = { ...DEFAULT_CONFIG, ...config };
   const {
     renderIcon,
     selectedId,
@@ -98,13 +78,13 @@ const SdTree = ({
     onMove,
     onDropExternal,
     canDropInside,
-  } = config ?? {};
+  } = settings;
   const items = useMemo(() => toItemArray(value), [value]);
   const template: TreeItemTemplate = typeof children === "function"
     ? (children as TreeItemTemplate)
     : defaultTemplate;
   const [expanded, setExpanded] = useState<Set<string>>(
-    () => new Set(defaultExpandedIds ?? config?.defaultExpandedIds ?? []),
+    () => new Set(defaultExpandedIds ?? []),
   );
   const [activeKey, setActiveKey] = useState<string | undefined>(undefined);
   const [dropAt, setDropAt] = useState<
@@ -155,9 +135,6 @@ const SdTree = ({
     return { keys: order, itemsByKey: byKey, parents: parentMap };
   }, [items, expanded]);
 
-  // Selection and auto-reveal must see every node, even ones hidden behind
-  // a collapsed ancestor; rendering and drop resolution stay gated on
-  // `expanded` via the memo above.
   const fullIndex = useMemo(() => {
     const byKey = new Map<string, TreeItem>();
     const parentMap = new Map<string, string>();
@@ -232,16 +209,14 @@ const SdTree = ({
     (item: TreeItem, key: string) => {
       setActiveKey(key);
       onSelect?.(item, key);
+      onChange?.({ type: "select", payload: { item, key } });
     },
-    [onSelect],
+    [onSelect, onChange],
   );
 
-  /** Turns a pointer position on an item into before/after/inside. */
   const dropPosition = (event: DragEvent<HTMLElement>, item: TreeItem) => {
     const el = event.currentTarget;
     const rect = el.getBoundingClientRect();
-    // A container row also wraps its expanded children, so the bands have to be
-    // measured against the item's own row, not the whole subtree.
     const group = el.querySelector<HTMLElement>(":scope > [role='group']");
     const ownRow = group
       ? group.getBoundingClientRect().top - rect.top
@@ -254,7 +229,6 @@ const SdTree = ({
     return ratio < 0.5 ? ("before" as const) : ("after" as const);
   };
 
-  /** Resolves a hovered item plus position into a parent key and child index. */
   const resolveTarget = (
     targetKey: string,
     position: TreeDropPosition,
@@ -264,7 +238,6 @@ const SdTree = ({
     if (position === "inside") {
       return { parentKey: targetKey, index: rawChildren(targetItem).length };
     }
-    // Beside a root item there is no parent to insert into.
     const parentKey = parents.get(targetKey);
     if (parentKey === undefined) return undefined;
     const siblings = rawChildren(itemsByKey.get(parentKey) ?? {});
@@ -273,7 +246,6 @@ const SdTree = ({
     return { parentKey, index: position === "before" ? at : at + 1 };
   };
 
-  /** Rejects drops onto the dragged node itself or into its own subtree. */
   const canDrop = (dragged: string, target: TreeDropTarget | undefined) => {
     if (!target) return false;
     if (!parents.has(dragged)) return false;
@@ -315,7 +287,7 @@ const SdTree = ({
     const twisty = hasChildren
       ? (
         <span
-          className="Tree-twisty"
+          className="sd-tree__twisty"
           onClick={(e) => {
             e.stopPropagation();
             toggle(key);
@@ -324,16 +296,20 @@ const SdTree = ({
           {isExpanded ? "▾" : "▸"}
         </span>
       )
-      : <span className="Tree-twisty Tree-twisty-empty" />;
+      : <span className="sd-tree__twisty sd-tree__twisty--empty" />;
 
     const iconNode = renderIcon?.(item, state);
     const leading = iconNode
-      ? <span className="Tree-icon">{iconNode}</span>
+      ? <span className="sd-tree__icon">{iconNode}</span>
       : null;
 
     const group = isExpanded
       ? (
-        <ul role="group" className="Tree-group" style={{ paddingLeft: INDENT }}>
+        <ul
+          role="group"
+          className="sd-tree__group"
+          style={{ paddingLeft: INDENT }}
+        >
           {kids.map((child, index) =>
             renderItem(child, keyOf(child, `${key}.${index}`), depth + 1)
           )}
@@ -349,9 +325,11 @@ const SdTree = ({
       tabIndex: isActive ? 0 : -1,
       "data-tree-key": key,
       className: [
-        "Tree-item",
-        isSelected ? "Tree-item-selected" : undefined,
-        dropAt?.key === key ? `Tree-drop-${dropAt.position}` : undefined,
+        "sd-tree__item",
+        isSelected ? "sd-tree__item--selected" : undefined,
+        dropAt?.key === key
+          ? `sd-tree__item--drop-${dropAt.position}`
+          : undefined,
       ]
         .filter(Boolean)
         .join(" "),
@@ -359,8 +337,6 @@ const SdTree = ({
 
     const rendered = template(item, state);
 
-    // Clicks inside a nested treeitem bubble up to every ancestor item, so
-    // ignore anything that did not originate on this item.
     const activate = (e: MouseEvent<HTMLElement>) => {
       const origin = (e.target as HTMLElement | null)?.closest?.(
         "[data-tree-key]",
@@ -369,7 +345,7 @@ const SdTree = ({
       selectItem(item, key);
     };
 
-    const dragHandlers: ItemElementProps = onMove || onDropExternal
+    const dragHandlers: TreeItemElementProps = onMove || onDropExternal
       ? {
         draggable: true,
         onDragStart: (e: DragEvent<HTMLElement>) => {
@@ -430,16 +406,21 @@ const SdTree = ({
           if (!target) return;
           if (externalType && !dragged) {
             onDropExternal?.(externalType, target);
+            onChange?.({
+              type: "dropExternal",
+              payload: { componentType: externalType, target },
+            });
             return;
           }
           if (!dragged || !canDrop(dragged, target)) return;
           onMove?.(dragged, target);
+          onChange?.({ type: "move", payload: { dragKey: dragged, target } });
         },
       }
       : {};
 
     if (isValidElement(rendered)) {
-      const element = rendered as ReactElement<ItemElementProps>;
+      const element = rendered as ReactElement<TreeItemElementProps>;
       return cloneElement(
         element,
         {
@@ -526,7 +507,7 @@ const SdTree = ({
       {...rest}
       ref={rootRef}
       role="tree"
-      className={["Tree", className].filter(Boolean).join(" ")}
+      className={["sd-tree", className].filter(Boolean).join(" ")}
       onKeyDown={handleKeyDown}
     >
       {items.map((item, index) =>

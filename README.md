@@ -44,9 +44,11 @@ Client (run from `client/`):
 npm install
 npm run dev          # Vite dev server on http://localhost:4210
 npm run build        # vite build + copy dist into server/dist
-npm run lint         # eslint
-npx tsc -b           # type-check
+npm run typecheck    # tsc --noEmit
 ```
+
+Linting and formatting are Deno-only: run `deno task lint` / `deno task fmt`
+from the repo root.
 
 ## Production
 
