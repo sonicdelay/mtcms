@@ -2,7 +2,9 @@ import { Outlet, useLocation, useNavigate } from "react-router";
 import { useAppStore } from "../../lib/app.store";
 import { useMounted } from "../../components/use-mounted";
 import LoginForm from "../../components/login-form";
-import SdApplication, { type SdNavNavItem } from "../../components/SdApplication";
+import SdApplication, {
+  type SdNavNavItem,
+} from "../../components/SdApplication";
 import "../../stylesheets/admin.scss";
 
 const navItems: SdNavNavItem[] = [

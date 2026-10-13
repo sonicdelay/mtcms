@@ -4,8 +4,7 @@ export interface Node {
   source?: string;
   children?: LayoutChild[] | string;
   className?: string;
-  [key: string]: unknown
+  [key: string]: unknown;
 }
-
 
 export type LayoutChild = Node | string;

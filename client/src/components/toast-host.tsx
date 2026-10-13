@@ -11,7 +11,11 @@ export default function ToastHost() {
   return (
     <div className="fixed top-4 right-4 z-[1200] flex flex-col gap-2">
       {toasts.map((t: any) => (
-        <SdToast key={t.id} value={t as SdToastValue} config={{ onDismiss: () => dismissToast(t.id) }} />
+        <SdToast
+          key={t.id}
+          value={t as SdToastValue}
+          config={{ onDismiss: () => dismissToast(t.id) }}
+        />
       ))}
     </div>
   );

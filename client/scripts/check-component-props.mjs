@@ -7,7 +7,7 @@
  *
  *   node scripts/check-component-props.mjs
  */
-import { readFileSync, readdirSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -17,14 +17,18 @@ const basePath = join(root, "src", "models", "sd-component-props.ts");
 
 /** Editor chrome: not registered in components/index.ts, not droppable content. */
 const EXEMPT = new Map([
-  ["SdSplitHandle.tsx", "editor chrome (drag handle), not a registered content component"],
+  [
+    "SdSplitHandle.tsx",
+    "editor chrome (drag handle), not a registered content component",
+  ],
 ]);
 
 /** Strips comments so documentation prose can never satisfy a check. */
 const stripComments = (source) =>
   source
     .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
-    .replace(/(^|[^:])\/\/[^\n]*/g, (m, p1) => p1 + " ".repeat(Math.max(0, m.length - p1.length)));
+    .replace(/(^|[^:])\/\/[^\n]*/g, (m, p1) =>
+      p1 + " ".repeat(Math.max(0, m.length - p1.length)));
 
 /** Returns every `interface Name ... { body }` with brace matching. */
 const interfacesIn = (source) => {
@@ -50,31 +54,55 @@ const interfacesIn = (source) => {
 
 /** The component's props interface: the one extending SdComponentProps, else any *Props. */
 const propsInterfaceOf = (all) =>
-  all.find((i) => /\bextends\s+[\w<>,\s.]*SdComponentProps\b/.test(i.heritage)) ??
-  all.find((i) => i.name.endsWith("Props"));
+  all.find((i) =>
+    /\bextends\s+[\w<>,\s.]*SdComponentProps\b/.test(i.heritage)
+  ) ??
+    all.find((i) => i.name.endsWith("Props"));
 
 const violations = [];
 const fail = (file, line, message) => violations.push({ file, line, message });
 
 // --- the base contract must not be weakened -------------------------------
 const base = stripComments(readFileSync(basePath, "utf8"));
-const baseInterface = interfacesIn(base).find((i) => i.name === "SdComponentProps");
+const baseInterface = interfacesIn(base).find((i) =>
+  i.name === "SdComponentProps"
+);
 if (!baseInterface) {
-  fail("src/models/sd-component-props.ts", 0, "SdComponentProps interface not found");
+  fail(
+    "src/models/sd-component-props.ts",
+    0,
+    "SdComponentProps interface not found",
+  );
 } else {
   for (const prop of ["value", "config", "onChange", "eventIn", "children"]) {
     if (!new RegExp(`\\b${prop}\\s*\\?\\s*:`).test(baseInterface.body)) {
-      fail("src/models/sd-component-props.ts", baseInterface.line, `base is missing \`${prop}\``);
+      fail(
+        "src/models/sd-component-props.ts",
+        baseInterface.line,
+        `base is missing \`${prop}\``,
+      );
     }
   }
   if (!/\[key:\s*string\]\s*:\s*unknown\s*;/.test(baseInterface.body)) {
-    fail("src/models/sd-component-props.ts", baseInterface.line, "base wildcard must be `[key: string]: unknown`");
+    fail(
+      "src/models/sd-component-props.ts",
+      baseInterface.line,
+      "base wildcard must be `[key: string]: unknown`",
+    );
   }
   if (/\[key:\s*string\]\s*:\s*any\s*;/.test(baseInterface.body)) {
-    fail("src/models/sd-component-props.ts", baseInterface.line, "base wildcard must not be `any`");
+    fail(
+      "src/models/sd-component-props.ts",
+      baseInterface.line,
+      "base wildcard must not be `any`",
+    );
   }
   if (/(^|[\s;])data\s*\?\s*:/.test(baseInterface.body)) {
-    fail("src/models/sd-component-props.ts", baseInterface.line, "base still declares `data`; the data prop is named `value`");
+    fail(
+      "src/models/sd-component-props.ts",
+      baseInterface.line,
+      "base still declares `data`; the data prop is named `value`",
+    );
   }
 }
 
@@ -100,23 +128,43 @@ for (const file of files) {
   }
 
   if (!/\bextends\s+[\w<>,\s.]*SdComponentProps\b/.test(props.heritage)) {
-    fail(rel, props.line, `${props.name} must extend SdComponentProps from ../models/sd-component-props`);
+    fail(
+      rel,
+      props.line,
+      `${props.name} must extend SdComponentProps from ../models/sd-component-props`,
+    );
   }
   if (!/\[key:\s*string\]\s*:\s*unknown\s*;/.test(props.body)) {
-    fail(rel, props.line, `${props.name} must declare the wildcard \`[key: string]: unknown\``);
+    fail(
+      rel,
+      props.line,
+      `${props.name} must declare the wildcard \`[key: string]: unknown\``,
+    );
   }
   if (/\[key:\s*string\]\s*:\s*any\s*;/.test(props.body)) {
-    fail(rel, props.line, `${props.name} declares \`[key: string]: any\`; use \`unknown\` (ai/rules/components.md §2)`);
+    fail(
+      rel,
+      props.line,
+      `${props.name} declares \`[key: string]: any\`; use \`unknown\` (ai/rules/components.md §2)`,
+    );
   }
   if (/(^|[\s;])data\s*\?\s*:/.test(props.body)) {
-    fail(rel, props.line, `${props.name} declares \`data\`; the data prop is named \`value\` (ai/rules/components.md §1)`);
+    fail(
+      rel,
+      props.line,
+      `${props.name} declares \`data\`; the data prop is named \`value\` (ai/rules/components.md §1)`,
+    );
   }
 
   checked.push(`  v ${file} -> ${props.name}`);
 }
 
 // --- report ---------------------------------------------------------------
-console.log(`Component props contract (ai/rules/components.md)\n\n${checked.join("\n")}\n`);
+console.log(
+  `Component props contract (ai/rules/components.md)\n\n${
+    checked.join("\n")
+  }\n`,
+);
 
 const conformed = checked.filter((l) => l.startsWith("  v ")).length;
 if (violations.length === 0) {
@@ -127,5 +175,7 @@ if (violations.length === 0) {
 for (const v of violations) {
   console.error(`FAIL ${v.file}:${v.line} ${v.message}`);
 }
-console.error(`\n${violations.length} violation(s). See ai/rules/components.md.`);
+console.error(
+  `\n${violations.length} violation(s). See ai/rules/components.md.`,
+);
 process.exit(1);

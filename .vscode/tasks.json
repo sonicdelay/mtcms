@@ -1,0 +1,29 @@
+{
+  // Runs `deno fmt` (repo-wide, honoring the excludes in deno.json) whenever
+  // the mtcms folder is opened in VS Code.
+  // Needs "task.allowAutomaticTasks": "on" in .vscode/settings.json to run
+  // without the "Allow automatic tasks?" prompt.
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "deno fmt",
+      "type": "shell",
+      "command": "deno",
+      "args": [
+        "fmt"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared",
+        "close": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

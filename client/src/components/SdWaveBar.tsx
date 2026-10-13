@@ -11,7 +11,8 @@ interface SdWaveBarProps extends SdComponentProps<unknown, SdWaveBarConfig> {
 const DEFAULT_CONFIG: SdWaveBarConfig = { source: "sin" };
 
 const SdWaveBar = (props: SdWaveBarProps) => {
-  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } =
+    props;
   const settings = { ...DEFAULT_CONFIG, ...config };
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
@@ -27,10 +28,21 @@ const SdWaveBar = (props: SdWaveBarProps) => {
   const hue = ((v + 1) / 2) * 120;
 
   return (
-    <div {...rest} className={["sd-wavebar", "WaveBar", className].filter(Boolean).join(" ")}>
-      {settings.title && <h2 className="mb-2 font-semibold">{settings.title}</h2>}
+    <div
+      {...rest}
+      className={["sd-wavebar", "WaveBar", className].filter(Boolean).join(" ")}
+    >
+      {settings.title && (
+        <h2 className="mb-2 font-semibold">{settings.title}</h2>
+      )}
       <div className="h-4 w-full rounded bg-gray-200">
-        <div className="h-4 rounded" style={{ width: `${((v + 1) / 2) * 100}%`, backgroundColor: `hsl(${hue}, 90%, 45%)` }} />
+        <div
+          className="h-4 rounded"
+          style={{
+            width: `${((v + 1) / 2) * 100}%`,
+            backgroundColor: `hsl(${hue}, 90%, 45%)`,
+          }}
+        />
       </div>
       {children}
     </div>

@@ -3,12 +3,16 @@ import type { LayoutChild, Node } from "../../models/types";
 const webCrypto = typeof crypto !== "undefined" ? crypto : undefined;
 
 export const randomId = (): string => {
-  if (typeof webCrypto?.randomUUID === "function") return webCrypto.randomUUID();
+  if (typeof webCrypto?.randomUUID === "function") {
+    return webCrypto.randomUUID();
+  }
   const bytes = new Uint8Array(16);
   if (typeof webCrypto?.getRandomValues === "function") {
     webCrypto.getRandomValues(bytes);
   } else {
-    for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+    for (let i = 0; i < bytes.length; i++) {
+      bytes[i] = Math.floor(Math.random() * 256);
+    }
   }
   bytes[6] = (bytes[6] & 0x0f) | 0x40;
   bytes[8] = (bytes[8] & 0x3f) | 0x80;
@@ -22,7 +26,10 @@ export const randomId = (): string => {
   ].join("-");
 };
 
-export const createNode = (type: string, defaults: Partial<Node> = {}): Node => ({
+export const createNode = (
+  type: string,
+  defaults: Partial<Node> = {},
+): Node => ({
   id: randomId(),
   type,
   ...defaults,
@@ -46,7 +53,11 @@ export const findNode = (
     if (typeof child === "string") continue;
     const res = findNode(child, id);
     if (res.node) {
-      return { node: res.node, parent: res.parent ?? root, index: res.index ?? i };
+      return {
+        node: res.node,
+        parent: res.parent ?? root,
+        index: res.index ?? i,
+      };
     }
   }
   return {};
@@ -71,14 +82,19 @@ export const updateNode = (
   if (root.id === id) {
     const copy: Node = {
       ...root,
-      children: Array.isArray(root.children) ? [...root.children] : root.children,
+      children: Array.isArray(root.children)
+        ? [...root.children]
+        : root.children,
     };
     updater(copy);
     return copy;
   }
   return {
     ...root,
-    children: mapChildren(root.children, (c) => (typeof c === "string" ? c : updateNode(c, id, updater))),
+    children: mapChildren(
+      root.children,
+      (c) => (typeof c === "string" ? c : updateNode(c, id, updater)),
+    ),
   };
 };
 
@@ -147,7 +163,9 @@ const filterChildren = (
     out.push({ ...c, children: filterChildren(c.children, id) });
   }
   if (out.length === 0) return undefined;
-  if (children !== undefined && !Array.isArray(children)) return out[0] as LayoutChild[] | string;
+  if (children !== undefined && !Array.isArray(children)) {
+    return out[0] as LayoutChild[] | string;
+  }
   return out;
 };
 
@@ -159,12 +177,16 @@ export const deleteNode = (root: Node, id: string): Node => ({
 const cloneWithNewIds = (n: Node): Node => ({
   ...n,
   id: randomId(),
-  children: childrenOf(n.children).map((c) => (typeof c === "string" ? c : cloneWithNewIds(c))),
+  children: childrenOf(n.children).map((
+    c,
+  ) => (typeof c === "string" ? c : cloneWithNewIds(c))),
 });
 
 export const duplicateNode = (root: Node, id: string): Node => {
   const { node, parent, index } = findNode(root, id);
-  if (!node || !parent || parent.id === undefined || index === undefined) return root;
+  if (!node || !parent || parent.id === undefined || index === undefined) {
+    return root;
+  }
   const clone = cloneWithNewIds(node);
   return updateNode(root, parent.id, (p) => {
     const arr = Array.isArray(p.children) ? [...p.children] : [];
@@ -208,7 +230,9 @@ export const ensureIds = (node: Node): Node => {
 const treeOrder = (root: Node): { id: string; depth: number }[] => {
   const out: { id: string; depth: number }[] = [];
   const walk = (n: Node, depth: number) => {
-    if (n.id !== undefined && n.id !== null) out.push({ id: String(n.id), depth });
+    if (n.id !== undefined && n.id !== null) {
+      out.push({ id: String(n.id), depth });
+    }
     for (const c of childrenOf(n.children)) {
       if (typeof c !== "string") walk(c, depth + 1);
     }

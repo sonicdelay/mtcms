@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>mtCMS WebSocket Demo</title>
-  <style>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>mtCMS WebSocket Demo</title>
+    <style>
     :root {
       --bg: #f4f5f7;
       --panel: #ffffff;
@@ -163,7 +162,7 @@
       flex-wrap: wrap;
     }
 
-    .row>* {
+    .row > * {
       flex: 0 0 auto;
     }
 
@@ -293,82 +292,86 @@
     .tools button {
       flex: 1 1 auto;
     }
-  </style>
-</head>
+    </style>
+  </head>
 
-<body>
-  <header>
-    <h1>mtCMS WebSocket Demo</h1>
-    <div class="row">
-      <span class="badge" id="connState">disconnected</span>
-      <span class="connId" id="myId">id: —</span>
-      <code>ws://&lt;host&gt;/api/ws?token=&lt;jwt&gt;</code>
-    </div>
-  </header>
-
-  <main>
-    <section class="panel">
-      <h2>1 &middot; Connection</h2>
-      <label for="wsOrigin">WS origin (host:port)</label>
-      <input type="text" id="wsOrigin" value="" placeholder="localhost:8421" />
-      <label for="token">JWT token</label>
-      <textarea id="token" rows="3" placeholder="Paste your JWT, or use the login form below."></textarea>
-      <label for="email">Or login (POST /api/auth)</label>
+  <body>
+    <header>
+      <h1>mtCMS WebSocket Demo</h1>
       <div class="row">
-        <input type="text" id="email" class="grow" placeholder="email" />
-        <input type="password" id="password" placeholder="password" />
-        <button class="small" id="loginBtn">Get token</button>
+        <span class="badge" id="connState">disconnected</span>
+        <span class="connId" id="myId">id: —</span>
+        <code>ws://&lt;host&gt;/api/ws?token=&lt;jwt&gt;</code>
       </div>
-      <div class="row" style="margin-top:12px">
-        <button class="primary grow" id="connectBtn">Connect</button>
-        <button id="disconnectBtn">Disconnect</button>
-      </div>
-      <p class="hint">
+    </header>
+
+    <main>
+      <section class="panel">
+        <h2>1 &middot; Connection</h2>
+        <label for="wsOrigin">WS origin (host:port)</label>
+        <input type="text" id="wsOrigin" value=""
+          placeholder="localhost:8421" />
+        <label for="token">JWT token</label>
+        <textarea id="token" rows="3"
+          placeholder="Paste your JWT, or use the login form below."></textarea>
+        <label for="email">Or login (POST /api/auth)</label>
+        <div class="row">
+          <input type="text" id="email" class="grow" placeholder="email" />
+          <input type="password" id="password" placeholder="password" />
+          <button class="small" id="loginBtn">Get token</button>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <button class="primary grow" id="connectBtn">Connect</button>
+          <button id="disconnectBtn">Disconnect</button>
+        </div>
+        <p class="hint">
         To test <b>unicast (to)</b> and <b>group</b> routing, open this page in a
         second browser tab and connect with the same token. Use that tab's client
         id as the <i>to</i> target.
       </p>
-      <p class="hint">
+        <p class="hint">
         In the Vite dev setup the page is proxied at
         <code>/api/ws-demo</code>, but WebSocket upgrades are <b>not</b> proxied.
         Open it directly on the API server instead:
         <code>http://localhost:8421/api/ws-demo</code>.
       </p>
-    </section>
+      </section>
 
-    <section class="panel">
-      <h2>2 &middot; Composer (send)</h2>
-      <p class="hint">Pick a preset, adjust the JSON, then <b>Send raw</b>.</p>
-      <div class="presets" id="presets">
-        <button data-preset="to">send → to</button>
-        <button data-preset="group">send → group</button>
-        <button data-preset="broadcast">send → broadcast</button>
-        <button data-preset="join">join group</button>
-        <button data-preset="leave">leave group</button>
-        <button data-preset="llmStream">llmChat (stream)</button>
-        <button data-preset="llmOnce">llmChat (one-shot)</button>
-        <button data-preset="llmClear">llmChat (clear)</button>
-        <button data-preset="raw">clear editor</button>
-      </div>
-      <label for="editor">Outgoing message (JSON)</label>
-      <textarea id="editor"></textarea>
-      <div class="row" style="margin-top:10px">
-        <button class="primary" id="sendBtn">Send raw</button>
-        <span class="hint" style="margin:0">&mdash; server actions: <code>sendWebsocket</code>, <code>joinGroup</code>,
+      <section class="panel">
+        <h2>2 &middot; Composer (send)</h2>
+        <p
+          class="hint">Pick a preset, adjust the JSON, then <b>Send raw</b>.</p>
+        <div class="presets" id="presets">
+          <button data-preset="to">send → to</button>
+          <button data-preset="group">send → group</button>
+          <button data-preset="broadcast">send → broadcast</button>
+          <button data-preset="join">join group</button>
+          <button data-preset="leave">leave group</button>
+          <button data-preset="llmStream">llmChat (stream)</button>
+          <button data-preset="llmOnce">llmChat (one-shot)</button>
+          <button data-preset="llmClear">llmChat (clear)</button>
+          <button data-preset="raw">clear editor</button>
+        </div>
+        <label for="editor">Outgoing message (JSON)</label>
+        <textarea id="editor"></textarea>
+        <div class="row" style="margin-top:10px">
+          <button class="primary" id="sendBtn">Send raw</button>
+          <span class="hint"
+            style="margin:0">&mdash; server actions: <code>sendWebsocket</code>, <code>joinGroup</code>,
           <code>leaveGroup</code>, <code>llmChat</code></span>
-      </div>
-    </section>
+        </div>
+      </section>
 
-    <section class="panel">
-      <h2>3 &middot; Message log</h2>
-      <div class="tools">
-        <button id="clearLog">Clear log</button>
-      </div>
-      <div class="log" id="log"></div>
-    </section>
-  </main>
+      <section class="panel">
+        <h2>3 &middot; Message log</h2>
+        <div class="tools">
+          <button id="clearLog">Clear log</button>
+        </div>
+        <div class="log" id="log"></div>
+      </section>
+    </main>
 
-  <script>
+    <script>
     (() => {
       "use strict";
 
@@ -410,7 +413,8 @@
         const metaEl = document.createElement("div");
         metaEl.className = "meta";
         metaEl.innerHTML =
-          `<span class="dir-${dir}">${label}</span> ${time} &mdash; ${action}${kind ? ` (${kind})` : ""
+          `<span class="dir-${dir}">${label}</span> ${time} &mdash; ${action}${
+            kind ? ` (${kind})` : ""
           }`;
         const pre = document.createElement("pre");
         pre.textContent = typeof obj === "string" ? obj : fmt(obj);
@@ -568,7 +572,7 @@
           }
           if (msg.action === "connected") {
             myId.textContent = `id: ${msg.data.id}`;
-            navigator.clipboard?.writeText(msg.data.id).catch(() => { });
+            navigator.clipboard?.writeText(msg.data.id).catch(() => {});
           }
           addEntry("recv", msg.action, msg);
         };
@@ -613,7 +617,7 @@
           $("token").value = body.token;
           try {
             localStorage.setItem("mtcms-demo-token", body.token);
-          } catch { }
+          } catch {}
           addEntry("conn", "info", "Token acquired via POST /api/auth");
         } catch (err) {
           addEntry("recv", "error", { message: err.message });
@@ -652,10 +656,9 @@
       try {
         const saved = localStorage.getItem("mtcms-demo-token");
         if (saved) $("token").value = saved;
-      } catch { }
+      } catch {}
       $("wsOrigin").value = location.host;
     })();
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export const useHistory = <T,>(initial: T) => {
+export const useHistory = <T>(initial: T) => {
   const [present, setPresent] = useState<T>(initial);
   const pastRef = useRef<T[]>([]);
   const futureRef = useRef<T[]>([]);
@@ -13,7 +13,7 @@ export const useHistory = <T,>(initial: T) => {
       futureRef.current = [];
       setPresent(next);
     },
-    [present]
+    [present],
   );
 
   const undo = useCallback(() => {

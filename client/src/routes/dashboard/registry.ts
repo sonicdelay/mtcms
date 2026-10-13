@@ -143,7 +143,12 @@ export const palette: Record<string, PaletteItem> = {
     defaultProps: () => ({ config: { title: "Wave", source: "sin" } }),
     settings: [
       { key: "config.title", label: "Title" },
-      { key: "config.source", label: "Source", kind: "select", options: SOURCE_OPTIONS },
+      {
+        key: "config.source",
+        label: "Source",
+        kind: "select",
+        options: SOURCE_OPTIONS,
+      },
     ],
   },
   SdWaveValue: {
@@ -154,7 +159,12 @@ export const palette: Record<string, PaletteItem> = {
     defaultProps: () => ({ config: { title: "Value", source: "sin" } }),
     settings: [
       { key: "config.title", label: "Title" },
-      { key: "config.source", label: "Source", kind: "select", options: SOURCE_OPTIONS },
+      {
+        key: "config.source",
+        label: "Source",
+        kind: "select",
+        options: SOURCE_OPTIONS,
+      },
     ],
   },
   SdWaveBar: {
@@ -165,7 +175,12 @@ export const palette: Record<string, PaletteItem> = {
     defaultProps: () => ({ config: { title: "Bar", source: "sin" } }),
     settings: [
       { key: "config.title", label: "Title" },
-      { key: "config.source", label: "Source", kind: "select", options: SOURCE_OPTIONS },
+      {
+        key: "config.source",
+        label: "Source",
+        kind: "select",
+        options: SOURCE_OPTIONS,
+      },
     ],
   },
   SdGauge: {
@@ -173,10 +188,17 @@ export const palette: Record<string, PaletteItem> = {
     title: "Gauge",
     icon: "gauge",
     group: "components",
-    defaultProps: () => ({ config: { title: "Gauge", source: "sin", min: -1, max: 1 } }),
+    defaultProps: () => ({
+      config: { title: "Gauge", source: "sin", min: -1, max: 1 },
+    }),
     settings: [
       { key: "config.title", label: "Title" },
-      { key: "config.source", label: "Source", kind: "select", options: SOURCE_OPTIONS },
+      {
+        key: "config.source",
+        label: "Source",
+        kind: "select",
+        options: SOURCE_OPTIONS,
+      },
       { key: "config.min", label: "Min", kind: "number" },
       { key: "config.max", label: "Max", kind: "number" },
     ],
@@ -234,7 +256,10 @@ export const palette: Record<string, PaletteItem> = {
     icon: "input",
     group: "form",
     droppable: true,
-    defaultProps: () => ({ value: "", config: { label: "Label", placeholder: "" } }),
+    defaultProps: () => ({
+      value: "",
+      config: { label: "Label", placeholder: "" },
+    }),
     settings: [
       { key: "config.label", label: "Label" },
       { key: "config.placeholder", label: "Placeholder" },
@@ -316,7 +341,10 @@ export const palette: Record<string, PaletteItem> = {
     icon: "listItem",
     group: "components",
     droppable: false,
-    defaultProps: () => ({ value: [{ id: "home", label: "Home" }], config: {} }),
+    defaultProps: () => ({
+      value: [{ id: "home", label: "Home" }],
+      config: {},
+    }),
     settings: [],
   },
   SdToast: {
@@ -341,7 +369,9 @@ export const palette: Record<string, PaletteItem> = {
     settings: [{ key: "brand", label: "Brand" }],
   },
 
-  div: container("div", "Div Box", "box", "layout", { className: "flex flex-col" }),
+  div: container("div", "Div Box", "box", "layout", {
+    className: "flex flex-col",
+  }),
   section: container("section", "Section", "section", "layout"),
   article: container("article", "Article", "article", "layout"),
   aside: container("aside", "Aside", "aside", "layout"),
@@ -352,17 +382,33 @@ export const palette: Record<string, PaletteItem> = {
   address: container("address", "Address", "address", "layout"),
   hgroup: container("hgroup", "Heading Group", "hgroup", "layout"),
   details: container("details", "Details", "details", "layout", { open: true }),
-  summary: leaf("summary", "Summary", "details", "layout", { children: "Summary" }),
+  summary: leaf("summary", "Summary", "details", "layout", {
+    children: "Summary",
+  }),
   dialog: container("dialog", "Dialog", "dialog", "layout", { open: true }),
 
-  h1: container("h1", "Heading 1", "heading1", "headings", { children: "Heading" }),
-  h2: container("h2", "Heading 2", "heading2", "headings", { children: "Heading" }),
-  h3: container("h3", "Heading 3", "heading3", "headings", { children: "Heading" }),
-  h4: container("h4", "Heading 4", "heading4", "headings", { children: "Heading" }),
-  h5: container("h5", "Heading 5", "heading5", "headings", { children: "Heading" }),
-  h6: container("h6", "Heading 6", "heading6", "headings", { children: "Heading" }),
+  h1: container("h1", "Heading 1", "heading1", "headings", {
+    children: "Heading",
+  }),
+  h2: container("h2", "Heading 2", "heading2", "headings", {
+    children: "Heading",
+  }),
+  h3: container("h3", "Heading 3", "heading3", "headings", {
+    children: "Heading",
+  }),
+  h4: container("h4", "Heading 4", "heading4", "headings", {
+    children: "Heading",
+  }),
+  h5: container("h5", "Heading 5", "heading5", "headings", {
+    children: "Heading",
+  }),
+  h6: container("h6", "Heading 6", "heading6", "headings", {
+    children: "Heading",
+  }),
 
-  p: container("p", "Paragraph", "paragraph", "text", { children: "Paragraph text" }),
+  p: container("p", "Paragraph", "paragraph", "text", {
+    children: "Paragraph text",
+  }),
   blockquote: container(
     "blockquote",
     "Blockquote",
@@ -399,7 +445,9 @@ export const palette: Record<string, PaletteItem> = {
   li: container("li", "List Item", "listItem", "text"),
   dl: container("dl", "Description List", "descriptionList", "text"),
   dt: leaf("dt", "Term", "term", "text", { children: "Term" }),
-  dd: leaf("dd", "Description", "description", "text", { children: "Description" }),
+  dd: leaf("dd", "Description", "description", "text", {
+    children: "Description",
+  }),
 
   span: container("span", "Span", "span", "inline", { children: "Text" }),
   a: container(
@@ -410,12 +458,18 @@ export const palette: Record<string, PaletteItem> = {
     { children: "Link", href: "#", className: "underline" },
     [{ key: "href", label: "Href" }, ...text()],
   ),
-  strong: container("strong", "Strong", "bold", "inline", { children: "Strong" }),
+  strong: container("strong", "Strong", "bold", "inline", {
+    children: "Strong",
+  }),
   b: container("b", "Bold", "bold", "inline", { children: "Bold" }),
   em: container("em", "Emphasis", "italic", "inline", { children: "Emphasis" }),
   i: container("i", "Italic", "italic", "inline", { children: "Italic" }),
-  u: container("u", "Underline", "underline", "inline", { children: "Underline" }),
-  s: container("s", "Strikeout", "strikethrough", "inline", { children: "Strikeout" }),
+  u: container("u", "Underline", "underline", "inline", {
+    children: "Underline",
+  }),
+  s: container("s", "Strikeout", "strikethrough", "inline", {
+    children: "Strikeout",
+  }),
   del: container(
     "del",
     "Deleted",
@@ -444,17 +498,29 @@ export const palette: Record<string, PaletteItem> = {
     children: "Highlighted",
     className: "bg-yellow-300 text-black",
   }),
-  small: container("small", "Small", "small", "inline", { children: "Small text" }),
-  sub: container("sub", "Subscript", "subscript", "inline", { children: "sub" }),
-  sup: container("sup", "Superscript", "superscript", "inline", { children: "sup" }),
+  small: container("small", "Small", "small", "inline", {
+    children: "Small text",
+  }),
+  sub: container("sub", "Subscript", "subscript", "inline", {
+    children: "sub",
+  }),
+  sup: container("sup", "Superscript", "superscript", "inline", {
+    children: "sup",
+  }),
   code: container("code", "Code", "code", "inline", { children: "code" }),
   kbd: container("kbd", "Keyboard", "keyboard", "inline", {
     children: "Ctrl",
     className: "font-mono",
   }),
-  samp: container("samp", "Sample Output", "code", "inline", { children: "sample" }),
-  var: container("var", "Variable", "italic", "inline", { children: "variable" }),
-  cite: container("cite", "Citation", "citation", "inline", { children: "Citation" }),
+  samp: container("samp", "Sample Output", "code", "inline", {
+    children: "sample",
+  }),
+  var: container("var", "Variable", "italic", "inline", {
+    children: "variable",
+  }),
+  cite: container("cite", "Citation", "citation", "inline", {
+    children: "Citation",
+  }),
   q: container(
     "q",
     "Inline Quote",
@@ -470,7 +536,10 @@ export const palette: Record<string, PaletteItem> = {
   dfn: container("dfn", "Definition", "definition", "inline", {
     children: "Definition",
   }),
-  data: container("data", "Data", "data", "inline", { children: "42", value: "42" }, [
+  data: container("data", "Data", "data", "inline", {
+    children: "42",
+    value: "42",
+  }, [
     { key: "value", label: "Value" },
     ...text(),
   ]),
@@ -492,7 +561,10 @@ export const palette: Record<string, PaletteItem> = {
     "bidi",
     "inline",
     { children: "Text" },
-    [{ key: "dir", label: "Dir", kind: "select", options: DIR_OPTIONS }, ...text()],
+    [
+      { key: "dir", label: "Dir", kind: "select", options: DIR_OPTIONS },
+      ...text(),
+    ],
   ),
 
   img: {
@@ -501,7 +573,11 @@ export const palette: Record<string, PaletteItem> = {
     icon: "image",
     group: "media",
     droppable: false,
-    defaultProps: () => ({ src: "/images/engine.jpg", alt: "image", className: "" }),
+    defaultProps: () => ({
+      src: "/images/engine.jpg",
+      alt: "image",
+      className: "",
+    }),
     settings: [
       { key: "src", label: "Src" },
       { key: "alt", label: "Alt" },
@@ -528,7 +604,10 @@ export const palette: Record<string, PaletteItem> = {
     { key: "src", label: "Src" },
     { key: "poster", label: "Poster" },
   ]),
-  audio: leaf("audio", "Audio", "audio", "media", {}, [{ key: "src", label: "Src" }]),
+  audio: leaf("audio", "Audio", "audio", "media", {}, [{
+    key: "src",
+    label: "Src",
+  }]),
   track: leaf("track", "Track", "track", "media", { kind: "subtitles" }, [
     { key: "src", label: "Src" },
     { key: "kind", label: "Kind", kind: "select", options: TRACK_KINDS },
@@ -547,7 +626,9 @@ export const palette: Record<string, PaletteItem> = {
   table: container("table", "Table", "table", "table", {
     className: "border-collapse",
   }, structural),
-  caption: leaf("caption", "Caption", "header", "table", { children: "Caption" }),
+  caption: leaf("caption", "Caption", "header", "table", {
+    children: "Caption",
+  }),
   colgroup: container("colgroup", "Column Group", "column", "table", {}, [
     { key: "span", label: "Span", kind: "number" },
   ]),
@@ -595,10 +676,14 @@ export const palette: Record<string, PaletteItem> = {
   select: container("select", "Select", "select", "form", { name: "select" }, [
     { key: "name", label: "Name" },
   ]),
-  datalist: container("datalist", "Datalist", "select", "form", { id: "datalist" }, [
+  datalist: container("datalist", "Datalist", "select", "form", {
+    id: "datalist",
+  }, [
     { key: "id", label: "Id" },
   ]),
-  optgroup: container("optgroup", "Option Group", "optionGroup", "form", { label: "Group" }, [
+  optgroup: container("optgroup", "Option Group", "optionGroup", "form", {
+    label: "Group",
+  }, [
     { key: "label", label: "Label" },
   ]),
   option: container("option", "Option", "option", "form", {
@@ -609,11 +694,18 @@ export const palette: Record<string, PaletteItem> = {
     { key: "name", label: "Name" },
     ...text(),
   ]),
-  progress: leaf("progress", "Progress", "progress", "form", { value: 50, max: 100 }, [
+  progress: leaf("progress", "Progress", "progress", "form", {
+    value: 50,
+    max: 100,
+  }, [
     { key: "value", label: "Value", kind: "number" },
     { key: "max", label: "Max", kind: "number" },
   ]),
-  meter: leaf("meter", "Meter", "meter", "form", { value: 60, min: 0, max: 100 }, [
+  meter: leaf("meter", "Meter", "meter", "form", {
+    value: 60,
+    min: 0,
+    max: 100,
+  }, [
     { key: "value", label: "Value", kind: "number" },
     { key: "min", label: "Min", kind: "number" },
     { key: "max", label: "Max", kind: "number" },
@@ -626,7 +718,11 @@ export const palette: Record<string, PaletteItem> = {
     droppable: false,
     defaultProps: () => ({
       value: [
-        { id: "root", label: "Root", children: [{ id: "child", label: "Child" }] },
+        {
+          id: "root",
+          label: "Root",
+          children: [{ id: "child", label: "Child" }],
+        },
       ],
       config: {},
     }),
@@ -642,7 +738,10 @@ export const palette: Record<string, PaletteItem> = {
     "button",
     "form",
     { children: "Click", type: "button" },
-    [{ key: "type", label: "Type", kind: "select", options: BUTTON_TYPES }, ...text()],
+    [
+      { key: "type", label: "Type", kind: "select", options: BUTTON_TYPES },
+      ...text(),
+    ],
   ),
 };
 

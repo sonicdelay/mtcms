@@ -7,7 +7,8 @@ interface SdPaneProps extends SdComponentProps<unknown> {
 }
 
 const SdPane = (props: SdPaneProps) => {
-  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } =
+    props;
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
     if (!eventIn || lastEvent.current === eventIn) return;

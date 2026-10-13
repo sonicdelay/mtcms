@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ChangeEvent } from "react";
+import { type ChangeEvent, useEffect, useRef } from "react";
 import type { SdComponentEvent } from "../models/sd-component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
 import type { SdTextareaConfig } from "../models/sd-textarea";
@@ -10,7 +10,8 @@ interface SdTextareaProps extends SdComponentProps<string, SdTextareaConfig> {
 const DEFAULT_CONFIG: SdTextareaConfig = {};
 
 const SdTextarea = (props: SdTextareaProps) => {
-  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } =
+    props;
   const settings = { ...DEFAULT_CONFIG, ...config };
 
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
@@ -26,8 +27,12 @@ const SdTextarea = (props: SdTextareaProps) => {
   };
 
   return (
-    <div className={["sd-textarea-wrapper", className].filter(Boolean).join(" ")}>
-      {settings.label && <label className="sd-textarea__label">{settings.label}</label>}
+    <div
+      className={["sd-textarea-wrapper", className].filter(Boolean).join(" ")}
+    >
+      {settings.label && (
+        <label className="sd-textarea__label">{settings.label}</label>
+      )}
       <textarea
         {...rest}
         value={value ?? ""}

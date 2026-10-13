@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router";
-import { useEditStore, type EditTreeModel } from "../../lib/edit.store";
+import { type EditTreeModel, useEditStore } from "../../lib/edit.store";
 import SdTree from "../SdTree";
 import type { TreeItem } from "../../models/sd-tree";
 

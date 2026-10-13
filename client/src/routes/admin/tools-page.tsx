@@ -82,14 +82,14 @@ export default function ToolsPage() {
           ]}
           onChange={(ev) =>
             setSelectedType(
-              String((ev.payload as { value?: string } | undefined)?.value ?? ""),
+              String(
+                (ev.payload as { value?: string } | undefined)?.value ?? "",
+              ),
             )}
         />
       </div>
 
-      {error && (
-        <p className="text-[var(--danger-fg)]">{error}</p>
-      )}
+      {error && <p className="text-[var(--danger-fg)]">{error}</p>}
 
       <div className="admin-grid">
         {tools.map((node) => (

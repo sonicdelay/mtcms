@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ChangeEvent } from "react";
+import { type ChangeEvent, useEffect, useRef } from "react";
 import type { SdComponentEvent } from "../models/sd-component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
 import type { SdInputConfig } from "../models/sd-input";
@@ -10,7 +10,8 @@ interface SdInputProps extends SdComponentProps<string, SdInputConfig> {
 const DEFAULT_CONFIG: SdInputConfig = {};
 
 const SdInput = (props: SdInputProps) => {
-  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } =
+    props;
   const settings = { ...DEFAULT_CONFIG, ...config };
 
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
@@ -28,7 +29,9 @@ const SdInput = (props: SdInputProps) => {
 
   return (
     <div className={["sd-input-wrapper", className].filter(Boolean).join(" ")}>
-      {settings.label && <label className="sd-input__label">{settings.label}</label>}
+      {settings.label && (
+        <label className="sd-input__label">{settings.label}</label>
+      )}
       <input
         {...rest}
         type={settings.type ?? "text"}

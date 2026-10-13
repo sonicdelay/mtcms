@@ -68,7 +68,9 @@ const SdSplitHandle = ({
       onKeyDown={(event) => {
         if (event.key !== plusKey && event.key !== minusKey) return;
         event.preventDefault();
-        onResize(sign * (event.key === plusKey ? KEYBOARD_STEP : -KEYBOARD_STEP));
+        onResize(
+          sign * (event.key === plusKey ? KEYBOARD_STEP : -KEYBOARD_STEP),
+        );
       }}
       style={horizontal ? { height: HANDLE_WIDTH } : { width: HANDLE_WIDTH }}
       className={`shrink-0 touch-none select-none bg-[var(--border-strong)] hover:bg-[var(--accent)] focus:bg-[var(--accent)] data-[dragging=true]:bg-[var(--accent-hover)] ${

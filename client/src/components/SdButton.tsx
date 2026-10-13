@@ -10,13 +10,15 @@ interface SdButtonProps extends SdComponentProps<string, SdButtonConfig> {
 
 const VARIANTS: Record<"primary" | "secondary" | "danger" | "ghost", string> = {
   primary: "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)]",
-  secondary: "border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
+  secondary:
+    "border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
   danger: "bg-[var(--danger)] text-white hover:bg-[var(--danger-hover)]",
   ghost: "text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
 };
 
 const SdButton = (props: SdButtonProps) => {
-  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } =
+    props;
   const settings = { variant: "primary" as const, ...config };
 
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
@@ -28,7 +30,9 @@ const SdButton = (props: SdButtonProps) => {
   }, [eventIn, onChange]);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (typeof (rest as any).onClick === "function") (rest as any).onClick(event);
+    if (typeof (rest as any).onClick === "function") {
+      (rest as any).onClick(event);
+    }
     onChange?.({ type: "click", payload: { value } });
   };
 

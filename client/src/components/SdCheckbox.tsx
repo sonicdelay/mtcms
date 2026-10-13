@@ -10,7 +10,8 @@ interface SdCheckboxProps extends SdComponentProps<boolean, SdCheckboxConfig> {
 const DEFAULT_CONFIG: SdCheckboxConfig = {};
 
 const SdCheckbox = (props: SdCheckboxProps) => {
-  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } =
+    props;
   const settings = { ...DEFAULT_CONFIG, ...config };
 
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
@@ -43,7 +44,9 @@ const SdCheckbox = (props: SdCheckboxProps) => {
         onChange={handleChange}
         className="sd-checkbox__input"
       />
-      {settings.label && <span className="sd-checkbox__label">{settings.label}</span>}
+      {settings.label && (
+        <span className="sd-checkbox__label">{settings.label}</span>
+      )}
       {children}
     </label>
   );

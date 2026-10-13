@@ -273,7 +273,13 @@ export const icons = {
   term: () => icon(<path d="M4 8h10M4 13h16M4 18h13" />),
   description: () => icon(<path d="M9 8h11M9 13h11M9 18h8" />),
 
-  span: () => icon(<><path d="M3 9v6M21 9v6" /><path d="M7 12h10" /></>),
+  span: () =>
+    icon(
+      <>
+        <path d="M3 9v6M21 9v6" />
+        <path d="M7 12h10" />
+      </>,
+    ),
   link: () =>
     icon(
       <>
@@ -327,7 +333,13 @@ export const icons = {
         <path d="M15 4h6" />
       </>,
     ),
-  code: () => icon(<><path d="M9 8l-4 4 4 4" /><path d="M15 8l4 4-4 4" /></>),
+  code: () =>
+    icon(
+      <>
+        <path d="M9 8l-4 4 4 4" />
+        <path d="M15 8l4 4-4 4" />
+      </>,
+    ),
   keyboard: () =>
     icon(
       <>

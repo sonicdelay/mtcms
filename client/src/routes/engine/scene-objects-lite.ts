@@ -12,15 +12,15 @@ import {
   createStandardMaterial,
   createTorus,
   createTorusKnot,
-  setPhysicsBodyMass,
-  setPhysicsBodyShape,
-  setPhysicsShapeMaterial,
   type EngineContext,
   type Mesh,
   type PhysicsBody,
   type PhysicsShapeType,
   type PhysicsWorld,
   type SceneContext,
+  setPhysicsBodyMass,
+  setPhysicsBodyShape,
+  setPhysicsShapeMaterial,
   type StandardMaterialProps,
   type Vec3,
 } from "@babylonjs/lite";
@@ -33,7 +33,12 @@ export const physicsShapeTypes = {
   CONVEX_HULL: 4,
 } as const;
 
-export type SpawnResult = { mesh: Mesh; body: PhysicsBody; kind: ShapeName; mass: number };
+export type SpawnResult = {
+  mesh: Mesh;
+  body: PhysicsBody;
+  kind: ShapeName;
+  mass: number;
+};
 
 type ShapeName = keyof typeof physicsShapeTypes;
 
@@ -41,7 +46,9 @@ type FactoryResult = { mesh: Mesh; type: ShapeName; mass: number };
 
 type ObjectFactory = (engine: EngineContext, name: string) => FactoryResult;
 
-function createMaterial(diffuse: [number, number, number]): StandardMaterialProps {
+function createMaterial(
+  diffuse: [number, number, number],
+): StandardMaterialProps {
   const mat = createStandardMaterial();
   mat.diffuseColor = diffuse;
   return mat;
@@ -102,7 +109,11 @@ const cylinderFactory: ObjectFactory = (engine, name) => {
 };
 
 const capsuleFactory: ObjectFactory = (engine, name) => {
-  const capsule = createCapsule(engine, { radius: 0.55, height: 1.8, tessellation: 24 });
+  const capsule = createCapsule(engine, {
+    radius: 0.55,
+    height: 1.8,
+    tessellation: 24,
+  });
   capsule.rotation.z = Math.PI / 2;
   capsule.name = name;
   capsule.material = createMaterial([0.85, 0.35, 0.75]);
@@ -110,7 +121,11 @@ const capsuleFactory: ObjectFactory = (engine, name) => {
 };
 
 const torusFactory: ObjectFactory = (engine, name) => {
-  const torus = createTorus(engine, { diameter: 1.4, thickness: 0.45, tessellation: 24 });
+  const torus = createTorus(engine, {
+    diameter: 1.4,
+    thickness: 0.45,
+    tessellation: 24,
+  });
   torus.name = name;
   torus.material = createMaterial([0.95, 0.9, 0.25]);
   return { mesh: torus, type: "CONVEX_HULL", mass: 2.5 };
@@ -148,7 +163,11 @@ const torusKnotFactory: ObjectFactory = (engine, name) => {
 };
 
 const icoSphereFactory: ObjectFactory = (engine, name) => {
-  const icoSphere = createPolyhedron(engine, { type: 3, size: 1.6, flat: false });
+  const icoSphere = createPolyhedron(engine, {
+    type: 3,
+    size: 1.6,
+    flat: false,
+  });
   icoSphere.name = name;
   icoSphere.material = createMaterial([0.6, 0.4, 0.95]);
   return { mesh: icoSphere, type: "CONVEX_HULL", mass: 1.5 };

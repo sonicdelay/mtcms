@@ -121,7 +121,6 @@
   }
 }
 
-
 .sd-checkbox {
   display: flex;
   align-items: center;
@@ -144,20 +143,64 @@
   font-size: 14px;
 }
 
-.sd-text { color: var(--fg-base); }
-.sd-card { background: var(--surface); border: 1px solid var(--border); }
-.sd-kpi { background: var(--surface); border: 1px solid var(--border); }
-.sd-page-header { color: var(--fg-base); }
-.sd-pane { background: var(--surface); border: 1px solid var(--border); }
-.sd-breadcrumb { color: var(--fg-base); }
-.sd-toast { background: var(--surface-raised); border: 1px solid var(--border-strong); }
-.sd-wave, .sd-wavebar, .sd-wavevalue { color: var(--fg-base); }
-.sd-gauge { color: var(--fg-base); }
-.sd-button { background: var(--surface); color: var(--fg-base); border: 1px solid var(--border); }
-.sd-icon-button { background: transparent; color: var(--fg-base); border: none; }
-.sd-input { background: var(--surface-raised); color: var(--fg); border: 1px solid var(--border); }
-.sd-textarea { background: var(--surface-raised); color: var(--fg); border: 1px solid var(--border); }
-.sd-select { background: var(--surface-raised); color: var(--fg); border: 1px solid var(--border); }
+.sd-text {
+  color: var(--fg-base);
+}
+.sd-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.sd-kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.sd-page-header {
+  color: var(--fg-base);
+}
+.sd-pane {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.sd-breadcrumb {
+  color: var(--fg-base);
+}
+.sd-toast {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-strong);
+}
+.sd-wave,
+.sd-wavebar,
+.sd-wavevalue {
+  color: var(--fg-base);
+}
+.sd-gauge {
+  color: var(--fg-base);
+}
+.sd-button {
+  background: var(--surface);
+  color: var(--fg-base);
+  border: 1px solid var(--border);
+}
+.sd-icon-button {
+  background: transparent;
+  color: var(--fg-base);
+  border: none;
+}
+.sd-input {
+  background: var(--surface-raised);
+  color: var(--fg);
+  border: 1px solid var(--border);
+}
+.sd-textarea {
+  background: var(--surface-raised);
+  color: var(--fg);
+  border: 1px solid var(--border);
+}
+.sd-select {
+  background: var(--surface-raised);
+  color: var(--fg);
+  border: 1px solid var(--border);
+}
 .sd-tree {
   color: var(--fg-base);
   list-style: none;
@@ -230,15 +273,39 @@
   width: 1em;
   height: 1em;
 }
-.sd-application { background: var(--surface); color: var(--fg-base); }
-.sd-d3-graph { color: var(--fg-base); }
+.sd-application {
+  background: var(--surface);
+  color: var(--fg-base);
+}
+.sd-d3-graph {
+  color: var(--fg-base);
+}
 
-.Dummy { padding: 8px; background: var(--surface); border: 1px solid var(--border); }
-.Dummy-children { display: flex; gap: 4px; }
-.Dummy-value { color: var(--fg-muted); }
-.D3Graph { background: var(--surface-sunken); }
+.Dummy {
+  padding: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.Dummy-children {
+  display: flex;
+  gap: 4px;
+}
+.Dummy-value {
+  color: var(--fg-muted);
+}
+.D3Graph {
+  background: var(--surface-sunken);
+}
 
-.Checkbox { @extend .sd-checkbox; }
-.Checkbox-disabled { @extend .sd-checkbox--disabled; }
-.Checkbox-input { @extend .sd-checkbox__input; }
-.Checkbox-label { @extend .sd-checkbox__label; }
+.Checkbox {
+  @extend .sd-checkbox;
+}
+.Checkbox-disabled {
+  @extend .sd-checkbox--disabled;
+}
+.Checkbox-input {
+  @extend .sd-checkbox__input;
+}
+.Checkbox-label {
+  @extend .sd-checkbox__label;
+}

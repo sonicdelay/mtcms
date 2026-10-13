@@ -10,7 +10,8 @@ interface SdKpiProps extends SdComponentProps<string | number, SdKpiConfig> {
 const DEFAULT_CONFIG: SdKpiConfig = {};
 
 const SdKpi = (props: SdKpiProps) => {
-  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } =
+    props;
   const settings = { ...DEFAULT_CONFIG, ...config };
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {

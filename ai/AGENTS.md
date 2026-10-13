@@ -42,7 +42,7 @@ default.
   the barrel `routes/index.ts` (`export const routers: Router[]`). Because they
   mount at root, **`router.use()` middleware must be scoped to `${prefix}`**
   (e.g. `router.use(`${prefix}`, authRequired)`); an unscoped `router.use(...)`
-  applies to *every* request app-wide.
+  applies to _every_ request app-wide.
 - Follow the structure of `server/src/routes/api.ts` (handlers as `const` fns,
   then `prefix`, then the chained router). See `ai/rules/controller-structure.md`.
 - Don't add a global `express.json()` — body parsing is router-scoped. `fm`

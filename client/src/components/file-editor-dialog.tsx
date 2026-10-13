@@ -61,9 +61,7 @@ export default function FileEditorDialog({
           <SdIconButton value="close" title="Close" onClick={closeModal} />
         </div>
       </div>
-      {error && (
-        <p className="text-[var(--danger-fg)]">{error}</p>
-      )}
+      {error && <p className="text-[var(--danger-fg)]">{error}</p>}
       <textarea
         aria-label={`Content of ${name}`}
         spellCheck={false}

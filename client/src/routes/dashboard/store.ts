@@ -20,14 +20,14 @@ export interface WaveState {
   stop: (id: number) => void;
 }
 
-export type DeepKeys<T, Prefix extends string = ""> = T extends (infer U)[]
-  ? `${Prefix}${number}` | (U extends object ? DeepKeys<U, `${Prefix}${number}.`> : never)
-  : T extends object
-  ? {
-    [K in keyof T & string]: T[K] extends object
-    ? `${Prefix}${K}` | DeepKeys<T[K], `${Prefix}${K}.`>
-    : `${Prefix}${K}`;
-  }[keyof T & string]
+export type DeepKeys<T, Prefix extends string = ""> = T extends (infer U)[] ?
+    | `${Prefix}${number}`
+    | (U extends object ? DeepKeys<U, `${Prefix}${number}.`> : never)
+  : T extends object ? {
+      [K in keyof T & string]: T[K] extends object
+        ? `${Prefix}${K}` | DeepKeys<T[K], `${Prefix}${K}.`>
+        : `${Prefix}${K}`;
+    }[keyof T & string]
   : never;
 
 const getByPath = (obj: any, path: string): any =>
@@ -41,7 +41,7 @@ export const useStoreValue = <P extends DeepKeys<WaveState>>(path: P) =>
 
 export const useStoreValues = <P extends DeepKeys<WaveState>>(...paths: P[]) =>
   useWaveStore(
-    useShallow((state) => paths.map((p) => getByPath(state, p)))
+    useShallow((state) => paths.map((p) => getByPath(state, p))),
   );
 
 export const useWaveStore = create<WaveState>()(
@@ -65,9 +65,15 @@ export const useWaveStore = create<WaveState>()(
             cos: Math.cos(t),
             tan: 1 / Math.tan(t),
             data: [
-              { time: Number(t.toPrecision(2)), sin: Number(Math.sin(t).toPrecision(2)) },
-              { time: Number(t.toPrecision(2)), sin: Number(Math.sin(t).toPrecision(2)) },
-            ]
+              {
+                time: Number(t.toPrecision(2)),
+                sin: Number(Math.sin(t).toPrecision(2)),
+              },
+              {
+                time: Number(t.toPrecision(2)),
+                sin: Number(Math.sin(t).toPrecision(2)),
+              },
+            ],
           };
         }),
 
@@ -82,6 +88,6 @@ export const useWaveStore = create<WaveState>()(
         window.clearInterval(id);
       },
     }),
-    { name: "WaveStore" }
-  )
+    { name: "WaveStore" },
+  ),
 );

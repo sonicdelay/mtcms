@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ChangeEvent } from "react";
+import { type ChangeEvent, useEffect, useRef } from "react";
 import type { SdComponentEvent } from "../models/sd-component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
 import type { SdSelectConfig, SdSelectOption } from "../models/sd-select";
@@ -10,7 +10,8 @@ interface SdSelectProps extends SdComponentProps<string, SdSelectConfig> {
 const DEFAULT_CONFIG: SdSelectConfig = { options: [] };
 
 const SdSelect = (props: SdSelectProps) => {
-  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } =
+    props;
   const settings = { ...DEFAULT_CONFIG, ...config };
 
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
@@ -27,7 +28,9 @@ const SdSelect = (props: SdSelectProps) => {
 
   return (
     <div className={["sd-select-wrapper", className].filter(Boolean).join(" ")}>
-      {settings.label && <label className="sd-select__label">{settings.label}</label>}
+      {settings.label && (
+        <label className="sd-select__label">{settings.label}</label>
+      )}
       <select
         {...rest}
         value={value ?? ""}

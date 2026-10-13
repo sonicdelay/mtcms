@@ -1,5 +1,6 @@
 import {
   addToScene,
+  type ArcRotateCamera,
   attachControl,
   createArcRotateCamera,
   createEngine,
@@ -12,21 +13,20 @@ import {
   disposeEngine,
   disposePhysics,
   disposeScene,
+  type EngineContext,
   getPhysicsBodyLinearVelocity,
+  type Mesh,
   onBeforeRender,
+  type PhysicsBody,
+  type PhysicsWorld,
   registerScene,
+  type SceneContext,
   setPhysicsBodyAngularVelocity,
   setPhysicsBodyLinearVelocity,
   setPhysicsBodyTransform,
+  type StandardMaterialProps,
   startEngine,
   stopEngine,
-  type ArcRotateCamera,
-  type EngineContext,
-  type Mesh,
-  type PhysicsBody,
-  type PhysicsWorld,
-  type SceneContext,
-  type StandardMaterialProps,
 } from "@babylonjs/lite";
 import HavokPhysics from "@babylonjs/havok";
 import HavokWasmUrl from "@babylonjs/havok/lib/esm/HavokPhysics.wasm?url";
@@ -201,7 +201,12 @@ export class EngineSceneController {
       y: Math.random() * 10 + 10,
       z: Math.random() * 16,
     };
-    setPhysicsBodyTransform(world, entry.body, position, { x: 0, y: 0, z: 16, w: 1 });
+    setPhysicsBodyTransform(world, entry.body, position, {
+      x: 0,
+      y: 0,
+      z: 16,
+      w: 1,
+    });
     setPhysicsBodyLinearVelocity(world, entry.body, { x: 0, y: 0, z: 0 });
     setPhysicsBodyAngularVelocity(world, entry.body, { x: 0, y: 0, z: 0 });
   }
@@ -227,9 +232,11 @@ export class EngineSceneController {
         radius: camera.radius,
         target: { x: camera.target.x, y: camera.target.y, z: camera.target.z },
         eye: {
-          x: camera.target.x + camera.radius * Math.sin(camera.alpha) * Math.cos(camera.beta),
+          x: camera.target.x +
+            camera.radius * Math.sin(camera.alpha) * Math.cos(camera.beta),
           y: camera.target.y + camera.radius * Math.sin(camera.beta),
-          z: camera.target.z + camera.radius * Math.cos(camera.alpha) * Math.cos(camera.beta),
+          z: camera.target.z +
+            camera.radius * Math.cos(camera.alpha) * Math.cos(camera.beta),
         },
       }
       : null;
@@ -237,13 +244,22 @@ export class EngineSceneController {
       const velocity = this.world
         ? getPhysicsBodyLinearVelocity(this.world, body)
         : null;
-      const diffuse = (mesh.material as StandardMaterialProps | null)?.diffuseColor ?? null;
+      const diffuse =
+        (mesh.material as StandardMaterialProps | null)?.diffuseColor ?? null;
       return {
         name: mesh.name ?? "unnamed",
         kind,
         mass,
-        position: { x: mesh.position.x, y: mesh.position.y, z: mesh.position.z },
-        rotation: { x: mesh.rotation.x, y: mesh.rotation.y, z: mesh.rotation.z },
+        position: {
+          x: mesh.position.x,
+          y: mesh.position.y,
+          z: mesh.position.z,
+        },
+        rotation: {
+          x: mesh.rotation.x,
+          y: mesh.rotation.y,
+          z: mesh.rotation.z,
+        },
         scaling: { x: mesh.scaling.x, y: mesh.scaling.y, z: mesh.scaling.z },
         diffuse,
         velocity: velocity

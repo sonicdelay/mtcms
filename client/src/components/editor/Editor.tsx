@@ -10,7 +10,11 @@ import type { Node } from "../../models/types";
 import { palette, paletteGroups } from "../../routes/dashboard/registry";
 import { icons } from "../../routes/dashboard/icons";
 import SdTree from "../SdTree";
-import type { TreeDropTarget, TreeItem, TreeItemState } from "../../models/sd-tree";
+import type {
+  TreeDropTarget,
+  TreeItem,
+  TreeItemState,
+} from "../../models/sd-tree";
 import { isDroppable } from "../../routes/dashboard/registry";
 import SdSplitHandle from "../SdSplitHandle";
 

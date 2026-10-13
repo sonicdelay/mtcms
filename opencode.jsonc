@@ -16,6 +16,25 @@
   ],
   // Default free model provided by OpenCode Zen (opencode provider).
   "model": "opencode/big-pickle",
+  // Format files OpenCode writes or edits, using Deno (the repo's formatter).
+  "formatter": {
+    "deno": {
+      "command": ["deno", "fmt", "$FILE"],
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".js",
+        ".jsx",
+        ".mjs",
+        ".cjs",
+        ".mts",
+        ".cts",
+        ".json",
+        ".jsonc",
+        ".md"
+      ]
+    }
+  },
   // Permissions (V2): ordered rules, last match wins. The built-in base policy
   // allows everything, so the broad `shell` ask re-establishes "ask before
   // running commands"; the git rules below allow routine inspection.
@@ -27,7 +46,8 @@
     { "action": "shell", "resource": "git add *", "effect": "allow" },
     { "action": "shell", "resource": "git status *", "effect": "allow" },
     { "action": "shell", "resource": "git diff *", "effect": "allow" },
-    { "action": "shell", "resource": "git log *", "effect": "allow" }
+    { "action": "shell", "resource": "git log *", "effect": "allow" },
+    { "action": "shell", "resource": "deno fmt *", "effect": "allow" }
   ],
   "exclude": [
     "build",

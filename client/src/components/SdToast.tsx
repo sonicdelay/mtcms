@@ -10,7 +10,8 @@ interface SdToastProps extends SdComponentProps<SdToastValue, SdToastConfig> {
 const DEFAULT_CONFIG: SdToastConfig = {};
 
 const SdToast = (props: SdToastProps) => {
-  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } =
+    props;
   const settings = { ...DEFAULT_CONFIG, ...config };
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
@@ -26,7 +27,8 @@ const SdToast = (props: SdToastProps) => {
   return (
     <div
       {...rest}
-      className={["sd-toast", `sd-toast--${toast.type ?? "info"}`, className].filter(Boolean).join(" ")}
+      className={["sd-toast", `sd-toast--${toast.type ?? "info"}`, className]
+        .filter(Boolean).join(" ")}
       onClick={() => {
         settings.onDismiss?.(toast.id);
         onChange?.({ type: "dismiss", payload: { id: toast.id } });

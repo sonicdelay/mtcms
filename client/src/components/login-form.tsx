@@ -28,7 +28,9 @@ export default function LoginForm() {
           required
           onChange={(ev) =>
             setEmail(
-              String((ev.payload as { value?: string } | undefined)?.value ?? ""),
+              String(
+                (ev.payload as { value?: string } | undefined)?.value ?? "",
+              ),
             )}
         />
         <SdInput
@@ -38,12 +40,12 @@ export default function LoginForm() {
           required
           onChange={(ev) =>
             setPassword(
-              String((ev.payload as { value?: string } | undefined)?.value ?? ""),
+              String(
+                (ev.payload as { value?: string } | undefined)?.value ?? "",
+              ),
             )}
         />
-        {error && (
-          <p className="m-0 text-[var(--danger-fg)]">{error}</p>
-        )}
+        {error && <p className="m-0 text-[var(--danger-fg)]">{error}</p>}
         <SdButton type="submit" disabled={loading}>
           {loading ? "Signing in…" : "Sign in"}
         </SdButton>

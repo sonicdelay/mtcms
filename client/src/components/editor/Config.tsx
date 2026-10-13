@@ -184,8 +184,7 @@ const FieldInput = ({ field, node, onPatch }: FieldProps) => {
         <select
           className={baseClass}
           value={str}
-          onChange={(e) =>
-            onPatch(writePath(node, field.key, e.target.value))}
+          onChange={(e) => onPatch(writePath(node, field.key, e.target.value))}
         >
           {value === undefined && <option value="">—</option>}
           {!known && <option value={str}>{str}</option>}
@@ -213,8 +212,7 @@ const FieldInput = ({ field, node, onPatch }: FieldProps) => {
           className={baseClass}
           rows={3}
           value={typeof value === "string" ? value : ""}
-          onChange={(e) =>
-            onPatch(writePath(node, field.key, e.target.value))}
+          onChange={(e) => onPatch(writePath(node, field.key, e.target.value))}
         />
       );
     default:
@@ -223,8 +221,7 @@ const FieldInput = ({ field, node, onPatch }: FieldProps) => {
           type="text"
           className={baseClass}
           value={typeof value === "string" ? value : ""}
-          onChange={(e) =>
-            onPatch(writePath(node, field.key, e.target.value))}
+          onChange={(e) => onPatch(writePath(node, field.key, e.target.value))}
         />
       );
   }
@@ -316,8 +313,7 @@ const Config = ({
             <div className="flex gap-1 mt-2">
               <button
                 className={buttonClass}
-                onClick={() =>
-                  onMove(-1)}
+                onClick={() => onMove(-1)}
                 disabled={!canMoveUp}
                 title="Move Up"
                 aria-label="Move Up"
@@ -326,8 +322,7 @@ const Config = ({
               </button>
               <button
                 className={buttonClass}
-                onClick={() =>
-                  onMove(1)}
+                onClick={() => onMove(1)}
                 disabled={!canMoveDown}
                 title="Move Down"
                 aria-label="Move Down"

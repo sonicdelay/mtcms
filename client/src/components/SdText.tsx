@@ -7,9 +7,9 @@ interface SdTextProps extends SdComponentProps<unknown, SdTextConfig> {
   [key: string]: unknown;
 }
 
-
 const SdText = (props: SdTextProps) => {
-  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } =
+    props;
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
     if (!eventIn || lastEvent.current === eventIn) return;
@@ -19,7 +19,10 @@ const SdText = (props: SdTextProps) => {
   }, [eventIn, onChange]);
 
   return (
-    <span {...rest} className={["sd-text", className].filter(Boolean).join(" ")}>
+    <span
+      {...rest}
+      className={["sd-text", className].filter(Boolean).join(" ")}
+    >
       {children}
     </span>
   );

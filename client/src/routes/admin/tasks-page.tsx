@@ -148,7 +148,9 @@ export default function TasksPage() {
           value={newTitle}
           onChange={(ev) =>
             setNewTitle(
-              String((ev.payload as { value?: string } | undefined)?.value ?? ""),
+              String(
+                (ev.payload as { value?: string } | undefined)?.value ?? "",
+              ),
             )}
         />
         <SdSelect
@@ -159,7 +161,9 @@ export default function TasksPage() {
           }))}
           onChange={(ev) =>
             setNewType(
-              String((ev.payload as { value?: string } | undefined)?.value ?? ""),
+              String(
+                (ev.payload as { value?: string } | undefined)?.value ?? "",
+              ),
             )}
         />
         <SdButton icon="plus" onClick={addTask}>
@@ -176,14 +180,14 @@ export default function TasksPage() {
           ]}
           onChange={(ev) =>
             setFilter(
-              String((ev.payload as { value?: string } | undefined)?.value ?? ""),
+              String(
+                (ev.payload as { value?: string } | undefined)?.value ?? "",
+              ),
             )}
         />
       </div>
 
-      {error && (
-        <p className="text-[var(--danger-fg)]">{error}</p>
-      )}
+      {error && <p className="text-[var(--danger-fg)]">{error}</p>}
 
       <div>
         {filtered.map((task) => (

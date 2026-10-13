@@ -11,7 +11,8 @@ interface SdWaveProps extends SdComponentProps<unknown, SdWaveConfig> {
 const DEFAULT_CONFIG: SdWaveConfig = { source: "sin" };
 
 const SdWave = (props: SdWaveProps) => {
-  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } =
+    props;
   const settings = { ...DEFAULT_CONFIG, ...config };
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
@@ -28,14 +29,31 @@ const SdWave = (props: SdWaveProps) => {
   const hue = normalized * 120;
 
   return (
-    <div {...rest} className={["sd-wave", "Wave", className].filter(Boolean).join(" ")}>
-      {settings.title && <h2 className="mb-2 font-semibold">{settings.title}</h2>}
-      <div className="font-mono text-4xl font-bold" style={{ color: `hsl(${hue}, 90%, 45%)` }}>
+    <div
+      {...rest}
+      className={["sd-wave", "Wave", className].filter(Boolean).join(" ")}
+    >
+      {settings.title && (
+        <h2 className="mb-2 font-semibold">{settings.title}</h2>
+      )}
+      <div
+        className="font-mono text-4xl font-bold"
+        style={{ color: `hsl(${hue}, 90%, 45%)` }}
+      >
         {val.toFixed(4)}
       </div>
-      <svg viewBox="0 0 200 60" className="mt-2 w-full" style={{ maxWidth: 300 }}>
+      <svg
+        viewBox="0 0 200 60"
+        className="mt-2 w-full"
+        style={{ maxWidth: 300 }}
+      >
         <line x1="0" y1="30" x2="200" y2="30" stroke="#ccc" strokeWidth="0.5" />
-        <circle cx={normalized * 200} cy={30 - val * 25} r="6" fill={`hsl(${hue}, 90%, 45%)`} />
+        <circle
+          cx={normalized * 200}
+          cy={30 - val * 25}
+          r="6"
+          fill={`hsl(${hue}, 90%, 45%)`}
+        />
       </svg>
       {children}
     </div>

@@ -307,9 +307,7 @@ export default function FilesPage() {
             </div>
           </div>
 
-          {error && (
-            <p className="text-[var(--danger-fg)]">{error}</p>
-          )}
+          {error && <p className="text-[var(--danger-fg)]">{error}</p>}
 
           <div className="admin-file-list">
             {directories.map((item) => (

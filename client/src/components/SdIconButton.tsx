@@ -10,13 +10,15 @@ interface SdIconButtonProps extends SdComponentProps<any, SdIconButtonConfig> {
 
 const VARIANTS: Record<string, string> = {
   primary: "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)]",
-  secondary: "border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
+  secondary:
+    "border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
   danger: "bg-[var(--danger)] text-white hover:bg-[var(--danger-hover)]",
   ghost: "text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
 };
 
 const SdIconButton = (props: SdIconButtonProps) => {
-  const { value, config, eventIn, onChange, children, className, ...rest } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } =
+    props;
   const settings = { variant: "ghost" as const, ...config };
 
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
@@ -28,7 +30,9 @@ const SdIconButton = (props: SdIconButtonProps) => {
   }, [eventIn, onChange]);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (typeof (rest as any).onClick === "function") (rest as any).onClick(event);
+    if (typeof (rest as any).onClick === "function") {
+      (rest as any).onClick(event);
+    }
     onChange?.({ type: "click", payload: { value } });
   };
 

@@ -5,15 +5,29 @@ import { components } from "../../components";
 import type { LayoutChild, Node } from "../../models/types";
 import { isDroppable, palette } from "./registry";
 
-type TreeNode = Node & { id?: string; type: string; children?: LayoutChild | LayoutChild[] };
+type TreeNode = Node & {
+  id?: string;
+  type: string;
+  children?: LayoutChild | LayoutChild[];
+};
 
 const childrenOf = (children?: LayoutChild | LayoutChild[]): LayoutChild[] =>
   children === undefined ? [] : Array.isArray(children) ? children : [children];
 
-const createNode = (type: string, props: Record<string, unknown>): Node =>
-  ({ id: `${type}-${Math.random().toString(36).slice(2, 9)}`, type, ...props } as Node);
+const createNode = (
+  type: string,
+  props: Record<string, unknown>,
+): Node => ({
+  id: `${type}-${Math.random().toString(36).slice(2, 9)}`,
+  type,
+  ...props,
+} as Node);
 
-const updateNode = (tree: Node, id: string, update: (node: TreeNode) => TreeNode): Node => {
+const updateNode = (
+  tree: Node,
+  id: string,
+  update: (node: TreeNode) => TreeNode,
+): Node => {
   const node = tree as TreeNode;
   if (node.id === id) return update(node) as Node;
   const oldChildren = childrenOf(node.children);
@@ -26,11 +40,19 @@ const updateNode = (tree: Node, id: string, update: (node: TreeNode) => TreeNode
     return next;
   });
   return changed
-    ? ({ ...node, children: Array.isArray(node.children) ? children : children[0] } as Node)
+    ? ({
+      ...node,
+      children: Array.isArray(node.children) ? children : children[0],
+    } as Node)
     : tree;
 };
 
-const insertChildAt = (tree: Node, id: string, index: number, child: LayoutChild): Node =>
+const insertChildAt = (
+  tree: Node,
+  id: string,
+  index: number,
+  child: LayoutChild,
+): Node =>
   updateNode(tree, id, (node) => {
     const children = childrenOf(node.children);
     children.splice(Math.max(0, Math.min(index, children.length)), 0, child);
@@ -52,15 +74,24 @@ const findNode = (tree: Node, id: string): TreeNode | undefined => {
 const containsNode = (tree: TreeNode, id: string): boolean =>
   childrenOf(tree.children).some((child) =>
     typeof child !== "string" &&
-    ((child as TreeNode).id === id || containsNode(child as TreeNode, id)),
+    ((child as TreeNode).id === id || containsNode(child as TreeNode, id))
   );
 
-const isSelfOrDescendant = (tree: Node, sourceId: string, targetId: string): boolean => {
+const isSelfOrDescendant = (
+  tree: Node,
+  sourceId: string,
+  targetId: string,
+): boolean => {
   const source = findNode(tree, sourceId);
   return sourceId === targetId || (!!source && containsNode(source, targetId));
 };
 
-const moveNode = (tree: Node, nodeId: string, targetId: string, index: number): Node => {
+const moveNode = (
+  tree: Node,
+  nodeId: string,
+  targetId: string,
+  index: number,
+): Node => {
   const moving = findNode(tree, nodeId);
   if (!moving) return tree;
   const remove = (node: Node): Node => {
@@ -79,7 +110,10 @@ const moveNode = (tree: Node, nodeId: string, targetId: string, index: number): 
       return [next];
     });
     return changed
-      ? ({ ...current, children: Array.isArray(current.children) ? children : children[0] } as Node)
+      ? ({
+        ...current,
+        children: Array.isArray(current.children) ? children : children[0],
+      } as Node)
       : node;
   };
   return insertChildAt(remove(tree), targetId, index, moving as LayoutChild);
@@ -105,15 +139,13 @@ export interface CanvasProps {
 const insertionIndex = (e: DragEvent): number => {
   const container = e.currentTarget as HTMLElement;
   const children = Array.from(container.children).filter(
-    (el) => !el.classList.contains("ed-drop-placeholder")
+    (el) => !el.classList.contains("ed-drop-placeholder"),
   );
   if (children.length === 0) return 0;
   const rects = children.map((el) => el.getBoundingClientRect());
-  const spanX =
-    Math.max(...rects.map((r) => r.right)) -
+  const spanX = Math.max(...rects.map((r) => r.right)) -
     Math.min(...rects.map((r) => r.left));
-  const spanY =
-    Math.max(...rects.map((r) => r.bottom)) -
+  const spanY = Math.max(...rects.map((r) => r.bottom)) -
     Math.min(...rects.map((r) => r.top));
   const horizontal = spanX > spanY;
   const pointer = horizontal ? e.clientX : e.clientY;
@@ -124,7 +156,7 @@ const insertionIndex = (e: DragEvent): number => {
     if (pointer < mid) return i;
   }
   return rects.length;
-}
+};
 
 export const useDragDrop = (
   tree: Node | null,
@@ -132,7 +164,9 @@ export const useDragDrop = (
   active: boolean,
 ) => {
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
-  const [dropTargetId, setDropTargetId] = useState<string | undefined>(undefined);
+  const [dropTargetId, setDropTargetId] = useState<string | undefined>(
+    undefined,
+  );
   const [dropIndex, setDropIndex] = useState(0);
 
   useEffect(() => {
@@ -183,7 +217,7 @@ export const useDragDrop = (
         commit(insertChildAt(tree, targetId, index ?? 0, child));
       }
     },
-    [tree, commit]
+    [tree, commit],
   );
 
   const editCtx: EditContext = {
@@ -239,7 +273,10 @@ export const renderEditable = (
   for (const [key, value] of Object.entries(baseProps)) {
     if (!/^[a-zA-Z][a-zA-Z0-9]*$/.test(key)) continue;
     if (value === undefined) continue;
-    if (value !== null && typeof value === "object" && key !== "style" && key !== "className") continue;
+    if (
+      value !== null && typeof value === "object" && key !== "style" &&
+      key !== "className"
+    ) continue;
     domProps[key] = value;
   }
 
@@ -296,8 +333,8 @@ export const renderEditable = (
   });
 
   let childNodes: ReactNode;
-  const showPlaceholder =
-    isDropTarget && id !== undefined && edit.dropTargetId === id;
+  const showPlaceholder = isDropTarget && id !== undefined &&
+    edit.dropTargetId === id;
   if (children === undefined) {
     childNodes = showPlaceholder ? [placeholder] : undefined;
   } else if (Array.isArray(children)) {
@@ -311,9 +348,7 @@ export const renderEditable = (
     childNodes = mapped;
   } else {
     childNodes = showPlaceholder
-      ? edit.dropIndex > 0
-        ? [children, placeholder]
-        : [placeholder, children]
+      ? edit.dropIndex > 0 ? [children, placeholder] : [placeholder, children]
       : children;
   }
 
