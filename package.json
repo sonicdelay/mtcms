@@ -8,9 +8,14 @@
   },
   "scripts": {
     "postinstall": "deno run install",
-    "dev": "deno run dev"
+    "dev": "deno run dev",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check ."
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
 }

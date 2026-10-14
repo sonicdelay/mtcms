@@ -1,0 +1,10 @@
+node_modules
+dist
+build
+.backup
+server/media
+client/public
+.fallow
+.opencode
+package-lock.json
+*.lock
