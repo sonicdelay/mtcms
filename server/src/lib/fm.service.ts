@@ -41,7 +41,7 @@ export async function getFolderContent(relPath = ""): Promise<FileItem[]> {
   const entries = await fs.readdir(absolute, { withFileTypes: true });
 
   return entries.map((entry) =>
-    toFileItem(relPath, entry.name, entry.isDirectory() ? "dir" : "file")
+    toFileItem(relPath, entry.name, entry.isDirectory() ? "dir" : "file"),
   );
 }
 

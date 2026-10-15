@@ -9,9 +9,7 @@
       "label": "deno fmt",
       "type": "shell",
       "command": "deno",
-      "args": [
-        "fmt"
-      ],
+      "args": ["fmt"],
       "options": {
         "cwd": "${workspaceFolder}"
       },

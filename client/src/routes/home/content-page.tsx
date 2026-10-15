@@ -6,9 +6,7 @@ import "../../stylesheets/markdown.scss";
 const md = new MarkdownIt({ html: true });
 
 type ContentState =
-  | { kind: "loading" }
-  | { kind: "error" }
-  | { kind: "ready"; html: string };
+  { kind: "loading" } | { kind: "error" } | { kind: "ready"; html: string };
 
 export default function ContentPage() {
   const { id } = useParams();

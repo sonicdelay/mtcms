@@ -24,9 +24,7 @@ const listItems = async (_req: Request, res: Response) => {
 const prefix = "/api/example";
 export const exampleRouter: Router = express.Router();
 exampleRouter.use(`${prefix}`, authRequired);
-exampleRouter
-  .get(`${prefix}/`, listItems)
-  .post(`${prefix}/`, createItem);
+exampleRouter.get(`${prefix}/`, listItems).post(`${prefix}/`, createItem);
 ```
 
 ## Rules

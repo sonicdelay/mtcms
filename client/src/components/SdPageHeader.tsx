@@ -3,8 +3,10 @@ import type { SdComponentEvent } from "../models/sd-component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
 import type { SdPageHeaderConfig } from "../models/sd-page-header";
 
-interface SdPageHeaderProps
-  extends SdComponentProps<unknown, SdPageHeaderConfig> {
+interface SdPageHeaderProps extends SdComponentProps<
+  unknown,
+  SdPageHeaderConfig
+> {
   [key: string]: unknown;
 }
 

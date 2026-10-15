@@ -96,12 +96,14 @@
 - [ ] **Step 7: Commit config + normalization (two commits)**
 
   Commit 1 (config/scripts):
+
   ```bash
   git add .prettierrc.json .prettierignore package.json
   git commit -m "chore(fmt): adopt Prettier with deno.json-mapped config"
   ```
 
   Commit 2 (normalization):
+
   ```bash
   git add -A
   git commit -m "style: format repo with Prettier (one-time normalization)"
@@ -210,6 +212,7 @@
 
   Edit `server/main.ts` to run at top level. Replace the guard block with unconditional boot.
   Change:
+
   ```ts
   if (import.meta.main) {
     const app = createApp();
@@ -220,7 +223,9 @@
     });
   }
   ```
+
   To:
+
   ```ts
   const app = createApp();
   const server = createServer(app);
@@ -327,6 +332,7 @@
 - [ ] **Step 2: Replace root scripts**
 
   Update root `package.json` `"scripts"` to:
+
   ```json
   {
     "postinstall": "npm run install:client && npm run install:server",
@@ -381,6 +387,7 @@
 - [ ] **Step 1: Update `.vscode/extensions.json`**
 
   Replace recommendations: remove `"denoland.vscode-deno"`, add `"esbenp.prettier-vscode"` and `"dbaeumer.vscode-eslint"`. Keep others.
+
   ```json
   {
     "recommendations": [
@@ -404,6 +411,7 @@
   - Keep `"task.allowAutomaticTasks": "on"` and `"js/ts.tsdk.*"` as-is
 
   Resulting structure (relevant keys):
+
   ```json
   {
     "js/ts.tsdk.path": "node_modules/typescript/lib",
@@ -423,6 +431,7 @@
 - [ ] **Step 3: Update `.vscode/tasks.json`**
 
   Change folder-open task to run Prettier via npm.
+
   ```json
   {
     "version": "2.0.0",

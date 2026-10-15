@@ -47,7 +47,9 @@ const SdIconButton = (props: SdIconButtonProps) => {
         VARIANTS[settings.variant ?? "ghost"],
         "sd-icon-button",
         className,
-      ].filter(Boolean).join(" ")}
+      ]
+        .filter(Boolean)
+        .join(" ")}
       onClick={handleClick}
     >
       <SdIcon name={value} size={16} />

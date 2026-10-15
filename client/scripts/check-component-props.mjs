@@ -27,8 +27,10 @@ const EXEMPT = new Map([
 const stripComments = (source) =>
   source
     .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
-    .replace(/(^|[^:])\/\/[^\n]*/g, (m, p1) =>
-      p1 + " ".repeat(Math.max(0, m.length - p1.length)));
+    .replace(
+      /(^|[^:])\/\/[^\n]*/g,
+      (m, p1) => p1 + " ".repeat(Math.max(0, m.length - p1.length)),
+    );
 
 /** Returns every `interface Name ... { body }` with brace matching. */
 const interfacesIn = (source) => {
@@ -55,17 +57,16 @@ const interfacesIn = (source) => {
 /** The component's props interface: the one extending SdComponentProps, else any *Props. */
 const propsInterfaceOf = (all) =>
   all.find((i) =>
-    /\bextends\s+[\w<>,\s.]*SdComponentProps\b/.test(i.heritage)
-  ) ??
-    all.find((i) => i.name.endsWith("Props"));
+    /\bextends\s+[\w<>,\s.]*SdComponentProps\b/.test(i.heritage),
+  ) ?? all.find((i) => i.name.endsWith("Props"));
 
 const violations = [];
 const fail = (file, line, message) => violations.push({ file, line, message });
 
 // --- the base contract must not be weakened -------------------------------
 const base = stripComments(readFileSync(basePath, "utf8"));
-const baseInterface = interfacesIn(base).find((i) =>
-  i.name === "SdComponentProps"
+const baseInterface = interfacesIn(base).find(
+  (i) => i.name === "SdComponentProps",
 );
 if (!baseInterface) {
   fail(
@@ -161,9 +162,9 @@ for (const file of files) {
 
 // --- report ---------------------------------------------------------------
 console.log(
-  `Component props contract (ai/rules/components.md)\n\n${
-    checked.join("\n")
-  }\n`,
+  `Component props contract (ai/rules/components.md)\n\n${checked.join(
+    "\n",
+  )}\n`,
 );
 
 const conformed = checked.filter((l) => l.startsWith("  v ")).length;

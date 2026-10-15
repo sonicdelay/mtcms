@@ -1,18 +1,10 @@
 {
   "nodeModulesDir": "auto",
   "fmt": {
-    "exclude": [
-      "media",
-      "dist",
-      "node_modules"
-    ]
+    "exclude": ["media", "dist", "node_modules"]
   },
   "lint": {
-    "exclude": [
-      "media",
-      "dist",
-      "node_modules"
-    ]
+    "exclude": ["media", "dist", "node_modules"]
   },
   "tasks": {
     "dev": "deno run --watch --env-file=../.env --allow-all main.ts",

@@ -20,7 +20,8 @@ const md = new MarkdownIt({
   linkify: true,
 });
 
-const defaultRender = md.renderer.rules.link_open ??
+const defaultRender =
+  md.renderer.rules.link_open ??
   ((tokens, idx, options, _env, self) =>
     self.renderToken(tokens, idx, options));
 
@@ -57,23 +58,19 @@ function displayName(item: ArticleItem) {
   return item.name;
 }
 
-function Breadcrumb({
-  crumbs,
-}: {
-  crumbs: { label: string; href: string }[];
-}) {
+function Breadcrumb({ crumbs }: { crumbs: { label: string; href: string }[] }) {
   return (
     <nav className="mb-6 text-sm text-zinc-500 dark:text-zinc-400">
       {crumbs.map((crumb, index) => (
         <span key={crumb.href}>
           {index > 0 && <span className="mx-2">/</span>}
-          {index < crumbs.length - 1
-            ? (
-              <Link to={crumb.href} className="hover:underline">
-                {crumb.label}
-              </Link>
-            )
-            : <span>{crumb.label}</span>}
+          {index < crumbs.length - 1 ? (
+            <Link to={crumb.href} className="hover:underline">
+              {crumb.label}
+            </Link>
+          ) : (
+            <span>{crumb.label}</span>
+          )}
         </span>
       ))}
     </nav>

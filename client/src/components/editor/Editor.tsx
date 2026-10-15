@@ -30,9 +30,9 @@ export type EditorEvent =
   | { type: "selectNode"; payload: string | undefined }
   | { type: "moveNode"; payload: { dragId: string; target: TreeDropTarget } }
   | {
-    type: "insertNode";
-    payload: { componentType: string; target: TreeDropTarget };
-  }
+      type: "insertNode";
+      payload: { componentType: string; target: TreeDropTarget };
+    }
   | { type: "undo" | "redo" | "resetLayout" };
 
 interface EditorProps {
@@ -69,7 +69,7 @@ const groupTitleClass =
 const labelOf = (item: TreeItem): string => {
   const type = typeof item.type === "string" ? item.type : undefined;
   const title = typeof item.title === "string" ? item.title : undefined;
-  return title ?? (type ? palette[type]?.title ?? type : "node");
+  return title ?? (type ? (palette[type]?.title ?? type) : "node");
 };
 
 const shortId = (item: TreeItem): string =>
@@ -197,10 +197,13 @@ const Editor = ({
           className={selectClass}
           value={selectedLayout}
           onChange={(event) =>
-            onChange({ type: "layoutChange", payload: event.target.value })}
+            onChange({ type: "layoutChange", payload: event.target.value })
+          }
         >
           {layoutNames.map((name) => (
-            <option key={name} value={name}>{name}</option>
+            <option key={name} value={name}>
+              {name}
+            </option>
           ))}
         </select>
       </div>
@@ -224,56 +227,58 @@ const Editor = ({
         className="flex min-h-0 flex-1 flex-col overflow-auto border-t border-[var(--border)]"
         style={{ flexBasis: `${treeShare * 100}%`, flexGrow: 0, flexShrink: 0 }}
       >
-        {tree
-          ? (
-            <SdTree
-              value={tree}
-              config={{
-                selectedId,
-                onSelect: (item) =>
+        {tree ? (
+          <SdTree
+            value={tree}
+            config={{
+              selectedId,
+              onSelect: (item) =>
+                onChange({
+                  type: "selectNode",
+                  payload: typeof item.id === "string" ? item.id : undefined,
+                }),
+              onMove: (dragKey, target) => {
+                if (dragKey !== target.parentKey) {
                   onChange({
-                    type: "selectNode",
-                    payload: typeof item.id === "string" ? item.id : undefined,
-                  }),
-                onMove: (dragKey, target) => {
-                  if (dragKey !== target.parentKey) {
-                    onChange({
-                      type: "moveNode",
-                      payload: { dragId: dragKey, target },
-                    });
-                  }
-                },
-                onDropExternal: (componentType, target) =>
-                  onChange({
-                    type: "insertNode",
-                    payload: { componentType, target },
-                  }),
-                canDropInside: (item) =>
-                  typeof item.type === "string" && isDroppable(item as Node),
-                renderIcon: (item) => {
-                  const type = typeof item.type === "string" ? item.type : "";
-                  const name = palette[type]?.icon;
-                  return name ? icons[name]() : null;
-                },
-              }}
-            >
-              {(item: TreeItem, state: TreeItemState) => (
-                <li
-                  className={state.hasChildren
+                    type: "moveNode",
+                    payload: { dragId: dragKey, target },
+                  });
+                }
+              },
+              onDropExternal: (componentType, target) =>
+                onChange({
+                  type: "insertNode",
+                  payload: { componentType, target },
+                }),
+              canDropInside: (item) =>
+                typeof item.type === "string" && isDroppable(item as Node),
+              renderIcon: (item) => {
+                const type = typeof item.type === "string" ? item.type : "";
+                const name = palette[type]?.icon;
+                return name ? icons[name]() : null;
+              },
+            }}
+          >
+            {(item: TreeItem, state: TreeItemState) => (
+              <li
+                className={
+                  state.hasChildren
                     ? "text-[var(--link-color)]"
-                    : "text-[var(--fg-base)]"}
-                >
-                  <span className="align-middle">{labelOf(item)}</span>
-                  {shortId(item) && (
-                    <span className="ml-1 align-middle text-[10px] text-[var(--fg-subtle)]">
-                      {shortId(item)}
-                    </span>
-                  )}
-                </li>
-              )}
-            </SdTree>
-          )
-          : <p className="text-sm">Loading layouts...</p>}
+                    : "text-[var(--fg-base)]"
+                }
+              >
+                <span className="align-middle">{labelOf(item)}</span>
+                {shortId(item) && (
+                  <span className="ml-1 align-middle text-[10px] text-[var(--fg-subtle)]">
+                    {shortId(item)}
+                  </span>
+                )}
+              </li>
+            )}
+          </SdTree>
+        ) : (
+          <p className="text-sm">Loading layouts...</p>
+        )}
       </div>
 
       <SdSplitHandle

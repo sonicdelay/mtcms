@@ -9,12 +9,13 @@ export default function NodeBreadcrumb() {
 
   const lineage = [...(node?.breadcrumb ?? [])].reverse();
 
-  const items: SdBreadcrumbItem[] = lineage.length === 0
-    ? [{ id: "00000000-0000-4000-8000-000000000000", label: "Root" }]
-    : lineage.map((item: any) => ({
-      id: item.id,
-      label: item.title || item.id,
-    }));
+  const items: SdBreadcrumbItem[] =
+    lineage.length === 0
+      ? [{ id: "00000000-0000-4000-8000-000000000000", label: "Root" }]
+      : lineage.map((item: any) => ({
+          id: item.id,
+          label: item.title || item.id,
+        }));
 
   return (
     <SdBreadcrumb

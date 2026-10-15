@@ -108,8 +108,7 @@ const buildTreeState = (
 
 const buildFormModel = (node: EditorNode, language: Language): FormField[] => {
   const zero = node.data?.["0"] as
-    | { values?: Record<string, Record<string, unknown>> }
-    | undefined;
+    { values?: Record<string, Record<string, unknown>> } | undefined;
   const values = zero?.values?.[language] ?? zero?.values?.en ?? {};
   const entries = Object.entries(values);
 
@@ -251,8 +250,8 @@ export const useEditStore = create<EditStore>()(
           }
 
           let nextData: Record<string, unknown>;
-          const isWholeData = formFields.length === 1 &&
-            formFields[0].name === "nodeData";
+          const isWholeData =
+            formFields.length === 1 && formFields[0].name === "nodeData";
 
           if (isWholeData) {
             try {
@@ -264,11 +263,11 @@ export const useEditStore = create<EditStore>()(
               nextData = node.data ?? {};
             }
           } else {
-            const currentRoot = (node.data?.["0"] as Record<string, unknown>) ??
-              {};
+            const currentRoot =
+              (node.data?.["0"] as Record<string, unknown>) ?? {};
             const currentValues =
               (currentRoot.values as Record<string, Record<string, unknown>>) ??
-                {};
+              {};
             const valuesFromForm = formFields.reduce<Record<string, unknown>>(
               (acc, field) => {
                 try {
@@ -314,7 +313,7 @@ export const useEditStore = create<EditStore>()(
 
           const parentId =
             (node.data?.["0"] as { parent?: string } | undefined)?.parent ??
-              ZERO_UUID;
+            ZERO_UUID;
 
           try {
             await deleteNode(token, node.id);

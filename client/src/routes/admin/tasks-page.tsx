@@ -67,9 +67,8 @@ export default function TasksPage() {
   }, [tasks]);
 
   const filtered = useMemo(() => {
-    const list = filter === "all"
-      ? tasks
-      : tasks.filter((t) => t.node.type === filter);
+    const list =
+      filter === "all" ? tasks : tasks.filter((t) => t.node.type === filter);
     return [...list].sort((a, b) => b.node.update.localeCompare(a.node.update));
   }, [tasks, filter]);
 
@@ -117,7 +116,9 @@ export default function TasksPage() {
         },
       });
       setTasks((prev) =>
-        prev.map((t) => t.node.id === task.node.id ? { ...t, done: next } : t)
+        prev.map((t) =>
+          t.node.id === task.node.id ? { ...t, done: next } : t,
+        ),
       );
     } catch (err) {
       setError((err as Error).message);
@@ -151,7 +152,8 @@ export default function TasksPage() {
               String(
                 (ev.payload as { value?: string } | undefined)?.value ?? "",
               ),
-            )}
+            )
+          }
         />
         <SdSelect
           value={newType}
@@ -164,7 +166,8 @@ export default function TasksPage() {
               String(
                 (ev.payload as { value?: string } | undefined)?.value ?? "",
               ),
-            )}
+            )
+          }
         />
         <SdButton icon="plus" onClick={addTask}>
           Add
@@ -183,7 +186,8 @@ export default function TasksPage() {
               String(
                 (ev.payload as { value?: string } | undefined)?.value ?? "",
               ),
-            )}
+            )
+          }
         />
       </div>
 
@@ -192,10 +196,7 @@ export default function TasksPage() {
       <div>
         {filtered.map((task) => (
           <div key={task.node.id} className="admin-row">
-            <SdCheckbox
-              value={task.done}
-              onChange={() => toggleDone(task)}
-            />
+            <SdCheckbox value={task.done} onChange={() => toggleDone(task)} />
             <div className="admin-row__main">
               <div
                 className="admin-row__title"

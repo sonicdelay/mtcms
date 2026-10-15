@@ -45,7 +45,9 @@ const SdApplication = (props: SdApplicationProps) => {
       className={[
         "flex h-screen flex-col bg-[var(--background)] text-[var(--foreground)]",
         className,
-      ].filter(Boolean).join(" ")}
+      ]
+        .filter(Boolean)
+        .join(" ")}
     >
       <header className="flex h-12 shrink-0 items-center justify-between border-b border-[var(--border)] px-4">
         <span className="text-base font-semibold">{brand ?? "mtCMS"}</span>
@@ -81,7 +83,8 @@ const SdApplication = (props: SdApplicationProps) => {
         {navItems && (
           <nav className="w-56 shrink-0 overflow-auto border-r border-[var(--border)] py-2">
             {navItems.map((item) => {
-              const active = activeHref !== undefined &&
+              const active =
+                activeHref !== undefined &&
                 (item.href === "/admin"
                   ? activeHref === item.href
                   : activeHref.startsWith(item.href));

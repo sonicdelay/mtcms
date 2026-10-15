@@ -7,8 +7,10 @@ import type {
   SdBreadcrumbValue,
 } from "../models/sd-breadcrumb";
 
-interface SdBreadcrumbProps
-  extends SdComponentProps<SdBreadcrumbValue, SdBreadcrumbConfig> {
+interface SdBreadcrumbProps extends SdComponentProps<
+  SdBreadcrumbValue,
+  SdBreadcrumbConfig
+> {
   [key: string]: unknown;
 }
 

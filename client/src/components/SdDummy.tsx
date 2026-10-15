@@ -100,12 +100,15 @@ const SdDummy = (props: SdDummyProps) => {
       className={["Dummy", rest.className].filter(Boolean).join(" ")}
       onClick={handleClick}
       onInput={() =>
-        onChange?.({ type: "change", payload: { value: resolvedValue } })}
+        onChange?.({ type: "change", payload: { value: resolvedValue } })
+      }
     >
       {settings.title && <h2>{settings.title}</h2>}
-      {children
-        ? <SdDummyContainerComponent children={children} onChange={onChange} />
-        : <SdDummyLeafComponent value={resolvedValue} />}
+      {children ? (
+        <SdDummyContainerComponent children={children} onChange={onChange} />
+      ) : (
+        <SdDummyLeafComponent value={resolvedValue} />
+      )}
     </div>
   );
 };

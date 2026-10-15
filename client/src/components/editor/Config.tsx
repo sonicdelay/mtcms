@@ -161,9 +161,10 @@ const writePath = (node: Node, path: string, value: unknown): Partial<Node> => {
   let cursor = root;
   for (const key of keys.slice(0, -1)) {
     const current = cursor[key];
-    const next = current !== null && typeof current === "object"
-      ? { ...(current as Record<string, unknown>) }
-      : {};
+    const next =
+      current !== null && typeof current === "object"
+        ? { ...(current as Record<string, unknown>) }
+        : {};
     cursor[key] = next;
     cursor = next;
   }
@@ -188,7 +189,11 @@ const FieldInput = ({ field, node, onPatch }: FieldProps) => {
         >
           {value === undefined && <option value="">—</option>}
           {!known && <option value={str}>{str}</option>}
-          {options.map((o) => <option key={o} value={o}>{o}</option>)}
+          {options.map((o) => (
+            <option key={o} value={o}>
+              {o}
+            </option>
+          ))}
         </select>
       );
     }
@@ -200,9 +205,7 @@ const FieldInput = ({ field, node, onPatch }: FieldProps) => {
           value={value === undefined || value === "" ? "" : Number(value)}
           onChange={(e) => {
             const v = e.target.value;
-            onPatch(
-              writePath(node, field.key, v === "" ? "" : Number(v)),
-            );
+            onPatch(writePath(node, field.key, v === "" ? "" : Number(v)));
           }}
         />
       );
@@ -287,82 +290,82 @@ const Config = ({
       style={style}
     >
       <h3>Config</h3>
-      {selected
-        ? (
-          <>
-            <div className="text-sm">
-              <b>Type:</b> {selected.type}
-            </div>
-            {(item?.settings ?? []).map((field) => (
-              <label key={field.key} className="block text-sm mt-2">
-                {field.label}
-                <FieldInput field={field} node={selected} onPatch={onUpdate} />
-              </label>
-            ))}
-            <label className="block text-sm mt-2">
-              className
-              <textarea
-                className={inputClass}
-                rows={3}
-                value={typeof selected.className === "string"
-                  ? selected.className
-                  : ""}
-                onChange={(e) => onUpdate({ className: e.target.value })}
-              />
+      {selected ? (
+        <>
+          <div className="text-sm">
+            <b>Type:</b> {selected.type}
+          </div>
+          {(item?.settings ?? []).map((field) => (
+            <label key={field.key} className="block text-sm mt-2">
+              {field.label}
+              <FieldInput field={field} node={selected} onPatch={onUpdate} />
             </label>
-            <div className="flex gap-1 mt-2">
-              <button
-                className={buttonClass}
-                onClick={() => onMove(-1)}
-                disabled={!canMoveUp}
-                title="Move Up"
-                aria-label="Move Up"
-              >
-                <IconArrowUp />
-              </button>
-              <button
-                className={buttonClass}
-                onClick={() => onMove(1)}
-                disabled={!canMoveDown}
-                title="Move Down"
-                aria-label="Move Down"
-              >
-                <IconArrowDown />
-              </button>
-              <button
-                className={buttonClass}
-                onClick={onDuplicate}
-                title="Duplicate"
-                aria-label="Duplicate"
-              >
-                <IconCopy />
-              </button>
-              <button
-                className={buttonClass}
-                onClick={onDelete}
-                title="Delete"
-                aria-label="Delete"
-              >
-                <IconTrash />
-              </button>
-            </div>
-            <br />
-            <JsonSection
-              label="JSON (selected)"
-              open={nodeJsonOpen}
-              onToggle={() => setNodeJsonOpen((v) => !v)}
-              rows={9}
-              value={nodeJson}
-              onChange={setNodeJson}
-              onApply={applyNodeJson}
-              applyTitle="Apply JSON"
-              applyIcon={<IconCheck />}
-              inputClass={inputClass}
-              buttonClass={buttonClass}
+          ))}
+          <label className="block text-sm mt-2">
+            className
+            <textarea
+              className={inputClass}
+              rows={3}
+              value={
+                typeof selected.className === "string" ? selected.className : ""
+              }
+              onChange={(e) => onUpdate({ className: e.target.value })}
             />
-          </>
-        )
-        : <p className="text-sm mt-1">Select an element on the canvas.</p>}
+          </label>
+          <div className="flex gap-1 mt-2">
+            <button
+              className={buttonClass}
+              onClick={() => onMove(-1)}
+              disabled={!canMoveUp}
+              title="Move Up"
+              aria-label="Move Up"
+            >
+              <IconArrowUp />
+            </button>
+            <button
+              className={buttonClass}
+              onClick={() => onMove(1)}
+              disabled={!canMoveDown}
+              title="Move Down"
+              aria-label="Move Down"
+            >
+              <IconArrowDown />
+            </button>
+            <button
+              className={buttonClass}
+              onClick={onDuplicate}
+              title="Duplicate"
+              aria-label="Duplicate"
+            >
+              <IconCopy />
+            </button>
+            <button
+              className={buttonClass}
+              onClick={onDelete}
+              title="Delete"
+              aria-label="Delete"
+            >
+              <IconTrash />
+            </button>
+          </div>
+          <br />
+          <JsonSection
+            label="JSON (selected)"
+            open={nodeJsonOpen}
+            onToggle={() => setNodeJsonOpen((v) => !v)}
+            rows={9}
+            value={nodeJson}
+            onChange={setNodeJson}
+            onApply={applyNodeJson}
+            applyTitle="Apply JSON"
+            applyIcon={<IconCheck />}
+            inputClass={inputClass}
+            buttonClass={buttonClass}
+          />
+        </>
+      ) : (
+        <p className="text-sm mt-1">Select an element on the canvas.</p>
+      )}
       <JsonSection
         label="JSON (screen)"
         open={treeJsonOpen}

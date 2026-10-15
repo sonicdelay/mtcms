@@ -14,14 +14,12 @@ type TreeNode = Node & {
 const childrenOf = (children?: LayoutChild | LayoutChild[]): LayoutChild[] =>
   children === undefined ? [] : Array.isArray(children) ? children : [children];
 
-const createNode = (
-  type: string,
-  props: Record<string, unknown>,
-): Node => ({
-  id: `${type}-${Math.random().toString(36).slice(2, 9)}`,
-  type,
-  ...props,
-} as Node);
+const createNode = (type: string, props: Record<string, unknown>): Node =>
+  ({
+    id: `${type}-${Math.random().toString(36).slice(2, 9)}`,
+    type,
+    ...props,
+  }) as Node;
 
 const updateNode = (
   tree: Node,
@@ -41,9 +39,9 @@ const updateNode = (
   });
   return changed
     ? ({
-      ...node,
-      children: Array.isArray(node.children) ? children : children[0],
-    } as Node)
+        ...node,
+        children: Array.isArray(node.children) ? children : children[0],
+      } as Node)
     : tree;
 };
 
@@ -72,9 +70,10 @@ const findNode = (tree: Node, id: string): TreeNode | undefined => {
 };
 
 const containsNode = (tree: TreeNode, id: string): boolean =>
-  childrenOf(tree.children).some((child) =>
-    typeof child !== "string" &&
-    ((child as TreeNode).id === id || containsNode(child as TreeNode, id))
+  childrenOf(tree.children).some(
+    (child) =>
+      typeof child !== "string" &&
+      ((child as TreeNode).id === id || containsNode(child as TreeNode, id)),
   );
 
 const isSelfOrDescendant = (
@@ -111,9 +110,9 @@ const moveNode = (
     });
     return changed
       ? ({
-        ...current,
-        children: Array.isArray(current.children) ? children : children[0],
-      } as Node)
+          ...current,
+          children: Array.isArray(current.children) ? children : children[0],
+        } as Node)
       : node;
   };
   return insertChildAt(remove(tree), targetId, index, moving as LayoutChild);
@@ -143,9 +142,11 @@ const insertionIndex = (e: DragEvent): number => {
   );
   if (children.length === 0) return 0;
   const rects = children.map((el) => el.getBoundingClientRect());
-  const spanX = Math.max(...rects.map((r) => r.right)) -
+  const spanX =
+    Math.max(...rects.map((r) => r.right)) -
     Math.min(...rects.map((r) => r.left));
-  const spanY = Math.max(...rects.map((r) => r.bottom)) -
+  const spanY =
+    Math.max(...rects.map((r) => r.bottom)) -
     Math.min(...rects.map((r) => r.top));
   const horizontal = spanX > spanY;
   const pointer = horizontal ? e.clientX : e.clientY;
@@ -232,24 +233,26 @@ export const useDragDrop = (
 
   const canvasProps: CanvasProps = tree
     ? {
-      onClick: () => select(undefined),
-      onDragOver: active
-        ? (e) => {
-          e.preventDefault();
-          setDropTarget(tree.id, childrenOf(tree.children).length);
-        }
-        : undefined,
-      onDragLeave: active
-        ? (e) => {
-          if (!e.currentTarget.contains(e.relatedTarget as Element | null)) {
-            setDropTarget(undefined);
-          }
-        }
-        : undefined,
-      onDrop: active
-        ? (e) => dropNode(tree.id ?? "", e, childrenOf(tree.children).length)
-        : undefined,
-    }
+        onClick: () => select(undefined),
+        onDragOver: active
+          ? (e) => {
+              e.preventDefault();
+              setDropTarget(tree.id, childrenOf(tree.children).length);
+            }
+          : undefined,
+        onDragLeave: active
+          ? (e) => {
+              if (
+                !e.currentTarget.contains(e.relatedTarget as Element | null)
+              ) {
+                setDropTarget(undefined);
+              }
+            }
+          : undefined,
+        onDrop: active
+          ? (e) => dropNode(tree.id ?? "", e, childrenOf(tree.children).length)
+          : undefined,
+      }
     : { onClick: () => select(undefined) };
 
   return { selectedId, select, editCtx, canvasProps, reset };
@@ -274,9 +277,12 @@ export const renderEditable = (
     if (!/^[a-zA-Z][a-zA-Z0-9]*$/.test(key)) continue;
     if (value === undefined) continue;
     if (
-      value !== null && typeof value === "object" && key !== "style" &&
+      value !== null &&
+      typeof value === "object" &&
+      key !== "style" &&
       key !== "className"
-    ) continue;
+    )
+      continue;
     domProps[key] = value;
   }
 
@@ -333,13 +339,13 @@ export const renderEditable = (
   });
 
   let childNodes: ReactNode;
-  const showPlaceholder = isDropTarget && id !== undefined &&
-    edit.dropTargetId === id;
+  const showPlaceholder =
+    isDropTarget && id !== undefined && edit.dropTargetId === id;
   if (children === undefined) {
     childNodes = showPlaceholder ? [placeholder] : undefined;
   } else if (Array.isArray(children)) {
     const mapped = children.map((child, index) =>
-      renderEditable(child, `${path}.${index}`, baseProps, edit)
+      renderEditable(child, `${path}.${index}`, baseProps, edit),
     );
     if (showPlaceholder) {
       const idx = Math.max(0, Math.min(edit.dropIndex, mapped.length));
@@ -348,15 +354,13 @@ export const renderEditable = (
     childNodes = mapped;
   } else {
     childNodes = showPlaceholder
-      ? edit.dropIndex > 0 ? [children, placeholder] : [placeholder, children]
+      ? edit.dropIndex > 0
+        ? [children, placeholder]
+        : [placeholder, children]
       : children;
   }
 
   const Component = components[type] ?? type;
 
-  return createElement(
-    Component,
-    { key: path, ...props },
-    childNodes,
-  );
+  return createElement(Component, { key: path, ...props }, childNodes);
 };

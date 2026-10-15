@@ -55,7 +55,7 @@ function extractTitle(content: string, fallback: string): string {
   }
 
   const preferred = headings.find((l) =>
-    /Kapitel|Anhang|Schluss|ÜBER DEN AUTOR|Willkommen/i.test(l)
+    /Kapitel|Anhang|Schluss|ÜBER DEN AUTOR|Willkommen/i.test(l),
   );
   return stripMarkdown(preferred ?? headings[0]);
 }
@@ -105,10 +105,7 @@ export async function listArticleDirWithTitles(
         const content = await getArticleContent(item.path);
         return {
           ...item,
-          title: extractTitle(
-            content ?? "",
-            item.name.replace(/\.md$/, ""),
-          ),
+          title: extractTitle(content ?? "", item.name.replace(/\.md$/, "")),
         };
       }
       return item;

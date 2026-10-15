@@ -13,7 +13,9 @@ const renderNode = (
 
   const { type, children, ...props } = node;
   const mergedProps = { ...inheritedProps, ...props };
-  const Component = components[type] ?? type ??
+  const Component =
+    components[type] ??
+    type ??
     (() => createElement(Fragment, null, `${type} ???`));
 
   return createElement(
@@ -21,8 +23,8 @@ const renderNode = (
     { key: path, ...mergedProps },
     Array.isArray(children)
       ? children.map((child: LayoutChild, index: number) =>
-        renderNode(child, `${path}.${index}`, mergedProps)
-      )
+          renderNode(child, `${path}.${index}`, mergedProps),
+        )
       : children,
   );
 };

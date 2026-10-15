@@ -7,9 +7,9 @@ import type {
 
 function rgb(diffuse: [number, number, number] | null): string {
   return diffuse
-    ? `rgb(${Math.round(diffuse[0] * 255)}, ${Math.round(diffuse[1] * 255)}, ${
-      Math.round(diffuse[2] * 255)
-    })`
+    ? `rgb(${Math.round(diffuse[0] * 255)}, ${Math.round(diffuse[1] * 255)}, ${Math.round(
+        diffuse[2] * 255,
+      )})`
     : "transparent";
 }
 
@@ -44,9 +44,9 @@ function MeshDetail({ mesh }: { mesh: MeshSnapshot }) {
       <Row label="position" value={vec(mesh.position)} />
       <Row
         label="rotation"
-        value={`${mesh.rotation.x.toFixed(2)}, ${mesh.rotation.y.toFixed(2)}, ${
-          mesh.rotation.z.toFixed(2)
-        }`}
+        value={`${mesh.rotation.x.toFixed(2)}, ${mesh.rotation.y.toFixed(2)}, ${mesh.rotation.z.toFixed(
+          2,
+        )}`}
       />
       <Row label="scaling" value={vec(mesh.scaling)} />
       {mesh.velocity && <Row label="velocity" value={vec(mesh.velocity)} />}
@@ -62,8 +62,8 @@ export function EngineSceneInspectorPanel({
   onClose: () => void;
 }) {
   const [selectedName, setSelectedName] = useState<string | null>(null);
-  const selected = snapshot?.meshes.find((m) => m.name === selectedName) ??
-    null;
+  const selected =
+    snapshot?.meshes.find((m) => m.name === selectedName) ?? null;
 
   return (
     <div className="absolute left-3 top-3 bottom-3 z-20 flex w-72 flex-col overflow-hidden rounded-md border border-zinc-300 bg-white/95 shadow-lg backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/95">
@@ -99,88 +99,84 @@ export function EngineSceneInspectorPanel({
         </button>
       </div>
 
-      {!snapshot
-        ? (
-          <div className="p-3 text-xs text-zinc-500 dark:text-zinc-400">
-            Waiting for engine…
+      {!snapshot ? (
+        <div className="p-3 text-xs text-zinc-500 dark:text-zinc-400">
+          Waiting for engine…
+        </div>
+      ) : !snapshot.ready ? (
+        <div className="p-3 text-xs text-zinc-500 dark:text-zinc-400">
+          Initializing engine…
+        </div>
+      ) : (
+        <div className="flex min-h-0 flex-1 flex-col">
+          <div className="space-y-1.5 border-b border-zinc-200 px-3 py-2 dark:border-zinc-700">
+            <Row label="meshes" value={String(snapshot.meshCount)} />
+            <Row label="physics bodies" value={String(snapshot.bodyCount)} />
+            <Row
+              label="gravity"
+              value={`${snapshot.gravity.x.toFixed(2)}, ${snapshot.gravity.y.toFixed(
+                2,
+              )}, ${snapshot.gravity.z.toFixed(2)}`}
+            />
+            {snapshot.camera && (
+              <>
+                <Row
+                  label="alpha"
+                  value={`${snapshot.camera.alpha.toFixed(2)} rad`}
+                />
+                <Row
+                  label="beta"
+                  value={`${snapshot.camera.beta.toFixed(2)} rad`}
+                />
+                <Row
+                  label="radius"
+                  value={`${snapshot.camera.radius.toFixed(2)}`}
+                />
+                <Row
+                  label="target"
+                  value={`${snapshot.camera.target.x.toFixed(1)}, ${snapshot.camera.target.y.toFixed(
+                    1,
+                  )}, ${snapshot.camera.target.z.toFixed(1)}`}
+                />
+              </>
+            )}
           </div>
-        )
-        : !snapshot.ready
-        ? (
-          <div className="p-3 text-xs text-zinc-500 dark:text-zinc-400">
-            Initializing engine…
-          </div>
-        )
-        : (
-          <div className="flex min-h-0 flex-1 flex-col">
-            <div className="space-y-1.5 border-b border-zinc-200 px-3 py-2 dark:border-zinc-700">
-              <Row label="meshes" value={String(snapshot.meshCount)} />
-              <Row label="physics bodies" value={String(snapshot.bodyCount)} />
-              <Row
-                label="gravity"
-                value={`${snapshot.gravity.x.toFixed(2)}, ${
-                  snapshot.gravity.y.toFixed(2)
-                }, ${snapshot.gravity.z.toFixed(2)}`}
-              />
-              {snapshot.camera && (
-                <>
-                  <Row
-                    label="alpha"
-                    value={`${snapshot.camera.alpha.toFixed(2)} rad`}
-                  />
-                  <Row
-                    label="beta"
-                    value={`${snapshot.camera.beta.toFixed(2)} rad`}
-                  />
-                  <Row
-                    label="radius"
-                    value={`${snapshot.camera.radius.toFixed(2)}`}
-                  />
-                  <Row
-                    label="target"
-                    value={`${snapshot.camera.target.x.toFixed(1)}, ${
-                      snapshot.camera.target.y.toFixed(1)
-                    }, ${snapshot.camera.target.z.toFixed(1)}`}
-                  />
-                </>
-              )}
-            </div>
 
-            <div className="min-h-0 flex-1 overflow-y-auto">
-              <div className="p-1.5 text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
-                Scene objects
-              </div>
-              {snapshot.meshes.map((mesh) => (
-                <button
-                  key={mesh.name}
-                  type="button"
-                  onClick={() => setSelectedName(mesh.name)}
-                  className={`flex w-full items-center justify-between gap-2 px-3 py-1.5 text-left text-xs transition-colors ${
-                    selectedName === mesh.name
-                      ? "bg-zinc-100 dark:bg-zinc-800"
-                      : "hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
-                  }`}
-                >
-                  <span className="truncate text-zinc-800 dark:text-zinc-100">
-                    {mesh.name}
-                  </span>
-                  <span className="flex shrink-0 items-center gap-1.5">
-                    <span className="font-mono text-[10px] text-zinc-400">
-                      {mesh.kind}{" "}
-                      {mesh.mass > 0 ? `· ${mesh.mass} kg` : "(static)"}
-                    </span>
-                    <span
-                      className="h-3 w-3 rounded-sm border border-zinc-300 dark:border-zinc-600"
-                      style={{ backgroundColor: rgb(mesh.diffuse) }}
-                    />
-                  </span>
-                </button>
-              ))}
+          <div className="min-h-0 flex-1 overflow-y-auto">
+            <div className="p-1.5 text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+              Scene objects
             </div>
-
-            {selected && <MeshDetail mesh={selected} />}
+            {snapshot.meshes.map((mesh) => (
+              <button
+                key={mesh.name}
+                type="button"
+                onClick={() => setSelectedName(mesh.name)}
+                className={`flex w-full items-center justify-between gap-2 px-3 py-1.5 text-left text-xs transition-colors ${
+                  selectedName === mesh.name
+                    ? "bg-zinc-100 dark:bg-zinc-800"
+                    : "hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
+                }`}
+              >
+                <span className="truncate text-zinc-800 dark:text-zinc-100">
+                  {mesh.name}
+                </span>
+                <span className="flex shrink-0 items-center gap-1.5">
+                  <span className="font-mono text-[10px] text-zinc-400">
+                    {mesh.kind}{" "}
+                    {mesh.mass > 0 ? `· ${mesh.mass} kg` : "(static)"}
+                  </span>
+                  <span
+                    className="h-3 w-3 rounded-sm border border-zinc-300 dark:border-zinc-600"
+                    style={{ backgroundColor: rgb(mesh.diffuse) }}
+                  />
+                </span>
+              </button>
+            ))}
           </div>
-        )}
+
+          {selected && <MeshDetail mesh={selected} />}
+        </div>
+      )}
     </div>
   );
 }

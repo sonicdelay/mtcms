@@ -69,10 +69,11 @@ export const useAppStore = create<AppState>()(
       (set, get) => ({
         token: null,
         user: null,
-        theme: typeof globalThis !== "undefined" &&
-            globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light",
+        theme:
+          typeof globalThis !== "undefined" &&
+          globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light",
         language: normalizeLanguage(
           typeof navigator !== "undefined" ? navigator.language : "en",
         ),
@@ -195,9 +196,10 @@ export const useAppStore = create<AppState>()(
             );
             return true;
           } catch (err) {
-            const errorMsg = err instanceof Error && err.name === "AbortError"
-              ? "Login request timed out"
-              : "Network error";
+            const errorMsg =
+              err instanceof Error && err.name === "AbortError"
+                ? "Login request timed out"
+                : "Network error";
 
             set(
               { token: null, user: null, loading: false, error: errorMsg },

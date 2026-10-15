@@ -56,7 +56,9 @@ function llmErrorMessage(err: unknown): string {
   if (err instanceof Error) {
     const cause = (err as { cause?: unknown }).cause;
     if (
-      cause instanceof Error && cause.message && cause.message !== err.message
+      cause instanceof Error &&
+      cause.message &&
+      cause.message !== err.message
     ) {
       return `${err.message}: ${cause.message}`;
     }
@@ -101,8 +103,8 @@ async function streamChatCompletion(
     if (!response.ok) {
       const detail = await response.text().catch(() => "");
       sendToClient(client, "error", {
-        message: `LLM API error: ${response.status} ${response.statusText}`
-          .trim(),
+        message:
+          `LLM API error: ${response.status} ${response.statusText}`.trim(),
         detail,
       });
       return;
@@ -148,8 +150,9 @@ async function streamChatCompletion(
           continue;
         }
 
-        const choice = (parsed.choices as Record<string, unknown>[] | undefined)
-          ?.[0];
+        const choice = (
+          parsed.choices as Record<string, unknown>[] | undefined
+        )?.[0];
         if (!choice) {
           continue;
         }
@@ -214,8 +217,8 @@ async function chatCompletion(
   if (!response.ok) {
     const detail = await response.text().catch(() => "");
     sendToClient(client, "error", {
-      message: `LLM API error: ${response.status} ${response.statusText}`
-        .trim(),
+      message:
+        `LLM API error: ${response.status} ${response.statusText}`.trim(),
       detail,
     });
     return;
@@ -240,10 +243,7 @@ async function chatCompletion(
   });
 }
 
-function llmChat(
-  client: WsClient,
-  payload: Record<string, unknown>,
-): void {
+function llmChat(client: WsClient, payload: Record<string, unknown>): void {
   const { stream, systemPrompt, clear, messages } = payload;
 
   if (clear) {
@@ -252,10 +252,7 @@ function llmChat(
 
   const history = historyFor(client);
 
-  if (
-    typeof systemPrompt === "string" &&
-    systemPrompt.trim()
-  ) {
+  if (typeof systemPrompt === "string" && systemPrompt.trim()) {
     const prompt = systemPrompt.trim();
     const last = history[history.length - 1];
     if (last?.role !== "system" || last.content !== prompt) {
@@ -278,11 +275,7 @@ function llmChat(
       role?: string;
       content?: string;
     };
-    if (
-      role !== "user" &&
-      role !== "assistant" &&
-      role !== "system"
-    ) {
+    if (role !== "user" && role !== "assistant" && role !== "system") {
       client.ws.send(
         JSON.stringify({
           action: "error",

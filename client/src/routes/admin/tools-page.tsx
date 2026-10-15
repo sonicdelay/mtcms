@@ -60,9 +60,10 @@ export default function ToolsPage() {
   );
 
   const tools = useMemo(() => {
-    const list = selectedType === "all"
-      ? nodes
-      : nodes.filter((n) => n.type === selectedType);
+    const list =
+      selectedType === "all"
+        ? nodes
+        : nodes.filter((n) => n.type === selectedType);
     return [...list].sort((a, b) => b.update.localeCompare(a.update));
   }, [nodes, selectedType]);
 
@@ -85,7 +86,8 @@ export default function ToolsPage() {
               String(
                 (ev.payload as { value?: string } | undefined)?.value ?? "",
               ),
-            )}
+            )
+          }
         />
       </div>
 

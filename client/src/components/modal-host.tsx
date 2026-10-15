@@ -26,9 +26,10 @@ export default function ModalHost() {
     return null;
   }
 
-  const node = typeof content === "function"
-    ? createElement(content as ComponentType)
-    : (content as ReactNode);
+  const node =
+    typeof content === "function"
+      ? createElement(content as ComponentType)
+      : (content as ReactNode);
 
   return createPortal(
     <div className="fixed inset-0 z-[1100] flex items-center justify-center p-4">

@@ -1,11 +1,7 @@
 {
   "deno.enable": true,
   "deno.config": "./deno.json",
-  "deno.enablePaths": [
-    "api",
-    "scripts",
-    "desktop"
-  ],
+  "deno.enablePaths": ["api", "scripts", "desktop"],
   "deno.suggest.imports.autoDiscover": true,
   "deno.lint": true,
   "deno.unstable": [],

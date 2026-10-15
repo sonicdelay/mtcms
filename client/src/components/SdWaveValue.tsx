@@ -4,8 +4,10 @@ import type { SdComponentEvent } from "../models/sd-component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
 import type { SdWaveValueConfig } from "../models/sd-wave";
 
-interface SdWaveValueProps
-  extends SdComponentProps<unknown, SdWaveValueConfig> {
+interface SdWaveValueProps extends SdComponentProps<
+  unknown,
+  SdWaveValueConfig
+> {
   [key: string]: unknown;
 }
 
@@ -30,9 +32,9 @@ const SdWaveValue = (props: SdWaveValueProps) => {
   return (
     <div
       {...rest}
-      className={["sd-wavevalue", "WaveValue", className].filter(Boolean).join(
-        " ",
-      )}
+      className={["sd-wavevalue", "WaveValue", className]
+        .filter(Boolean)
+        .join(" ")}
     >
       {settings.title && (
         <h2 className="mb-2 font-semibold">{settings.title}</h2>

@@ -210,7 +210,12 @@ export const palette: Record<string, PaletteItem> = {
     group: "components",
     defaultProps: () => ({
       title: "D3 Graph",
-      value: { points: [{ x: 0, y: 0 }, { x: 1, y: 1 }] },
+      value: {
+        points: [
+          { x: 0, y: 0 },
+          { x: 1, y: 1 },
+        ],
+      },
       config: { width: 460, height: 400, r: 8 },
     }),
     settings: [
@@ -529,20 +534,31 @@ export const palette: Record<string, PaletteItem> = {
     { children: "Inline quote" },
     [{ key: "cite", label: "Cite" }, ...text()],
   ),
-  abbr: container("abbr", "Abbreviation", "abbreviation", "inline", {
-    children: "HTML",
-    title: "HyperText Markup Language",
-  }, [{ key: "title", label: "Title" }, ...text()]),
+  abbr: container(
+    "abbr",
+    "Abbreviation",
+    "abbreviation",
+    "inline",
+    {
+      children: "HTML",
+      title: "HyperText Markup Language",
+    },
+    [{ key: "title", label: "Title" }, ...text()],
+  ),
   dfn: container("dfn", "Definition", "definition", "inline", {
     children: "Definition",
   }),
-  data: container("data", "Data", "data", "inline", {
-    children: "42",
-    value: "42",
-  }, [
-    { key: "value", label: "Value" },
-    ...text(),
-  ]),
+  data: container(
+    "data",
+    "Data",
+    "data",
+    "inline",
+    {
+      children: "42",
+      value: "42",
+    },
+    [{ key: "value", label: "Value" }, ...text()],
+  ),
   time: container(
     "time",
     "Time",
@@ -604,10 +620,12 @@ export const palette: Record<string, PaletteItem> = {
     { key: "src", label: "Src" },
     { key: "poster", label: "Poster" },
   ]),
-  audio: leaf("audio", "Audio", "audio", "media", {}, [{
-    key: "src",
-    label: "Src",
-  }]),
+  audio: leaf("audio", "Audio", "audio", "media", {}, [
+    {
+      key: "src",
+      label: "Src",
+    },
+  ]),
   track: leaf("track", "Track", "track", "media", { kind: "subtitles" }, [
     { key: "src", label: "Src" },
     { key: "kind", label: "Kind", kind: "select", options: TRACK_KINDS },
@@ -623,9 +641,16 @@ export const palette: Record<string, PaletteItem> = {
     { key: "alt", label: "Alt" },
   ]),
 
-  table: container("table", "Table", "table", "table", {
-    className: "border-collapse",
-  }, structural),
+  table: container(
+    "table",
+    "Table",
+    "table",
+    "table",
+    {
+      className: "border-collapse",
+    },
+    structural,
+  ),
   caption: leaf("caption", "Caption", "header", "table", {
     children: "Caption",
   }),
@@ -654,62 +679,107 @@ export const palette: Record<string, PaletteItem> = {
     ...text(),
   ]),
   label: container("label", "Label", "label", "form", { children: "Label" }),
-  input: leaf("input", "Input", "input", "form", {
-    type: "text",
-    name: "input",
-    placeholder: "Input",
-  }, [
-    { key: "type", label: "Type", kind: "select", options: INPUT_TYPES },
-    { key: "name", label: "Name" },
-    { key: "placeholder", label: "Placeholder" },
-    { key: "value", label: "Value" },
-  ]),
-  textarea: leaf("textarea", "Textarea", "textarea", "form", {
-    name: "textarea",
-    placeholder: "Text",
-    rows: 3,
-  }, [
-    { key: "name", label: "Name" },
-    { key: "placeholder", label: "Placeholder" },
-    { key: "rows", label: "Rows", kind: "number" },
-  ]),
+  input: leaf(
+    "input",
+    "Input",
+    "input",
+    "form",
+    {
+      type: "text",
+      name: "input",
+      placeholder: "Input",
+    },
+    [
+      { key: "type", label: "Type", kind: "select", options: INPUT_TYPES },
+      { key: "name", label: "Name" },
+      { key: "placeholder", label: "Placeholder" },
+      { key: "value", label: "Value" },
+    ],
+  ),
+  textarea: leaf(
+    "textarea",
+    "Textarea",
+    "textarea",
+    "form",
+    {
+      name: "textarea",
+      placeholder: "Text",
+      rows: 3,
+    },
+    [
+      { key: "name", label: "Name" },
+      { key: "placeholder", label: "Placeholder" },
+      { key: "rows", label: "Rows", kind: "number" },
+    ],
+  ),
   select: container("select", "Select", "select", "form", { name: "select" }, [
     { key: "name", label: "Name" },
   ]),
-  datalist: container("datalist", "Datalist", "select", "form", {
-    id: "datalist",
-  }, [
-    { key: "id", label: "Id" },
-  ]),
-  optgroup: container("optgroup", "Option Group", "optionGroup", "form", {
-    label: "Group",
-  }, [
-    { key: "label", label: "Label" },
-  ]),
-  option: container("option", "Option", "option", "form", {
-    value: "option",
-    children: "Option",
-  }, [{ key: "value", label: "Value" }, ...text("Label")]),
+  datalist: container(
+    "datalist",
+    "Datalist",
+    "select",
+    "form",
+    {
+      id: "datalist",
+    },
+    [{ key: "id", label: "Id" }],
+  ),
+  optgroup: container(
+    "optgroup",
+    "Option Group",
+    "optionGroup",
+    "form",
+    {
+      label: "Group",
+    },
+    [{ key: "label", label: "Label" }],
+  ),
+  option: container(
+    "option",
+    "Option",
+    "option",
+    "form",
+    {
+      value: "option",
+      children: "Option",
+    },
+    [{ key: "value", label: "Value" }, ...text("Label")],
+  ),
   output: leaf("output", "Output", "output", "form", { children: "Output" }, [
     { key: "name", label: "Name" },
     ...text(),
   ]),
-  progress: leaf("progress", "Progress", "progress", "form", {
-    value: 50,
-    max: 100,
-  }, [
-    { key: "value", label: "Value", kind: "number" },
-    { key: "max", label: "Max", kind: "number" },
-  ]),
-  meter: leaf("meter", "Meter", "meter", "form", {
-    value: 60,
-    min: 0,
-    max: 100,
-  }, [
-    { key: "value", label: "Value", kind: "number" },
-    { key: "min", label: "Min", kind: "number" },
-    { key: "max", label: "Max", kind: "number" },
-  ]),
+  progress: leaf(
+    "progress",
+    "Progress",
+    "progress",
+    "form",
+    {
+      value: 50,
+      max: 100,
+    },
+    [
+      { key: "value", label: "Value", kind: "number" },
+      { key: "max", label: "Max", kind: "number" },
+    ],
+  ),
+  meter: leaf(
+    "meter",
+    "Meter",
+    "meter",
+    "form",
+    {
+      value: 60,
+      min: 0,
+      max: 100,
+    },
+    [
+      { key: "value", label: "Value", kind: "number" },
+      { key: "min", label: "Min", kind: "number" },
+      { key: "max", label: "Max", kind: "number" },
+    ],
+  ),
   SdTree: {
     type: "SdTree",
     title: "Tree",

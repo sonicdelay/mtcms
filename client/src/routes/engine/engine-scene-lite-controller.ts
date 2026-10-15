@@ -227,18 +227,24 @@ export class EngineSceneController {
     const camera = scene.camera as ArcRotateCamera | null;
     const cameraInfo = camera
       ? {
-        alpha: camera.alpha,
-        beta: camera.beta,
-        radius: camera.radius,
-        target: { x: camera.target.x, y: camera.target.y, z: camera.target.z },
-        eye: {
-          x: camera.target.x +
-            camera.radius * Math.sin(camera.alpha) * Math.cos(camera.beta),
-          y: camera.target.y + camera.radius * Math.sin(camera.beta),
-          z: camera.target.z +
-            camera.radius * Math.cos(camera.alpha) * Math.cos(camera.beta),
-        },
-      }
+          alpha: camera.alpha,
+          beta: camera.beta,
+          radius: camera.radius,
+          target: {
+            x: camera.target.x,
+            y: camera.target.y,
+            z: camera.target.z,
+          },
+          eye: {
+            x:
+              camera.target.x +
+              camera.radius * Math.sin(camera.alpha) * Math.cos(camera.beta),
+            y: camera.target.y + camera.radius * Math.sin(camera.beta),
+            z:
+              camera.target.z +
+              camera.radius * Math.cos(camera.alpha) * Math.cos(camera.beta),
+          },
+        }
       : null;
     const meshes = this.entries.map(({ mesh, body, kind, mass }) => {
       const velocity = this.world

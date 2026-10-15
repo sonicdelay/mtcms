@@ -155,7 +155,8 @@ export default function EditPage() {
               setLanguage(
                 ((ev.payload as { value?: string } | undefined)?.value ??
                   "") as "en" | "de",
-              )}
+              )
+            }
           />
           <SdButton
             icon="plus"

@@ -221,7 +221,8 @@ export default function FilesPage() {
                 type="button"
                 className="admin-file-manager__crumb"
                 onClick={() =>
-                  navigateTo(segments.slice(0, index + 1).join("/"))}
+                  navigateTo(segments.slice(0, index + 1).join("/"))
+                }
               >
                 {segment}
               </button>
@@ -261,16 +262,13 @@ export default function FilesPage() {
                   key={`${index}-${segment}`}
                   className="admin-file-manager__crumb-group"
                 >
-                  <SdIconButton
-                    value="chevronRight"
-                    title=""
-                    disabled
-                  />
+                  <SdIconButton value="chevronRight" title="" disabled />
                   <button
                     type="button"
                     className="admin-file-manager__crumb"
                     onClick={() =>
-                      navigateTo(segments.slice(0, index + 1).join("/"))}
+                      navigateTo(segments.slice(0, index + 1).join("/"))
+                    }
                   >
                     {segment}
                   </button>
@@ -328,8 +326,7 @@ export default function FilesPage() {
                 <SdIconButton
                   value="trash"
                   title="Delete"
-                  onClick={() =>
-                    removeItem(item)}
+                  onClick={() => removeItem(item)}
                 />
               </div>
             ))}
@@ -349,9 +346,10 @@ export default function FilesPage() {
                   <div className="admin-row__meta">{item.path}</div>
                 </a>
                 <a
-                  href={`/api/fm/${
-                    item.path.split("/").map(encodeURIComponent).join("/")
-                  }?token=${encodeURIComponent(token ?? "")}`}
+                  href={`/api/fm/${item.path
+                    .split("/")
+                    .map(encodeURIComponent)
+                    .join("/")}?token=${encodeURIComponent(token ?? "")}`}
                   target="_blank"
                   rel="noreferrer"
                   title="Open raw"

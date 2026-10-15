@@ -49,8 +49,15 @@ const DashboardPage = () => {
     config: DEFAULT_CONFIG_WIDTH,
   });
   const rowRef = useRef<HTMLDivElement>(null);
-  const { present: tree, setPresent, commit, undo, redo, canUndo, canRedo } =
-    useHistory<Node | null>(null);
+  const {
+    present: tree,
+    setPresent,
+    commit,
+    undo,
+    redo,
+    canUndo,
+    canRedo,
+  } = useHistory<Node | null>(null);
   const { start, stop, edit, toggleEdit } = useWaveStore();
   const { selectedId, select, editCtx, canvasProps, reset } = useDragDrop(
     tree,
@@ -109,8 +116,8 @@ const DashboardPage = () => {
     ? childrenOf(selInfo.parent.children)
     : [];
   const canMoveUp = selInfo?.index !== undefined && selInfo.index > 0;
-  const canMoveDown = selInfo?.index !== undefined &&
-    selInfo.index < parentChildren.length - 1;
+  const canMoveDown =
+    selInfo?.index !== undefined && selInfo.index < parentChildren.length - 1;
 
   const updateSelected = (patch: Partial<Node>) => {
     if (!tree || !selectedId) return;
@@ -119,9 +126,12 @@ const DashboardPage = () => {
 
   const moveSelected = (dir: -1 | 1) => {
     if (
-      !tree || !selInfo?.parent || selInfo.parent.id === undefined ||
+      !tree ||
+      !selInfo?.parent ||
+      selInfo.parent.id === undefined ||
       selInfo.index === undefined
-    ) return;
+    )
+      return;
     commit(moveChild(tree, selInfo.parent.id, selInfo.index, dir));
   };
 
@@ -149,10 +159,8 @@ const DashboardPage = () => {
   const applySelectedJson = (parsed: Record<string, unknown>) => {
     if (!tree || !selectedId) return;
     commit(
-      updateNode(
-        tree,
-        selectedId,
-        (n) => Object.assign(n, parsed, { id: n.id }),
+      updateNode(tree, selectedId, (n) =>
+        Object.assign(n, parsed, { id: n.id }),
       ),
     );
   };
@@ -274,9 +282,15 @@ const DashboardPage = () => {
         className="flex min-w-0 w-full flex-1 flex-col overflow-auto bg-[var(--background)]"
         {...canvasProps}
       >
-        {tree
-          ? edit ? renderEditable(tree, "0", {}, editCtx) : renderNode(tree)
-          : <p>Loading layouts...</p>}
+        {tree ? (
+          edit ? (
+            renderEditable(tree, "0", {}, editCtx)
+          ) : (
+            renderNode(tree)
+          )
+        ) : (
+          <p>Loading layouts...</p>
+        )}
       </div>
       {edit && tree && (
         <>

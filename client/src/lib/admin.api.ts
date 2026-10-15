@@ -9,8 +9,8 @@ export interface EditorNode extends Node {
 async function handle<T>(res: Response): Promise<T> {
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    const detail = (body as { detail?: string } | null)?.detail ??
-      `HTTP ${res.status}`;
+    const detail =
+      (body as { detail?: string } | null)?.detail ?? `HTTP ${res.status}`;
     throw new Error(detail);
   }
   return (await res.json()) as T;
@@ -71,18 +71,14 @@ export async function deleteNode(token: string, id: string): Promise<void> {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    const detail = (body as { detail?: string } | null)?.detail ??
-      `HTTP ${res.status}`;
+    const detail =
+      (body as { detail?: string } | null)?.detail ?? `HTTP ${res.status}`;
     throw new Error(detail);
   }
 }
 
 function encodePath(relPath: string): string {
-  return relPath
-    .split("/")
-    .filter(Boolean)
-    .map(encodeURIComponent)
-    .join("/");
+  return relPath.split("/").filter(Boolean).map(encodeURIComponent).join("/");
 }
 
 export async function listMedia(
@@ -106,8 +102,8 @@ export async function readMediaText(
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    const detail = (body as { detail?: string } | null)?.detail ??
-      `HTTP ${res.status}`;
+    const detail =
+      (body as { detail?: string } | null)?.detail ?? `HTTP ${res.status}`;
     throw new Error(detail);
   }
   const text = await res.text();
@@ -136,8 +132,8 @@ export async function writeMediaFile(
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    const detail = (body as { detail?: string } | null)?.detail ??
-      `HTTP ${res.status}`;
+    const detail =
+      (body as { detail?: string } | null)?.detail ?? `HTTP ${res.status}`;
     throw new Error(detail);
   }
 }
@@ -158,8 +154,8 @@ export async function uploadMediaFile(
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    const detail = (body as { detail?: string } | null)?.detail ??
-      `HTTP ${res.status}`;
+    const detail =
+      (body as { detail?: string } | null)?.detail ?? `HTTP ${res.status}`;
     throw new Error(detail);
   }
 }
@@ -175,8 +171,8 @@ export async function createMediaDirectory(
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    const detail = (body as { detail?: string } | null)?.detail ??
-      `HTTP ${res.status}`;
+    const detail =
+      (body as { detail?: string } | null)?.detail ?? `HTTP ${res.status}`;
     throw new Error(detail);
   }
 }
@@ -192,8 +188,8 @@ export async function deleteMediaPath(
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
-    const detail = (body as { detail?: string } | null)?.detail ??
-      `HTTP ${res.status}`;
+    const detail =
+      (body as { detail?: string } | null)?.detail ?? `HTTP ${res.status}`;
     throw new Error(detail);
   }
 }

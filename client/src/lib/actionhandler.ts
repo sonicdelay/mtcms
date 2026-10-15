@@ -30,7 +30,7 @@ const addActionHandler = (type: string, handler: ActionHandler) => {
 
 const addActionHandlers = (entries: ActionHandlerEntry[]) => {
   const unsubscribers = entries.map(({ type, handler }) =>
-    addActionHandler(type, handler)
+    addActionHandler(type, handler),
   );
 
   return () => {

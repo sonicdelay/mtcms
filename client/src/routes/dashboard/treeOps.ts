@@ -91,9 +91,8 @@ export const updateNode = (
   }
   return {
     ...root,
-    children: mapChildren(
-      root.children,
-      (c) => (typeof c === "string" ? c : updateNode(c, id, updater)),
+    children: mapChildren(root.children, (c) =>
+      typeof c === "string" ? c : updateNode(c, id, updater),
     ),
   };
 };
@@ -177,9 +176,9 @@ export const deleteNode = (root: Node, id: string): Node => ({
 const cloneWithNewIds = (n: Node): Node => ({
   ...n,
   id: randomId(),
-  children: childrenOf(n.children).map((
-    c,
-  ) => (typeof c === "string" ? c : cloneWithNewIds(c))),
+  children: childrenOf(n.children).map((c) =>
+    typeof c === "string" ? c : cloneWithNewIds(c),
+  ),
 });
 
 export const duplicateNode = (root: Node, id: string): Node => {
@@ -215,10 +214,11 @@ export const moveChild = (
 
 export const ensureIds = (node: Node): Node => {
   const children = node.children;
-  const nextChildren: LayoutChild[] | string | undefined =
-    Array.isArray(children)
-      ? children.map((c) => (typeof c === "string" ? c : ensureIds(c)))
-      : children;
+  const nextChildren: LayoutChild[] | string | undefined = Array.isArray(
+    children,
+  )
+    ? children.map((c) => (typeof c === "string" ? c : ensureIds(c)))
+    : children;
   return {
     ...node,
     id: node.id ?? randomId(),

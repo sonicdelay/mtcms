@@ -25,13 +25,12 @@ import type {
   TreeItemTemplate,
 } from "../models/sd-tree";
 
-interface SdTreeProps extends
-  SdComponentProps<
-    TreeItem | (TreeItem | string)[] | string | null,
-    SdTreeConfig,
-    SdComponentEvent,
-    ReactNode | TreeItemTemplate
-  > {
+interface SdTreeProps extends SdComponentProps<
+  TreeItem | (TreeItem | string)[] | string | null,
+  SdTreeConfig,
+  SdComponentEvent,
+  ReactNode | TreeItemTemplate
+> {
   [key: string]: unknown;
 }
 
@@ -80,9 +79,10 @@ const SdTree = (props: SdTreeProps) => {
     canDropInside,
   } = settings;
   const items = useMemo(() => toItemArray(value), [value]);
-  const template: TreeItemTemplate = typeof children === "function"
-    ? (children as TreeItemTemplate)
-    : defaultTemplate;
+  const template: TreeItemTemplate =
+    typeof children === "function"
+      ? (children as TreeItemTemplate)
+      : defaultTemplate;
   const [expanded, setExpanded] = useState<Set<string>>(
     () => new Set(defaultExpandedIds ?? []),
   );
@@ -159,7 +159,8 @@ const SdTree = (props: SdTreeProps) => {
     if (fullIndex.byKey.has(selectedId)) return selectedId;
     for (const [key, item] of fullIndex.byKey) {
       if (
-        item.id !== undefined && item.id !== null &&
+        item.id !== undefined &&
+        item.id !== null &&
         String(item.id) === selectedId
       ) {
         return key;
@@ -193,9 +194,8 @@ const SdTree = (props: SdTreeProps) => {
   useEffect(() => {
     if (!pendingFocus.current || activeKey === undefined) return;
     pendingFocus.current = false;
-    const rendered = rootRef.current?.querySelectorAll<HTMLElement>(
-      "[data-tree-key]",
-    );
+    const rendered =
+      rootRef.current?.querySelectorAll<HTMLElement>("[data-tree-key]");
     if (!rendered) return;
     for (const node of Array.from(rendered)) {
       if (node.getAttribute("data-tree-key") === activeKey) {
@@ -271,8 +271,8 @@ const SdTree = (props: SdTreeProps) => {
     const hasChildren = kids.length > 0;
     const isExpanded = hasChildren && expanded.has(key);
     const isSelected = selectedKey === key;
-    const isActive = activeKey === key ||
-      (activeKey === undefined && keys[0] === key);
+    const isActive =
+      activeKey === key || (activeKey === undefined && keys[0] === key);
 
     const state: TreeItemState = {
       key,
@@ -284,38 +284,36 @@ const SdTree = (props: SdTreeProps) => {
       select: () => selectItem(item, key),
     };
 
-    const twisty = hasChildren
-      ? (
-        <span
-          className="sd-tree__twisty"
-          onClick={(e) => {
-            e.stopPropagation();
-            toggle(key);
-          }}
-        >
-          {isExpanded ? "▾" : "▸"}
-        </span>
-      )
-      : <span className="sd-tree__twisty sd-tree__twisty--empty" />;
+    const twisty = hasChildren ? (
+      <span
+        className="sd-tree__twisty"
+        onClick={(e) => {
+          e.stopPropagation();
+          toggle(key);
+        }}
+      >
+        {isExpanded ? "▾" : "▸"}
+      </span>
+    ) : (
+      <span className="sd-tree__twisty sd-tree__twisty--empty" />
+    );
 
     const iconNode = renderIcon?.(item, state);
-    const leading = iconNode
-      ? <span className="sd-tree__icon">{iconNode}</span>
-      : null;
+    const leading = iconNode ? (
+      <span className="sd-tree__icon">{iconNode}</span>
+    ) : null;
 
-    const group = isExpanded
-      ? (
-        <ul
-          role="group"
-          className="sd-tree__group"
-          style={{ paddingLeft: INDENT }}
-        >
-          {kids.map((child, index) =>
-            renderItem(child, keyOf(child, `${key}.${index}`), depth + 1)
-          )}
-        </ul>
-      )
-      : null;
+    const group = isExpanded ? (
+      <ul
+        role="group"
+        className="sd-tree__group"
+        style={{ paddingLeft: INDENT }}
+      >
+        {kids.map((child, index) =>
+          renderItem(child, keyOf(child, `${key}.${index}`), depth + 1),
+        )}
+      </ul>
+    ) : null;
 
     const itemProps: Record<string, unknown> = {
       role: "treeitem",
@@ -345,79 +343,85 @@ const SdTree = (props: SdTreeProps) => {
       selectItem(item, key);
     };
 
-    const dragHandlers: TreeItemElementProps = onMove || onDropExternal
-      ? {
-        draggable: true,
-        onDragStart: (e: DragEvent<HTMLElement>) => {
-          e.stopPropagation();
-          dragKey.current = key;
-          setActiveKey(key);
-          e.dataTransfer.effectAllowed = "move";
-          e.dataTransfer.setData(NODE_MIME, key);
-        },
-        onDragEnd: () => {
-          dragKey.current = undefined;
-          setDropAt(undefined);
-        },
-        onDragEnter: (e: DragEvent<HTMLElement>) => {
-          const external = e.dataTransfer.types.includes(EXTERNAL_MIME);
-          e.preventDefault();
-          e.dataTransfer.dropEffect = external ? "copy" : "move";
-        },
-        onDragOver: (e: DragEvent<HTMLElement>) => {
-          const origin = (e.target as HTMLElement | null)?.closest?.(
-            "[data-tree-key]",
-          );
-          if (origin?.getAttribute("data-tree-key") !== key) return;
-          const external = e.dataTransfer.types.includes(EXTERNAL_MIME);
-          const dragged = dragKey.current;
-          if (external) {
-            if (!onDropExternal) return;
-          } else if (!dragged || dragged === key) return;
-          const position = dropPosition(e, item);
-          const target = resolveTarget(key, position);
-          if (!target) return;
-          if (!external && (!dragged || !canDrop(dragged, target))) return;
-          e.preventDefault();
-          e.dataTransfer.dropEffect = external ? "copy" : "move";
-          setDropAt((prev) =>
-            prev && prev.key === key && prev.position === position
-              ? prev
-              : { key, position }
-          );
-        },
-        onDragLeave: (e: DragEvent<HTMLElement>) => {
-          if (e.currentTarget.contains(e.relatedTarget as Node | null)) return;
-          setDropAt((prev) => (prev?.key === key ? undefined : prev));
-        },
-        onDrop: (e: DragEvent<HTMLElement>) => {
-          const origin = (e.target as HTMLElement | null)?.closest?.(
-            "[data-tree-key]",
-          );
-          if (origin?.getAttribute("data-tree-key") !== key) return;
-          e.preventDefault();
-          e.stopPropagation();
-          const externalType = e.dataTransfer.getData(EXTERNAL_MIME);
-          const dragged = dragKey.current ?? e.dataTransfer.getData(NODE_MIME);
-          const position = dropPosition(e, item);
-          const target = resolveTarget(key, position);
-          setDropAt(undefined);
-          dragKey.current = undefined;
-          if (!target) return;
-          if (externalType && !dragged) {
-            onDropExternal?.(externalType, target);
-            onChange?.({
-              type: "dropExternal",
-              payload: { componentType: externalType, target },
-            });
-            return;
+    const dragHandlers: TreeItemElementProps =
+      onMove || onDropExternal
+        ? {
+            draggable: true,
+            onDragStart: (e: DragEvent<HTMLElement>) => {
+              e.stopPropagation();
+              dragKey.current = key;
+              setActiveKey(key);
+              e.dataTransfer.effectAllowed = "move";
+              e.dataTransfer.setData(NODE_MIME, key);
+            },
+            onDragEnd: () => {
+              dragKey.current = undefined;
+              setDropAt(undefined);
+            },
+            onDragEnter: (e: DragEvent<HTMLElement>) => {
+              const external = e.dataTransfer.types.includes(EXTERNAL_MIME);
+              e.preventDefault();
+              e.dataTransfer.dropEffect = external ? "copy" : "move";
+            },
+            onDragOver: (e: DragEvent<HTMLElement>) => {
+              const origin = (e.target as HTMLElement | null)?.closest?.(
+                "[data-tree-key]",
+              );
+              if (origin?.getAttribute("data-tree-key") !== key) return;
+              const external = e.dataTransfer.types.includes(EXTERNAL_MIME);
+              const dragged = dragKey.current;
+              if (external) {
+                if (!onDropExternal) return;
+              } else if (!dragged || dragged === key) return;
+              const position = dropPosition(e, item);
+              const target = resolveTarget(key, position);
+              if (!target) return;
+              if (!external && (!dragged || !canDrop(dragged, target))) return;
+              e.preventDefault();
+              e.dataTransfer.dropEffect = external ? "copy" : "move";
+              setDropAt((prev) =>
+                prev && prev.key === key && prev.position === position
+                  ? prev
+                  : { key, position },
+              );
+            },
+            onDragLeave: (e: DragEvent<HTMLElement>) => {
+              if (e.currentTarget.contains(e.relatedTarget as Node | null))
+                return;
+              setDropAt((prev) => (prev?.key === key ? undefined : prev));
+            },
+            onDrop: (e: DragEvent<HTMLElement>) => {
+              const origin = (e.target as HTMLElement | null)?.closest?.(
+                "[data-tree-key]",
+              );
+              if (origin?.getAttribute("data-tree-key") !== key) return;
+              e.preventDefault();
+              e.stopPropagation();
+              const externalType = e.dataTransfer.getData(EXTERNAL_MIME);
+              const dragged =
+                dragKey.current ?? e.dataTransfer.getData(NODE_MIME);
+              const position = dropPosition(e, item);
+              const target = resolveTarget(key, position);
+              setDropAt(undefined);
+              dragKey.current = undefined;
+              if (!target) return;
+              if (externalType && !dragged) {
+                onDropExternal?.(externalType, target);
+                onChange?.({
+                  type: "dropExternal",
+                  payload: { componentType: externalType, target },
+                });
+                return;
+              }
+              if (!dragged || !canDrop(dragged, target)) return;
+              onMove?.(dragged, target);
+              onChange?.({
+                type: "move",
+                payload: { dragKey: dragged, target },
+              });
+            },
           }
-          if (!dragged || !canDrop(dragged, target)) return;
-          onMove?.(dragged, target);
-          onChange?.({ type: "move", payload: { dragKey: dragged, target } });
-        },
-      }
-      : {};
+        : {};
 
     if (isValidElement(rendered)) {
       const element = rendered as ReactElement<TreeItemElementProps>;
@@ -511,7 +515,7 @@ const SdTree = (props: SdTreeProps) => {
       onKeyDown={handleKeyDown}
     >
       {items.map((item, index) =>
-        renderItem(item, keyOf(item, String(index)), 0)
+        renderItem(item, keyOf(item, String(index)), 0),
       )}
     </ul>
   );

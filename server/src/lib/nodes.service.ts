@@ -29,8 +29,7 @@ export async function getAllNodes(
   }
 
   const where = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
-  const query =
-    `SELECT id, type, update, sync, data FROM nodes ${where} ORDER BY update DESC LIMIT $${idx++} OFFSET $${idx++}`;
+  const query = `SELECT id, type, update, sync, data FROM nodes ${where} ORDER BY update DESC LIMIT $${idx++} OFFSET $${idx++}`;
   values.push(limit, offset);
 
   const { rows } = await pool.query<Node>(query, values);

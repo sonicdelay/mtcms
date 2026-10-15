@@ -6,27 +6,17 @@
   // `AGENTS.md` (the `instructions` field is accepted but not resolved), so
   // `ai/AGENTS.md` loads when the agent first reads under ai/.
   // Superpowers plugin (V2 2.0.4+ key). Also registered in the global config.
-  "plugins": [
-    "superpowers@git+https://github.com/obra/superpowers.git"
-  ],
+  "plugins": ["superpowers@git+https://github.com/obra/superpowers.git"],
   // Project skills. OpenCode discovers `.opencode/skills` automatically, not
   // `ai/skills`, so register the location explicitly.
-  "skills": [
-    "./ai/skills"
-  ],
-  "agents": [
-    "./ai/agents"
-  ],
+  "skills": ["./ai/skills"],
+  "agents": ["./ai/agents"],
   // Default free model provided by OpenCode Zen (opencode provider).
   "model": "opencode/big-pickle",
   // Format files OpenCode writes or edits, using Deno (the repo's formatter).
   "formatter": {
     "deno": {
-      "command": [
-        "deno",
-        "fmt",
-        "$FILE"
-      ],
+      "command": ["deno", "fmt", "$FILE"],
       "extensions": [
         ".ts",
         ".tsx",
@@ -38,9 +28,9 @@
         ".cts",
         ".json",
         ".jsonc",
-        ".md"
-      ]
-    }
+        ".md",
+      ],
+    },
   },
   // Permissions (V2): ordered rules, last match wins. The built-in base policy
   // allows everything, so the broad `shell` ask re-establishes "ask before
@@ -49,48 +39,48 @@
     {
       "action": "edit",
       "resource": "*",
-      "effect": "allow"
+      "effect": "allow",
     },
     {
       "action": "edit",
       "resource": "*.env",
-      "effect": "deny"
+      "effect": "deny",
     },
     {
       "action": "edit",
       "resource": "ai/rules/*.md",
-      "effect": "deny"
+      "effect": "deny",
     },
     {
       "action": "shell",
       "resource": "*",
-      "effect": "ask"
+      "effect": "ask",
     },
     {
       "action": "shell",
       "resource": "git add *",
-      "effect": "allow"
+      "effect": "allow",
     },
     {
       "action": "shell",
       "resource": "git status *",
-      "effect": "allow"
+      "effect": "allow",
     },
     {
       "action": "shell",
       "resource": "git diff *",
-      "effect": "allow"
+      "effect": "allow",
     },
     {
       "action": "shell",
       "resource": "git log *",
-      "effect": "allow"
+      "effect": "allow",
     },
     {
       "action": "shell",
       "resource": "deno fmt *",
-      "effect": "allow"
-    }
+      "effect": "allow",
+    },
   ],
   "exclude": [
     "build",
@@ -107,6 +97,6 @@
     ".turbo",
     ".yarn",
     ".pnpm",
-    ".gitignore"
-  ]
+    ".gitignore",
+  ],
 }

@@ -56,8 +56,10 @@ const DEFAULT_CONFIG = {
   scaleExtent: [0.5, 20] as [number, number],
 };
 
-interface SdD3GraphProps
-  extends SdComponentProps<SdD3GraphValue, SdD3GraphConfig> {
+interface SdD3GraphProps extends SdComponentProps<
+  SdD3GraphValue,
+  SdD3GraphConfig
+> {
   title?: string;
   width?: number;
   height?: number;
@@ -115,9 +117,10 @@ const SdD3Graph = (props: SdD3GraphProps) => {
     onChange?.({ type: "click", payload: { value } });
   };
 
-  const points = value && Array.isArray(value.points) && value.points.length > 0
-    ? value.points
-    : DEFAULT_POINTS;
+  const points =
+    value && Array.isArray(value.points) && value.points.length > 0
+      ? value.points
+      : DEFAULT_POINTS;
 
   const cfg = {
     ...DEFAULT_CONFIG,
@@ -131,10 +134,10 @@ const SdD3Graph = (props: SdD3GraphProps) => {
     yLabel: String(yLabel ?? config?.yLabel ?? DEFAULT_CONFIG.yLabel),
     scaleExtent:
       Array.isArray(config?.scaleExtent) && config.scaleExtent.length === 2
-        ? [num(config.scaleExtent[0], 0.5), num(config.scaleExtent[1], 20)] as [
-          number,
-          number,
-        ]
+        ? ([
+            num(config.scaleExtent[0], 0.5),
+            num(config.scaleExtent[1], 20),
+          ] as [number, number])
         : DEFAULT_CONFIG.scaleExtent,
     xDomain: config?.xDomain,
     yDomain: config?.yDomain,
@@ -274,8 +277,9 @@ const SdD3Graph = (props: SdD3GraphProps) => {
 
   return (
     <div {...rest} className={graphClassName} onClick={handleClick}>
-      {title && <h2 className="mb-2 font-semibold text-[var(--fg)]">{title}
-      </h2>}
+      {title && (
+        <h2 className="mb-2 font-semibold text-[var(--fg)]">{title}</h2>
+      )}
       <svg
         ref={svgRef}
         width={cfg.width}

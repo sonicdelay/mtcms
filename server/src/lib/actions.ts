@@ -25,10 +25,7 @@ export type ActionHandler = (
 
 const actionRegistry = new Map<string, ActionHandler>();
 
-export function registerAction(
-  name: string,
-  handler: ActionHandler,
-): void {
+export function registerAction(name: string, handler: ActionHandler): void {
   actionRegistry.set(name, handler);
 }
 
@@ -77,9 +74,8 @@ export function dispatchAction(
       JSON.stringify({
         action: "error",
         data: {
-          message: err instanceof Error
-            ? err.message
-            : "Internal action error.",
+          message:
+            err instanceof Error ? err.message : "Internal action error.",
         },
       }),
     );

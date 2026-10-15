@@ -29,7 +29,7 @@ const SdGauge = (props: SdGaugeProps) => {
   const clamped = Math.max(min, Math.min(max, raw));
   const percent = Math.max(
     0,
-    Math.min(1, (max - min) === 0 ? 0 : (clamped - min) / (max - min)),
+    Math.min(1, max - min === 0 ? 0 : (clamped - min) / (max - min)),
   );
   const display = Math.round(percent * 100);
   const hue = percent * 120;

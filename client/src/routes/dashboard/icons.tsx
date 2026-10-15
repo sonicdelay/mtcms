@@ -14,7 +14,9 @@ export const iconProps = {
 export type IconComponent = () => ReactElement;
 
 const icon = (children: ReactNode): ReactElement => (
-  <svg {...iconProps} aria-hidden="true">{children}</svg>
+  <svg {...iconProps} aria-hidden="true">
+    {children}
+  </svg>
 );
 
 const band = (y: number, h: number, width = 18) => (
@@ -46,13 +48,15 @@ const digit = (x: number, y: number, value: string) => (
   </text>
 );
 
-const heading = (level: number): IconComponent => () =>
-  icon(
-    <>
-      <path d="M3 6v12M9 6v12M3 12h6" />
-      {digit(12.5, 17, String(level))}
-    </>,
-  );
+const heading =
+  (level: number): IconComponent =>
+  () =>
+    icon(
+      <>
+        <path d="M3 6v12M9 6v12M3 12h6" />
+        {digit(12.5, 17, String(level))}
+      </>,
+    );
 
 export const icons = {
   layout: () =>

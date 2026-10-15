@@ -7,7 +7,7 @@ export default function DynamicForm() {
   const updateField = (index: number, value: string) => {
     setFormFields(
       formFields.map((field, fieldIndex) =>
-        fieldIndex === index ? { ...field, value } : field
+        fieldIndex === index ? { ...field, value } : field,
       ),
     );
   };
@@ -31,8 +31,7 @@ export default function DynamicForm() {
             aria-label={`Field ${field.name}`}
             spellCheck={false}
             value={field.value}
-            onChange={(event) =>
-              updateField(index, event.target.value)}
+            onChange={(event) => updateField(index, event.target.value)}
             className="admin-dynamic-form__textarea"
           />
         </div>

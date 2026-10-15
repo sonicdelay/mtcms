@@ -27,7 +27,9 @@ const MAX_CAPTURE_DEPTH = 20;
 const list = (children: ReactNode): ReactNode[] | null =>
   children === null || children === undefined
     ? null
-    : (Array.isArray(children) ? children : [children]);
+    : Array.isArray(children)
+      ? children
+      : [children];
 
 /**
  * Recursively wires nested child events back to SdDummy's own `onChange`.

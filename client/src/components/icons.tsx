@@ -176,9 +176,12 @@ export interface SdIconProps {
   [key: string]: unknown;
 }
 
-export const SdIcon = (
-  { name, size = 16, className, ...rest }: SdIconProps,
-) => {
+export const SdIcon = ({
+  name,
+  size = 16,
+  className,
+  ...rest
+}: SdIconProps) => {
   if (!name) return null;
   const Glyph = sdIcons[name];
   return (

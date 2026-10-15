@@ -43,36 +43,30 @@ export default function Nav() {
   return (
     <header className="border-b border-[var(--border)] bg-[var(--surface)]">
       <nav className="mx-auto flex h-14 max-w-5xl items-center gap-6 px-6">
-        <Link
-          to="/home"
-          className="text-lg font-semibold text-[var(--fg)]"
-        >
+        <Link to="/home" className="text-lg font-semibold text-[var(--fg)]">
           SonicDelay
         </Link>
         <ul className="flex items-center gap-4">
           {links
             .filter((link) => !link.requiresAuth || (mounted && isLoggedIn))
             .map((link) => {
-              const className =
-                `text-sm font-medium transition-colors hover:text-[var(--fg)] ${
-                  pathname === link.href
-                    ? "text-[var(--fg)]"
-                    : "text-[var(--fg-muted)]"
-                }`;
+              const className = `text-sm font-medium transition-colors hover:text-[var(--fg)] ${
+                pathname === link.href
+                  ? "text-[var(--fg)]"
+                  : "text-[var(--fg-muted)]"
+              }`;
 
               return (
                 <li key={link.href}>
-                  {link.external
-                    ? (
-                      <a href={link.href} className={className}>
-                        {link.label}
-                      </a>
-                    )
-                    : (
-                      <Link to={link.href} className={className}>
-                        {link.label}
-                      </Link>
-                    )}
+                  {link.external ? (
+                    <a href={link.href} className={className}>
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link to={link.href} className={className}>
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               );
             })}
@@ -80,49 +74,45 @@ export default function Nav() {
         <div className="ml-auto flex items-center gap-2">
           <ThemeSwitcher />
           <LanguageSwitcher />
-          {mounted && isLoggedIn
-            ? (
-              <>
-                <Link
-                  to="/admin"
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--fg)] text-sm font-medium text-[var(--surface)]"
-                  title={email ?? "Admin"}
-                >
-                  {email ? email.charAt(0).toUpperCase() : "A"}
-                </Link>
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="text-xs font-medium text-[var(--fg-muted)] transition-colors hover:text-[var(--fg)]"
-                  title="Logout"
-                >
-                  Logout
-                </button>
-              </>
-            )
-            : mounted
-            ? (
+          {mounted && isLoggedIn ? (
+            <>
+              <Link
+                to="/admin"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--fg)] text-sm font-medium text-[var(--surface)]"
+                title={email ?? "Admin"}
+              >
+                {email ? email.charAt(0).toUpperCase() : "A"}
+              </Link>
               <button
                 type="button"
-                onClick={handleLoginClick}
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border-strong)] text-sm font-medium text-[var(--fg-muted)] transition-colors hover:bg-[var(--surface-hover)]"
-                title="Login"
+                onClick={handleLogout}
+                className="text-xs font-medium text-[var(--fg-muted)] transition-colors hover:text-[var(--fg)]"
+                title="Logout"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-4 w-4"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                Logout
               </button>
-            )
-            : null}
+            </>
+          ) : mounted ? (
+            <button
+              type="button"
+              onClick={handleLoginClick}
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border-strong)] text-sm font-medium text-[var(--fg-muted)] transition-colors hover:bg-[var(--surface-hover)]"
+              title="Login"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="h-4 w-4"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          ) : null}
         </div>
       </nav>
     </header>

@@ -11,8 +11,8 @@ const format = (value: SdDummyValue) =>
   Array.isArray(value)
     ? value.join(", ")
     : typeof value === "object"
-    ? JSON.stringify(value)
-    : value;
+      ? JSON.stringify(value)
+      : value;
 
 /** Leaf variant of SdDummy: shows the formatted value. */
 const SdDummyLeafComponent = ({ value }: SdDummyLeafComponentProps) => (

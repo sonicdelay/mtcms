@@ -31,7 +31,8 @@ export default function LoginForm() {
               String(
                 (ev.payload as { value?: string } | undefined)?.value ?? "",
               ),
-            )}
+            )
+          }
         />
         <SdInput
           label="Password"
@@ -43,7 +44,8 @@ export default function LoginForm() {
               String(
                 (ev.payload as { value?: string } | undefined)?.value ?? "",
               ),
-            )}
+            )
+          }
         />
         {error && <p className="m-0 text-[var(--danger-fg)]">{error}</p>}
         <SdButton type="submit" disabled={loading}>

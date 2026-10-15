@@ -28,7 +28,8 @@ const SdToast = (props: SdToastProps) => {
     <div
       {...rest}
       className={["sd-toast", `sd-toast--${toast.type ?? "info"}`, className]
-        .filter(Boolean).join(" ")}
+        .filter(Boolean)
+        .join(" ")}
       onClick={() => {
         settings.onDismiss?.(toast.id);
         onChange?.({ type: "dismiss", payload: { id: toast.id } });

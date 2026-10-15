@@ -1,7 +1,7 @@
 @layer base {
   * {
     box-sizing: border-box;
-    transition: all .1s ease-in-out;
+    transition: all 0.1s ease-in-out;
     margin: 0;
     padding: 0;
     user-select: none;
@@ -14,9 +14,9 @@
   }
 
   body {
-    font-family: 'Arial', sans-serif;
+    font-family: "Arial", sans-serif;
     background-color: var(--background-color, #202020);
-    color: var(--color, #FFFFFF);
+    color: var(--color, #ffffff);
   }
 
   body,

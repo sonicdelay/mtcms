@@ -20,15 +20,16 @@ export interface WaveState {
   stop: (id: number) => void;
 }
 
-export type DeepKeys<T, Prefix extends string = ""> = T extends (infer U)[] ?
-    | `${Prefix}${number}`
+export type DeepKeys<T, Prefix extends string = ""> = T extends (infer U)[]
+  ? | `${Prefix}${number}`
     | (U extends object ? DeepKeys<U, `${Prefix}${number}.`> : never)
-  : T extends object ? {
-      [K in keyof T & string]: T[K] extends object
-        ? `${Prefix}${K}` | DeepKeys<T[K], `${Prefix}${K}.`>
-        : `${Prefix}${K}`;
-    }[keyof T & string]
-  : never;
+  : T extends object
+    ? {
+        [K in keyof T & string]: T[K] extends object
+          ? `${Prefix}${K}` | DeepKeys<T[K], `${Prefix}${K}.`>
+          : `${Prefix}${K}`;
+      }[keyof T & string]
+    : never;
 
 const getByPath = (obj: any, path: string): any =>
   path.split(".").reduce((acc, key) => {
@@ -40,9 +41,7 @@ export const useStoreValue = <P extends DeepKeys<WaveState>>(path: P) =>
   useWaveStore(useShallow((state) => getByPath(state, path)));
 
 export const useStoreValues = <P extends DeepKeys<WaveState>>(...paths: P[]) =>
-  useWaveStore(
-    useShallow((state) => paths.map((p) => getByPath(state, p))),
-  );
+  useWaveStore(useShallow((state) => paths.map((p) => getByPath(state, p))));
 
 export const useWaveStore = create<WaveState>()(
   devtools(
@@ -52,7 +51,11 @@ export const useWaveStore = create<WaveState>()(
       sin: 0,
       cos: 1,
       tan: 0,
-      data: [{ time: 0, sin: 20 }, { time: 0, sin: 9 }, { time: 0, sin: 3 }],
+      data: [
+        { time: 0, sin: 20 },
+        { time: 0, sin: 9 },
+        { time: 0, sin: 3 },
+      ],
 
       toggleEdit: () => set((state) => ({ edit: !state.edit })),
 
