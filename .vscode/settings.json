@@ -1,20 +1,14 @@
 {
-  "deno.enable": true,
-  "deno.config": "./deno.json",
-  "deno.enablePaths": ["api", "scripts", "desktop"],
-  "deno.suggest.imports.autoDiscover": true,
-  "deno.lint": true,
-  "deno.unstable": [],
-  "deno.codeLens.references": true,
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "js/ts.tsdk.promptToUseWorkspaceVersion": true,
   "js/ts.preferences.includePackageJsonAutoImports": "on",
 
-  // Allow folder-open tasks (deno fmt) to run without a prompt.
+  // Allow folder-open tasks (Prettier) to run without a prompt.
   "task.allowAutomaticTasks": "on",
 
   "files.autoSave": "onFocusChange",
   "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
 
   "[typescriptreact]": {
     "editor.formatOnSave": true

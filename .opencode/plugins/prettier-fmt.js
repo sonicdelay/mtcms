@@ -1,8 +1,8 @@
 /**
- * Deno format-on-startup for OpenCode V2.
+ * Prettier format-on-startup for OpenCode V2.
  *
  * Injects a one-time instruction into each top-level session's first request,
- * so the agent runs `deno fmt` at the start of the session.
+ * so the agent runs `npm run fmt` at the start of the session.
  *
  * Dependency-free on purpose (no `@opencode/plugin` import): like the
  * superpowers plugin, it relies only on the host `ctx` and the default export
@@ -10,13 +10,13 @@
  * plugin generation could be disabled.
  */
 
-const MARKER = "[deno-fmt:startup]";
+const MARKER = "[prettier-fmt:startup]";
 
 const INSTRUCTION = `${MARKER}
-Before responding to the user's first request, run \`deno fmt\` from the repository root to normalize formatting, then continue with the task. Only mention it if formatting fails.`;
+Before responding to the user's first request, run \`npm run fmt\` from the repository root to normalize formatting, then continue with the task. Only mention it if formatting fails.`;
 
 export default {
-  id: "deno-fmt",
+  id: "prettier-fmt",
   async setup(ctx) {
     if (!ctx || !ctx.session || typeof ctx.session.hook !== "function") return;
 

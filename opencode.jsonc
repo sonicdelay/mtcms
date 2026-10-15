@@ -13,10 +13,10 @@
   "agents": ["./ai/agents"],
   // Default free model provided by OpenCode Zen (opencode provider).
   "model": "opencode/big-pickle",
-  // Format files OpenCode writes or edits, using Deno (the repo's formatter).
+  // Format files OpenCode writes or edits, using Prettier (the repo's formatter).
   "formatter": {
-    "deno": {
-      "command": ["deno", "fmt", "$FILE"],
+    "prettier": {
+      "command": ["npx", "prettier", "--write", "$FILE"],
       "extensions": [
         ".ts",
         ".tsx",
@@ -49,7 +49,7 @@
     {
       "action": "edit",
       "resource": "ai/rules/*.md",
-      "effect": "deny",
+      "effect": "allow",
     },
     {
       "action": "shell",
@@ -78,7 +78,7 @@
     },
     {
       "action": "shell",
-      "resource": "deno fmt *",
+      "resource": "npm run fmt *",
       "effect": "allow",
     },
   ],

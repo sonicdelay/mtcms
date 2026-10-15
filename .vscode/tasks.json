@@ -1,15 +1,15 @@
 {
-  // Runs `deno fmt` (repo-wide, honoring the excludes in deno.json) whenever
+  // Runs `npm run fmt` (Prettier, repo-wide, honoring .prettierignore) whenever
   // the mtcms folder is opened in VS Code.
   // Needs "task.allowAutomaticTasks": "on" in .vscode/settings.json to run
   // without the "Allow automatic tasks?" prompt.
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "deno fmt",
+      "label": "prettier fmt",
       "type": "shell",
-      "command": "deno",
-      "args": ["fmt"],
+      "command": "npm",
+      "args": ["run", "fmt"],
       "options": {
         "cwd": "${workspaceFolder}"
       },
