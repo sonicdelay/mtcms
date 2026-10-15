@@ -1,6 +1,7 @@
 import { randomBytes } from "node:crypto";
 import path from "node:path";
-import { Request, Response, Router } from "express";
+import { Router } from "express";
+import type { Request, Response } from "express";
 
 const renderSwagger = (_req: Request, res: Response) => {
   const cdn = "https://cdn.jsdelivr.net";

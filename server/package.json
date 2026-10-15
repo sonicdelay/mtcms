@@ -3,16 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node --watch --env-file=../.env main.ts",
+    "start": "node --env-file=../.env main.ts",
+    "check": "tsc --noEmit"
+  },
   "dependencies": {
-    "express": "^5",
-    "pg": "^8",
     "@neondatabase/serverless": "^0.10",
     "bcryptjs": "^2",
+    "express": "^5",
+    "mtcms": "file:..",
+    "pg": "^8",
     "ws": "^8"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/express": "^5",
+    "@types/node": "^26.6.4",
     "@types/pg": "^8",
-    "@types/ws": "^8"
+    "@types/ws": "^8",
+    "typescript": "^5.9.0"
   }
 }
