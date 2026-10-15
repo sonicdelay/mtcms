@@ -41,7 +41,8 @@ export default {
 
           const firstUser = messages.find((m) => m.role === "user");
           if (
-            firstUser && (!firstUser.content || firstUser.content.length === 0)
+            firstUser &&
+            (!firstUser.content || firstUser.content.length === 0)
           ) {
             return;
           }
@@ -49,9 +50,12 @@ export default {
           const parts = firstUser ? firstUser.content : undefined;
           if (
             parts &&
-            parts.some((p) =>
-              p && p.type === "text" && typeof p.text === "string" &&
-              p.text.includes(MARKER)
+            parts.some(
+              (p) =>
+                p &&
+                p.type === "text" &&
+                typeof p.text === "string" &&
+                p.text.includes(MARKER),
             )
           ) {
             return;

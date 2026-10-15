@@ -5,8 +5,14 @@
   // Project instructions live in ai/. OpenCode V2 only auto-loads files named
   // `AGENTS.md` (the `instructions` field is accepted but not resolved), so
   // `ai/AGENTS.md` loads when the agent first reads under ai/.
-  // Superpowers plugin (V2 2.0.4+ key). Also registered in the global config.
-  "plugins": ["superpowers@git+https://github.com/obra/superpowers.git"],
+  // Plugins. Superpowers is a package (V2 2.0.4+ key); also registered in the
+  // global config. The prettier-fmt plugin lives in ai/ alongside the project's
+  // instructions/agents/skills, so its path is registered explicitly: only
+  // `.opencode/plugins/` is auto-discovered, not arbitrary locations.
+  "plugins": [
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "./ai/plugins/prettier-fmt.js",
+  ],
   // Project skills. OpenCode discovers `.opencode/skills` automatically, not
   // `ai/skills`, so register the location explicitly.
   "skills": ["./ai/skills"],

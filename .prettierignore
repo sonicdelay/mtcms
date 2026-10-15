@@ -5,7 +5,6 @@ build
 server/media
 client/public
 .fallow
-.opencode
 .superpowers
 package-lock.json
 *.lock
