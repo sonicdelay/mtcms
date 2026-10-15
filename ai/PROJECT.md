@@ -24,7 +24,7 @@ Content-management web app split into a React client and an Express API server.
 Server (run from `server/`):
 
 - `npm run dev` runs the server in watch mode.
-- `npm start` runs the server on port 8421; `PORT` overrides it.
+- `npm start` runs the server on port 8421; `SERVER_PORT` overrides it.
 - `npm run check` type-checks the server with `tsc --noEmit`.
 
 Client (run from `client/`):

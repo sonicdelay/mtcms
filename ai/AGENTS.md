@@ -25,7 +25,7 @@ Client (from `client/`):
 - `npm run lint` / `npm run fmt` — from the **repo root**; linting uses
   ESLint + typescript-eslint, formatting uses Prettier.
 
-Ports: server default **8421** (`PORT` overrides, `server/main.ts`); Vite dev
+Ports: server default **8421** (`SERVER_PORT` overrides, `server/main.ts`); Vite dev
 **4210**. Verify any README/plan claiming 4000 — it's stale. Set `API_TARGET`
 only if you change the proxy target; the Vite proxy is hardcoded to 8421 by
 default.
