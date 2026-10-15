@@ -6,14 +6,13 @@ A content-management web app split into a React client and an Express API server
   in-repo `Sd*` component library. Includes the home site, the admin UI, and a
   BabylonJS 3D engine view that is lazy-loaded (loaded only when navigating to
   `/engine`).
-- `server/` — Express 5 running on Deno, backed by PostgreSQL (Neon or `pg`).
-  Serves the `/api/*` routes, Swagger documentation, and the built client from
-  `dist/`.
+- `server/` — Express 5 running on Node.js, backed by PostgreSQL (Neon or
+  `pg`). Serves the `/api/*` routes, Swagger documentation, and the built client
+  from `dist/`.
 
 ## Prerequisites
 
-- Deno 2.x for the server
-- Node.js + npm for the client
+- Node.js 24+ and npm (client and server)
 
 ## Environment
 
@@ -32,10 +31,9 @@ The client's dev server proxies `/api` to the server; set `API_TARGET` in
 Server (run from `server/`):
 
 ```bash
-deno task dev        # watch mode
-deno task start      # run
-deno task check      # type-check
-deno task test       # integration tests
+npm run dev          # watch mode
+npm start            # run
+npm run check        # type-check
 ```
 
 Client (run from `client/`):
@@ -47,8 +45,8 @@ npm run build        # vite build + copy dist into server/dist
 npm run typecheck    # tsc --noEmit
 ```
 
-Linting and formatting are Deno-only: run `deno task lint` / `deno task fmt`
-from the repo root.
+Formatting uses Prettier and linting uses ESLint + typescript-eslint: run
+`npm run fmt` / `npm run lint` from the repo root.
 
 ## Production
 
@@ -57,7 +55,7 @@ Build the client, then start the server — it serves the client from
 
 ```bash
 cd client && npm run build
-cd ../server && deno task start
+cd ../server && npm start
 ```
 
 The server serves the SPA with a catch-all route that falls back to

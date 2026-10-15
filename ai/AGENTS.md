@@ -1,9 +1,9 @@
 # mtCMS
 
 Content-management web app: React client (`client/`) + Express 5 API running on
-**Deno** (`server/`). `ai/PROJECT.md` has the fuller architecture reference and
-`ai/rules/*.md` the code conventions; this file is the compact quickstart and
-repo gotchas.
+**Node.js** (`server/`). `ai/PROJECT.md` has the fuller architecture reference
+and `ai/rules/*.md` the code conventions; this file is the compact quickstart
+and repo gotchas.
 
 > OpenCode auto-loads files named `AGENTS.md`: the project root at startup, then
 > any `AGENTS.md` between a file you read and the workspace. This file loads when
@@ -11,14 +11,10 @@ repo gotchas.
 
 ## Commands
 
-Server (from `server/`; Deno — never `npm`/`node` here):
+Server (from `server/`; Node.js — runs `.ts` directly via type-stripping):
 
-- `deno task dev` — watch mode; `deno task start` — prod run.
-- `deno task check` — type-checks **only** `main.ts` and `main_test.ts`, not the
-  whole tree.
-- `deno task test` — integration suite. Requires `../.env` with `DATABASE_URL`
-  and a reachable PostgreSQL/Neon DB (tests seed and clean the `nodes` table).
-- `deno task lint` / `deno task fmt`.
+- `npm run dev` — watch mode; `npm start` — prod run.
+- `npm run check` — type-checks the server with `tsc --noEmit`.
 
 Client (from `client/`):
 
@@ -26,8 +22,8 @@ Client (from `client/`):
 - `npm run build` — `vite build` + `scripts/sync-dist.mjs` (copies
   `client/dist` → `server/dist` so the server serves the app).
 - `npm run typecheck` — `tsc --noEmit`.
-- `deno task lint` / `deno task fmt` — from the **repo root**; formatting and
-  linting are Deno-only (no ESLint/Prettier).
+- `npm run lint` / `npm run fmt` — from the **repo root**; linting uses
+  ESLint + typescript-eslint, formatting uses Prettier.
 
 Ports: server default **8421** (`PORT` overrides, `server/main.ts`); Vite dev
 **4210**. Verify any README/plan claiming 4000 — it's stale. Set `API_TARGET`
@@ -36,7 +32,7 @@ default.
 
 ## Server architecture gotchas
 
-- **All imports use explicit `.ts`/`.tsx` extensions** (Deno + client TS).
+- **All imports use explicit `.ts`/`.tsx` extensions** (Node + client TS).
 - Route files `server/src/routes/*.ts` embed their **absolute** `${prefix}/`
   path in every route and are mounted **at the root** in `server/src/app.ts` via
   the barrel `routes/index.ts` (`export const routers: Router[]`). Because they

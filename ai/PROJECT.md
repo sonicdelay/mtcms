@@ -7,25 +7,25 @@ Content-management web app split into a React client and an Express API server.
 - `client/` — Vite + React 19 + React Router 7 + Tailwind CSS 4 with the
   in-repo `Sd*` component library. Home site, admin UI, and a lazy-loaded
   BabylonJS 3D engine view.
-- `server/` — Express 5 running on Deno, backed by PostgreSQL (Neon or `pg`).
-  Serves `/api/*`, Swagger, and the built client from `dist/`.
+- `server/` — Express 5 running on Node.js, backed by PostgreSQL (Neon or
+  `pg`). Serves `/api/*`, Swagger, and the built client from `dist/`.
 
 ## Standards
 
 - Client: TypeScript + ES modules with explicit `.ts`/`.tsx` import extensions.
   Use `.tsx` for React components and `.ts` for plain modules.
-- Server: Deno runtime, explicit `.ts` import extensions, npm packages referenced
-  via `npm:` specifiers in `server/deno.json`. No Node-specific tooling.
+- Server: Node.js runtime (runs `.ts` directly via type-stripping), explicit
+  `.ts` import extensions, npm packages declared in `server/package.json`. Use
+  `import type` for type-only imports (`verbatimModuleSyntax` is enabled).
 - Keep changes focused; preserve the middleware order in `server/src/app.ts`.
 
 ## Commands
 
 Server (run from `server/`):
 
-- `deno task dev` runs the server in watch mode.
-- `deno task start` runs the server on port 8421; `PORT` overrides it.
-- `deno task check` type-checks `main.ts` and `main_test.ts`.
-- `deno task test` runs the integration suite (auth + auth-guard cases).
+- `npm run dev` runs the server in watch mode.
+- `npm start` runs the server on port 8421; `PORT` overrides it.
+- `npm run check` type-checks the server with `tsc --noEmit`.
 
 Client (run from `client/`):
 
@@ -33,15 +33,15 @@ Client (run from `client/`):
   server (target hardcoded to `http://localhost:8421` in `vite.config.ts`).
 - `npm run build` runs `vite build` then `scripts/sync-dist.mjs`, copying
   `client/dist` into `server/dist` so the server can serve the app.
-- `npm run typecheck` runs `tsc --noEmit`. Formatting and linting are Deno-only:
-  run `deno task lint` / `deno task fmt` from the **repo root** (no ESLint or
-  Prettier).
+- `npm run typecheck` runs `tsc --noEmit`. Linting (ESLint + typescript-eslint)
+  and formatting (Prettier) run from the **repo root**: `npm run lint` /
+  `npm run fmt`.
 
 ## Architecture
 
-- `server/main.ts` creates the Express app and starts listening only when
-  `import.meta.main` is true. Tests import `createApp()` and bind an ephemeral
-  port (see `main_test.ts`).
+- `server/main.ts` creates the Express app and starts listening on import. (The
+  old `import.meta.main` guard and the DB-dependent `main_test.ts` were removed
+  in the Deno → Node migration.)
 - Middleware order in `server/src/app.ts` is load-bearing: each route file's
   router (`auth`, `nodes`, `fm`, `articles`, `api` — the `routers` array from
   `routes/index.ts`) is mounted **at the root**, then static serving of `dist/`,

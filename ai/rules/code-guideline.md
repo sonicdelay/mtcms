@@ -2,7 +2,7 @@
 
 ## Framework
 
-- Deno formatting and linting are used.
+- Prettier (formatting) and ESLint + typescript-eslint (linting) are used.
 - Client holds the React 19 frontend.
 - Server holds the Express backend.
 

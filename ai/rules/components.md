@@ -28,12 +28,12 @@ interface SdThingProps extends SdComponentProps<ThingValue, ThingConfig> {
 Narrow the generics to describe what the component accepts. `SdComponentProps`
 is generic over four parameters, in this order:
 
-| Parameter   | Default          | Purpose                                           |
-| ----------- | ---------------- | ------------------------------------------------- |
-| `TValue`    | `unknown`        | type of `value`                                   |
-| `TConfig`   | `unknown`        | type of `config`                                  |
-| `TEvent`    | `ComponentEvent` | type of `onChange` / `eventIn`                    |
-| `TChildren` | `ReactNode`      | type of `children` — widen only for a render prop |
+| Parameter   | Default            | Purpose                                           |
+| ----------- | ------------------ | ------------------------------------------------- |
+| `TValue`    | `unknown`          | type of `value`                                   |
+| `TConfig`   | `unknown`          | type of `config`                                  |
+| `TEvent`    | `SdComponentEvent` | type of `onChange` / `eventIn`                    |
+| `TChildren` | `ReactNode`        | type of `children` — widen only for a render prop |
 
 ## 2. The wildcard MUST be `[key: string]: unknown`, never `any`
 
@@ -65,7 +65,7 @@ incompatible type.
 | `value`    | inbound      | the data the component renders. Never call it `data`.              |
 | `config`   | inbound      | configuration object; merge over your defaults with a spread.      |
 | `onChange` | **outbound** | the component **sends** events with `onChange({ type, payload })`. |
-| `eventIn`  | **inbound**  | a `ComponentEvent` the component **receives** and reacts to.       |
+| `eventIn`  | **inbound**  | a `SdComponentEvent` the component **receives** and reacts to.     |
 | `children` | inbound      | nested content.                                                    |
 
 ## 4. Events travel over `eventIn` / `onChange`
@@ -83,7 +83,7 @@ with a `useRef`, because React re-renders with the same object and an unguarded
 effect fires on every render:
 
 ```tsx
-const lastEvent = useRef<ComponentEvent | undefined>(undefined);
+const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
 useEffect(() => {
   if (!eventIn || lastEvent.current === eventIn) return;
   lastEvent.current = eventIn;
