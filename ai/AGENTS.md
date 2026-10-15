@@ -24,6 +24,8 @@ Client (from `client/`):
 - `npm run typecheck` — `tsc --noEmit`.
 - `npm run lint` / `npm run fmt` — from the **repo root**; linting uses
   ESLint + typescript-eslint, formatting uses Prettier.
+- `npm run verify` — from the **repo root**; runs `fmt:check`, `lint`, and
+  `check` (the all-in-one gate).
 
 Ports: server default **8421** (`SERVER_PORT` overrides, `server/main.ts`); Vite dev
 **4210**. Verify any README/plan claiming 4000 — it's stale. Set `API_TARGET`

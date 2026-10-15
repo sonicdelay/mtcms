@@ -46,7 +46,8 @@ npm run typecheck    # tsc --noEmit
 ```
 
 Formatting uses Prettier and linting uses ESLint + typescript-eslint: run
-`npm run fmt` / `npm run lint` from the repo root.
+`npm run fmt` / `npm run lint` from the repo root. `npm run verify` runs every
+check — format, lint, and type-check — in one command.
 
 ## Production
 

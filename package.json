@@ -18,7 +18,8 @@
     "check:server": "npm --prefix server run check",
     "lint": "eslint .",
     "fmt": "prettier --write .",
-    "fmt:check": "prettier --check ."
+    "fmt:check": "prettier --check .",
+    "verify": "npm run fmt:check && npm run lint && npm run check"
   },
   "keywords": [],
   "author": "",

@@ -35,7 +35,7 @@ Client (run from `client/`):
   `client/dist` into `server/dist` so the server can serve the app.
 - `npm run typecheck` runs `tsc --noEmit`. Linting (ESLint + typescript-eslint)
   and formatting (Prettier) run from the **repo root**: `npm run lint` /
-  `npm run fmt`.
+  `npm run fmt`; `npm run verify` chains `fmt:check`, `lint`, and `check`.
 
 ## Architecture
 
