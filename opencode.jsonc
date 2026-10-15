@@ -1,7 +1,7 @@
 {
   // mtCMS project configuration for opencode.
-  // Schema: https://opencode.ai/config.json
-  "$schema": "https://opencode.ai/config.json",
+  // Schema reference omitted to avoid loading an untrusted remote URL.
+  // Schema documentation: https://opencode.ai/config.json
   // Project instructions live in ai/. OpenCode V2 only auto-loads files named
   // `AGENTS.md` (the `instructions` field is accepted but not resolved), so
   // `ai/AGENTS.md` loads when the agent first reads under ai/.
