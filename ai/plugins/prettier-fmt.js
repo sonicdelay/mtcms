@@ -30,7 +30,7 @@ export default {
           if (event.sessionID && typeof ctx.session.get === "function") {
             try {
               const found = await ctx.session.get({
-                sessionID: event.sessionID,
+                sessionID: event.sessionID
               });
               const session = found && found.data ? found.data : found;
               if (session && session.parentID) return;
@@ -55,7 +55,7 @@ export default {
                 p &&
                 p.type === "text" &&
                 typeof p.text === "string" &&
-                p.text.includes(MARKER),
+                p.text.includes(MARKER)
             )
           ) {
             return;
@@ -74,5 +74,5 @@ export default {
     } catch {
       // Never break plugin activation.
     }
-  },
+  }
 };

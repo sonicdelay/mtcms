@@ -3,7 +3,7 @@ import { useAppStore } from "../../lib/app.store";
 import { useMounted } from "../../components/use-mounted";
 import LoginForm from "../../components/login-form";
 import SdApplication, {
-  type SdNavNavItem,
+  type SdNavNavItem
 } from "../../components/SdApplication";
 import "../../stylesheets/admin.scss";
 
@@ -12,7 +12,7 @@ const navItems: SdNavNavItem[] = [
   { href: "/admin/tasks", label: "Tasklist", icon: "tasks" },
   { href: "/admin/tools", label: "Tools", icon: "tools" },
   { href: "/admin/files", label: "Files", icon: "folder" },
-  { href: "/admin/edit", label: "Edit", icon: "tree" },
+  { href: "/admin/edit", label: "Edit", icon: "tree" }
 ];
 
 const AdminLayout = () => {

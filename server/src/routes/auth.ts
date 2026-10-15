@@ -45,6 +45,6 @@ authRouter
     `${prefix}/`,
     express.urlencoded({ extended: true }),
     express.json(),
-    postLogin,
+    postLogin
   )
   .get(`${prefix}/`, authRequired, getRefresh);

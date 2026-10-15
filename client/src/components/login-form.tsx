@@ -29,8 +29,8 @@ export default function LoginForm() {
           onChange={(ev) =>
             setEmail(
               String(
-                (ev.payload as { value?: string } | undefined)?.value ?? "",
-              ),
+                (ev.payload as { value?: string } | undefined)?.value ?? ""
+              )
             )
           }
         />
@@ -42,8 +42,8 @@ export default function LoginForm() {
           onChange={(ev) =>
             setPassword(
               String(
-                (ev.payload as { value?: string } | undefined)?.value ?? "",
-              ),
+                (ev.payload as { value?: string } | undefined)?.value ?? ""
+              )
             )
           }
         />

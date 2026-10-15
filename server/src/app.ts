@@ -31,7 +31,7 @@ export function createApp() {
       res,
       503,
       "Service Unavailable",
-      "Client build not found. Run `npm run build` in client/ first.",
+      "Client build not found. Run `npm run build` in client/ first."
     );
   });
 
@@ -40,7 +40,7 @@ export function createApp() {
       err: Error & { type?: string; status?: number },
       _req: express.Request,
       res: express.Response,
-      _next: express.NextFunction,
+      _next: express.NextFunction
     ) => {
       if (err?.type === "entity.parse.failed") {
         problem(res, 400, "Bad Request", "Request body must be valid JSON.");
@@ -52,7 +52,7 @@ export function createApp() {
       }
       console.error(err);
       problem(res, 500, "Internal Server Error", err.message);
-    },
+    }
   );
 
   return app;

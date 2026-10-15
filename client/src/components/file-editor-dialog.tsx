@@ -16,7 +16,7 @@ export default function FileEditorDialog({
   path,
   name,
   initialContent,
-  onSaved,
+  onSaved
 }: FileEditorDialogProps) {
   const token = useAppStore((s) => s.token);
   const closeModal = useAppStore((s) => s.closeModal);

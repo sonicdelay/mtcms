@@ -24,10 +24,7 @@ function useTreeWidth(initial = 300) {
       if (!draggingRef.current || !containerRef.current) return;
       const left = containerRef.current.getBoundingClientRect().left;
       setWidth(
-        Math.min(
-          MAX_TREE_WIDTH,
-          Math.max(MIN_TREE_WIDTH, event.clientX - left),
-        ),
+        Math.min(MAX_TREE_WIDTH, Math.max(MIN_TREE_WIDTH, event.clientX - left))
       );
     };
     const up = () => {
@@ -49,7 +46,7 @@ function useTreeWidth(initial = 300) {
     onPointerDown: (event: React.PointerEvent) => {
       event.preventDefault();
       draggingRef.current = true;
-    },
+    }
   };
 }
 
@@ -94,7 +91,7 @@ export default function EditPage() {
         node.id,
         childName.trim(),
         "node",
-        language,
+        language
       );
       if (createdId) {
         await fetchNode(node.id, true);
@@ -114,7 +111,7 @@ export default function EditPage() {
       const ok = await saveNode();
       toast(
         ok ? "Node saved" : "Could not save node",
-        ok ? "success" : "error",
+        ok ? "success" : "error"
       );
     } finally {
       setBusy(false);
@@ -149,12 +146,12 @@ export default function EditPage() {
             value={language}
             options={[
               { value: "en", label: "English" },
-              { value: "de", label: "Deutsch" },
+              { value: "de", label: "Deutsch" }
             ]}
             onChange={(ev) =>
               setLanguage(
                 ((ev.payload as { value?: string } | undefined)?.value ??
-                  "") as "en" | "de",
+                  "") as "en" | "de"
               )
             }
           />

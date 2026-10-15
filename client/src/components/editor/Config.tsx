@@ -32,7 +32,7 @@ const iconProps = {
   stroke: "currentColor",
   strokeWidth: 2,
   strokeLinecap: "round" as const,
-  strokeLinejoin: "round" as const,
+  strokeLinejoin: "round" as const
 };
 
 const IconArrowUp = () => (
@@ -115,7 +115,7 @@ const JsonSection = ({
   applyTitle,
   applyIcon,
   inputClass,
-  buttonClass,
+  buttonClass
 }: JsonSectionProps) => (
   <div className="mt-2">
     <button
@@ -241,7 +241,7 @@ const Config = ({
   onDelete,
   onUpdate,
   onApplySelectedJson,
-  onApplyTreeJson,
+  onApplyTreeJson
 }: ConfigProps) => {
   const [nodeJson, setNodeJson] = useState("");
   const [treeJson, setTreeJson] = useState("");

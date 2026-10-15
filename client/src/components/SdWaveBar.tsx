@@ -40,7 +40,7 @@ const SdWaveBar = (props: SdWaveBarProps) => {
           className="h-4 rounded"
           style={{
             width: `${((v + 1) / 2) * 100}%`,
-            backgroundColor: `hsl(${hue}, 90%, 45%)`,
+            backgroundColor: `hsl(${hue}, 90%, 45%)`
           }}
         />
       </div>

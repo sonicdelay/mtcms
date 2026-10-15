@@ -4,7 +4,7 @@ import type { SdComponentProps } from "../models/sd-component-props";
 import type {
   SdBreadcrumbConfig,
   SdBreadcrumbItem,
-  SdBreadcrumbValue,
+  SdBreadcrumbValue
 } from "../models/sd-breadcrumb";
 
 interface SdBreadcrumbProps extends SdComponentProps<

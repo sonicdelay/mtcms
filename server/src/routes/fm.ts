@@ -10,7 +10,7 @@ import {
   removeMediaPath,
   resolveMediaPath,
   statMediaPath,
-  writeMediaFile,
+  writeMediaFile
 } from "../lib/fm.service.ts";
 import { problem } from "../lib/http.ts";
 

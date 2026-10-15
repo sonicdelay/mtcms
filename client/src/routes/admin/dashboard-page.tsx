@@ -21,8 +21,8 @@ export default function DashboardPage() {
         const [nodeRows, fileRows] = await Promise.all([
           getNodes(token),
           fetch("/api/fm", {
-            headers: { Authorization: `Bearer ${token}` },
-          }).then((res) => (res.ok ? res.json() : [])) as Promise<FileItem[]>,
+            headers: { Authorization: `Bearer ${token}` }
+          }).then((res) => (res.ok ? res.json() : [])) as Promise<FileItem[]>
         ]);
         if (!cancelled) {
           setNodes(nodeRows);

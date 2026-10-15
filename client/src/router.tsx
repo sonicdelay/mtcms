@@ -23,36 +23,35 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <HomePage /> },
           { path: "articles/*", element: <ArticlesPage /> },
-          { path: "content/:id", element: <ContentPage /> },
-        ],
+          { path: "content/:id", element: <ContentPage /> }
+        ]
       },
       {
         path: "engine",
         lazy: async () => ({
-          Component: (await import("./routes/engine/engine-page")).default,
-        }),
+          Component: (await import("./routes/engine/engine-page")).default
+        })
       },
       {
         path: "dashboard",
         lazy: async () => ({
-          Component: (await import("./routes/dashboard/dashboard-page"))
-            .default,
-        }),
+          Component: (await import("./routes/dashboard/dashboard-page")).default
+        })
       },
       {
         path: "admin",
         lazy: async () => ({
-          Component: (await import("./routes/admin/admin-layout")).default,
+          Component: (await import("./routes/admin/admin-layout")).default
         }),
         children: [
           { index: true, element: <TasksPage /> },
           { path: "tools", element: <ToolsPage /> },
           { path: "files", element: <FilesPage /> },
           { path: "edit", element: <EditIndexPage /> },
-          { path: "edit/:id", element: <EditPage /> },
-        ],
+          { path: "edit/:id", element: <EditPage /> }
+        ]
       },
-      { path: "*", element: <Navigate to="/home" replace /> },
-    ],
-  },
+      { path: "*", element: <Navigate to="/home" replace /> }
+    ]
+  }
 ]);

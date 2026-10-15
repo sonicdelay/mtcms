@@ -7,8 +7,8 @@ export default function DynamicForm() {
   const updateField = (index: number, value: string) => {
     setFormFields(
       formFields.map((field, fieldIndex) =>
-        fieldIndex === index ? { ...field, value } : field,
-      ),
+        fieldIndex === index ? { ...field, value } : field
+      )
     );
   };
 

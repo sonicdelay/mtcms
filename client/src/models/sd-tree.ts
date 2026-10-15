@@ -19,7 +19,7 @@ export interface TreeItemState {
 
 export type TreeItemTemplate = (
   item: TreeItem,
-  state: TreeItemState,
+  state: TreeItemState
 ) => ReactNode;
 
 export type TreeDropPosition = "before" | "after" | "inside";

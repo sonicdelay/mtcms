@@ -14,7 +14,7 @@ const renderSwagger = (_req: Request, res: Response) => {
     `connect-src 'self' ${cdn}`,
     "frame-ancestors 'none'",
     "base-uri 'self'",
-    "form-action 'self'",
+    "form-action 'self'"
   ].join("; ");
 
   const html = `<!DOCTYPE html>
@@ -64,7 +64,7 @@ const getWsDemo = (_req: Request, res: Response) => {
     "img-src 'self' data:",
     "frame-ancestors 'none'",
     "base-uri 'self'",
-    "form-action 'self'",
+    "form-action 'self'"
   ].join("; ");
   res
     .set("Content-Type", "text/html; charset=utf-8")
@@ -81,4 +81,4 @@ export const apiRouter: Router = Router();
 apiRouter
   .get(`${prefix}/`, renderSwagger)
   .get(`${prefix}/openapi.yaml`, getOpenApi)
-  .get(`${prefix}/ws-demo`, getWsDemo);
+  .get(`${prefix}/ws-demo.html`, getWsDemo);

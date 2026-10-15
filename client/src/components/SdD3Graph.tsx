@@ -2,7 +2,7 @@ import {
   type MouseEvent as ReactMouseEvent,
   useEffect,
   useId,
-  useRef,
+  useRef
 } from "react";
 import * as d3 from "d3";
 import type { SdComponentEvent } from "../models/sd-component-event";
@@ -30,7 +30,7 @@ export interface SdD3GraphConfig {
   scaleExtent?: [number, number];
 }
 
-export const DEFAULT_POINTS: SdD3GraphPoint[] = [
+const DEFAULT_POINTS: SdD3GraphPoint[] = [
   { x: 1, y: 1.2 },
   { x: 1.6, y: 2.4 },
   { x: 2.2, y: 1.8 },
@@ -42,7 +42,7 @@ export const DEFAULT_POINTS: SdD3GraphPoint[] = [
   { x: 6.0, y: 4.4 },
   { x: 6.6, y: 6.2 },
   { x: 7.2, y: 5.5 },
-  { x: 7.8, y: 6.9 },
+  { x: 7.8, y: 6.9 }
 ];
 
 const DEFAULT_CONFIG = {
@@ -53,7 +53,7 @@ const DEFAULT_CONFIG = {
   opacity: 0.6,
   xLabel: "",
   yLabel: "",
-  scaleExtent: [0.5, 20] as [number, number],
+  scaleExtent: [0.5, 20] as [number, number]
 };
 
 interface SdD3GraphProps extends SdComponentProps<
@@ -78,7 +78,7 @@ const num = (value: unknown, fallback: number): number => {
 
 const domainOf = (
   points: SdD3GraphPoint[],
-  key: "x" | "y",
+  key: "x" | "y"
 ): [number, number] => {
   const values = points.map((p) => p[key]).filter((v) => Number.isFinite(v));
   if (values.length === 0) return [0, 1];
@@ -136,11 +136,11 @@ const SdD3Graph = (props: SdD3GraphProps) => {
       Array.isArray(config?.scaleExtent) && config.scaleExtent.length === 2
         ? ([
             num(config.scaleExtent[0], 0.5),
-            num(config.scaleExtent[1], 20),
+            num(config.scaleExtent[1], 20)
           ] as [number, number])
         : DEFAULT_CONFIG.scaleExtent,
     xDomain: config?.xDomain,
-    yDomain: config?.yDomain,
+    yDomain: config?.yDomain
   };
 
   const cfgKey = JSON.stringify({ points, cfg });
@@ -243,7 +243,7 @@ const SdD3Graph = (props: SdD3GraphProps) => {
       .scaleExtent([cfg.scaleExtent[0], cfg.scaleExtent[1]])
       .extent([
         [0, 0],
-        [plotWidth, plotHeight],
+        [plotWidth, plotHeight]
       ])
       .on("zoom", (event) => draw(event.transform));
 

@@ -3,7 +3,7 @@ import {
   type ReactNode,
   useEffect,
   useRef,
-  useState,
+  useState
 } from "react";
 import { layouts, loadLayouts } from "../layoutTree";
 import type { Node } from "../../models/types";
@@ -13,7 +13,7 @@ import SdTree from "../SdTree";
 import type {
   TreeDropTarget,
   TreeItem,
-  TreeItemState,
+  TreeItemState
 } from "../../models/sd-tree";
 import { isDroppable } from "../../routes/dashboard/registry";
 import SdSplitHandle from "../SdSplitHandle";
@@ -83,7 +83,7 @@ const iconProps = {
   stroke: "currentColor",
   strokeWidth: 2,
   strokeLinecap: "round" as const,
-  strokeLinejoin: "round" as const,
+  strokeLinejoin: "round" as const
 };
 
 const IconUndo = () => (
@@ -122,7 +122,7 @@ const Editor = ({
   selectedId,
   canUndo,
   canRedo,
-  onChange,
+  onChange
 }: EditorProps) => {
   const [layoutNames, setLayoutNames] = useState<string[]>([]);
   const [treeShare, setTreeShare] = useState(DEFAULT_TREE_SHARE);
@@ -135,7 +135,7 @@ const Editor = ({
       const next = prev + deltaY / height;
       const clamped = Math.min(
         1 - MIN_TREE_SHARE,
-        Math.max(MIN_TREE_SHARE, next),
+        Math.max(MIN_TREE_SHARE, next)
       );
       return Math.abs(clamped - prev) < 0.001 ? prev : clamped;
     });
@@ -144,7 +144,7 @@ const Editor = ({
   const exportModel = () => {
     if (!tree) return;
     const blob = new Blob([JSON.stringify(tree, null, 2)], {
-      type: "application/json",
+      type: "application/json"
     });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -162,28 +162,28 @@ const Editor = ({
       label: `Export ${selectedLayout || "layout"} as JSON`,
       Icon: IconExport,
       disabled: !tree,
-      run: exportModel,
+      run: exportModel
     },
     {
       key: "undo",
       label: "Undo",
       Icon: IconUndo,
       disabled: !canUndo,
-      run: () => onChange({ type: "undo" }),
+      run: () => onChange({ type: "undo" })
     },
     {
       key: "redo",
       label: "Redo",
       Icon: IconRedo,
       disabled: !canRedo,
-      run: () => onChange({ type: "redo" }),
+      run: () => onChange({ type: "redo" })
     },
     {
       key: "reset",
       label: "Reset layout",
       Icon: IconReset,
-      run: () => onChange({ type: "resetLayout" }),
-    },
+      run: () => onChange({ type: "resetLayout" })
+    }
   ];
 
   useEffect(() => {
@@ -235,20 +235,20 @@ const Editor = ({
               onSelect: (item) =>
                 onChange({
                   type: "selectNode",
-                  payload: typeof item.id === "string" ? item.id : undefined,
+                  payload: typeof item.id === "string" ? item.id : undefined
                 }),
               onMove: (dragKey, target) => {
                 if (dragKey !== target.parentKey) {
                   onChange({
                     type: "moveNode",
-                    payload: { dragId: dragKey, target },
+                    payload: { dragId: dragKey, target }
                   });
                 }
               },
               onDropExternal: (componentType, target) =>
                 onChange({
                   type: "insertNode",
-                  payload: { componentType, target },
+                  payload: { componentType, target }
                 }),
               canDropInside: (item) =>
                 typeof item.type === "string" && isDroppable(item as Node),
@@ -256,7 +256,7 @@ const Editor = ({
                 const type = typeof item.type === "string" ? item.type : "";
                 const name = palette[type]?.icon;
                 return name ? icons[name]() : null;
-              },
+              }
             }}
           >
             {(item: TreeItem, state: TreeItemState) => (

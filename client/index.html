@@ -18,7 +18,7 @@
       (function () {
         try {
           var s = JSON.parse(
-            localStorage.getItem("app-store-storage") || "{}",
+            localStorage.getItem("app-store-storage") || "{}"
           ).state;
           var t = s && s.theme;
           if (t === "dark" || t === "light") {

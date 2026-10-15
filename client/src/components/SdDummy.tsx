@@ -40,8 +40,8 @@ const DEFAULT_CONFIG: SdDummyConfig = {
     },
     test2: (event: SdComponentEvent) => {
       alert("SdDummy: test2 action received event " + JSON.stringify(event));
-    },
-  },
+    }
+  }
 };
 
 const DEFAULT_VALUE: SdDummyValue = "default value";

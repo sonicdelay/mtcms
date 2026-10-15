@@ -44,7 +44,7 @@ const SdApplication = (props: SdApplicationProps) => {
       {...rest}
       className={[
         "flex h-screen flex-col bg-[var(--background)] text-[var(--foreground)]",
-        className,
+        className
       ]
         .filter(Boolean)
         .join(" ")}
@@ -96,7 +96,7 @@ const SdApplication = (props: SdApplicationProps) => {
                     "flex w-full items-center gap-2 px-4 py-2 text-left text-sm transition-colors",
                     active
                       ? "bg-[var(--accent-subtle-bg)] font-medium text-[var(--accent-subtle-fg)]"
-                      : "text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
+                      : "text-[var(--fg-base)] hover:bg-[var(--surface-hover)]"
                   ].join(" ")}
                   onClick={() => onNavigate?.(item.href)}
                 >

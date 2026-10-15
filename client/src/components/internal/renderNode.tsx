@@ -5,7 +5,7 @@ import type { LayoutChild } from "../../models/types";
 const renderNode = (
   node: LayoutChild,
   path = "0",
-  inheritedProps: Record<string, unknown> = {},
+  inheritedProps: Record<string, unknown> = {}
 ): ReactNode => {
   if (typeof node === "string") {
     return createElement("span", { key: path, ...inheritedProps }, node);
@@ -23,9 +23,9 @@ const renderNode = (
     { key: path, ...mergedProps },
     Array.isArray(children)
       ? children.map((child: LayoutChild, index: number) =>
-          renderNode(child, `${path}.${index}`, mergedProps),
+          renderNode(child, `${path}.${index}`, mergedProps)
         )
-      : children,
+      : children
   );
 };
 

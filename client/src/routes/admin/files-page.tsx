@@ -3,7 +3,7 @@ import {
   useEffect,
   useMemo,
   useRef,
-  useState,
+  useState
 } from "react";
 import { useAppStore } from "../../lib/app.store";
 import {
@@ -12,7 +12,7 @@ import {
   listMedia,
   readMediaText,
   uploadMediaFile,
-  writeMediaFile,
+  writeMediaFile
 } from "../../lib/admin.api";
 import type { FileItem } from "../../lib/types";
 import { toast } from "../../lib/toast.store";
@@ -44,7 +44,7 @@ export default function FilesPage() {
     const onMove = (moveEvent: PointerEvent) => {
       const next = Math.min(
         Math.max(moveEvent.clientX - containerLeft, 160),
-        Math.max(containerWidth - 320, 160),
+        Math.max(containerWidth - 320, 160)
       );
       setSidebarWidth(next);
     };
@@ -71,12 +71,12 @@ export default function FilesPage() {
         setItems(
           rows
             .filter(
-              (item) => item && (item.type === "dir" || item.type === "file"),
+              (item) => item && (item.type === "dir" || item.type === "file")
             )
             .sort((a, b) => {
               if (a.type !== b.type) return a.type === "dir" ? -1 : 1;
               return a.name.localeCompare(b.name);
-            }),
+            })
         );
         setError(null);
       } catch (err) {
@@ -91,13 +91,13 @@ export default function FilesPage() {
 
   const directories = useMemo(
     () => items.filter((i) => i.type === "dir"),
-    [items],
+    [items]
   );
   const files = useMemo(() => items.filter((i) => i.type === "file"), [items]);
 
   const segments = useMemo(
     () => currentPath.split("/").filter(Boolean),
-    [currentPath],
+    [currentPath]
   );
 
   const refresh = () => setReloadKey((k) => k + 1);
@@ -151,7 +151,7 @@ export default function FilesPage() {
       refresh();
       toast(
         `${files.length} file${files.length > 1 ? "s" : ""} uploaded`,
-        "success",
+        "success"
       );
     } catch (err) {
       setError((err as Error).message);
@@ -177,7 +177,7 @@ export default function FilesPage() {
           onSaved={refresh}
         />,
         "file-editor",
-        "wide",
+        "wide"
       );
     } catch (err) {
       setError((err as Error).message);

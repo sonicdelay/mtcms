@@ -5,7 +5,7 @@ import {
   deleteNode,
   getNodes,
   nodeTitle,
-  updateNode,
+  updateNode
 } from "../../lib/admin.api";
 import type { Node } from "../../lib/types";
 import { toast } from "../../lib/toast.store";
@@ -19,7 +19,7 @@ const PROTECTED = new Set([
   "00000000-0000-4000-8000-000000000000",
   "00000000-0000-4000-8000-000000000001",
   "00000000-0000-4000-8000-000000000002",
-  "00000000-0000-4000-8000-000000000003",
+  "00000000-0000-4000-8000-000000000003"
 ]);
 
 interface TaskView {
@@ -50,7 +50,7 @@ export default function TasksPage() {
             };
             const done = root?.["0"]?.values?.en?.done === true;
             return { node, done };
-          }),
+          })
         );
       } catch (err) {
         if (!cancelled) setError((err as Error).message);
@@ -87,9 +87,9 @@ export default function TasksPage() {
             values: { en: { done: false } },
             position: 10,
             protected: false,
-            reviewGroup: "0",
-          },
-        },
+            reviewGroup: "0"
+          }
+        }
       });
       setNewTitle("");
       setReloadKey((k) => k + 1);
@@ -111,14 +111,12 @@ export default function TasksPage() {
           ...root,
           "0": {
             ...zero,
-            values: { ...values, en: { ...(values["en"] ?? {}), done: next } },
-          },
-        },
+            values: { ...values, en: { ...(values["en"] ?? {}), done: next } }
+          }
+        }
       });
       setTasks((prev) =>
-        prev.map((t) =>
-          t.node.id === task.node.id ? { ...t, done: next } : t,
-        ),
+        prev.map((t) => (t.node.id === task.node.id ? { ...t, done: next } : t))
       );
     } catch (err) {
       setError((err as Error).message);
@@ -150,8 +148,8 @@ export default function TasksPage() {
           onChange={(ev) =>
             setNewTitle(
               String(
-                (ev.payload as { value?: string } | undefined)?.value ?? "",
-              ),
+                (ev.payload as { value?: string } | undefined)?.value ?? ""
+              )
             )
           }
         />
@@ -159,13 +157,13 @@ export default function TasksPage() {
           value={newType}
           options={(types.length > 0 ? types : ["node"]).map((type) => ({
             value: type,
-            label: type,
+            label: type
           }))}
           onChange={(ev) =>
             setNewType(
               String(
-                (ev.payload as { value?: string } | undefined)?.value ?? "",
-              ),
+                (ev.payload as { value?: string } | undefined)?.value ?? ""
+              )
             )
           }
         />
@@ -179,13 +177,13 @@ export default function TasksPage() {
           value={filter}
           options={[
             { value: "all", label: "All types" },
-            ...types.map((type) => ({ value: type, label: type })),
+            ...types.map((type) => ({ value: type, label: type }))
           ]}
           onChange={(ev) =>
             setFilter(
               String(
-                (ev.payload as { value?: string } | undefined)?.value ?? "",
-              ),
+                (ev.payload as { value?: string } | undefined)?.value ?? ""
+              )
             )
           }
         />
@@ -202,7 +200,7 @@ export default function TasksPage() {
                 className="admin-row__title"
                 style={{
                   textDecoration: task.done ? "line-through" : "none",
-                  opacity: task.done ? 0.6 : 1,
+                  opacity: task.done ? 0.6 : 1
                 }}
               >
                 {nodeTitle(task.node)}

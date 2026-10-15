@@ -32,7 +32,7 @@ const SdCheckbox = (props: SdCheckboxProps) => {
       className={[
         "sd-checkbox",
         settings.disabled ? "sd-checkbox--disabled" : "",
-        className,
+        className
       ]
         .filter(Boolean)
         .join(" ")}

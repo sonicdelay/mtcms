@@ -30,7 +30,7 @@ const addActionHandler = (type: string, handler: ActionHandler) => {
 
 const addActionHandlers = (entries: ActionHandlerEntry[]) => {
   const unsubscribers = entries.map(({ type, handler }) =>
-    addActionHandler(type, handler),
+    addActionHandler(type, handler)
   );
 
   return () => {
@@ -46,8 +46,8 @@ const dispatchAction = (action: Action) => {
   actionHistory.push(action);
   actionEmitter.dispatchEvent(
     new CustomEvent<Action>(ACTION_EVENT_NAME, {
-      detail: action,
-    }),
+      detail: action
+    })
   );
   const handlersForType = actionHandlers.get(action.type);
   handlersForType?.forEach((handler) => {
@@ -111,5 +111,5 @@ globalThis.sd = {
   removeActionHandler,
   removeAllHandlers,
   actionHandler,
-  actions: actionHistory,
+  actions: actionHistory
 };

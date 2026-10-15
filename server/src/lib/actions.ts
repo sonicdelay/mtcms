@@ -20,7 +20,7 @@ export interface WsManager {
 export type ActionHandler = (
   client: WsClient,
   payload: Record<string, unknown>,
-  wsManager: WsManager,
+  wsManager: WsManager
 ) => Promise<void> | void;
 
 const actionRegistry = new Map<string, ActionHandler>();
@@ -32,14 +32,14 @@ export function registerAction(name: string, handler: ActionHandler): void {
 export function dispatchAction(
   client: WsClient,
   rawMessage: string,
-  wsManager: WsManager,
+  wsManager: WsManager
 ): void {
   let parsed: Record<string, unknown>;
   try {
     parsed = JSON.parse(rawMessage);
   } catch {
     client.ws.send(
-      JSON.stringify({ action: "error", data: { message: "Invalid JSON." } }),
+      JSON.stringify({ action: "error", data: { message: "Invalid JSON." } })
     );
     return;
   }
@@ -49,8 +49,8 @@ export function dispatchAction(
     client.ws.send(
       JSON.stringify({
         action: "error",
-        data: { message: "Missing 'action' field." },
-      }),
+        data: { message: "Missing 'action' field." }
+      })
     );
     return;
   }
@@ -60,8 +60,8 @@ export function dispatchAction(
     client.ws.send(
       JSON.stringify({
         action: "error",
-        data: { message: `Unknown action: ${action}` },
-      }),
+        data: { message: `Unknown action: ${action}` }
+      })
     );
     return;
   }
@@ -74,10 +74,9 @@ export function dispatchAction(
       JSON.stringify({
         action: "error",
         data: {
-          message:
-            err instanceof Error ? err.message : "Internal action error.",
-        },
-      }),
+          message: err instanceof Error ? err.message : "Internal action error."
+        }
+      })
     );
   };
 
@@ -92,9 +91,9 @@ export function dispatchAction(
       JSON.stringify({
         action: "error",
         data: {
-          message: (err as Error)?.message ?? "Internal action error.",
-        },
-      }),
+          message: (err as Error)?.message ?? "Internal action error."
+        }
+      })
     );
   }
 }
@@ -102,7 +101,7 @@ export function dispatchAction(
 function sendWebsocket(
   client: WsClient,
   payload: Record<string, unknown>,
-  wsManager: WsManager,
+  wsManager: WsManager
 ): void {
   const { to, group, broadcast, data } = payload;
 
@@ -111,8 +110,8 @@ function sendWebsocket(
     client.ws.send(
       JSON.stringify({
         action: "error",
-        data: { message: "Specify exactly one of to, group, or broadcast." },
-      }),
+        data: { message: "Specify exactly one of to, group, or broadcast." }
+      })
     );
     return;
   }
@@ -120,8 +119,8 @@ function sendWebsocket(
     client.ws.send(
       JSON.stringify({
         action: "error",
-        data: { message: "Specify exactly one of to, group, or broadcast." },
-      }),
+        data: { message: "Specify exactly one of to, group, or broadcast." }
+      })
     );
     return;
   }
@@ -129,7 +128,7 @@ function sendWebsocket(
   const message = {
     action: "message",
     from: { id: client.id, email: client.user.email, role: client.user.role },
-    data: data ?? null,
+    data: data ?? null
   };
 
   if (typeof to === "string") {
@@ -138,8 +137,8 @@ function sendWebsocket(
       client.ws.send(
         JSON.stringify({
           action: "error",
-          data: { message: `Client not found: ${to}` },
-        }),
+          data: { message: `Client not found: ${to}` }
+        })
       );
       return;
     }
@@ -149,8 +148,8 @@ function sendWebsocket(
       client.ws.send(
         JSON.stringify({
           action: "error",
-          data: { message: `Not a member of group: ${group}` },
-        }),
+          data: { message: `Not a member of group: ${group}` }
+        })
       );
       return;
     }
@@ -163,15 +162,15 @@ function sendWebsocket(
 function joinGroup(
   client: WsClient,
   payload: Record<string, unknown>,
-  wsManager: WsManager,
+  wsManager: WsManager
 ): void {
   const { group } = payload;
   if (typeof group !== "string" || !group.trim()) {
     client.ws.send(
       JSON.stringify({
         action: "error",
-        data: { message: "joinGroup requires a 'group' name." },
-      }),
+        data: { message: "joinGroup requires a 'group' name." }
+      })
     );
     return;
   }
@@ -179,23 +178,23 @@ function joinGroup(
   client.ws.send(
     JSON.stringify({
       action: "joined",
-      data: { group: group.trim() },
-    }),
+      data: { group: group.trim() }
+    })
   );
 }
 
 function leaveGroup(
   client: WsClient,
   payload: Record<string, unknown>,
-  wsManager: WsManager,
+  wsManager: WsManager
 ): void {
   const { group } = payload;
   if (typeof group !== "string" || !group.trim()) {
     client.ws.send(
       JSON.stringify({
         action: "error",
-        data: { message: "leaveGroup requires a 'group' name." },
-      }),
+        data: { message: "leaveGroup requires a 'group' name." }
+      })
     );
     return;
   }
@@ -203,8 +202,8 @@ function leaveGroup(
   client.ws.send(
     JSON.stringify({
       action: "left",
-      data: { group: group.trim() },
-    }),
+      data: { group: group.trim() }
+    })
   );
 }
 

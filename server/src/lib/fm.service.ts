@@ -26,13 +26,13 @@ export function resolveMediaPath(relPath = ""): string {
 function toFileItem(
   relPath: string,
   name: string,
-  type: "dir" | "file",
+  type: "dir" | "file"
 ): FileItem {
   const dir = relPath.replace(/^\/+/, "");
   return {
     name,
     path: dir ? `${dir}/${name}` : name,
-    type,
+    type
   };
 }
 
@@ -41,7 +41,7 @@ export async function getFolderContent(relPath = ""): Promise<FileItem[]> {
   const entries = await fs.readdir(absolute, { withFileTypes: true });
 
   return entries.map((entry) =>
-    toFileItem(relPath, entry.name, entry.isDirectory() ? "dir" : "file"),
+    toFileItem(relPath, entry.name, entry.isDirectory() ? "dir" : "file")
   );
 }
 
@@ -55,7 +55,7 @@ export function readMediaFile(relPath: string): Promise<Uint8Array> {
 
 export async function writeMediaFile(
   relPath: string,
-  content: string | Uint8Array,
+  content: string | Uint8Array
 ) {
   const absolute = resolveMediaPath(relPath);
   await fs.mkdir(path.dirname(absolute), { recursive: true });

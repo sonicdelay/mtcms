@@ -9,7 +9,7 @@ const ZERO_UUID = "00000000-0000-4000-8000-000000000000";
 const toItems = (
   model: EditTreeModel,
   rootId: string,
-  seen: Set<string> = new Set(),
+  seen: Set<string> = new Set()
 ): TreeItem[] => {
   const node = model[rootId];
   if (!node || seen.has(rootId)) return [];
@@ -19,7 +19,7 @@ const toItems = (
     return {
       id: childId,
       title: child?.data.name ?? childId,
-      children: toItems(model, childId, seen),
+      children: toItems(model, childId, seen)
     };
   });
 };
@@ -44,7 +44,7 @@ export default function NodeTree() {
             navigate(`/admin/edit/${encodeURIComponent(id)}`);
             void fetchNode(id);
           }
-        },
+        }
       }}
     />
   );

@@ -11,7 +11,8 @@
   // `.opencode/plugins/` is auto-discovered, not arbitrary locations.
   "plugins": [
     "superpowers@git+https://github.com/obra/superpowers.git",
-    "./ai/plugins/prettier-fmt.js",
+    "@wakatime/opencode-wakatime"
+    //"./ai/plugins/prettier-fmt.js",
   ],
   // Project skills. OpenCode discovers `.opencode/skills` automatically, not
   // `ai/skills`, so register the location explicitly.
@@ -34,9 +35,9 @@
         ".cts",
         ".json",
         ".jsonc",
-        ".md",
-      ],
-    },
+        ".md"
+      ]
+    }
   },
   // Permissions (V2): ordered rules, last match wins. The built-in base policy
   // allows everything, so the broad `shell` ask re-establishes "ask before
@@ -45,48 +46,53 @@
     {
       "action": "edit",
       "resource": "*",
-      "effect": "allow",
+      "effect": "allow"
     },
     {
       "action": "edit",
       "resource": "*.env",
-      "effect": "deny",
+      "effect": "deny"
     },
     {
       "action": "edit",
       "resource": "ai/rules/*.md",
-      "effect": "allow",
+      "effect": "allow"
+    },
+    {
+      "action": "supermemory_recall",
+      "resource": "*",
+      "effect": "allow"
     },
     {
       "action": "shell",
       "resource": "*",
-      "effect": "ask",
+      "effect": "ask"
     },
     {
       "action": "shell",
       "resource": "git add *",
-      "effect": "allow",
+      "effect": "allow"
     },
     {
       "action": "shell",
       "resource": "git status *",
-      "effect": "allow",
+      "effect": "allow"
     },
     {
       "action": "shell",
       "resource": "git diff *",
-      "effect": "allow",
+      "effect": "allow"
     },
     {
       "action": "shell",
       "resource": "git log *",
-      "effect": "allow",
+      "effect": "allow"
     },
     {
       "action": "shell",
       "resource": "npm run fmt *",
-      "effect": "allow",
-    },
+      "effect": "allow"
+    }
   ],
   "exclude": [
     "build",
@@ -103,6 +109,6 @@
     ".turbo",
     ".yarn",
     ".pnpm",
-    ".gitignore",
-  ],
+    ".gitignore"
+  ]
 }

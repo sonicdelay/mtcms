@@ -7,7 +7,7 @@ export function problem(
   res: Response,
   status: number,
   title: string,
-  detail?: string,
+  detail?: string
 ): void {
   res
     .status(status)
@@ -16,6 +16,6 @@ export function problem(
       type: "about:blank",
       title,
       status,
-      detail: detail ?? title,
+      detail: detail ?? title
     });
 }

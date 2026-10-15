@@ -2,13 +2,13 @@ import { useState } from "react";
 
 import type {
   EngineSceneSnapshot,
-  MeshSnapshot,
+  MeshSnapshot
 } from "./engine-scene-lite-controller";
 
 function rgb(diffuse: [number, number, number] | null): string {
   return diffuse
     ? `rgb(${Math.round(diffuse[0] * 255)}, ${Math.round(diffuse[1] * 255)}, ${Math.round(
-        diffuse[2] * 255,
+        diffuse[2] * 255
       )})`
     : "transparent";
 }
@@ -45,7 +45,7 @@ function MeshDetail({ mesh }: { mesh: MeshSnapshot }) {
       <Row
         label="rotation"
         value={`${mesh.rotation.x.toFixed(2)}, ${mesh.rotation.y.toFixed(2)}, ${mesh.rotation.z.toFixed(
-          2,
+          2
         )}`}
       />
       <Row label="scaling" value={vec(mesh.scaling)} />
@@ -56,7 +56,7 @@ function MeshDetail({ mesh }: { mesh: MeshSnapshot }) {
 
 export function EngineSceneInspectorPanel({
   snapshot,
-  onClose,
+  onClose
 }: {
   snapshot: EngineSceneSnapshot | null;
   onClose: () => void;
@@ -115,7 +115,7 @@ export function EngineSceneInspectorPanel({
             <Row
               label="gravity"
               value={`${snapshot.gravity.x.toFixed(2)}, ${snapshot.gravity.y.toFixed(
-                2,
+                2
               )}, ${snapshot.gravity.z.toFixed(2)}`}
             />
             {snapshot.camera && (
@@ -135,7 +135,7 @@ export function EngineSceneInspectorPanel({
                 <Row
                   label="target"
                   value={`${snapshot.camera.target.x.toFixed(1)}, ${snapshot.camera.target.y.toFixed(
-                    1,
+                    1
                   )}, ${snapshot.camera.target.z.toFixed(1)}`}
                 />
               </>

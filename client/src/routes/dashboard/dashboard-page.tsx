@@ -20,7 +20,7 @@ import {
   moveChild,
   moveNode,
   successorOf,
-  updateNode,
+  updateNode
 } from "./treeOps";
 import { palette } from "./registry";
 import { clearOverride, loadOverride, saveOverride } from "./storage";
@@ -46,7 +46,7 @@ const DashboardPage = () => {
   const [selectedLayout, setSelectedLayout] = useState<string>("");
   const [panels, setPanels] = useState<PanelWidths>({
     editor: DEFAULT_EDITOR_WIDTH,
-    config: DEFAULT_CONFIG_WIDTH,
+    config: DEFAULT_CONFIG_WIDTH
   });
   const rowRef = useRef<HTMLDivElement>(null);
   const {
@@ -56,13 +56,13 @@ const DashboardPage = () => {
     undo,
     redo,
     canUndo,
-    canRedo,
+    canRedo
   } = useHistory<Node | null>(null);
   const { start, stop, edit, toggleEdit } = useWaveStore();
   const { selectedId, select, editCtx, canvasProps, reset } = useDragDrop(
     tree,
     commit,
-    edit,
+    edit
   );
 
   useEffect(() => {
@@ -149,7 +149,7 @@ const DashboardPage = () => {
 
   const moveNodeInTree = (
     dragId: string,
-    target: { parentKey: string; index: number },
+    target: { parentKey: string; index: number }
   ) => {
     if (!tree || dragId === target.parentKey) return;
     if (isSelfOrDescendant(tree, dragId, target.parentKey)) return;
@@ -160,8 +160,8 @@ const DashboardPage = () => {
     if (!tree || !selectedId) return;
     commit(
       updateNode(tree, selectedId, (n) =>
-        Object.assign(n, parsed, { id: n.id }),
-      ),
+        Object.assign(n, parsed, { id: n.id })
+      )
     );
   };
 
@@ -195,7 +195,7 @@ const DashboardPage = () => {
       const config = next.config ?? prev.config;
       const clamped = {
         editor: clampPanelWidth(editor, config),
-        config: clampPanelWidth(config, editor),
+        config: clampPanelWidth(config, editor)
       };
       return clamped.editor === prev.editor && clamped.config === prev.config
         ? prev
@@ -233,13 +233,13 @@ const DashboardPage = () => {
         if (!tree || !item) break;
         const child = createNode(
           event.payload.componentType,
-          item.defaultProps(),
+          item.defaultProps()
         );
         const next = insertChildAt(
           tree,
           event.payload.target.parentKey,
           event.payload.target.index,
-          child,
+          child
         );
         if (next !== tree) commit(next);
         if (child.id !== undefined) select(child.id);

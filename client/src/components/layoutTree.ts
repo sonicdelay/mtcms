@@ -4,7 +4,7 @@ const BOARD_NAMES = [
   "empty.json",
   "layoutTree.json",
   "layoutTree2.json",
-  "export.json",
+  "export.json"
 ];
 
 export const layouts: Record<string, Node> = {};
@@ -22,7 +22,7 @@ const loadLayout = async (name: string): Promise<Node> => {
 export const loadLayouts = (): Promise<Record<string, Node>> => {
   if (!layoutsPromise) {
     layoutsPromise = Promise.all(
-      BOARD_NAMES.map(async (name) => [name, await loadLayout(name)] as const),
+      BOARD_NAMES.map(async (name) => [name, await loadLayout(name)] as const)
     ).then((entries) => {
       const loaded = Object.fromEntries(entries);
       Object.assign(layouts, loaded);

@@ -54,7 +54,7 @@ export const useWaveStore = create<WaveState>()(
       data: [
         { time: 0, sin: 20 },
         { time: 0, sin: 9 },
-        { time: 0, sin: 3 },
+        { time: 0, sin: 3 }
       ],
 
       toggleEdit: () => set((state) => ({ edit: !state.edit })),
@@ -70,13 +70,13 @@ export const useWaveStore = create<WaveState>()(
             data: [
               {
                 time: Number(t.toPrecision(2)),
-                sin: Number(Math.sin(t).toPrecision(2)),
+                sin: Number(Math.sin(t).toPrecision(2))
               },
               {
                 time: Number(t.toPrecision(2)),
-                sin: Number(Math.sin(t).toPrecision(2)),
-              },
-            ],
+                sin: Number(Math.sin(t).toPrecision(2))
+              }
+            ]
           };
         }),
 
@@ -89,8 +89,8 @@ export const useWaveStore = create<WaveState>()(
 
       stop: (id: number) => {
         window.clearInterval(id);
-      },
+      }
     }),
-    { name: "WaveStore" },
-  ),
+    { name: "WaveStore" }
+  )
 );

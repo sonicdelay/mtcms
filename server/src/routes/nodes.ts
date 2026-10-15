@@ -11,7 +11,7 @@ import {
   getParent,
   NotFoundError,
   removeNode,
-  updateNode,
+  updateNode
 } from "../lib/nodes.service.ts";
 
 const MAX_LIMIT = 50;
@@ -24,7 +24,7 @@ function parseRange(
   value: unknown,
   fallback: number,
   min: number,
-  max: number,
+  max: number
 ): number | null {
   if (value === undefined || value === null) {
     return fallback;
@@ -53,7 +53,7 @@ const getNodes = async (req: Request, res: Response) => {
       res,
       400,
       "Bad Request",
-      "limit must be an integer between 1 and 50.",
+      "limit must be an integer between 1 and 50."
     );
     return;
   }
@@ -62,7 +62,7 @@ const getNodes = async (req: Request, res: Response) => {
       res,
       400,
       "Bad Request",
-      "offset must be an integer between 0 and 1000.",
+      "offset must be an integer between 0 and 1000."
     );
     return;
   }
@@ -105,7 +105,7 @@ const postNode = async (req: Request, res: Response) => {
     const row = await addNode({
       type,
       sync: syncValue,
-      data,
+      data
     });
     res.status(201).json(row);
   } catch (error) {
@@ -138,7 +138,7 @@ const getNode = async (req: Request, res: Response) => {
         const [node, children, breadcrumb] = await Promise.all([
           getNodeById(id),
           getChildren(id),
-          getBreadcrumb(id),
+          getBreadcrumb(id)
         ]);
         result = { ...node, children, breadcrumb };
         break;
@@ -190,7 +190,7 @@ const putNode = async (req: Request, res: Response) => {
       res,
       400,
       "Bad Request",
-      "At least one of type, sync, or data must be provided.",
+      "At least one of type, sync, or data must be provided."
     );
     return;
   }
@@ -199,7 +199,7 @@ const putNode = async (req: Request, res: Response) => {
     const row = await updateNode(id, {
       type: type as string | undefined,
       sync: sync as Record<string, unknown> | undefined,
-      data: data as Record<string, unknown> | undefined,
+      data: data as Record<string, unknown> | undefined
     });
     res.json(row);
   } catch (error) {

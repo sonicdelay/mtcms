@@ -26,7 +26,7 @@ export const paletteGroupTitles: Record<PaletteGroupId, string> = {
   inline: "Inline",
   media: "Media",
   table: "Table",
-  form: "Form",
+  form: "Form"
 };
 
 export interface PaletteItem {
@@ -61,7 +61,7 @@ const INPUT_TYPES = [
   "range",
   "checkbox",
   "radio",
-  "file",
+  "file"
 ];
 const BUTTON_TYPES = ["button", "submit", "reset"];
 const METHOD_OPTIONS = ["get", "post", "dialog"];
@@ -73,11 +73,11 @@ const TRACK_KINDS = [
   "captions",
   "descriptions",
   "chapters",
-  "metadata",
+  "metadata"
 ];
 
 const text = (label = "Text"): ConfigField[] => [
-  { key: "children", label, kind: "textarea" },
+  { key: "children", label, kind: "textarea" }
 ];
 
 const container = (
@@ -86,7 +86,7 @@ const container = (
   icon: IconName,
   group: PaletteGroupId,
   props: Partial<Node> = {},
-  settings?: ConfigField[],
+  settings?: ConfigField[]
 ): PaletteItem => ({
   type,
   title,
@@ -94,7 +94,7 @@ const container = (
   group,
   droppable: true,
   defaultProps: () => ({ ...props }),
-  settings: settings ?? text(),
+  settings: settings ?? text()
 });
 
 const leaf = (
@@ -103,7 +103,7 @@ const leaf = (
   icon: IconName,
   group: PaletteGroupId,
   props: Partial<Node> = {},
-  settings?: ConfigField[],
+  settings?: ConfigField[]
 ): PaletteItem => ({
   type,
   title,
@@ -111,7 +111,7 @@ const leaf = (
   group,
   droppable: false,
   defaultProps: () => ({ ...props }),
-  settings: settings ?? text(),
+  settings: settings ?? text()
 });
 
 const structural: ConfigField[] = [];
@@ -124,7 +124,7 @@ export const palette: Record<string, PaletteItem> = {
     group: "components",
     droppable: true,
     defaultProps: () => ({ config: {} }),
-    settings: [],
+    settings: []
   },
   SdDummy: {
     type: "SdDummy",
@@ -133,7 +133,7 @@ export const palette: Record<string, PaletteItem> = {
     group: "components",
     droppable: true,
     defaultProps: () => ({ value: "default value", config: {} }),
-    settings: [{ key: "value", label: "Value", kind: "textarea" }],
+    settings: [{ key: "value", label: "Value", kind: "textarea" }]
   },
   SdWave: {
     type: "SdWave",
@@ -147,9 +147,9 @@ export const palette: Record<string, PaletteItem> = {
         key: "config.source",
         label: "Source",
         kind: "select",
-        options: SOURCE_OPTIONS,
-      },
-    ],
+        options: SOURCE_OPTIONS
+      }
+    ]
   },
   SdWaveValue: {
     type: "SdWaveValue",
@@ -163,9 +163,9 @@ export const palette: Record<string, PaletteItem> = {
         key: "config.source",
         label: "Source",
         kind: "select",
-        options: SOURCE_OPTIONS,
-      },
-    ],
+        options: SOURCE_OPTIONS
+      }
+    ]
   },
   SdWaveBar: {
     type: "SdWaveBar",
@@ -179,9 +179,9 @@ export const palette: Record<string, PaletteItem> = {
         key: "config.source",
         label: "Source",
         kind: "select",
-        options: SOURCE_OPTIONS,
-      },
-    ],
+        options: SOURCE_OPTIONS
+      }
+    ]
   },
   SdGauge: {
     type: "SdGauge",
@@ -189,7 +189,7 @@ export const palette: Record<string, PaletteItem> = {
     icon: "gauge",
     group: "components",
     defaultProps: () => ({
-      config: { title: "Gauge", source: "sin", min: -1, max: 1 },
+      config: { title: "Gauge", source: "sin", min: -1, max: 1 }
     }),
     settings: [
       { key: "config.title", label: "Title" },
@@ -197,11 +197,11 @@ export const palette: Record<string, PaletteItem> = {
         key: "config.source",
         label: "Source",
         kind: "select",
-        options: SOURCE_OPTIONS,
+        options: SOURCE_OPTIONS
       },
       { key: "config.min", label: "Min", kind: "number" },
-      { key: "config.max", label: "Max", kind: "number" },
-    ],
+      { key: "config.max", label: "Max", kind: "number" }
+    ]
   },
   SdD3Graph: {
     type: "SdD3Graph",
@@ -213,10 +213,10 @@ export const palette: Record<string, PaletteItem> = {
       value: {
         points: [
           { x: 0, y: 0 },
-          { x: 1, y: 1 },
-        ],
+          { x: 1, y: 1 }
+        ]
       },
-      config: { width: 460, height: 400, r: 8 },
+      config: { width: 460, height: 400, r: 8 }
     }),
     settings: [
       { key: "title", label: "Title" },
@@ -224,8 +224,8 @@ export const palette: Record<string, PaletteItem> = {
       { key: "config.height", label: "Height", kind: "number" },
       { key: "config.r", label: "Point radius", kind: "number" },
       { key: "config.xLabel", label: "X label" },
-      { key: "config.yLabel", label: "Y label" },
-    ],
+      { key: "config.yLabel", label: "Y label" }
+    ]
   },
   SdText: {
     type: "SdText",
@@ -233,7 +233,7 @@ export const palette: Record<string, PaletteItem> = {
     icon: "textBlock",
     group: "components",
     defaultProps: () => ({ children: "Some text here", config: {} }),
-    settings: [{ key: "children", label: "Text", kind: "textarea" }],
+    settings: [{ key: "children", label: "Text", kind: "textarea" }]
   },
   SdButton: {
     type: "SdButton",
@@ -241,7 +241,7 @@ export const palette: Record<string, PaletteItem> = {
     icon: "buttonPointer",
     group: "components",
     defaultProps: () => ({ value: "Button", config: {} }),
-    settings: [{ key: "value", label: "Label" }],
+    settings: [{ key: "value", label: "Label" }]
   },
   SdIconButton: {
     type: "SdIconButton",
@@ -252,8 +252,8 @@ export const palette: Record<string, PaletteItem> = {
     defaultProps: () => ({ value: "check", config: { title: "Action" } }),
     settings: [
       { key: "value", label: "Icon" },
-      { key: "config.title", label: "Tooltip" },
-    ],
+      { key: "config.title", label: "Tooltip" }
+    ]
   },
   SdInput: {
     type: "SdInput",
@@ -263,12 +263,12 @@ export const palette: Record<string, PaletteItem> = {
     droppable: true,
     defaultProps: () => ({
       value: "",
-      config: { label: "Label", placeholder: "" },
+      config: { label: "Label", placeholder: "" }
     }),
     settings: [
       { key: "config.label", label: "Label" },
-      { key: "config.placeholder", label: "Placeholder" },
-    ],
+      { key: "config.placeholder", label: "Placeholder" }
+    ]
   },
   SdTextarea: {
     type: "SdTextarea",
@@ -277,7 +277,7 @@ export const palette: Record<string, PaletteItem> = {
     group: "form",
     droppable: true,
     defaultProps: () => ({ value: "", config: { label: "Label" } }),
-    settings: [{ key: "config.label", label: "Label" }],
+    settings: [{ key: "config.label", label: "Label" }]
   },
   SdSelect: {
     type: "SdSelect",
@@ -291,11 +291,11 @@ export const palette: Record<string, PaletteItem> = {
         label: "Label",
         options: [
           { value: "a", label: "Option A" },
-          { value: "b", label: "Option B" },
-        ],
-      },
+          { value: "b", label: "Option B" }
+        ]
+      }
     }),
-    settings: [{ key: "config.label", label: "Label" }],
+    settings: [{ key: "config.label", label: "Label" }]
   },
   SdCheckbox: {
     type: "SdCheckbox",
@@ -304,7 +304,7 @@ export const palette: Record<string, PaletteItem> = {
     group: "form",
     droppable: true,
     defaultProps: () => ({ value: false, config: { label: "Checkbox" } }),
-    settings: [{ key: "config.label", label: "Label" }],
+    settings: [{ key: "config.label", label: "Label" }]
   },
 
   SdCard: {
@@ -314,7 +314,7 @@ export const palette: Record<string, PaletteItem> = {
     group: "components",
     droppable: true,
     defaultProps: () => ({ children: [], config: {} }),
-    settings: [],
+    settings: []
   },
   SdPageHeader: {
     type: "SdPageHeader",
@@ -325,8 +325,8 @@ export const palette: Record<string, PaletteItem> = {
     defaultProps: () => ({ value: "Page", config: { subtitle: "" } }),
     settings: [
       { key: "value", label: "Title" },
-      { key: "config.subtitle", label: "Subtitle" },
-    ],
+      { key: "config.subtitle", label: "Subtitle" }
+    ]
   },
   SdKpi: {
     type: "SdKpi",
@@ -337,8 +337,8 @@ export const palette: Record<string, PaletteItem> = {
     defaultProps: () => ({ value: "0", config: { label: "Label" } }),
     settings: [
       { key: "value", label: "Value" },
-      { key: "config.label", label: "Label" },
-    ],
+      { key: "config.label", label: "Label" }
+    ]
   },
   SdBreadcrumb: {
     type: "SdBreadcrumb",
@@ -348,9 +348,9 @@ export const palette: Record<string, PaletteItem> = {
     droppable: false,
     defaultProps: () => ({
       value: [{ id: "home", label: "Home" }],
-      config: {},
+      config: {}
     }),
-    settings: [],
+    settings: []
   },
   SdToast: {
     type: "SdToast",
@@ -360,9 +360,9 @@ export const palette: Record<string, PaletteItem> = {
     droppable: false,
     defaultProps: () => ({
       value: { id: "toast", message: "Notification", type: "info" },
-      config: {},
+      config: {}
     }),
-    settings: [],
+    settings: []
   },
   SdApplication: {
     type: "SdApplication",
@@ -371,11 +371,11 @@ export const palette: Record<string, PaletteItem> = {
     group: "layout",
     droppable: true,
     defaultProps: () => ({ brand: "mtCMS", config: {} }),
-    settings: [{ key: "brand", label: "Brand" }],
+    settings: [{ key: "brand", label: "Brand" }]
   },
 
   div: container("div", "Div Box", "box", "layout", {
-    className: "flex flex-col",
+    className: "flex flex-col"
   }),
   section: container("section", "Section", "section", "layout"),
   article: container("article", "Article", "article", "layout"),
@@ -388,31 +388,31 @@ export const palette: Record<string, PaletteItem> = {
   hgroup: container("hgroup", "Heading Group", "hgroup", "layout"),
   details: container("details", "Details", "details", "layout", { open: true }),
   summary: leaf("summary", "Summary", "details", "layout", {
-    children: "Summary",
+    children: "Summary"
   }),
   dialog: container("dialog", "Dialog", "dialog", "layout", { open: true }),
 
   h1: container("h1", "Heading 1", "heading1", "headings", {
-    children: "Heading",
+    children: "Heading"
   }),
   h2: container("h2", "Heading 2", "heading2", "headings", {
-    children: "Heading",
+    children: "Heading"
   }),
   h3: container("h3", "Heading 3", "heading3", "headings", {
-    children: "Heading",
+    children: "Heading"
   }),
   h4: container("h4", "Heading 4", "heading4", "headings", {
-    children: "Heading",
+    children: "Heading"
   }),
   h5: container("h5", "Heading 5", "heading5", "headings", {
-    children: "Heading",
+    children: "Heading"
   }),
   h6: container("h6", "Heading 6", "heading6", "headings", {
-    children: "Heading",
+    children: "Heading"
   }),
 
   p: container("p", "Paragraph", "paragraph", "text", {
-    children: "Paragraph text",
+    children: "Paragraph text"
   }),
   blockquote: container(
     "blockquote",
@@ -420,18 +420,18 @@ export const palette: Record<string, PaletteItem> = {
     "blockquote",
     "text",
     { children: "Quoted text" },
-    [{ key: "cite", label: "Cite" }, ...text()],
+    [{ key: "cite", label: "Cite" }, ...text()]
   ),
   pre: container("pre", "Preformatted", "preformatted", "text", {
     children: "preformatted text",
-    className: "font-mono text-sm",
+    className: "font-mono text-sm"
   }),
   hr: leaf("hr", "Rule", "rule", "text", {}, structural),
   br: leaf("br", "Line Break", "lineBreak", "text", {}, structural),
   wbr: leaf("wbr", "Word Break", "wordBreak", "text", {}, structural),
   figure: container("figure", "Figure", "figure", "text"),
   figcaption: leaf("figcaption", "Figcaption", "figure", "text", {
-    children: "Caption",
+    children: "Caption"
   }),
   ol: container(
     "ol",
@@ -441,17 +441,17 @@ export const palette: Record<string, PaletteItem> = {
     { className: "list-decimal pl-5" },
     [
       { key: "start", label: "Start", kind: "number" },
-      { key: "type", label: "Type", kind: "select", options: LIST_TYPES },
-    ],
+      { key: "type", label: "Type", kind: "select", options: LIST_TYPES }
+    ]
   ),
   ul: container("ul", "Unordered List", "unorderedList", "text", {
-    className: "list-disc pl-5",
+    className: "list-disc pl-5"
   }),
   li: container("li", "List Item", "listItem", "text"),
   dl: container("dl", "Description List", "descriptionList", "text"),
   dt: leaf("dt", "Term", "term", "text", { children: "Term" }),
   dd: leaf("dd", "Description", "description", "text", {
-    children: "Description",
+    children: "Description"
   }),
 
   span: container("span", "Span", "span", "inline", { children: "Text" }),
@@ -461,19 +461,19 @@ export const palette: Record<string, PaletteItem> = {
     "link",
     "inline",
     { children: "Link", href: "#", className: "underline" },
-    [{ key: "href", label: "Href" }, ...text()],
+    [{ key: "href", label: "Href" }, ...text()]
   ),
   strong: container("strong", "Strong", "bold", "inline", {
-    children: "Strong",
+    children: "Strong"
   }),
   b: container("b", "Bold", "bold", "inline", { children: "Bold" }),
   em: container("em", "Emphasis", "italic", "inline", { children: "Emphasis" }),
   i: container("i", "Italic", "italic", "inline", { children: "Italic" }),
   u: container("u", "Underline", "underline", "inline", {
-    children: "Underline",
+    children: "Underline"
   }),
   s: container("s", "Strikeout", "strikethrough", "inline", {
-    children: "Strikeout",
+    children: "Strikeout"
   }),
   del: container(
     "del",
@@ -484,8 +484,8 @@ export const palette: Record<string, PaletteItem> = {
     [
       { key: "cite", label: "Cite" },
       { key: "datetime", label: "Datetime" },
-      ...text(),
-    ],
+      ...text()
+    ]
   ),
   ins: container(
     "ins",
@@ -496,35 +496,35 @@ export const palette: Record<string, PaletteItem> = {
     [
       { key: "cite", label: "Cite" },
       { key: "datetime", label: "Datetime" },
-      ...text(),
-    ],
+      ...text()
+    ]
   ),
   mark: container("mark", "Mark", "highlight", "inline", {
     children: "Highlighted",
-    className: "bg-yellow-300 text-black",
+    className: "bg-yellow-300 text-black"
   }),
   small: container("small", "Small", "small", "inline", {
-    children: "Small text",
+    children: "Small text"
   }),
   sub: container("sub", "Subscript", "subscript", "inline", {
-    children: "sub",
+    children: "sub"
   }),
   sup: container("sup", "Superscript", "superscript", "inline", {
-    children: "sup",
+    children: "sup"
   }),
   code: container("code", "Code", "code", "inline", { children: "code" }),
   kbd: container("kbd", "Keyboard", "keyboard", "inline", {
     children: "Ctrl",
-    className: "font-mono",
+    className: "font-mono"
   }),
   samp: container("samp", "Sample Output", "code", "inline", {
-    children: "sample",
+    children: "sample"
   }),
   var: container("var", "Variable", "italic", "inline", {
-    children: "variable",
+    children: "variable"
   }),
   cite: container("cite", "Citation", "citation", "inline", {
-    children: "Citation",
+    children: "Citation"
   }),
   q: container(
     "q",
@@ -532,7 +532,7 @@ export const palette: Record<string, PaletteItem> = {
     "quotation",
     "inline",
     { children: "Inline quote" },
-    [{ key: "cite", label: "Cite" }, ...text()],
+    [{ key: "cite", label: "Cite" }, ...text()]
   ),
   abbr: container(
     "abbr",
@@ -541,12 +541,12 @@ export const palette: Record<string, PaletteItem> = {
     "inline",
     {
       children: "HTML",
-      title: "HyperText Markup Language",
+      title: "HyperText Markup Language"
     },
-    [{ key: "title", label: "Title" }, ...text()],
+    [{ key: "title", label: "Title" }, ...text()]
   ),
   dfn: container("dfn", "Definition", "definition", "inline", {
-    children: "Definition",
+    children: "Definition"
   }),
   data: container(
     "data",
@@ -555,9 +555,9 @@ export const palette: Record<string, PaletteItem> = {
     "inline",
     {
       children: "42",
-      value: "42",
+      value: "42"
     },
-    [{ key: "value", label: "Value" }, ...text()],
+    [{ key: "value", label: "Value" }, ...text()]
   ),
   time: container(
     "time",
@@ -565,7 +565,7 @@ export const palette: Record<string, PaletteItem> = {
     "clock",
     "inline",
     { children: "1 January 2026", datetime: "2026-01-01" },
-    [{ key: "datetime", label: "Datetime" }, ...text()],
+    [{ key: "datetime", label: "Datetime" }, ...text()]
   ),
   ruby: container("ruby", "Ruby", "ruby", "inline", {}, structural),
   rt: leaf("rt", "Ruby Text", "term", "inline", { children: "Text" }),
@@ -579,8 +579,8 @@ export const palette: Record<string, PaletteItem> = {
     { children: "Text" },
     [
       { key: "dir", label: "Dir", kind: "select", options: DIR_OPTIONS },
-      ...text(),
-    ],
+      ...text()
+    ]
   ),
 
   img: {
@@ -592,53 +592,53 @@ export const palette: Record<string, PaletteItem> = {
     defaultProps: () => ({
       src: "/images/engine.jpg",
       alt: "image",
-      className: "",
+      className: ""
     }),
     settings: [
       { key: "src", label: "Src" },
-      { key: "alt", label: "Alt" },
-    ],
+      { key: "alt", label: "Alt" }
+    ]
   },
   picture: container("picture", "Picture", "image", "media", {}, structural),
   source: leaf("source", "Source", "mediaSource", "media", {}, [
     { key: "src", label: "Src" },
-    { key: "type", label: "Type" },
+    { key: "type", label: "Type" }
   ]),
   iframe: leaf("iframe", "Frame", "frame", "media", { title: "Frame" }, [
     { key: "src", label: "Src" },
-    { key: "title", label: "Title" },
+    { key: "title", label: "Title" }
   ]),
   embed: leaf("embed", "Embed", "embed", "media", {}, [
     { key: "src", label: "Src" },
-    { key: "type", label: "Type" },
+    { key: "type", label: "Type" }
   ]),
   object: leaf("object", "Object", "object", "media", {}, [
     { key: "data", label: "Data" },
-    { key: "type", label: "Type" },
+    { key: "type", label: "Type" }
   ]),
   video: leaf("video", "Video", "video", "media", {}, [
     { key: "src", label: "Src" },
-    { key: "poster", label: "Poster" },
+    { key: "poster", label: "Poster" }
   ]),
   audio: leaf("audio", "Audio", "audio", "media", {}, [
     {
       key: "src",
-      label: "Src",
-    },
+      label: "Src"
+    }
   ]),
   track: leaf("track", "Track", "track", "media", { kind: "subtitles" }, [
     { key: "src", label: "Src" },
-    { key: "kind", label: "Kind", kind: "select", options: TRACK_KINDS },
+    { key: "kind", label: "Kind", kind: "select", options: TRACK_KINDS }
   ]),
   map: container("map", "Map", "map", "media", {}, [
     { key: "name", label: "Name" },
-    ...structural,
+    ...structural
   ]),
   area: leaf("area", "Area", "area", "media", {}, [
     { key: "shape", label: "Shape", kind: "select", options: AREA_SHAPES },
     { key: "coords", label: "Coords" },
     { key: "href", label: "Href" },
-    { key: "alt", label: "Alt" },
+    { key: "alt", label: "Alt" }
   ]),
 
   table: container(
@@ -647,18 +647,18 @@ export const palette: Record<string, PaletteItem> = {
     "table",
     "table",
     {
-      className: "border-collapse",
+      className: "border-collapse"
     },
-    structural,
+    structural
   ),
   caption: leaf("caption", "Caption", "header", "table", {
-    children: "Caption",
+    children: "Caption"
   }),
   colgroup: container("colgroup", "Column Group", "column", "table", {}, [
-    { key: "span", label: "Span", kind: "number" },
+    { key: "span", label: "Span", kind: "number" }
   ]),
   col: leaf("col", "Column", "column", "table", { span: 1 }, [
-    { key: "span", label: "Span", kind: "number" },
+    { key: "span", label: "Span", kind: "number" }
   ]),
   thead: container("thead", "Table Head", "tableHead", "table", {}, structural),
   tbody: container("tbody", "Table Body", "tableBody", "table", {}, structural),
@@ -666,17 +666,17 @@ export const palette: Record<string, PaletteItem> = {
   tr: container("tr", "Table Row", "tableRow", "table", {}, structural),
   th: container("th", "Header Cell", "tableHeader", "table", {
     children: "Header",
-    className: "border border-gray-600 p-1",
+    className: "border border-gray-600 p-1"
   }),
   td: container("td", "Data Cell", "tableCell", "table", {
     children: "Cell",
-    className: "border border-gray-600 p-1",
+    className: "border border-gray-600 p-1"
   }),
 
   form: container("form", "Form", "form", "form", {}, [
     { key: "action", label: "Action" },
     { key: "method", label: "Method", kind: "select", options: METHOD_OPTIONS },
-    ...text(),
+    ...text()
   ]),
   label: container("label", "Label", "label", "form", { children: "Label" }),
   input: leaf(
@@ -687,14 +687,14 @@ export const palette: Record<string, PaletteItem> = {
     {
       type: "text",
       name: "input",
-      placeholder: "Input",
+      placeholder: "Input"
     },
     [
       { key: "type", label: "Type", kind: "select", options: INPUT_TYPES },
       { key: "name", label: "Name" },
       { key: "placeholder", label: "Placeholder" },
-      { key: "value", label: "Value" },
-    ],
+      { key: "value", label: "Value" }
+    ]
   ),
   textarea: leaf(
     "textarea",
@@ -704,16 +704,16 @@ export const palette: Record<string, PaletteItem> = {
     {
       name: "textarea",
       placeholder: "Text",
-      rows: 3,
+      rows: 3
     },
     [
       { key: "name", label: "Name" },
       { key: "placeholder", label: "Placeholder" },
-      { key: "rows", label: "Rows", kind: "number" },
-    ],
+      { key: "rows", label: "Rows", kind: "number" }
+    ]
   ),
   select: container("select", "Select", "select", "form", { name: "select" }, [
-    { key: "name", label: "Name" },
+    { key: "name", label: "Name" }
   ]),
   datalist: container(
     "datalist",
@@ -721,9 +721,9 @@ export const palette: Record<string, PaletteItem> = {
     "select",
     "form",
     {
-      id: "datalist",
+      id: "datalist"
     },
-    [{ key: "id", label: "Id" }],
+    [{ key: "id", label: "Id" }]
   ),
   optgroup: container(
     "optgroup",
@@ -731,9 +731,9 @@ export const palette: Record<string, PaletteItem> = {
     "optionGroup",
     "form",
     {
-      label: "Group",
+      label: "Group"
     },
-    [{ key: "label", label: "Label" }],
+    [{ key: "label", label: "Label" }]
   ),
   option: container(
     "option",
@@ -742,13 +742,13 @@ export const palette: Record<string, PaletteItem> = {
     "form",
     {
       value: "option",
-      children: "Option",
+      children: "Option"
     },
-    [{ key: "value", label: "Value" }, ...text("Label")],
+    [{ key: "value", label: "Value" }, ...text("Label")]
   ),
   output: leaf("output", "Output", "output", "form", { children: "Output" }, [
     { key: "name", label: "Name" },
-    ...text(),
+    ...text()
   ]),
   progress: leaf(
     "progress",
@@ -757,12 +757,12 @@ export const palette: Record<string, PaletteItem> = {
     "form",
     {
       value: 50,
-      max: 100,
+      max: 100
     },
     [
       { key: "value", label: "Value", kind: "number" },
-      { key: "max", label: "Max", kind: "number" },
-    ],
+      { key: "max", label: "Max", kind: "number" }
+    ]
   ),
   meter: leaf(
     "meter",
@@ -772,13 +772,13 @@ export const palette: Record<string, PaletteItem> = {
     {
       value: 60,
       min: 0,
-      max: 100,
+      max: 100
     },
     [
       { key: "value", label: "Value", kind: "number" },
       { key: "min", label: "Min", kind: "number" },
-      { key: "max", label: "Max", kind: "number" },
-    ],
+      { key: "max", label: "Max", kind: "number" }
+    ]
   ),
   SdTree: {
     type: "SdTree",
@@ -791,15 +791,15 @@ export const palette: Record<string, PaletteItem> = {
         {
           id: "root",
           label: "Root",
-          children: [{ id: "child", label: "Child" }],
-        },
+          children: [{ id: "child", label: "Child" }]
+        }
       ],
-      config: {},
+      config: {}
     }),
-    settings: [],
+    settings: []
   },
   fieldset: container("fieldset", "Fieldset", "fieldset", "form", {
-    children: "Fieldset",
+    children: "Fieldset"
   }),
   legend: leaf("legend", "Legend", "label", "form", { children: "Legend" }),
   button: container(
@@ -810,9 +810,9 @@ export const palette: Record<string, PaletteItem> = {
     { children: "Click", type: "button" },
     [
       { key: "type", label: "Type", kind: "select", options: BUTTON_TYPES },
-      ...text(),
-    ],
-  ),
+      ...text()
+    ]
+  )
 };
 
 const GROUP_ORDER: PaletteGroupId[] = [
@@ -823,13 +823,13 @@ const GROUP_ORDER: PaletteGroupId[] = [
   "inline",
   "media",
   "table",
-  "form",
+  "form"
 ];
 
 export const paletteGroups: PaletteGroup[] = GROUP_ORDER.map((id) => ({
   id,
   title: paletteGroupTitles[id],
-  items: Object.values(palette).filter((item) => item.group === id),
+  items: Object.values(palette).filter((item) => item.group === id)
 })).filter((group) => group.items.length > 0);
 
 export const isDroppable = (node: Node): boolean => {

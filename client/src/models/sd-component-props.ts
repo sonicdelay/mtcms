@@ -20,7 +20,7 @@ export interface SdComponentProps<
   TValue = unknown,
   TConfig = unknown,
   TEvent extends SdComponentEvent = SdComponentEvent,
-  TChildren = ReactNode,
+  TChildren = ReactNode
 > {
   value?: TValue | undefined;
   config?: TConfig | undefined;

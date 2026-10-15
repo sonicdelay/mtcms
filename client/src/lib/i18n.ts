@@ -11,10 +11,10 @@ const resources = {
         engine: "Engine",
         about: "About",
         contact: "Contact",
-        admin: "Admin",
+        admin: "Admin"
       },
-      homePageDescription: "Home of mtCMS.",
-    },
+      homePageDescription: "Home of mtCMS."
+    }
   },
   de: {
     translation: {
@@ -25,18 +25,18 @@ const resources = {
         engine: "Engine",
         about: "Über",
         contact: "Kontakt",
-        admin: "Admin",
+        admin: "Admin"
       },
-      homePageDescription: "Heimat von mtCMS.",
-    },
-  },
+      homePageDescription: "Heimat von mtCMS."
+    }
+  }
 };
 
 void i18n.use(initReactI18next).init({
   resources,
   lng: "en",
   fallbackLng: "en",
-  interpolation: { escapeValue: false },
+  interpolation: { escapeValue: false }
 });
 
 export default i18n;

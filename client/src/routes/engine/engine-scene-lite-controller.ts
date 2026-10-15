@@ -26,7 +26,7 @@ import {
   setPhysicsBodyTransform,
   type StandardMaterialProps,
   startEngine,
-  stopEngine,
+  stopEngine
 } from "@babylonjs/lite";
 import HavokPhysics from "@babylonjs/havok";
 import HavokWasmUrl from "@babylonjs/havok/lib/esm/HavokPhysics.wasm?url";
@@ -87,7 +87,7 @@ export class EngineSceneController {
 
     if (!(navigator as Navigator & { gpu?: unknown }).gpu) {
       throw new Error(
-        "WebGPU is not available in this browser. The Lite engine requires WebGPU.",
+        "WebGPU is not available in this browser. The Lite engine requires WebGPU."
       );
     }
 
@@ -113,7 +113,7 @@ export class EngineSceneController {
     const camera = createArcRotateCamera(-Math.PI / 3, Math.PI / 3.2, 24, {
       x: 0,
       y: 0,
-      z: 0,
+      z: 0
     });
     camera.lowerRadiusLimit = 5;
     camera.upperRadiusLimit = 50;
@@ -142,20 +142,20 @@ export class EngineSceneController {
       world,
       ground,
       physicsShapeTypes.BOX,
-      { mass: 0 },
+      { mass: 0 }
     );
     this.entries.push({
       mesh: ground,
       body: groundAggregate.body,
       kind: "BOX",
-      mass: 0,
+      mass: 0
     });
     this.bodies.push(groundAggregate.body);
 
     const groupOrigins = Array.from({ length: 300 }, () => ({
       x: Math.random() * 16,
       y: Math.random() * 16,
-      z: Math.random() * 16,
+      z: Math.random() * 16
     }));
     for (let i = 0; i < groupOrigins.length; i++) {
       const { mesh, body, kind, mass } = spawnObjectLite(
@@ -163,7 +163,7 @@ export class EngineSceneController {
         scene,
         world,
         i,
-        groupOrigins[i],
+        groupOrigins[i]
       );
       this.bodies.push(body);
       this.entries.push({ mesh, body, kind, mass });
@@ -199,13 +199,13 @@ export class EngineSceneController {
     const position = {
       x: Math.random() * 16,
       y: Math.random() * 10 + 10,
-      z: Math.random() * 16,
+      z: Math.random() * 16
     };
     setPhysicsBodyTransform(world, entry.body, position, {
       x: 0,
       y: 0,
       z: 16,
-      w: 1,
+      w: 1
     });
     setPhysicsBodyLinearVelocity(world, entry.body, { x: 0, y: 0, z: 0 });
     setPhysicsBodyAngularVelocity(world, entry.body, { x: 0, y: 0, z: 0 });
@@ -221,7 +221,7 @@ export class EngineSceneController {
         bodyCount: 0,
         gravity: { ...this.gravity },
         camera: null,
-        meshes: [],
+        meshes: []
       };
     }
     const camera = scene.camera as ArcRotateCamera | null;
@@ -233,7 +233,7 @@ export class EngineSceneController {
           target: {
             x: camera.target.x,
             y: camera.target.y,
-            z: camera.target.z,
+            z: camera.target.z
           },
           eye: {
             x:
@@ -242,8 +242,8 @@ export class EngineSceneController {
             y: camera.target.y + camera.radius * Math.sin(camera.beta),
             z:
               camera.target.z +
-              camera.radius * Math.cos(camera.alpha) * Math.cos(camera.beta),
-          },
+              camera.radius * Math.cos(camera.alpha) * Math.cos(camera.beta)
+          }
         }
       : null;
     const meshes = this.entries.map(({ mesh, body, kind, mass }) => {
@@ -259,18 +259,18 @@ export class EngineSceneController {
         position: {
           x: mesh.position.x,
           y: mesh.position.y,
-          z: mesh.position.z,
+          z: mesh.position.z
         },
         rotation: {
           x: mesh.rotation.x,
           y: mesh.rotation.y,
-          z: mesh.rotation.z,
+          z: mesh.rotation.z
         },
         scaling: { x: mesh.scaling.x, y: mesh.scaling.y, z: mesh.scaling.z },
         diffuse,
         velocity: velocity
           ? { x: velocity.x, y: velocity.y, z: velocity.z }
-          : null,
+          : null
       };
     });
     return {
@@ -280,7 +280,7 @@ export class EngineSceneController {
       bodyCount: this.bodies.length,
       gravity: { ...this.gravity },
       camera: cameraInfo,
-      meshes,
+      meshes
     };
   }
 

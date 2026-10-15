@@ -25,7 +25,7 @@ function getModel(): string {
 function sendToClient(
   client: WsClient,
   action: string,
-  data: Record<string, unknown>,
+  data: Record<string, unknown>
 ): void {
   client.ws.send(JSON.stringify({ action, data }));
 }
@@ -72,7 +72,7 @@ async function streamChatCompletion(
   apiUrl: string,
   apiKey: string,
   model: string,
-  messages: ChatMessage[],
+  messages: ChatMessage[]
 ): Promise<void> {
   const messageId = crypto.randomUUID();
   sendToClient(client, "llmStreamStart", { messageId });
@@ -80,7 +80,7 @@ async function streamChatCompletion(
   const body = {
     model: model || undefined,
     messages,
-    stream: true,
+    stream: true
   };
 
   const abortController = new AbortController();
@@ -94,10 +94,10 @@ async function streamChatCompletion(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {}),
+        ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {})
       },
       body: JSON.stringify(body),
-      signal: abortController.signal,
+      signal: abortController.signal
     });
 
     if (!response.ok) {
@@ -105,14 +105,14 @@ async function streamChatCompletion(
       sendToClient(client, "error", {
         message:
           `LLM API error: ${response.status} ${response.statusText}`.trim(),
-        detail,
+        detail
       });
       return;
     }
 
     if (!response.body) {
       sendToClient(client, "error", {
-        message: "LLM API returned no response body.",
+        message: "LLM API returned no response body."
       });
       return;
     }
@@ -175,11 +175,11 @@ async function streamChatCompletion(
     if (fullResponse) {
       sendToClient(client, "llmStreamEnd", {
         messageId,
-        fullResponse,
+        fullResponse
       });
     } else {
       sendToClient(client, "error", {
-        message: "LLM API returned an empty streamed response.",
+        message: "LLM API returned an empty streamed response."
       });
     }
   } catch (err) {
@@ -197,21 +197,21 @@ async function chatCompletion(
   apiUrl: string,
   apiKey: string,
   model: string,
-  messages: ChatMessage[],
+  messages: ChatMessage[]
 ): Promise<void> {
   const body = {
     model: model || undefined,
     messages,
-    stream: false,
+    stream: false
   };
 
   const response = await fetch(apiUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {}),
+      ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {})
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(body)
   });
 
   if (!response.ok) {
@@ -219,7 +219,7 @@ async function chatCompletion(
     sendToClient(client, "error", {
       message:
         `LLM API error: ${response.status} ${response.statusText}`.trim(),
-      detail,
+      detail
     });
     return;
   }
@@ -231,7 +231,7 @@ async function chatCompletion(
   const content = parsed.choices?.[0]?.message?.content ?? "";
   if (!content) {
     sendToClient(client, "error", {
-      message: "LLM API returned an empty response.",
+      message: "LLM API returned an empty response."
     });
     return;
   }
@@ -239,7 +239,7 @@ async function chatCompletion(
   appendAssistant(client, content);
   sendToClient(client, "llmResponse", {
     content,
-    messages: historyFor(client),
+    messages: historyFor(client)
   });
 }
 
@@ -264,8 +264,8 @@ function llmChat(client: WsClient, payload: Record<string, unknown>): void {
     client.ws.send(
       JSON.stringify({
         action: "error",
-        data: { message: "'messages' must be an array." },
-      }),
+        data: { message: "'messages' must be an array." }
+      })
     );
     return;
   }
@@ -279,8 +279,8 @@ function llmChat(client: WsClient, payload: Record<string, unknown>): void {
       client.ws.send(
         JSON.stringify({
           action: "error",
-          data: { message: `Invalid role: ${String(role)}` },
-        }),
+          data: { message: `Invalid role: ${String(role)}` }
+        })
       );
       return;
     }
@@ -288,8 +288,8 @@ function llmChat(client: WsClient, payload: Record<string, unknown>): void {
       client.ws.send(
         JSON.stringify({
           action: "error",
-          data: { message: "Each message must have a string 'content'." },
-        }),
+          data: { message: "Each message must have a string 'content'." }
+        })
       );
       return;
     }
@@ -312,7 +312,7 @@ function llmChat(client: WsClient, payload: Record<string, unknown>): void {
       (err) => {
         console.error("[llmChat] streaming error:", err);
         sendToClient(client, "error", { message: llmErrorMessage(err) });
-      },
+      }
     );
   }
 }

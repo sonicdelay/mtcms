@@ -49,5 +49,5 @@ export const components: Record<string, React.ElementType> = {
   SdDummy,
   SdDummyLeafComponent,
   SdDummyContainerComponent,
-  SdSplitHandle,
+  SdSplitHandle
 };

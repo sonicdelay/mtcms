@@ -13,7 +13,7 @@ const VARIANTS: Record<"primary" | "secondary" | "danger" | "ghost", string> = {
   secondary:
     "border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
   danger: "bg-[var(--danger)] text-white hover:bg-[var(--danger-hover)]",
-  ghost: "text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
+  ghost: "text-[var(--fg-base)] hover:bg-[var(--surface-hover)]"
 };
 
 const SdButton = (props: SdButtonProps) => {
@@ -46,7 +46,7 @@ const SdButton = (props: SdButtonProps) => {
         "disabled:cursor-not-allowed disabled:opacity-50",
         VARIANTS[settings.variant ?? "primary"],
         "sd-button",
-        className,
+        className
       ]
         .filter(Boolean)
         .join(" ")}

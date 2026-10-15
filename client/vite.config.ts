@@ -13,19 +13,17 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "http://localhost:8421",
-        changeOrigin: true,
-      },
-    },
+        changeOrigin: true
+      }
+    }
   },
   build: {
     target: "esnext",
-    chunkSizeWarningLimit: 1600,
+    chunkSizeWarningLimit: 1600
   },
   resolve: {
     alias: {
-      "@components": fileURLToPath(
-        new URL("./app/components", import.meta.url),
-      ),
+      "@components": fileURLToPath(new URL("./app/components", import.meta.url))
     },
     dedupe: [
       "react",
@@ -35,10 +33,10 @@ export default defineConfig({
       "react-dom/client",
       "zustand",
       "zustand/shallow",
-      "zustand/middleware",
-    ],
+      "zustand/middleware"
+    ]
   },
   optimizeDeps: {
-    include: ["react/jsx-runtime"],
-  },
+    include: ["react/jsx-runtime"]
+  }
 });

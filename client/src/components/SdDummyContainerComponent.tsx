@@ -3,7 +3,7 @@ import {
   Fragment,
   isValidElement,
   type ReactElement,
-  type ReactNode,
+  type ReactNode
 } from "react";
 import type { SdComponentEvent } from "../models/sd-component-event";
 import type { SdComponentProps } from "../models/sd-component-props";
@@ -40,7 +40,7 @@ const list = (children: ReactNode): ReactNode[] | null =>
 const capture = (
   node: ReactNode,
   onChange?: EventHandler,
-  depth = 0,
+  depth = 0
 ): ReactNode => {
   if (
     depth >= MAX_CAPTURE_DEPTH ||
@@ -69,7 +69,7 @@ const capture = (
           } catch (error) {
             console.error(
               "SdDummy: nested child onChange handler threw",
-              error,
+              error
             );
           }
         }
@@ -77,7 +77,7 @@ const capture = (
       },
       children: childList
         ? childList.map((child) => capture(child, onChange, depth + 1))
-        : element.props.children,
+        : element.props.children
     });
   } catch (error) {
     console.error("SdDummy: failed to capture nested events", error);
@@ -88,7 +88,7 @@ const capture = (
 /** Nested variant of SdDummy: renders children and routes their events to onChange. */
 const SdDummyContainerComponent = ({
   children,
-  onChange,
+  onChange
 }: SdDummyContainerComponentProps) => (
   <div className="Dummy-children">{capture(children, onChange)}</div>
 );

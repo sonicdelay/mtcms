@@ -14,7 +14,7 @@ export default function NodeBreadcrumb() {
       ? [{ id: "00000000-0000-4000-8000-000000000000", label: "Root" }]
       : lineage.map((item: any) => ({
           id: item.id,
-          label: item.title || item.id,
+          label: item.title || item.id
         }));
 
   return (
@@ -23,7 +23,7 @@ export default function NodeBreadcrumb() {
       config={{
         onSelect: (item: SdBreadcrumbItem) => {
           if (item.id !== selectedNodeId) void fetchNode(item.id);
-        },
+        }
       }}
     />
   );

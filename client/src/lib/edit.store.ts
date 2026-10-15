@@ -34,22 +34,22 @@ const EMPTY_TREE_MODEL: EditTreeModel = {
     id: ZERO_UUID,
     data: { name: "Root" },
     hasChildren: true,
-    children: [],
-  },
+    children: []
+  }
 };
 
 const EMPTY_TREE_STATE: TreeState = {
-  model: EMPTY_TREE_MODEL,
+  model: EMPTY_TREE_MODEL
 };
 
 const mergeIds = (left: string[], right: string[]) => [
-  ...new Set([...left, ...right]),
+  ...new Set([...left, ...right])
 ];
 
 const getLineage = (node: EditorNode): LineageItem[] =>
   [...(node.breadcrumb ?? [])].reverse().map((item) => ({
     id: item.id,
-    label: item.title || item.id,
+    label: item.title || item.id
   }));
 
 const displayName = (label: string, id: string): string =>
@@ -57,7 +57,7 @@ const displayName = (label: string, id: string): string =>
 
 const buildTreeState = (
   node: EditorNode,
-  previousTree: TreeState,
+  previousTree: TreeState
 ): TreeState => {
   const lineage = getLineage(node);
   const nodeChildren = node.children ?? [];
@@ -73,7 +73,7 @@ const buildTreeState = (
       id: ZERO_UUID,
       data: { name: rootNode?.data?.name ?? "Root" },
       hasChildren: rootChildren.length > 0,
-      children: rootChildren,
+      children: rootChildren
     };
   }
 
@@ -89,7 +89,7 @@ const buildTreeState = (
       id: item.id,
       data: { name: displayName(item.label, item.id) },
       hasChildren: (currentItem?.hasChildren ?? false) || children.length > 0,
-      children,
+      children
     };
   });
 
@@ -99,7 +99,7 @@ const buildTreeState = (
       id: child.id,
       data: { name: displayName(child.title || child.id, child.id) },
       hasChildren: existingChild?.hasChildren ?? false,
-      children: existingChild?.children ?? [],
+      children: existingChild?.children ?? []
     };
   });
 
@@ -116,7 +116,7 @@ const buildFormModel = (node: EditorNode, language: Language): FormField[] => {
     return entries.map(([key, value]) => ({
       name: key,
       type: "textarea",
-      value: JSON.stringify(value, null, 2),
+      value: JSON.stringify(value, null, 2)
     }));
   }
 
@@ -124,8 +124,8 @@ const buildFormModel = (node: EditorNode, language: Language): FormField[] => {
     {
       name: "raw data...",
       type: "textarea",
-      value: JSON.stringify(node.data ?? {}, null, 2),
-    },
+      value: JSON.stringify(node.data ?? {}, null, 2)
+    }
   ];
 };
 
@@ -143,7 +143,7 @@ interface EditStore {
     parentId: string,
     name: string,
     type: string,
-    language: Language,
+    language: Language
   ) => Promise<string | null>;
   saveNode: () => Promise<boolean>;
   deleteNode: () => Promise<string | null>;
@@ -164,10 +164,10 @@ export const useEditStore = create<EditStore>()(
           set(
             {
               language,
-              formFields: node ? buildFormModel(node, language) : [],
+              formFields: node ? buildFormModel(node, language) : []
             },
             false,
-            "edit/setLanguage",
+            "edit/setLanguage"
           );
         },
         setFormFields: (fields) =>
@@ -182,7 +182,7 @@ export const useEditStore = create<EditStore>()(
           set(
             { loading: true, selectedNodeId: nodeId },
             false,
-            "edit/fetchNode:start",
+            "edit/fetchNode:start"
           );
 
           const token = useAppStore.getState().token;
@@ -200,10 +200,10 @@ export const useEditStore = create<EditStore>()(
                 node: data,
                 loading: false,
                 tree,
-                formFields: buildFormModel(data, get().language),
+                formFields: buildFormModel(data, get().language)
               },
               false,
-              "edit/fetchNode:success",
+              "edit/fetchNode:success"
             );
             return data;
           } catch {
@@ -229,9 +229,9 @@ export const useEditStore = create<EditStore>()(
                   values: { en: {}, [language]: {} },
                   position: 10,
                   protected: false,
-                  reviewGroup: "0",
-                },
-              },
+                  reviewGroup: "0"
+                }
+              }
             });
             return created.id;
           } catch {
@@ -277,7 +277,7 @@ export const useEditStore = create<EditStore>()(
                 }
                 return acc;
               },
-              {},
+              {}
             );
 
             nextData = {
@@ -286,9 +286,9 @@ export const useEditStore = create<EditStore>()(
                 ...currentRoot,
                 values: {
                   ...currentValues,
-                  [language]: valuesFromForm,
-                },
-              },
+                  [language]: valuesFromForm
+                }
+              }
             };
           }
 
@@ -321,13 +321,13 @@ export const useEditStore = create<EditStore>()(
           } catch {
             return null;
           }
-        },
+        }
       }),
       {
         name: "edit-store-persist",
-        partialize: (state) => ({ language: state.language }),
-      },
+        partialize: (state) => ({ language: state.language })
+      }
     ),
-    { name: "edit-store" },
-  ),
+    { name: "edit-store" }
+  )
 );

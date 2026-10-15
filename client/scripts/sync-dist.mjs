@@ -5,13 +5,13 @@ import path from "node:path";
 const clientDist = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "..",
-  "dist",
+  "dist"
 );
 const serverDist = path.resolve(clientDist, "..", "..", "server", "dist");
 
 if (!existsSync(clientDist)) {
   console.error(
-    "[sync-dist] client/dist does not exist. Run `vite build` first.",
+    "[sync-dist] client/dist does not exist. Run `vite build` first."
   );
   process.exit(1);
 }

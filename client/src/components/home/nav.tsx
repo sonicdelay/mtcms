@@ -24,7 +24,7 @@ export default function Nav() {
     { href: "/home/content/about", label: t("nav.about") },
     { href: "/home/content/contact", label: t("nav.contact") },
     { href: "/admin", label: t("nav.admin"), requiresAuth: true },
-    { href: "/api", label: "API", requiresAuth: true, external: true },
+    { href: "/api", label: "API", requiresAuth: true, external: true }
   ];
 
   const isLoggedIn = token != null;

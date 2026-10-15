@@ -3,7 +3,7 @@ import { decodeError } from "@babylonjs/lite";
 
 import {
   EngineSceneController,
-  type EngineSceneSnapshot,
+  type EngineSceneSnapshot
 } from "./engine-scene-lite-controller";
 import { EngineSceneInspectorPanel } from "./engine-scene-inspector-panel";
 

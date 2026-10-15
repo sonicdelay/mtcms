@@ -37,7 +37,7 @@ export interface AppState {
   openModal: (
     content: ModalContent,
     modalId?: string,
-    size?: "sm" | "wide",
+    size?: "sm" | "wide"
   ) => void;
   setModalContent: (content: ModalContent | null) => void;
   closeModal: () => void;
@@ -75,7 +75,7 @@ export const useAppStore = create<AppState>()(
             ? "dark"
             : "light",
         language: normalizeLanguage(
-          typeof navigator !== "undefined" ? navigator.language : "en",
+          typeof navigator !== "undefined" ? navigator.language : "en"
         ),
         loading: false,
         error: null,
@@ -90,10 +90,10 @@ export const useAppStore = create<AppState>()(
               isModalOpen: true,
               modalId: modalId ?? null,
               modalContent: content,
-              modalSize: size,
+              modalSize: size
             },
             false,
-            "app/openModal",
+            "app/openModal"
           ),
 
         closeModal: () =>
@@ -102,10 +102,10 @@ export const useAppStore = create<AppState>()(
               isModalOpen: false,
               modalId: null,
               modalContent: null,
-              modalSize: "sm",
+              modalSize: "sm"
             },
             false,
-            "app/closeModal",
+            "app/closeModal"
           ),
         setModalContent: (content) =>
           set({ modalContent: content ?? null }, false, "app/setModalContent"),
@@ -128,7 +128,7 @@ export const useAppStore = create<AppState>()(
             set(
               { loading: false, error: "Email and password are required" },
               false,
-              "app/login:validation",
+              "app/login:validation"
             );
             return false;
           }
@@ -144,9 +144,9 @@ export const useAppStore = create<AppState>()(
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 email: trimmedEmail,
-                password: trimmedPassword,
+                password: trimmedPassword
               }),
-              signal: controller.signal,
+              signal: controller.signal
             });
 
             clearTimeout(timeoutId);
@@ -156,10 +156,10 @@ export const useAppStore = create<AppState>()(
               set(
                 {
                   loading: false,
-                  error: body.error ?? `Login failed (${res.status})`,
+                  error: body.error ?? `Login failed (${res.status})`
                 },
                 false,
-                "app/login:error",
+                "app/login:error"
               );
               return false;
             }
@@ -169,7 +169,7 @@ export const useAppStore = create<AppState>()(
               set(
                 { loading: false, error: "Invalid server response" },
                 false,
-                "app/login:error",
+                "app/login:error"
               );
               return false;
             }
@@ -179,7 +179,7 @@ export const useAppStore = create<AppState>()(
               set(
                 { loading: false, error: "Failed to decode auth token" },
                 false,
-                "app/login:error",
+                "app/login:error"
               );
               return false;
             }
@@ -189,10 +189,10 @@ export const useAppStore = create<AppState>()(
                 token: data.token,
                 user,
                 loading: false,
-                error: null,
+                error: null
               },
               false,
-              "app/login:success",
+              "app/login:success"
             );
             return true;
           } catch (err) {
@@ -204,7 +204,7 @@ export const useAppStore = create<AppState>()(
             set(
               { token: null, user: null, loading: false, error: errorMsg },
               false,
-              "app/login:error",
+              "app/login:error"
             );
             return false;
           }
@@ -215,10 +215,10 @@ export const useAppStore = create<AppState>()(
             {
               token: null,
               user: null,
-              error: null,
+              error: null
             },
             false,
-            "app/logout",
+            "app/logout"
           );
         },
 
@@ -232,7 +232,7 @@ export const useAppStore = create<AppState>()(
 
             const res = await fetch("/api/auth", {
               headers: { Authorization: `Bearer ${token}` },
-              signal: controller.signal,
+              signal: controller.signal
             });
 
             clearTimeout(timeoutId);
@@ -254,17 +254,17 @@ export const useAppStore = create<AppState>()(
             set(
               {
                 token: data.token,
-                user,
+                user
               },
               false,
-              "app/refresh:success",
+              "app/refresh:success"
             );
             return true;
           } catch {
             set({ token: null, user: null }, false, "app/refresh:error");
             return false;
           }
-        },
+        }
       }),
       {
         name: "app-store-storage",
@@ -272,10 +272,10 @@ export const useAppStore = create<AppState>()(
           token: state.token,
           user: state.user,
           theme: state.theme,
-          language: state.language,
-        }),
-      },
+          language: state.language
+        })
+      }
     ),
-    { name: "app-store" },
-  ),
+    { name: "app-store" }
+  )
 );

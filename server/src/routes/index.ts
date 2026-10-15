@@ -10,5 +10,5 @@ export const routers: Router[] = [
   nodesRouter,
   fmRouter,
   articlesRouter,
-  apiRouter,
+  apiRouter
 ];

@@ -22,7 +22,7 @@ import {
   setPhysicsBodyShape,
   setPhysicsShapeMaterial,
   type StandardMaterialProps,
-  type Vec3,
+  type Vec3
 } from "@babylonjs/lite";
 
 export const physicsShapeTypes = {
@@ -30,7 +30,7 @@ export const physicsShapeTypes = {
   CAPSULE: 1,
   CYLINDER: 2,
   BOX: 3,
-  CONVEX_HULL: 4,
+  CONVEX_HULL: 4
 } as const;
 
 export type SpawnResult = {
@@ -47,7 +47,7 @@ type FactoryResult = { mesh: Mesh; type: ShapeName; mass: number };
 type ObjectFactory = (engine: EngineContext, name: string) => FactoryResult;
 
 function createMaterial(
-  diffuse: [number, number, number],
+  diffuse: [number, number, number]
 ): StandardMaterialProps {
   const mat = createStandardMaterial();
   mat.diffuseColor = diffuse;
@@ -59,13 +59,13 @@ function attachPhysics(
   scene: SceneContext,
   world: PhysicsWorld,
   type: ShapeName,
-  mass: number,
+  mass: number
 ): PhysicsBody {
   addToScene(scene, mesh);
   if (type === "CONVEX_HULL") {
     const shape = createPhysicsShape(world, {
       type: physicsShapeTypes.CONVEX_HULL as PhysicsShapeType,
-      mesh,
+      mesh
     });
     const body = createPhysicsBody(world, mesh, 2, false);
     setPhysicsBodyShape(world, body, shape);
@@ -77,7 +77,7 @@ function attachPhysics(
     world,
     mesh,
     physicsShapeTypes[type] as PhysicsShapeType,
-    { mass },
+    { mass }
   );
   return aggregate.body;
 }
@@ -101,7 +101,7 @@ const cylinderFactory: ObjectFactory = (engine, name) => {
     height: 2.2,
     diameterTop: 1.1,
     diameterBottom: 1.1,
-    tessellation: 32,
+    tessellation: 32
   });
   cylinder.name = name;
   cylinder.material = createMaterial([0.4, 0.85, 0.4]);
@@ -112,7 +112,7 @@ const capsuleFactory: ObjectFactory = (engine, name) => {
   const capsule = createCapsule(engine, {
     radius: 0.55,
     height: 1.8,
-    tessellation: 24,
+    tessellation: 24
   });
   capsule.rotation.z = Math.PI / 2;
   capsule.name = name;
@@ -124,7 +124,7 @@ const torusFactory: ObjectFactory = (engine, name) => {
   const torus = createTorus(engine, {
     diameter: 1.4,
     thickness: 0.45,
-    tessellation: 24,
+    tessellation: 24
   });
   torus.name = name;
   torus.material = createMaterial([0.95, 0.9, 0.25]);
@@ -136,7 +136,7 @@ const coneFactory: ObjectFactory = (engine, name) => {
     height: 1.6,
     diameterTop: 0,
     diameterBottom: 1.2,
-    tessellation: 24,
+    tessellation: 24
   });
   cone.name = name;
   cone.material = createMaterial([0.85, 0.55, 0.15]);
@@ -155,7 +155,7 @@ const torusKnotFactory: ObjectFactory = (engine, name) => {
     radius: 0.7,
     tube: 0.25,
     radialSegments: 32,
-    tubularSegments: 64,
+    tubularSegments: 64
   });
   torusKnot.name = name;
   torusKnot.material = createMaterial([0.95, 0.25, 0.35]);
@@ -166,7 +166,7 @@ const icoSphereFactory: ObjectFactory = (engine, name) => {
   const icoSphere = createPolyhedron(engine, {
     type: 3,
     size: 1.6,
-    flat: false,
+    flat: false
   });
   icoSphere.name = name;
   icoSphere.material = createMaterial([0.6, 0.4, 0.95]);
@@ -231,7 +231,7 @@ const objectFactories: ObjectFactory[] = [
   dodecahedronFactory,
   pyramidFactory,
   icoBallFactory,
-  tileFactory,
+  tileFactory
 ];
 
 export function spawnObjectLite(
@@ -239,11 +239,11 @@ export function spawnObjectLite(
   scene: SceneContext,
   world: PhysicsWorld,
   index: number,
-  position: Vec3,
+  position: Vec3
 ): SpawnResult {
   const { mesh, type, mass } = objectFactories[index % objectFactories.length](
     engine,
-    `object${index}`,
+    `object${index}`
   );
   mesh.position.set(position.x, position.y, position.z);
   const body = attachPhysics(mesh, scene, world, type, mass);

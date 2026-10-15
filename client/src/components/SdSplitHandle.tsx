@@ -18,7 +18,7 @@ const SdSplitHandle = ({
   sign,
   orientation = "vertical",
   onResize,
-  onReset,
+  onReset
 }: SdSplitHandleProps) => {
   const [dragging, setDragging] = useState(false);
   const lastPos = useRef(0);
@@ -69,7 +69,7 @@ const SdSplitHandle = ({
         if (event.key !== plusKey && event.key !== minusKey) return;
         event.preventDefault();
         onResize(
-          sign * (event.key === plusKey ? KEYBOARD_STEP : -KEYBOARD_STEP),
+          sign * (event.key === plusKey ? KEYBOARD_STEP : -KEYBOARD_STEP)
         );
       }}
       style={horizontal ? { height: HANDLE_WIDTH } : { width: HANDLE_WIDTH }}

@@ -18,13 +18,13 @@ const createNode = (type: string, props: Record<string, unknown>): Node =>
   ({
     id: `${type}-${Math.random().toString(36).slice(2, 9)}`,
     type,
-    ...props,
+    ...props
   }) as Node;
 
 const updateNode = (
   tree: Node,
   id: string,
-  update: (node: TreeNode) => TreeNode,
+  update: (node: TreeNode) => TreeNode
 ): Node => {
   const node = tree as TreeNode;
   if (node.id === id) return update(node) as Node;
@@ -40,7 +40,7 @@ const updateNode = (
   return changed
     ? ({
         ...node,
-        children: Array.isArray(node.children) ? children : children[0],
+        children: Array.isArray(node.children) ? children : children[0]
       } as Node)
     : tree;
 };
@@ -49,7 +49,7 @@ const insertChildAt = (
   tree: Node,
   id: string,
   index: number,
-  child: LayoutChild,
+  child: LayoutChild
 ): Node =>
   updateNode(tree, id, (node) => {
     const children = childrenOf(node.children);
@@ -73,13 +73,13 @@ const containsNode = (tree: TreeNode, id: string): boolean =>
   childrenOf(tree.children).some(
     (child) =>
       typeof child !== "string" &&
-      ((child as TreeNode).id === id || containsNode(child as TreeNode, id)),
+      ((child as TreeNode).id === id || containsNode(child as TreeNode, id))
   );
 
 const isSelfOrDescendant = (
   tree: Node,
   sourceId: string,
-  targetId: string,
+  targetId: string
 ): boolean => {
   const source = findNode(tree, sourceId);
   return sourceId === targetId || (!!source && containsNode(source, targetId));
@@ -89,7 +89,7 @@ const moveNode = (
   tree: Node,
   nodeId: string,
   targetId: string,
-  index: number,
+  index: number
 ): Node => {
   const moving = findNode(tree, nodeId);
   if (!moving) return tree;
@@ -111,7 +111,7 @@ const moveNode = (
     return changed
       ? ({
           ...current,
-          children: Array.isArray(current.children) ? children : children[0],
+          children: Array.isArray(current.children) ? children : children[0]
         } as Node)
       : node;
   };
@@ -138,7 +138,7 @@ export interface CanvasProps {
 const insertionIndex = (e: DragEvent): number => {
   const container = e.currentTarget as HTMLElement;
   const children = Array.from(container.children).filter(
-    (el) => !el.classList.contains("ed-drop-placeholder"),
+    (el) => !el.classList.contains("ed-drop-placeholder")
   );
   if (children.length === 0) return 0;
   const rects = children.map((el) => el.getBoundingClientRect());
@@ -162,11 +162,11 @@ const insertionIndex = (e: DragEvent): number => {
 export const useDragDrop = (
   tree: Node | null,
   commit: (next: Node) => void,
-  active: boolean,
+  active: boolean
 ) => {
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
   const [dropTargetId, setDropTargetId] = useState<string | undefined>(
-    undefined,
+    undefined
   );
   const [dropIndex, setDropIndex] = useState(0);
 
@@ -218,7 +218,7 @@ export const useDragDrop = (
         commit(insertChildAt(tree, targetId, index ?? 0, child));
       }
     },
-    [tree, commit],
+    [tree, commit]
   );
 
   const editCtx: EditContext = {
@@ -228,7 +228,7 @@ export const useDragDrop = (
     dropNode,
     dropTargetId,
     dropIndex,
-    setDropTarget,
+    setDropTarget
   };
 
   const canvasProps: CanvasProps = tree
@@ -251,7 +251,7 @@ export const useDragDrop = (
           : undefined,
         onDrop: active
           ? (e) => dropNode(tree.id ?? "", e, childrenOf(tree.children).length)
-          : undefined,
+          : undefined
       }
     : { onClick: () => select(undefined) };
 
@@ -262,7 +262,7 @@ export const renderEditable = (
   node: LayoutChild,
   path = "0",
   inheritedProps: Record<string, unknown> = {},
-  edit: EditContext,
+  edit: EditContext
 ): ReactNode => {
   if (typeof node === "string") {
     return createElement("span", { key: path, ...inheritedProps }, node);
@@ -304,7 +304,7 @@ export const renderEditable = (
       onClick: (e: MouseEvent) => {
         e.stopPropagation();
         edit.select(id);
-      },
+      }
     };
     if (isDropTarget) {
       props.onDragEnter = (e: DragEvent) => {
@@ -326,7 +326,7 @@ export const renderEditable = (
     const classes = [
       props.className,
       edit.selectedId === id ? "ed-selected" : undefined,
-      isDropTarget && edit.dropTargetId === id ? "ed-drop-target" : undefined,
+      isDropTarget && edit.dropTargetId === id ? "ed-drop-target" : undefined
     ]
       .filter(Boolean)
       .join(" ");
@@ -335,7 +335,7 @@ export const renderEditable = (
 
   const placeholder = createElement("div", {
     key: `${path}.placeholder`,
-    className: "ed-drop-placeholder",
+    className: "ed-drop-placeholder"
   });
 
   let childNodes: ReactNode;
@@ -345,7 +345,7 @@ export const renderEditable = (
     childNodes = showPlaceholder ? [placeholder] : undefined;
   } else if (Array.isArray(children)) {
     const mapped = children.map((child, index) =>
-      renderEditable(child, `${path}.${index}`, baseProps, edit),
+      renderEditable(child, `${path}.${index}`, baseProps, edit)
     );
     if (showPlaceholder) {
       const idx = Math.max(0, Math.min(edit.dropIndex, mapped.length));

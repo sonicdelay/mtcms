@@ -23,7 +23,7 @@ interface UserNodeData {
  */
 async function authenticate(
   email: string,
-  password: string,
+  password: string
 ): Promise<AuthUser> {
   const node = await getUserByEmail(email);
   if (!node) {
@@ -42,7 +42,7 @@ async function authenticate(
   return {
     id: node.id,
     email: values.email,
-    role: values.role ?? "User",
+    role: values.role ?? "User"
   };
 }
 

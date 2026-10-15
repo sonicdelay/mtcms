@@ -16,8 +16,8 @@ export default tseslint.config(
       "package-lock.json",
       "**/*.lock",
       "client/node_modules/**",
-      "server/node_modules/**",
-    ],
+      "server/node_modules/**"
+    ]
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -30,6 +30,9 @@ export default tseslint.config(
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/no-unused-vars": "warn",
       "no-unused-vars": "off",
-    },
-  },
+      // Trailing commas are disallowed (Prettier is set to trailingComma:
+      // "none"); this catches them in code Prettier doesn't rewrite.
+      "comma-dangle": ["error", "never"]
+    }
+  }
 );

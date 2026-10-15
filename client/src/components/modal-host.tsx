@@ -67,6 +67,6 @@ export default function ModalHost() {
         {node}
       </div>
     </div>,
-    document.body,
+    document.body
   );
 }

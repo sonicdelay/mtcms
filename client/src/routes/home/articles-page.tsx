@@ -17,7 +17,7 @@ type ArticlesState = DirState | FileState | ErrorState | { kind: "loading" };
 
 const md = new MarkdownIt({
   html: true,
-  linkify: true,
+  linkify: true
 });
 
 const defaultRender =
@@ -41,7 +41,7 @@ md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
 
 function buildBreadcrumb(segments: string[]) {
   const crumbs: { label: string; href: string }[] = [
-    { label: "Artikel", href: "/home/articles" },
+    { label: "Artikel", href: "/home/articles" }
   ];
   let acc = "";
   for (const segment of segments) {
@@ -139,7 +139,7 @@ export default function ArticlesPage() {
 
   if (state.kind === "file") {
     const html = md.render(state.content, {
-      articlePath: `${segments.join("/")}.md`,
+      articlePath: `${segments.join("/")}.md`
     });
     return (
       <div className="mx-auto w-full max-w-5xl flex-1 px-6 py-16">

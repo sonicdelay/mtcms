@@ -55,7 +55,7 @@ function extractTitle(content: string, fallback: string): string {
   }
 
   const preferred = headings.find((l) =>
-    /Kapitel|Anhang|Schluss|ÜBER DEN AUTOR|Willkommen/i.test(l),
+    /Kapitel|Anhang|Schluss|ÜBER DEN AUTOR|Willkommen/i.test(l)
   );
   return stripMarkdown(preferred ?? headings[0]);
 }
@@ -75,14 +75,14 @@ async function listArticleDir(relPath = ""): Promise<FileItem[]> {
   const items: FileItem[] = entries
     .filter(
       (entry) =>
-        entry.isDirectory() || (entry.isFile() && entry.name.endsWith(".md")),
+        entry.isDirectory() || (entry.isFile() && entry.name.endsWith(".md"))
     )
     .map((entry) => {
       const dir = relPath.replace(/^\/+/, "");
       return {
         name: entry.name,
         path: dir ? `${dir}/${entry.name}` : entry.name,
-        type: entry.isDirectory() ? "dir" : "file",
+        type: entry.isDirectory() ? "dir" : "file"
       };
     });
 
@@ -96,7 +96,7 @@ async function listArticleDir(relPath = ""): Promise<FileItem[]> {
  * Lists a folder and enriches markdown files with their extracted titles.
  */
 export async function listArticleDirWithTitles(
-  relPath = "",
+  relPath = ""
 ): Promise<ArticleItem[]> {
   const items = await listArticleDir(relPath);
   return Promise.all(
@@ -105,11 +105,11 @@ export async function listArticleDirWithTitles(
         const content = await getArticleContent(item.path);
         return {
           ...item,
-          title: extractTitle(content ?? "", item.name.replace(/\.md$/, "")),
+          title: extractTitle(content ?? "", item.name.replace(/\.md$/, ""))
         };
       }
       return item;
-    }),
+    })
   );
 }
 
@@ -117,7 +117,7 @@ export async function listArticleDirWithTitles(
  * Reads a single article's markdown, or null when it does not exist.
  */
 export async function getArticleContent(
-  relPath: string,
+  relPath: string
 ): Promise<string | null> {
   const absolute = resolveArticlesPath(relPath);
   try {
@@ -132,7 +132,7 @@ export async function getArticleContent(
  * caller can decide whether to render a listing or markdown content.
  */
 export async function resolveArticlePath(
-  segments: string[],
+  segments: string[]
 ): Promise<{ type: "dir" | "file"; relPath: string } | null> {
   if (segments.some((segment) => !isValidSegment(segment))) {
     return null;

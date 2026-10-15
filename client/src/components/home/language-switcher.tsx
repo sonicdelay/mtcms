@@ -3,7 +3,7 @@ import { useMounted } from "../use-mounted";
 
 const labels: Record<string, string> = {
   en: "EN",
-  de: "DE",
+  de: "DE"
 };
 
 export default function LanguageSwitcher() {

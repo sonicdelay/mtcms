@@ -11,7 +11,7 @@ import {
   useEffect,
   useMemo,
   useRef,
-  useState,
+  useState
 } from "react";
 import type { SdComponentProps } from "../models/sd-component-props";
 import type { SdComponentEvent } from "../models/sd-component-event";
@@ -22,7 +22,7 @@ import type {
   TreeItem,
   TreeItemElementProps,
   TreeItemState,
-  TreeItemTemplate,
+  TreeItemTemplate
 } from "../models/sd-tree";
 
 interface SdTreeProps extends SdComponentProps<
@@ -76,7 +76,7 @@ const SdTree = (props: SdTreeProps) => {
     defaultExpandedIds,
     onMove,
     onDropExternal,
-    canDropInside,
+    canDropInside
   } = settings;
   const items = useMemo(() => toItemArray(value), [value]);
   const template: TreeItemTemplate =
@@ -84,7 +84,7 @@ const SdTree = (props: SdTreeProps) => {
       ? (children as TreeItemTemplate)
       : defaultTemplate;
   const [expanded, setExpanded] = useState<Set<string>>(
-    () => new Set(defaultExpandedIds ?? []),
+    () => new Set(defaultExpandedIds ?? [])
   );
   const [activeKey, setActiveKey] = useState<string | undefined>(undefined);
   const [dropAt, setDropAt] = useState<
@@ -102,7 +102,7 @@ const SdTree = (props: SdTreeProps) => {
   }, [eventIn, onChange]);
   const acceptsChildren = useCallback(
     (item: TreeItem) => canDropInside?.(item) ?? childItems(item).length > 0,
-    [canDropInside],
+    [canDropInside]
   );
 
   const toggle = useCallback((key: string) => {
@@ -121,7 +121,7 @@ const SdTree = (props: SdTreeProps) => {
     const walk = (
       list: TreeItem[],
       parentKey: string | undefined,
-      path: string,
+      path: string
     ) => {
       list.forEach((item, index) => {
         const key = keyOf(item, path ? `${path}.${index}` : String(index));
@@ -141,7 +141,7 @@ const SdTree = (props: SdTreeProps) => {
     const walk = (
       list: TreeItem[],
       parentKey: string | undefined,
-      path: string,
+      path: string
     ) => {
       list.forEach((item, index) => {
         const key = keyOf(item, path ? `${path}.${index}` : String(index));
@@ -211,7 +211,7 @@ const SdTree = (props: SdTreeProps) => {
       onSelect?.(item, key);
       onChange?.({ type: "select", payload: { item, key } });
     },
-    [onSelect, onChange],
+    [onSelect, onChange]
   );
 
   const dropPosition = (event: DragEvent<HTMLElement>, item: TreeItem) => {
@@ -231,7 +231,7 @@ const SdTree = (props: SdTreeProps) => {
 
   const resolveTarget = (
     targetKey: string,
-    position: TreeDropPosition,
+    position: TreeDropPosition
   ): TreeDropTarget | undefined => {
     const targetItem = itemsByKey.get(targetKey);
     if (!targetItem) return undefined;
@@ -265,7 +265,7 @@ const SdTree = (props: SdTreeProps) => {
   const renderItem = (
     item: TreeItem,
     key: string,
-    depth: number,
+    depth: number
   ): ReactNode => {
     const kids = childItems(item);
     const hasChildren = kids.length > 0;
@@ -281,7 +281,7 @@ const SdTree = (props: SdTreeProps) => {
       expanded: isExpanded,
       selected: isSelected,
       toggle: () => toggle(key),
-      select: () => selectItem(item, key),
+      select: () => selectItem(item, key)
     };
 
     const twisty = hasChildren ? (
@@ -310,7 +310,7 @@ const SdTree = (props: SdTreeProps) => {
         style={{ paddingLeft: INDENT }}
       >
         {kids.map((child, index) =>
-          renderItem(child, keyOf(child, `${key}.${index}`), depth + 1),
+          renderItem(child, keyOf(child, `${key}.${index}`), depth + 1)
         )}
       </ul>
     ) : null;
@@ -327,17 +327,17 @@ const SdTree = (props: SdTreeProps) => {
         isSelected ? "sd-tree__item--selected" : undefined,
         dropAt?.key === key
           ? `sd-tree__item--drop-${dropAt.position}`
-          : undefined,
+          : undefined
       ]
         .filter(Boolean)
-        .join(" "),
+        .join(" ")
     };
 
     const rendered = template(item, state);
 
     const activate = (e: MouseEvent<HTMLElement>) => {
       const origin = (e.target as HTMLElement | null)?.closest?.(
-        "[data-tree-key]",
+        "[data-tree-key]"
       );
       if (origin?.getAttribute("data-tree-key") !== key) return;
       selectItem(item, key);
@@ -365,7 +365,7 @@ const SdTree = (props: SdTreeProps) => {
             },
             onDragOver: (e: DragEvent<HTMLElement>) => {
               const origin = (e.target as HTMLElement | null)?.closest?.(
-                "[data-tree-key]",
+                "[data-tree-key]"
               );
               if (origin?.getAttribute("data-tree-key") !== key) return;
               const external = e.dataTransfer.types.includes(EXTERNAL_MIME);
@@ -382,7 +382,7 @@ const SdTree = (props: SdTreeProps) => {
               setDropAt((prev) =>
                 prev && prev.key === key && prev.position === position
                   ? prev
-                  : { key, position },
+                  : { key, position }
               );
             },
             onDragLeave: (e: DragEvent<HTMLElement>) => {
@@ -392,7 +392,7 @@ const SdTree = (props: SdTreeProps) => {
             },
             onDrop: (e: DragEvent<HTMLElement>) => {
               const origin = (e.target as HTMLElement | null)?.closest?.(
-                "[data-tree-key]",
+                "[data-tree-key]"
               );
               if (origin?.getAttribute("data-tree-key") !== key) return;
               e.preventDefault();
@@ -409,7 +409,7 @@ const SdTree = (props: SdTreeProps) => {
                 onDropExternal?.(externalType, target);
                 onChange?.({
                   type: "dropExternal",
-                  payload: { componentType: externalType, target },
+                  payload: { componentType: externalType, target }
                 });
                 return;
               }
@@ -417,9 +417,9 @@ const SdTree = (props: SdTreeProps) => {
               onMove?.(dragged, target);
               onChange?.({
                 type: "move",
-                payload: { dragKey: dragged, target },
+                payload: { dragKey: dragged, target }
               });
-            },
+            }
           }
         : {};
 
@@ -438,12 +438,12 @@ const SdTree = (props: SdTreeProps) => {
             element.props.onClick?.(e);
             if (e.defaultPrevented) return;
             activate(e);
-          },
+          }
         },
         <Fragment key="twisty">{twisty}</Fragment>,
         <Fragment key="icon">{leading}</Fragment>,
         <Fragment key="content">{element.props.children}</Fragment>,
-        <Fragment key="group">{group}</Fragment>,
+        <Fragment key="group">{group}</Fragment>
       );
     }
 
@@ -515,7 +515,7 @@ const SdTree = (props: SdTreeProps) => {
       onKeyDown={handleKeyDown}
     >
       {items.map((item, index) =>
-        renderItem(item, keyOf(item, String(index)), 0),
+        renderItem(item, keyOf(item, String(index)), 0)
       )}
     </ul>
   );

@@ -15,7 +15,7 @@ export interface ListNodesOptions {
 }
 
 export async function getAllNodes(
-  options: ListNodesOptions = {},
+  options: ListNodesOptions = {}
 ): Promise<Node[]> {
   const { type, limit = 50, offset = 0 } = options;
 
@@ -38,10 +38,10 @@ export async function getAllNodes(
 
 export async function getNodeById(id: string): Promise<Node> {
   const {
-    rows: [row],
+    rows: [row]
   } = await pool.query<Node>(
     "SELECT id, type, update, sync, data FROM nodes WHERE id = $1",
-    [id],
+    [id]
   );
 
   if (!row) {
@@ -57,10 +57,10 @@ export async function addNode(input: {
   data: Record<string, unknown>;
 }): Promise<Node> {
   const {
-    rows: [row],
+    rows: [row]
   } = await pool.query<Node>(
     `INSERT INTO nodes (type, sync, data) VALUES ($1, $2, $3) RETURNING id, type, update, sync, data`,
-    [input.type, input.sync ?? {}, input.data],
+    [input.type, input.sync ?? {}, input.data]
   );
 
   return row;
@@ -72,13 +72,13 @@ export async function updateNode(
     type?: string;
     sync?: Record<string, unknown>;
     data?: Record<string, unknown>;
-  },
+  }
 ): Promise<Node> {
   const {
-    rows: [row],
+    rows: [row]
   } = await pool.query<Node>(
     `UPDATE nodes SET type = COALESCE($1, type), sync = COALESCE($2, sync), data = COALESCE($3, data) WHERE id = $4 RETURNING id, type, update, sync, data`,
-    [patch.type ?? null, patch.sync ?? null, patch.data ?? null, id],
+    [patch.type ?? null, patch.sync ?? null, patch.data ?? null, id]
   );
 
   if (!row) {
@@ -90,7 +90,7 @@ export async function updateNode(
 
 export async function removeNode(id: string): Promise<void> {
   const { rowCount } = await pool.query(`DELETE FROM nodes WHERE id = $1`, [
-    id,
+    id
   ]);
 
   if (!rowCount) {
@@ -104,7 +104,7 @@ export async function getChildren(id: string): Promise<MiniNode[]> {
      FROM nodes
      WHERE data @> $1
      ORDER BY data->'0'->>'position'`,
-    [{ "0": { parent: id } }],
+    [{ "0": { parent: id } }]
   );
 
   return rows as MiniNode[];
@@ -112,10 +112,10 @@ export async function getChildren(id: string): Promise<MiniNode[]> {
 
 export async function getParent(id: string): Promise<Node> {
   const {
-    rows: [child],
+    rows: [child]
   } = await pool.query<{ parent: string | null }>(
     `SELECT data->'0'->>'parent' AS parent FROM nodes WHERE id = $1 LIMIT 1`,
-    [id],
+    [id]
   );
 
   if (!child?.parent) {
@@ -137,7 +137,7 @@ export async function getBreadcrumb(id: string): Promise<MiniNode[]> {
        JOIN nodes ON breadcrumb.parent_id = nodes.id
      )
      SELECT id, title FROM breadcrumb LIMIT 20`,
-    [id],
+    [id]
   );
 
   return rows as MiniNode[];
@@ -145,10 +145,10 @@ export async function getBreadcrumb(id: string): Promise<MiniNode[]> {
 
 export async function getUserByEmail(email: string): Promise<Node | null> {
   const {
-    rows: [row],
+    rows: [row]
   } = await pool.query<Node>(
     `SELECT * FROM nodes WHERE type = 'user' AND data->'0'->'values'->'en'->>'email' = $1`,
-    [email],
+    [email]
   );
 
   return row ?? null;

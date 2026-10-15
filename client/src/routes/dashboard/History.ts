@@ -13,7 +13,7 @@ export const useHistory = <T>(initial: T) => {
       futureRef.current = [];
       setPresent(next);
     },
-    [present],
+    [present]
   );
 
   const undo = useCallback(() => {

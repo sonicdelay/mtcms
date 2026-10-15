@@ -20,7 +20,7 @@ function hmacKey(secret: string, usages: KeyUsage[]): Promise<CryptoKey> {
     encoder.encode(secret),
     { name: "HMAC", hash: "SHA-256" },
     false,
-    usages,
+    usages
   );
 }
 
@@ -47,7 +47,7 @@ function base64UrlDecode(input: string): Uint8Array<ArrayBuffer> {
  */
 export async function signToken(
   user: AuthUser,
-  expiresInSeconds = 60 * 60 * 24,
+  expiresInSeconds = 60 * 60 * 24
 ): Promise<string> {
   const secret = process.env.JWT_SECRET;
   if (!secret) {
@@ -61,19 +61,19 @@ export async function signToken(
     exp: now + expiresInSeconds,
     iat: now,
     iss: "mtcms",
-    aud: "mtcms",
+    aud: "mtcms"
   };
 
   const signingInput = [
     base64UrlEncode(encoder.encode(JSON.stringify(header))),
-    base64UrlEncode(encoder.encode(JSON.stringify(payload))),
+    base64UrlEncode(encoder.encode(JSON.stringify(payload)))
   ].join(".");
 
   const key = await hmacKey(secret, ["sign"]);
   const signature = await crypto.subtle.sign(
     "HMAC",
     key,
-    encoder.encode(signingInput),
+    encoder.encode(signingInput)
   );
 
   return `${signingInput}.${base64UrlEncode(new Uint8Array(signature))}`;
@@ -110,7 +110,7 @@ export async function verifyToken(token: string): Promise<AuthUser | null> {
     "HMAC",
     key,
     base64UrlDecode(signaturePart),
-    encoder.encode(`${headerPart}.${payloadPart}`),
+    encoder.encode(`${headerPart}.${payloadPart}`)
   );
   if (!signatureValid) {
     return null;
@@ -143,7 +143,7 @@ export async function verifyToken(token: string): Promise<AuthUser | null> {
 export async function authRequired(
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ): Promise<void> {
   const authorization = req.get("authorization");
   let token: string | null = null;
@@ -164,7 +164,7 @@ export async function authRequired(
       res,
       401,
       "Unauthorized",
-      "Authentication credentials were missing or incorrect.",
+      "Authentication credentials were missing or incorrect."
     );
     return;
   }
@@ -175,7 +175,7 @@ export async function authRequired(
       res,
       401,
       "Unauthorized",
-      "Authentication credentials were missing or incorrect.",
+      "Authentication credentials were missing or incorrect."
     );
     return;
   }

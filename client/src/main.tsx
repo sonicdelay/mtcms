@@ -11,7 +11,7 @@ import "./lib/i18n";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
+  </StrictMode>
 );
 
 // Compile Tailwind utilities for classes that only exist in the DOM at runtime

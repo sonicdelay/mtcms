@@ -18,32 +18,32 @@ async function handle<T>(res: Response): Promise<T> {
 
 export async function getNodes(token: string): Promise<Node[]> {
   const res = await fetch("/api/nodes", {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}` }
   });
   return handle<Node[]>(res);
 }
 
 export async function getNodeEditor(
   token: string,
-  id: string,
+  id: string
 ): Promise<EditorNode> {
   const res = await fetch(`/api/nodes/${id}?scope=editor`, {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}` }
   });
   return handle<EditorNode>(res);
 }
 
 export async function createNode(
   token: string,
-  input: { type: string; data: Record<string, unknown> },
+  input: { type: string; data: Record<string, unknown> }
 ): Promise<Node> {
   const res = await fetch("/api/nodes", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify(input),
+    body: JSON.stringify(input)
   });
   return handle<Node>(res);
 }
@@ -51,15 +51,15 @@ export async function createNode(
 export async function updateNode(
   token: string,
   id: string,
-  patch: { type?: string; data?: Record<string, unknown> },
+  patch: { type?: string; data?: Record<string, unknown> }
 ): Promise<Node> {
   const res = await fetch(`/api/nodes/${id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify(patch),
+    body: JSON.stringify(patch)
   });
   return handle<Node>(res);
 }
@@ -67,7 +67,7 @@ export async function updateNode(
 export async function deleteNode(token: string, id: string): Promise<void> {
   const res = await fetch(`/api/nodes/${id}`, {
     method: "DELETE",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}` }
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
@@ -83,22 +83,22 @@ function encodePath(relPath: string): string {
 
 export async function listMedia(
   token: string,
-  relPath = "",
+  relPath = ""
 ): Promise<FileItem[]> {
   const path = encodePath(relPath);
   const res = await fetch(`/api/fm${path ? `/${path}` : ""}`, {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}` }
   });
   return handle<FileItem[]>(res);
 }
 
 export async function readMediaText(
   token: string,
-  relPath: string,
+  relPath: string
 ): Promise<string> {
   const path = encodePath(relPath);
   const res = await fetch(`/api/fm/${path}`, {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}` }
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
@@ -119,16 +119,16 @@ export async function readMediaText(
 export async function writeMediaFile(
   token: string,
   relPath: string,
-  content: string,
+  content: string
 ): Promise<void> {
   const path = encodePath(relPath);
   const res = await fetch(`/api/fm/${path}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "text/plain",
+      "Content-Type": "text/plain"
     },
-    body: content,
+    body: content
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
@@ -141,16 +141,16 @@ export async function writeMediaFile(
 export async function uploadMediaFile(
   token: string,
   relPath: string,
-  file: Blob,
+  file: Blob
 ): Promise<void> {
   const path = encodePath(relPath);
   const res = await fetch(`/api/fm/${path}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": file.type || "application/octet-stream",
+      "Content-Type": file.type || "application/octet-stream"
     },
-    body: file,
+    body: file
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
@@ -162,12 +162,12 @@ export async function uploadMediaFile(
 
 export async function createMediaDirectory(
   token: string,
-  relPath: string,
+  relPath: string
 ): Promise<void> {
   const path = encodePath(relPath);
   const res = await fetch(`/api/fm/${path}`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}` }
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);
@@ -179,12 +179,12 @@ export async function createMediaDirectory(
 
 export async function deleteMediaPath(
   token: string,
-  relPath: string,
+  relPath: string
 ): Promise<void> {
   const path = encodePath(relPath);
   const res = await fetch(`/api/fm/${path}`, {
     method: "DELETE",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}` }
   });
   if (!res.ok) {
     const body = await res.json().catch(() => null);

@@ -12,7 +12,7 @@ const ICON_BY_NAME: Record<string, SdIconName> = {
   root: "circle",
   node: "node",
   trash: "trash",
-  user: "user",
+  user: "user"
 };
 
 const ICON_BY_TYPE: Record<string, SdIconName> = {
@@ -25,7 +25,7 @@ const ICON_BY_TYPE: Record<string, SdIconName> = {
   user: "user",
   users: "user",
   root: "circle",
-  trash: "trash",
+  trash: "trash"
 };
 
 function iconFor(node: Node): SdIconName {
@@ -56,7 +56,7 @@ export default function ToolsPage() {
 
   const types = useMemo(
     () => [...new Set(nodes.map((n) => n.type))].sort(),
-    [nodes],
+    [nodes]
   );
 
   const tools = useMemo(() => {
@@ -79,13 +79,13 @@ export default function ToolsPage() {
           value={selectedType}
           options={[
             { value: "all", label: "All types" },
-            ...types.map((type) => ({ value: type, label: type })),
+            ...types.map((type) => ({ value: type, label: type }))
           ]}
           onChange={(ev) =>
             setSelectedType(
               String(
-                (ev.payload as { value?: string } | undefined)?.value ?? "",
-              ),
+                (ev.payload as { value?: string } | undefined)?.value ?? ""
+              )
             )
           }
         />

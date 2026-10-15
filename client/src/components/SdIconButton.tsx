@@ -13,7 +13,7 @@ const VARIANTS: Record<string, string> = {
   secondary:
     "border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
   danger: "bg-[var(--danger)] text-white hover:bg-[var(--danger-hover)]",
-  ghost: "text-[var(--fg-base)] hover:bg-[var(--surface-hover)]",
+  ghost: "text-[var(--fg-base)] hover:bg-[var(--surface-hover)]"
 };
 
 const SdIconButton = (props: SdIconButtonProps) => {
@@ -46,7 +46,7 @@ const SdIconButton = (props: SdIconButtonProps) => {
         "disabled:cursor-not-allowed disabled:opacity-50",
         VARIANTS[settings.variant ?? "ghost"],
         "sd-icon-button",
-        className,
+        className
       ]
         .filter(Boolean)
         .join(" ")}

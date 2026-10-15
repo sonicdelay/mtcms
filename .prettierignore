@@ -8,3 +8,5 @@ client/public
 .superpowers
 package-lock.json
 *.lock
+test-results
+playwright-report

@@ -3,7 +3,7 @@ import express from "express";
 import {
   getArticleContent,
   listArticleDirWithTitles,
-  resolveArticlePath,
+  resolveArticlePath
 } from "../lib/articles.service.ts";
 import { problem } from "../lib/http.ts";
 

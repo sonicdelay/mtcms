@@ -158,8 +158,8 @@
         "deno.json",
         "deno.lock",
         "server/deno.json",
-        "server/deno.lock",
-      ],
+        "server/deno.lock"
+      ]
     },
     js.configs.recommended,
     ...tseslint.configs.recommended,
@@ -168,9 +168,9 @@
         // Pre-existing debt (from deno lint baseline): demote to warn.
         "@typescript-eslint/no-explicit-any": "warn",
         "@typescript-eslint/no-unused-vars": "warn",
-        "no-unused-vars": "off",
-      },
-    },
+        "no-unused-vars": "off"
+      }
+    }
   );
   ```
 
