@@ -1,0 +1,4 @@
+# Normalize line endings to LF in the repository and working tree so the
+# formatter (Prettier, configured with endOfLine "lf") is stable on Windows
+# checkouts where core.autocrlf=true.
+* text=auto eol=lf

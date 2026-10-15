@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "scripts": {
     "dev": "node --watch --env-file=../.env main.ts",
@@ -15,7 +15,6 @@
     "@neondatabase/serverless": "^0.10",
     "bcryptjs": "^2",
     "express": "^5",
-    "mtcms": "file:..",
     "pg": "^8",
     "ws": "^8"
   },
