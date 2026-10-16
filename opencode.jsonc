@@ -109,6 +109,7 @@
     ".turbo",
     ".yarn",
     ".pnpm",
-    ".gitignore"
+    ".gitignore",
+    "spectre"
   ]
 }
