@@ -24,10 +24,10 @@ function getModel(): string {
 
 function sendToClient(
   client: WsClient,
-  action: string,
+  type: string,
   data: Record<string, unknown>
 ): void {
-  client.ws.send(JSON.stringify({ action, data }));
+  client.ws.send(JSON.stringify({ type, ...data }));
 }
 
 function historyFor(client: WsClient): ChatMessage[] {
@@ -262,10 +262,7 @@ function llmChat(client: WsClient, payload: Record<string, unknown>): void {
 
   if (!Array.isArray(messages)) {
     client.ws.send(
-      JSON.stringify({
-        action: "error",
-        data: { message: "'messages' must be an array." }
-      })
+      JSON.stringify({ type: "error", message: "'messages' must be an array." })
     );
     return;
   }
@@ -278,8 +275,8 @@ function llmChat(client: WsClient, payload: Record<string, unknown>): void {
     if (role !== "user" && role !== "assistant" && role !== "system") {
       client.ws.send(
         JSON.stringify({
-          action: "error",
-          data: { message: `Invalid role: ${String(role)}` }
+          type: "error",
+          message: `Invalid role: ${String(role)}`
         })
       );
       return;
@@ -287,8 +284,8 @@ function llmChat(client: WsClient, payload: Record<string, unknown>): void {
     if (typeof content !== "string") {
       client.ws.send(
         JSON.stringify({
-          action: "error",
-          data: { message: "Each message must have a string 'content'." }
+          type: "error",
+          message: "Each message must have a string 'content'."
         })
       );
       return;

@@ -408,7 +408,7 @@
         <div class="row" style="margin-top: 10px">
           <button class="primary" id="sendBtn">Send raw</button>
           <span class="hint" style="margin: 0"
-            >&mdash; server actions: <code>sendWebsocket</code>,
+            >&mdash; server actions: <code>send:websocket</code>,
             <code>joinGroup</code>, <code>leaveGroup</code>,
             <code>llmChat</code></span
           >
@@ -491,11 +491,9 @@
             body: () =>
               JSON.stringify(
                 {
-                  action: "sendWebsocket",
-                  data: {
-                    to: "PASTE-OTHER-TABS-CLIENT-ID",
-                    data: { text: "Hello, other tab!" }
-                  }
+                  type: "send:websocket",
+                  to: "PASTE-OTHER-TABS-CLIENT-ID",
+                  data: { text: "Hello, other tab!" }
                 },
                 null,
                 2
@@ -506,11 +504,9 @@
             body: () =>
               JSON.stringify(
                 {
-                  action: "sendWebsocket",
-                  data: {
-                    group: "room-demo",
-                    data: { text: "Hello, group members!" }
-                  }
+                  type: "send:websocket",
+                  group: "room-demo",
+                  data: { text: "Hello, group members!" }
                 },
                 null,
                 2
@@ -521,11 +517,9 @@
             body: () =>
               JSON.stringify(
                 {
-                  action: "sendWebsocket",
-                  data: {
-                    broadcast: true,
-                    data: { text: "Hello, everybody!" }
-                  }
+                  type: "send:websocket",
+                  broadcast: true,
+                  data: { text: "Hello, everybody!" }
                 },
                 null,
                 2
@@ -534,17 +528,13 @@
           join: {
             name: "join group",
             body: () =>
-              JSON.stringify(
-                { action: "joinGroup", data: { group: "room-demo" } },
-                null,
-                2
-              )
+              JSON.stringify({ type: "joinGroup", group: "room-demo" }, null, 2)
           },
           leave: {
             name: "leave group",
             body: () =>
               JSON.stringify(
-                { action: "leaveGroup", data: { group: "room-demo" } },
+                { type: "leaveGroup", group: "room-demo" },
                 null,
                 2
               )
@@ -554,14 +544,12 @@
             body: () =>
               JSON.stringify(
                 {
-                  action: "llmChat",
-                  data: {
-                    systemPrompt: "You are a terse assistant.",
-                    messages: [
-                      { role: "user", content: "Say hello in 5 words." }
-                    ],
-                    stream: true
-                  }
+                  type: "llmChat",
+                  systemPrompt: "You are a terse assistant.",
+                  messages: [
+                    { role: "user", content: "Say hello in 5 words." }
+                  ],
+                  stream: true
                 },
                 null,
                 2
@@ -572,13 +560,11 @@
             body: () =>
               JSON.stringify(
                 {
-                  action: "llmChat",
-                  data: {
-                    messages: [
-                      { role: "user", content: "Reply with exactly: pong" }
-                    ],
-                    stream: false
-                  }
+                  type: "llmChat",
+                  messages: [
+                    { role: "user", content: "Reply with exactly: pong" }
+                  ],
+                  stream: false
                 },
                 null,
                 2
@@ -588,7 +574,7 @@
             name: "llmChat (clear)",
             body: () =>
               JSON.stringify(
-                { action: "llmChat", data: { clear: true, messages: [] } },
+                { type: "llmChat", clear: true, messages: [] },
                 null,
                 2
               )
@@ -634,11 +620,11 @@
               addEntry("recv", "raw", String(ev.data));
               return;
             }
-            if (msg.action === "connected") {
-              myId.textContent = `id: ${msg.data.id}`;
-              navigator.clipboard?.writeText(msg.data.id).catch(() => {});
+            if (msg.type === "connected") {
+              myId.textContent = `id: ${msg.id}`;
+              navigator.clipboard?.writeText(msg.id).catch(() => {});
             }
-            addEntry("recv", msg.action, msg);
+            addEntry("recv", msg.type, msg);
           };
           ws.onclose = (ev) => {
             connState.textContent = "disconnected";
@@ -713,7 +699,7 @@
           }
           try {
             ws.send(text);
-            addEntry("send", obj.action || "?", obj);
+            addEntry("send", obj.type || "?", obj);
           } catch (err) {
             addEntry("recv", "error", { message: err.message });
           }

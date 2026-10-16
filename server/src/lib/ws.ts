@@ -84,7 +84,7 @@ export class WsManager {
     this.clients.set(ws, client);
     this.idIndex.set(id, client);
 
-    this.sendTo(ws, { action: "connected", data: { id } });
+    this.sendTo(ws, { type: "connected", id });
 
     ws.on("message", (data: RawData) => {
       let message: string;
