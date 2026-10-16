@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { type ComponentType, createElement, type ReactNode } from "react";
-import { createPortal } from "react-dom";
 import { useAppStore } from "../lib/app.store";
+import Portal from "./internal/portal";
 
 export default function ModalHost() {
   const isOpen = useAppStore((s) => s.isModalOpen);
@@ -31,42 +31,43 @@ export default function ModalHost() {
       ? createElement(content as ComponentType)
       : (content as ReactNode);
 
-  return createPortal(
-    <div className="fixed inset-0 z-[1100] flex items-center justify-center p-4">
-      <div
-        className="absolute inset-0 bg-black/50"
-        onClick={closeModal}
-        aria-hidden
-      />
-      <div
-        className={`relative w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-xl ${
-          modalSize === "wide"
-            ? "flex h-[92vh] max-h-[92vh] max-w-[95vw] flex-col"
-            : "max-w-md"
-        }`}
-      >
-        <button
-          type="button"
+  return (
+    <Portal>
+      <div className="fixed inset-0 z-[1100] flex items-center justify-center p-4">
+        <div
+          className="absolute inset-0 bg-black/50"
           onClick={closeModal}
-          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-[var(--fg-muted)] transition-colors hover:bg-[var(--surface-hover)]"
-          aria-label="Close dialog"
+          aria-hidden
+        />
+        <div
+          className={`relative w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-xl ${
+            modalSize === "wide"
+              ? "flex h-[92vh] max-h-[92vh] max-w-[95vw] flex-col"
+              : "max-w-md"
+          }`}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="h-4 w-4"
+          <button
+            type="button"
+            onClick={closeModal}
+            className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-[var(--fg-muted)] transition-colors hover:bg-[var(--surface-hover)]"
+            aria-label="Close dialog"
           >
-            <path
-              fillRule="evenodd"
-              d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
-        {node}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="h-4 w-4"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+          {node}
+        </div>
       </div>
-    </div>,
-    document.body
+    </Portal>
   );
 }
