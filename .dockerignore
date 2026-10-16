@@ -1,10 +1,23 @@
-ai
+# Build context hygiene — keep sources only
+**/node_modules
+**/dist
+**/npm-debug.log
+.git
+.github
+.gitattributes
 .backup
-node_modules
-npm-debug.log
-.env
-.DS_Store
+.fallow
+.opencode
+.vscode
+ai
+docs
 logs/
 tmp/
-dist/
+tests
+spectre
+vp1
 coverage/
+.env
+.DS_Store
+# media is persisted as a volume, not baked into the image
+server/media

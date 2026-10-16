@@ -62,6 +62,22 @@ cd ../server && npm start
 The server serves the SPA with a catch-all route that falls back to
 `dist/index.html`; unknown `/api/*` paths return a JSON `404`.
 
+## Docker
+
+The multi-stage `Dockerfile` at the repo root builds the client, copies the
+bundle into `server/dist`, and runs the server — one container serves both the
+SPA and `/api/*`:
+
+```bash
+cp .env.example .env   # fill in DATABASE_URL, JWT_SECRET, ...
+docker compose up --build
+```
+
+The app is then on `http://localhost:<SERVER_PORT>` (from `.env`, default
+`8421`). Uploaded files (file manager / articles) live in the `media` named
+volume; your PostgreSQL (Neon or `pg`) stays external, configured via
+`DATABASE_URL` in `.env`.
+
 ## API
 
 - `POST /api/auth` — login (`{ email, password }`)

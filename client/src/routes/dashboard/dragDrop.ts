@@ -272,11 +272,17 @@ export const renderEditable = (
   const id = node.id;
   const baseProps = { ...inheritedProps, ...restProps };
 
+  // Object/array props must not leak onto DOM elements (e.g. `class` on a
+  // native tag), but `config` and `value` are the component data channels and
+  // must always reach registered components.
+  const COMPONENT_DATA_PROPS = new Set(["config", "value"]);
+
   const domProps: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(baseProps)) {
     if (!/^[a-zA-Z][a-zA-Z0-9]*$/.test(key)) continue;
     if (value === undefined) continue;
     if (
+      !COMPONENT_DATA_PROPS.has(key) &&
       value !== null &&
       typeof value === "object" &&
       key !== "style" &&

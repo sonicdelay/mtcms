@@ -40,11 +40,13 @@
       "children": [
         {
           "type": "SdGauge",
-          "title": "Cos Wave",
-          "source": "cos",
-          "min": -1,
-          "max": 1,
-          "className": ""
+          "className": "",
+          "config": {
+            "title": "Cos Wave",
+            "source": "cos",
+            "min": -1,
+            "max": 1
+          }
         },
         {
           "type": "img",
@@ -56,11 +58,13 @@
         },
         {
           "type": "SdGauge",
-          "title": "Sin Wave",
-          "source": "sin",
-          "min": -1,
-          "max": 1,
-          "className": ""
+          "className": "",
+          "config": {
+            "title": "Sin Wave",
+            "source": "sin",
+            "min": -1,
+            "max": 1
+          }
         }
       ]
     },
@@ -70,57 +74,67 @@
       "children": [
         {
           "type": "SdPane",
-          "title": "Button Right",
           "className": " flex flex-1 items-center align-stretch justify-center bg-gray-700  flex flex-row items-center justify-center",
           "children": [
             {
               "type": "SdButton",
-              "data": "Button Right",
               "className": "bg-gray-700 p-4",
               "actions": [
                 {
                   "type": "Sdclick",
                   "action": "alert('Button clicked!')"
                 }
-              ]
+              ],
+              "value": "Button Right"
             },
             {
               "type": "SdWaveValue",
-              "title": "Tan Wave",
-              "source": "data.1",
-              "className": ""
+              "className": "",
+              "config": {
+                "title": "Tan Wave",
+                "source": "data.1"
+              }
             },
             {
               "type": "SdWaveBar",
-              "title": "Sin Wave",
-              "source": "sin",
-              "className": "flex flex-col items-left justify-center p-4"
+              "className": "flex flex-col items-left justify-center p-4",
+              "config": {
+                "title": "Sin Wave",
+                "source": "sin"
+              }
             },
             {
               "type": "SdWaveBar",
-              "title": "Cos Wave",
-              "source": "cos",
-              "className": "flex flex-col items-left justify-center"
+              "className": "flex flex-col items-left justify-center",
+              "config": {
+                "title": "Cos Wave",
+                "source": "cos"
+              }
             }
-          ]
+          ],
+          "config": {
+            "title": "Button Right"
+          }
         },
         {
           "type": "SdPane",
-          "title": "Bottom",
           "className": " flex flex-1 items-center justify-center p-2.5 bg-gray-700",
           "children": [
             {
               "type": "SdButton",
-              "data  ": "Click Me",
               "className": "bg-gray-800 text-white p-2 rounded",
               "actions": [
                 {
                   "type": "Sdclick",
                   "action": "alert('Button clicked!')"
                 }
-              ]
+              ],
+              "value": "Click Me"
             }
-          ]
+          ],
+          "config": {
+            "title": "Bottom"
+          }
         }
       ]
     },
@@ -130,9 +144,11 @@
       "children": [
         {
           "type": "SdWave",
-          "title": "Sin Wave",
-          "source": "sin",
-          "className": "border border-gray-300"
+          "className": "border border-gray-300",
+          "config": {
+            "title": "Sin Wave",
+            "source": "sin"
+          }
         },
         {
           "type": "SdPane",
@@ -140,35 +156,45 @@
           "children": [
             {
               "type": "SdWaveValue",
-              "title": "Tan Wave",
-              "source": "data.0",
-              "className": "text-sm text-green-200"
+              "className": "text-sm text-green-200",
+              "config": {
+                "title": "Tan Wave",
+                "source": "data.0"
+              }
             },
             {
               "type": "SdWaveValue",
-              "title": "Tan Wave",
-              "source": "data.0",
-              "className": "text-sm text-green-200"
+              "className": "text-sm text-green-200",
+              "config": {
+                "title": "Tan Wave",
+                "source": "data.0"
+              }
             },
             {
               "type": "SdWaveValue",
-              "title": "Tan Wave",
-              "source": "data.1",
-              "className": ""
+              "className": "",
+              "config": {
+                "title": "Tan Wave",
+                "source": "data.1"
+              }
             }
           ]
         },
         {
           "type": "SdWaveBar",
-          "title": "Sin Wave",
-          "source": "sin",
-          "className": ""
+          "className": "",
+          "config": {
+            "title": "Sin Wave",
+            "source": "sin"
+          }
         },
         {
           "type": "SdWaveBar",
-          "title": "Sin Wave",
-          "source": "cos",
-          "className": ""
+          "className": "",
+          "config": {
+            "title": "Sin Wave",
+            "source": "cos"
+          }
         }
       ]
     }

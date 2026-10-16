@@ -40,11 +40,13 @@ const AdminLayout = () => {
 
   return (
     <SdApplication
-      brand="mtCMS"
-      navItems={token ? navItems : undefined}
-      activeHref={pathname}
-      user={token ? { username, role } : null}
-      theme={theme}
+      config={{
+        brand: "mtCMS",
+        navItems: token ? navItems : undefined,
+        activeHref: pathname,
+        user: token ? { username, role } : null,
+        theme: theme
+      }}
       onToggleTheme={toggleTheme}
       onNavigate={(href) => navigate(href)}
       onLogout={handleLogout}

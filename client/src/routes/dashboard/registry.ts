@@ -209,17 +209,16 @@ export const palette: Record<string, PaletteItem> = {
     icon: "activity",
     group: "components",
     defaultProps: () => ({
-      title: "D3 Graph",
       value: {
         points: [
           { x: 0, y: 0 },
           { x: 1, y: 1 }
         ]
       },
-      config: { width: 460, height: 400, r: 8 }
+      config: { title: "D3 Graph", width: 460, height: 400, r: 8 }
     }),
     settings: [
-      { key: "title", label: "Title" },
+      { key: "config.title", label: "Title" },
       { key: "config.width", label: "Width", kind: "number" },
       { key: "config.height", label: "Height", kind: "number" },
       { key: "config.r", label: "Point radius", kind: "number" },
@@ -370,8 +369,8 @@ export const palette: Record<string, PaletteItem> = {
     icon: "layout",
     group: "layout",
     droppable: true,
-    defaultProps: () => ({ brand: "mtCMS", config: {} }),
-    settings: [{ key: "brand", label: "Brand" }]
+    defaultProps: () => ({ config: { brand: "mtCMS" } }),
+    settings: [{ key: "config.brand", label: "Brand" }]
   },
 
   div: container("div", "Div Box", "box", "layout", {

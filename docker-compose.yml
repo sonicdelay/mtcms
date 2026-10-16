@@ -1,0 +1,28 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mtcms:latest
+    container_name: mtcms
+    restart: unless-stopped
+    init: true
+    ports:
+      # Host port comes from SERVER_PORT in .env; container always listens on 8421
+      - "${SERVER_PORT:-8421}:8421"
+    env_file:
+      - .env
+    environment:
+      SERVER_PORT: "8421"
+    volumes:
+      # Persist uploaded files (file manager + articles)
+      - media:/app/server/media
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8421/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  media:

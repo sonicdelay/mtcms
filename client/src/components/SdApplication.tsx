@@ -1,19 +1,17 @@
 import type { ReactNode } from "react";
 import type { SdComponentProps } from "../models/sd-component-props";
-import { SdIcon, type SdIconName } from "./icons";
+import type {
+  SdApplicationConfig,
+  SdNavNavItem
+} from "../models/sd-application";
+import { SdIcon } from "./icons";
 
-export interface SdNavNavItem {
-  href: string;
-  label: string;
-  icon: SdIconName;
-}
+export type { SdNavNavItem } from "../models/sd-application";
 
-interface SdApplicationProps extends SdComponentProps<ReactNode> {
-  brand?: string | undefined;
-  navItems?: SdNavNavItem[] | undefined;
-  activeHref?: string | undefined;
-  user?: { username: string; role: string } | null | undefined;
-  theme?: "light" | "dark" | undefined;
+interface SdApplicationProps extends SdComponentProps<
+  ReactNode,
+  SdApplicationConfig
+> {
   onToggleTheme?: (() => void) | undefined;
   onNavigate?: ((href: string) => void) | undefined;
   onLogout?: (() => void) | undefined;
@@ -28,16 +26,18 @@ const SdApplication = (props: SdApplicationProps) => {
     onChange,
     children,
     className,
-    brand,
-    navItems,
-    activeHref,
-    user,
-    theme,
     onToggleTheme,
     onNavigate,
     onLogout,
     ...rest
   } = props;
+
+  const settings: SdApplicationConfig = { ...config };
+  const brand = settings.brand ?? "mtCMS";
+  const navItems: SdNavNavItem[] | undefined = settings.navItems;
+  const activeHref = settings.activeHref;
+  const user = settings.user;
+  const theme = settings.theme;
 
   return (
     <div
@@ -50,7 +50,7 @@ const SdApplication = (props: SdApplicationProps) => {
         .join(" ")}
     >
       <header className="flex h-12 shrink-0 items-center justify-between border-b border-[var(--border)] px-4">
-        <span className="text-base font-semibold">{brand ?? "mtCMS"}</span>
+        <span className="text-base font-semibold">{brand}</span>
         <div className="flex items-center gap-3 text-sm">
           <button
             type="button"

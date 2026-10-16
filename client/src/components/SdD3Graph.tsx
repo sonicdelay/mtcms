@@ -18,6 +18,7 @@ export interface SdD3GraphValue {
 }
 
 export interface SdD3GraphConfig {
+  title?: string;
   width?: number;
   height?: number;
   xDomain?: [number, number];
@@ -46,6 +47,7 @@ const DEFAULT_POINTS: SdD3GraphPoint[] = [
 ];
 
 const DEFAULT_CONFIG = {
+  title: "",
   width: 460,
   height: 400,
   r: 8,
@@ -60,14 +62,6 @@ interface SdD3GraphProps extends SdComponentProps<
   SdD3GraphValue,
   SdD3GraphConfig
 > {
-  title?: string;
-  width?: number;
-  height?: number;
-  r?: number;
-  fill?: string;
-  opacity?: number;
-  xLabel?: string;
-  yLabel?: string;
   [key: string]: unknown;
 }
 
@@ -88,21 +82,8 @@ const domainOf = (
 };
 
 const SdD3Graph = (props: SdD3GraphProps) => {
-  const {
-    value,
-    config,
-    eventIn,
-    onChange,
-    title,
-    width,
-    height,
-    r,
-    fill,
-    opacity,
-    xLabel,
-    yLabel,
-    ...rest
-  } = props;
+  const { value, config, eventIn, onChange, children, className, ...rest } =
+    props;
 
   const lastEvent = useRef<SdComponentEvent | undefined>(undefined);
   useEffect(() => {
@@ -125,13 +106,14 @@ const SdD3Graph = (props: SdD3GraphProps) => {
   const cfg = {
     ...DEFAULT_CONFIG,
     ...config,
-    width: num(width ?? config?.width, DEFAULT_CONFIG.width),
-    height: num(height ?? config?.height, DEFAULT_CONFIG.height),
-    r: num(r ?? config?.r, DEFAULT_CONFIG.r),
-    fill: fill ?? config?.fill ?? DEFAULT_CONFIG.fill,
-    opacity: num(opacity ?? config?.opacity, DEFAULT_CONFIG.opacity),
-    xLabel: String(xLabel ?? config?.xLabel ?? DEFAULT_CONFIG.xLabel),
-    yLabel: String(yLabel ?? config?.yLabel ?? DEFAULT_CONFIG.yLabel),
+    title: String(config?.title ?? DEFAULT_CONFIG.title),
+    width: num(config?.width, DEFAULT_CONFIG.width),
+    height: num(config?.height, DEFAULT_CONFIG.height),
+    r: num(config?.r, DEFAULT_CONFIG.r),
+    fill: config?.fill ?? DEFAULT_CONFIG.fill,
+    opacity: num(config?.opacity, DEFAULT_CONFIG.opacity),
+    xLabel: String(config?.xLabel ?? DEFAULT_CONFIG.xLabel),
+    yLabel: String(config?.yLabel ?? DEFAULT_CONFIG.yLabel),
     scaleExtent:
       Array.isArray(config?.scaleExtent) && config.scaleExtent.length === 2
         ? ([
@@ -273,12 +255,12 @@ const SdD3Graph = (props: SdD3GraphProps) => {
     };
   }, [cfgKey, clipId]);
 
-  const graphClassName = ["D3Graph", rest.className].filter(Boolean).join(" ");
+  const graphClassName = ["D3Graph", className].filter(Boolean).join(" ");
 
   return (
     <div {...rest} className={graphClassName} onClick={handleClick}>
-      {title && (
-        <h2 className="mb-2 font-semibold text-[var(--fg)]">{title}</h2>
+      {cfg.title && (
+        <h2 className="mb-2 font-semibold text-[var(--fg)]">{cfg.title}</h2>
       )}
       <svg
         ref={svgRef}
@@ -286,6 +268,7 @@ const SdD3Graph = (props: SdD3GraphProps) => {
         height={cfg.height}
         style={{ display: "block" }}
       />
+      {children}
     </div>
   );
 };
