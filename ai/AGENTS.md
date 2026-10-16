@@ -25,10 +25,10 @@ Client (from `client/`):
 - `npm run lint` / `npm run fmt` — from the **repo root**; linting uses
   ESLint + typescript-eslint, formatting uses Prettier.
 - `npm run verify` — from the **repo root**; runs `fmt:check`, `lint`, `check`,
-  the client build, then the Playwright tests (the all-in-one gate). Playwright
-  tests run against the **built** client served by the server, so the build
-  step is what keeps them honest — `npm test` alone runs against whatever
-  `server/dist` currently holds.
+  the server unit tests (`node:test`, `test:server`), the client build, then the
+  Playwright tests (the all-in-one gate). Playwright tests run against the
+  **built** client served by the server, so the build step is what keeps them
+  honest — `npm test` alone runs against whatever `server/dist` currently holds.
 
 Ports: server default **8421** (`SERVER_PORT` overrides, `server/main.ts`); Vite dev
 **4210**. Verify any README/plan claiming 4000 — it's stale. Set `API_TARGET`

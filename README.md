@@ -47,9 +47,10 @@ npm run typecheck    # tsc --noEmit
 
 Formatting uses Prettier and linting uses ESLint + typescript-eslint: run
 `npm run fmt` / `npm run lint` from the repo root. `npm run verify` runs every
-check — format, lint, type-check, a client build, and the Playwright tests — in
-one command. `npm test` runs Playwright directly; it needs a current
-`server/dist` (run `npm run build` first, since the tests drive the built app).
+check — format, lint, type-check, the server unit tests, a client build, and the
+Playwright tests — in one command. `npm test` runs Playwright directly; it needs
+a current `server/dist` (run `npm run build` first, since the tests drive the
+built app). `npm run test:server` runs the server's `node:test` suite.
 
 ## Production
 

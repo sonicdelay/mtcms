@@ -21,9 +21,10 @@
     "fmt:check": "prettier --check .",
     "build": "npm --prefix client run build",
     "test": "playwright test",
+    "test:server": "npm --prefix server run test",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
-    "verify": "npm run fmt:check && npm run lint && npm run check && npm run build && npm run test -- --reporter=list --pass-with-no-tests"
+    "verify": "npm run fmt:check && npm run lint && npm run check && npm run test:server && npm run build && npm run test -- --reporter=list --pass-with-no-tests"
   },
   "keywords": [],
   "author": "",
