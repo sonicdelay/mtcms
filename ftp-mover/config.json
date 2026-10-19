@@ -1,0 +1,21 @@
+{
+  "host": "192.168.178.28",
+  "port": 4552,
+  "secure": false,
+  "user": "anonymous",
+  "password": "anonymous@",
+  "paths": ["/"],
+  "localDir": "./downloads",
+  "imageExtensions": [
+    "jpg",
+    "jpeg",
+    "png",
+    "gif",
+    "webp",
+    "bmp",
+    "heic",
+    "tif",
+    "tiff"
+  ],
+  "videoExtensions": ["mp4", "mov", "avi", "mkv", "3gp", "m4v", "webm"]
+}

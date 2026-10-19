@@ -1,0 +1,14 @@
+{
+  "name": "ftp-mover",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Find images and videos on whitelisted paths of an FTP server and move them to a local folder.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dry-run": "node src/index.js --dry-run",
+    "test": "node --test test/"
+  },
+  "license": "ISC"
+}
