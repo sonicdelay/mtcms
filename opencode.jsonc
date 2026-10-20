@@ -14,6 +14,16 @@
     "@wakatime/opencode-wakatime"
     //"./ai/plugins/prettier-fmt.js",
   ],
+  "mcp": {
+    "blender": {
+      "type" : "local",
+      "command": ["uv", "run", "blender-mcp"],
+      "cwd": "~/Downloads/sw/blender_mcp/mcp/",
+
+      "enabled": false
+    
+    }
+  },
   // Project skills. OpenCode discovers `.opencode/skills` automatically, not
   // `ai/skills`, so register the location explicitly.
   "skills": ["./ai/skills"],
