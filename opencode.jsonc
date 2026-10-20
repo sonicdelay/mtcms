@@ -14,26 +14,51 @@
     "@wakatime/opencode-wakatime"
     //"./ai/plugins/prettier-fmt.js",
   ],
+  // MCP servers (V2 shape: servers live under `mcp.servers`).
+  // mcp-for-blender bridges to the Blender addon over localhost:9876; the addon
+  // must be installed (`uvx mcp-for-blender install-addon`) and its "Start MCP
+  // Server" button clicked in Blender's N-panel for tools to work.
   "mcp": {
-    "blender": {
-      "type" : "local",
-      "command": ["uv", "run", "blender-mcp"],
-      "cwd": "~/Downloads/sw/blender_mcp/mcp/",
-
-      "enabled": false
-    
+    "servers": {
+      "blender-win": {
+        "command": "uv",
+        "args": [
+          "--directory",
+          "%USERPROFILE%\\Downloads\\sw\\blender_mcp\\mcp",
+          "run",
+          "blender-mcp"
+        ]
+      },
+      "blender-linux": {
+        "command": "uv",
+        "args": [
+          "--directory",
+          "~/Downloads/sw/blender_mcp/mcp",
+          "run",
+          "blender-mcp"
+        ]
+      }
     }
   },
   // Project skills. OpenCode discovers `.opencode/skills` automatically, not
   // `ai/skills`, so register the location explicitly.
-  "skills": ["./ai/skills"],
-  "agents": ["./ai/agents"],
+  "skills": [
+    "./ai/skills"
+  ],
+  "agents": [
+    "./ai/agents"
+  ],
   // Default free model provided by OpenCode Zen (opencode provider).
   "model": "opencode/big-pickle",
   // Format files OpenCode writes or edits, using Prettier (the repo's formatter).
   "formatter": {
     "prettier": {
-      "command": ["npx", "prettier", "--write", "$FILE"],
+      "command": [
+        "npx",
+        "prettier",
+        "--write",
+        "$FILE"
+      ],
       "extensions": [
         ".ts",
         ".tsx",

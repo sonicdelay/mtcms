@@ -12,7 +12,17 @@ export default function LoginDialog() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const ok = await login(email, password);
+    // Read from the form rather than the controlled state so values injected by
+    // browser / password-manager autofill (which never fire React's onChange)
+    // are picked up on the first submit.
+    const form = event.currentTarget as HTMLFormElement;
+    const formData = new FormData(form);
+    const submittedEmail = String(formData.get("email") ?? "").trim();
+    const submittedPassword = String(formData.get("password") ?? "");
+    const ok = await login(
+      submittedEmail || email,
+      submittedPassword || password
+    );
     if (ok) {
       closeModal();
     }
@@ -27,6 +37,7 @@ export default function LoginDialog() {
         Email
         <input
           type="email"
+          name="email"
           value={email}
           required
           autoFocus
@@ -39,6 +50,7 @@ export default function LoginDialog() {
         Passwort
         <input
           type="password"
+          name="password"
           value={password}
           required
           onChange={(event) => setPassword(event.target.value)}
