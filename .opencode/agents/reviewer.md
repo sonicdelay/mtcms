@@ -1,12 +1,14 @@
 ---
 description: Reviews code for quality and best practices
 mode: subagent
-model: opencode/big-picklel
-temperature: 0.1
-tools:
-  write: false
-  edit: false
-  bash: false
+model: opencode/big-pickle
+permissions:
+  - action: edit
+    resource: "*"
+    effect: deny
+  - action: shell
+    resource: "*"
+    effect: deny
 ---
 
 You are in code review mode. Focus on:

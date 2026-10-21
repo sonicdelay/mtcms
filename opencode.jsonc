@@ -14,51 +14,45 @@
     "@wakatime/opencode-wakatime"
     //"./ai/plugins/prettier-fmt.js",
   ],
-  // MCP servers (V2 shape: servers live under `mcp.servers`).
-  // mcp-for-blender bridges to the Blender addon over localhost:9876; the addon
-  // must be installed (`uvx mcp-for-blender install-addon`) and its "Start MCP
-  // Server" button clicked in Blender's N-panel for tools to work.
+  // MCP servers (V2 shape: servers live under `mcp.servers`). Each entry needs
+  // `type: "local"` and `command` as an ARRAY; a string `command` plus `args`
+  // fails schema validation and the whole `mcp` key is dropped silently.
+  // `command` elements are spawned directly (no shell), so `%USERPROFILE%` and
+  // `{env:NAME}` are NOT expanded there — use literal absolute paths, `cwd`,
+  // or `{env:NAME}` inside `environment` instead.
+  // blender bridges to the ahujasid Blender addon over localhost:9876. The
+  // addon must be installed (`uvx mcp-for-blender install-addon`) and Blender
+  // must be running with its MCP server started, or tool calls fail.
   "mcp": {
+    // First launch resolves and installs the package, which can outrun the
+    // 30s default startup budget.
+    "timeout": {
+      "startup": 120000
+    },
     "servers": {
-      "blender-win": {
-        "command": "uv",
-        "args": [
-          "--directory",
-          "%USERPROFILE%\\Downloads\\sw\\blender_mcp\\mcp",
-          "run",
-          "blender-mcp"
-        ]
+      "blender": {
+        "type": "local",
+        "command": ["uvx", "--from", "mcp-for-blender", "mcp-for-blender"]
       },
-      "blender-linux": {
-        "command": "uv",
-        "args": [
-          "--directory",
-          "~/Downloads/sw/blender_mcp/mcp",
-          "run",
-          "blender-mcp"
-        ]
+      "playwright": {
+        "type": "local",
+        "command": ["npx", "-y", "@playwright/mcp@latest"]
       }
     }
   },
   // Project skills. OpenCode discovers `.opencode/skills` automatically, not
   // `ai/skills`, so register the location explicitly.
-  "skills": [
-    "./ai/skills"
-  ],
-  "agents": [
-    "./ai/agents"
-  ],
+  "skills": ["./ai/skills"],
+  // Custom agents cannot be registered by path: V2's `agents` key must be an
+  // object of agent definitions, so a path array fails schema validation and is
+  // dropped. Markdown agents are discovered from `.opencode/agents/*.md`
+  // instead (see `.opencode/agents/reviewer.md`).
   // Default free model provided by OpenCode Zen (opencode provider).
   "model": "opencode/big-pickle",
   // Format files OpenCode writes or edits, using Prettier (the repo's formatter).
   "formatter": {
     "prettier": {
-      "command": [
-        "npx",
-        "prettier",
-        "--write",
-        "$FILE"
-      ],
+      "command": ["npx", "prettier", "--write", "$FILE"],
       "extensions": [
         ".ts",
         ".tsx",
@@ -79,6 +73,21 @@
   // running commands"; the git rules below allow routine inspection.
   "permissions": [
     {
+      "action": "websearch",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "webfetch",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "question",
+      "resource": "*",
+      "effect": "deny"
+    },
+    {
       "action": "edit",
       "resource": "*",
       "effect": "allow"
@@ -96,7 +105,7 @@
     {
       "action": "supermemory_recall",
       "resource": "*",
-      "effect": "allow"
+      "effect": "ask"
     },
     {
       "action": "shell",
