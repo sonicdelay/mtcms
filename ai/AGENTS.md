@@ -56,3 +56,10 @@ default.
 - Content roots: `server/media/` (fm API), `server/media/articles/` (markdown
   articles), `client/public/content/` (static pages served at `/content/*`).
 - `client/dist/`, `server/dist/`, `media/`, `node_modules/` are gitignored.
+
+## Permissions
+
+The project's OpenCode permission rules live in the `permissions` array of
+`opencode.jsonc`. When a permission prompt is granted, record the grant there
+so it is tracked, reviewable, and shared — see `ai/rules/permissions.md` for
+the pattern and the matching rules.

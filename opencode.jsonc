@@ -2,17 +2,26 @@
   // mtCMS project configuration for opencode.
   // Schema reference omitted to avoid loading an untrusted remote URL.
   // Schema documentation: https://opencode.ai/config.json
-  // Project instructions live in ai/. OpenCode V2 only auto-loads files named
-  // `AGENTS.md` (the `instructions` field is accepted but not resolved), so
-  // `ai/AGENTS.md` loads when the agent first reads under ai/.
+  // Project instructions live in ai/. Two mechanisms load them:
+  //   1. `AGENTS.md` is auto-loaded: the project root at startup, then any
+  //      `AGENTS.md` between a file the agent reads and the workspace, so
+  //      `ai/AGENTS.md` arrives when ai/ is first read.
+  //   2. The `instructions` array below is resolved at startup (see the
+  //      "Instructions" section of https://opencode.ai/v2/docs/config/), so
+  //      `ai/rules/*.md` is present before the first tool call.
   // Plugins. Superpowers is a package (V2 2.0.4+ key); also registered in the
   // global config. The prettier-fmt plugin lives in ai/ alongside the project's
   // instructions/agents/skills, so its path is registered explicitly: only
   // `.opencode/plugins/` is auto-discovered, not arbitrary locations.
   "plugins": [
     "superpowers@git+https://github.com/obra/superpowers.git",
-    "@wakatime/opencode-wakatime"
-    //"./ai/plugins/prettier-fmt.js",
+    "@wakatime/opencode-wakatime",
+    // Auto-injects TypeScript types into file reads. The unscoped
+    // `opencode-type-inject` name does not exist on npm; this is the package.
+    "@nick-vi/opencode-type-inject",
+    // Prunes obsolete tool output from the context. Large Babylon scenes and
+    // asset dumps otherwise crowd out the working set.
+    "@tarquinen/opencode-dcp"
   ],
   // MCP servers (V2 shape: servers live under `mcp.servers`). Each entry needs
   // `type: "local"` and `command` as an ARRAY; a string `command` plus `args`
@@ -32,17 +41,139 @@
     "servers": {
       "blender": {
         "type": "local",
-        "command": ["uvx", "--from", "mcp-for-blender", "mcp-for-blender"]
+<<<<<<< Updated upstream
+        "command": [
+          "uvx",
+          "--from",
+          "mcp-for-blender",
+          "mcp-for-blender"
+        ]
       },
       "playwright": {
         "type": "local",
-        "command": ["npx", "-y", "@playwright/mcp@latest"]
+        "command": [
+          "npx",
+          "-y",
+          "@playwright/mcp@latest"
+        ]
+=======
+        "command": [
+          "uvx",
+          "--from",
+          "mcp-for-blender",
+          "mcp-for-blender"
+        ]
+      },
+      "playwright": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@playwright/mcp@latest"
+        ]
+      },
+      // Babylon.js graph editors. All seven are configured so that switching
+      // one on is a one-word change, but only three are enabled: the client
+      // renders with `@babylonjs/lite`, and `lite` can consume node materials,
+      // node particles, and flow graphs (see ai/rules/babylon-engine.md).
+      // It has no GUI, Node Geometry, render-graph, or Smart Filter runtime, so
+      // the other four would author assets this app cannot load.
+      "babylon-nme": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@babylonjs/mcp-servers@9.32.0",
+          "nme"
+        ]
+      },
+      "babylon-npe": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@babylonjs/mcp-servers@9.32.0",
+          "npe"
+        ]
+      },
+      "babylon-flow-graph": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@babylonjs/mcp-servers@9.32.0",
+          "flow-graph"
+        ]
+      },
+      // Disabled: no matching runtime in `@babylonjs/lite`. Enable only if the
+      // client moves to `@babylonjs/core` or these exports get loaded another
+      // way.
+      "babylon-nge": {
+        "type": "local",
+        "disabled": true,
+        "command": [
+          "npx",
+          "-y",
+          "@babylonjs/mcp-servers@9.32.0",
+          "nge"
+        ]
+      },
+      "babylon-nrge": {
+        "type": "local",
+        "disabled": true,
+        "command": [
+          "npx",
+          "-y",
+          "@babylonjs/mcp-servers@9.32.0",
+          "nrge"
+        ]
+      },
+      "babylon-gui": {
+        "type": "local",
+        "disabled": true,
+        "command": [
+          "npx",
+          "-y",
+          "@babylonjs/mcp-servers@9.32.0",
+          "gui"
+        ]
+      },
+      "babylon-smart-filters": {
+        "type": "local",
+        "disabled": true,
+        "command": [
+          "npx",
+          "-y",
+          "@babylonjs/mcp-servers@9.32.0",
+          "smart-filters"
+        ]
+>>>>>>> Stashed changes
       }
     }
   },
   // Project skills. OpenCode discovers `.opencode/skills` automatically, not
   // `ai/skills`, so register the location explicitly.
-  "skills": ["./ai/skills"],
+  "skills": [
+    "./ai/skills"
+  ],
+  // Additional instruction files loaded alongside the discovered `AGENTS.md`.
+  // `ai/AGENTS.md` already points the agent at `ai/rules/*` on demand; this
+  // glob pulls the same rules in up front so they apply without a read first.
+  "instructions": [
+    "ai/rules/*.md"
+  ],
+  // Language servers. Disabled by default in OpenCode. The built-in
+  // `typescript` server covers .ts/.tsx/.js/.jsx and needs only the
+  // `typescript` dependency already in the root package.json; `eslint` and
+  // `oxlint` come along from the project's own dev dependencies.
+  // `npm run check` remains the batch gate — LSP adds live diagnostics and
+  // symbol information, it does not replace the typecheck.
+  "lsp": true,
+  // `todo` adds the `todowrite` tool. OpenCode V2 ships no todo tool by
+  // default, and the superpowers workflow expects one.
+  "experimental": {
+    "todo": true
+  },
   // Custom agents cannot be registered by path: V2's `agents` key must be an
   // object of agent definitions, so a path array fails schema validation and is
   // dropped. Markdown agents are discovered from `.opencode/agents/*.md`
@@ -52,7 +183,12 @@
   // Format files OpenCode writes or edits, using Prettier (the repo's formatter).
   "formatter": {
     "prettier": {
-      "command": ["npx", "prettier", "--write", "$FILE"],
+      "command": [
+        "npx",
+        "prettier",
+        "--write",
+        "$FILE"
+      ],
       "extensions": [
         ".ts",
         ".tsx",
@@ -71,6 +207,12 @@
   // Permissions (V2): ordered rules, last match wins. The built-in base policy
   // allows everything, so the broad `shell` ask re-establishes "ask before
   // running commands"; the git rules below allow routine inspection.
+  //
+  // Grants are recorded here on purpose. OpenCode's own "Allow always" saves a
+  // grant in its own local database, which is invisible to the repo and lost
+  // when that database is reset. This file is tracked, so a grant is
+  // reviewable in a diff and shared with the team. `ai/rules/permissions.md`
+  // says how to record a new grant.
   "permissions": [
     {
       "action": "websearch",
@@ -107,16 +249,139 @@
       "resource": "*",
       "effect": "ask"
     },
+    // The broad gate. Everything below is a narrow exception, and V2 resolves
+    // an action by the LAST matching rule — so every exception must stay
+    // under this line.
     {
       "action": "shell",
       "resource": "*",
       "effect": "ask"
     },
+    // Deliberately prompt-gated. These commands destroy work, publish it, or
+    // run code the agent fetched; a one-off approval is not a standing
+    // invitation. To keep one of them, add an `allow` rule at the end of
+    // this array — the last matching rule wins.
     {
       "action": "shell",
-      "resource": "git add *",
-      "effect": "allow"
+      "resource": "git push *",
+      "effect": "ask"
     },
+    {
+      "action": "shell",
+      "resource": "git reset *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "git checkout *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "git clean *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "git rebase *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "Remove-Item *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "Move-Item *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "Copy-Item *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "Set-Content *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "Out-File *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "Stop-Process *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "Start-Process *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "npm install *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "npm i *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "npm start *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "npx -y *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "npx --yes *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "curl *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "Invoke-WebRequest *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "Invoke-RestMethod *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "bash *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "cmd *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "sh *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "python -c *",
+      "effect": "ask"
+    },
+    // git: history and inspection. Read-only, so it cannot lose work.
     {
       "action": "shell",
       "resource": "git status *",
@@ -134,26 +399,380 @@
     },
     {
       "action": "shell",
+      "resource": "git show *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git ls-files *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git ls-tree *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git grep *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git rev-parse *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git branch *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git reflog *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git cat-file *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git check-ignore *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git merge-base *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git config --get *",
+      "effect": "allow"
+    },
+    // Staging and committing stay local and are recoverable from the reflog.
+    {
+      "action": "shell",
+      "resource": "git add *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git commit *",
+      "effect": "allow"
+    },
+    // The project scripts `npm run verify` chains, plus the dev watchers.
+    {
+      "action": "shell",
       "resource": "npm run fmt *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm run fmt:check *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm run lint *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm run check *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm run test *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm run verify *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm run build *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm run dev:server *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm --prefix *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm list *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm --version *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm pkg *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npx prettier *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npx eslint *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npx playwright *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "node *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "python.exe *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "python --version *",
+      "effect": "allow"
+    },
+    // Read-only inspection of the filesystem and the process table.
+    {
+      "action": "shell",
+      "resource": "Get-ChildItem *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Get-Content *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Get-Item *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Get-Command *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Get-Location *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Get-Date *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Get-FileHash *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Get-PSDrive *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Get-Process *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Get-CimInstance *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Get-NetTCPConnection *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Get-WinEvent *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Test-Path *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Test-NetConnection *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Measure-Object *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Select-Object *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Select-String *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Sort-Object *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Group-Object *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Where-Object *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "ForEach-Object *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Format-Table *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Format-List *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Out-String *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Out-Null *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Write-Output *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Write-Host *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "Join-Path *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "ConvertFrom-Json *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "ConvertTo-Json *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "rg *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "grep *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "findstr *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "ls *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "head *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "tail *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "wc *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "where.exe *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "netstat *",
       "effect": "allow"
     }
   ],
-  "exclude": [
-    "build",
-    "node_modules",
-    "media",
-    "dist",
-    ".backup",
-    ".git",
-    ".vscode",
-    ".idea",
-    ".cache",
-    ".next",
-    ".fallow",
-    ".turbo",
-    ".yarn",
-    ".pnpm",
-    ".gitignore",
-    "spectre"
-  ]
+  // Filesystem watch exclusions. The schema has no `exclude` key
+  // (`additionalProperties: false`), so the previous top-level `exclude` array
+  // was dropped at load and did nothing. `watcher.ignore` is the supported
+  // key; it stops churn from dependency and build trees.
+  "watcher": {
+    "ignore": [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/.git/**",
+      "**/.cache/**",
+      "**/.next/**",
+      "**/.turbo/**",
+      "**/.yarn/**",
+      "**/.pnpm/**",
+      "**/.fallow/**",
+      "**/.backup/**",
+      "**/.idea/**",
+      "**/.vscode/**",
+      "**/coverage/**",
+      "**/logs/**",
+      "**/3rd-party/**"
+    ]
+  }
 }
