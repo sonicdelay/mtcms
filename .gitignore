@@ -36,4 +36,4 @@ yarn-error.log*
 cache/
 .backup/
 vp1/dist/*
-spectre
+
