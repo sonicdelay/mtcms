@@ -6,8 +6,9 @@ Outputs into  <repo>/client/public/assets/:
   proxy741_g11_athletic_preview.png    (front render)
 
 Prerequisites
-  Blender 5.2 LTS with the MPFB extension installed as
-  bl_ext.user_default.mpfb, and MPFB user data containing:
+  Blender 5.2 LTS with the MPFB extension installed (either as
+  bl_ext.blender_org.mpfb or bl_ext.user_default.mpfb), and MPFB user data
+  containing:
     - skin  saltycowdawg_genuine_caucasian_female_with_genitals.mhmat
     - proxy proxy741.proxy
   (MPFB user data root is set in Edit > Preferences > Add-ons > MPFB.)
@@ -26,6 +27,20 @@ import sys
 import traceback
 
 from mathutils import Matrix, Vector
+
+
+def mpfb_services():
+    """Return MPFB's ``services`` package for either extension repository name."""
+    import importlib
+
+    errors = []
+    for package in ("bl_ext.blender_org.mpfb", "bl_ext.user_default.mpfb"):
+        try:
+            return importlib.import_module(package + ".services")
+        except ImportError as exc:
+            errors.append("%s (%s)" % (package, exc))
+    raise ImportError("MPFB add-on not found; tried: " + ", ".join(errors))
+
 
 # <repo>/client/public/assets, resolved from this file so the script is portable.
 OUT_DIR = os.path.abspath(
@@ -93,7 +108,7 @@ def purge():
 
 
 def obj_type(ob):
-    from bl_ext.user_default.mpfb.services import ObjectService
+    ObjectService = mpfb_services().ObjectService
 
     try:
         return ObjectService.get_object_type(ob)
@@ -235,7 +250,7 @@ def aim_bone(arm, name, target_world):
 
 
 def build():
-    from bl_ext.user_default.mpfb.services import HumanService
+    HumanService = mpfb_services().HumanService
 
     human_info = HumanService._create_default_human_info_dict()
     human_info["name"] = BASE
@@ -452,7 +467,7 @@ def render_preview():
 
 
 def main():
-    from bl_ext.user_default.mpfb.services import RigService
+    RigService = mpfb_services().RigService
 
     clean_scene()
     basemesh = build()
