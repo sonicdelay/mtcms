@@ -1,0 +1,1 @@
+In blender create a 12yo athletic low poly child girl character with MPFB add-on standing in a-pose with the arms straight to the side without cloth. Skin texture should be saltycowdawg_genuine_caucasian_female_with_genitals and topology female1609. store the files under client\public\assets

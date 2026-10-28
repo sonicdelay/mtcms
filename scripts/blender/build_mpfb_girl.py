@@ -1,4 +1,4 @@
-"""Build an 11-year-old athletic low-poly girl with the MPFB add-on.
+"""Build an XX-year-old athletic low-poly girl with the MPFB add-on.
 
 Outputs into  <repo>/client/public/assets/:
   proxy741_g11_athletic.blend          (packed textures, A-pose baked as rest)
@@ -10,7 +10,7 @@ Prerequisites
   bl_ext.blender_org.mpfb or bl_ext.user_default.mpfb), and MPFB user data
   containing:
     - skin  saltycowdawg_genuine_caucasian_female_with_genitals.mhmat
-    - proxy proxy741.proxy
+    - proxy none
   (MPFB user data root is set in Edit > Preferences > Add-ons > MPFB.)
 
 Run headless:
@@ -46,7 +46,7 @@ def mpfb_services():
 OUT_DIR = os.path.abspath(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "client", "public", "assets")
 )
-BASE = "proxy741_g11_athletic"
+BASE = "female1609"
 BLEND_PATH = os.path.join(OUT_DIR, BASE + ".blend")
 GLB_PATH = os.path.join(OUT_DIR, BASE + ".glb")
 PNG_PATH = os.path.join(OUT_DIR, BASE + "_preview.png")
@@ -55,7 +55,7 @@ ARGS = sys.argv[sys.argv.index("--") + 1 :] if "--" in sys.argv else []
 FIX_POSE = "--nopose" not in ARGS
 
 SKIN = "saltycowdawg_genuine_caucasian_female_with_genitals.mhmat"
-PROXY = "proxy741.proxy"
+PROXY = "female1605.proxy"
 
 # 11 yo girl, athletic, caucasian.  Macro scale: 0.1875 = child, 0.5 = young adult.
 PHENOTYPE = {
@@ -529,8 +529,8 @@ def main():
         bpy.data.objects.remove(basemesh, do_unlink=True)
         log("removed basemesh, objects now:", [ob.name for ob in bpy.data.objects])
 
-    mesh.name = "proxy741"
-    mesh.data.name = "proxy741"
+    #mesh.name = "proxy741"
+    #mesh.data.name = "proxy741"
     arm.name = "Armature"
     arm.data.name = "Armature"
     for mat in mesh.data.materials:

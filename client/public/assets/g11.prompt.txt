@@ -1,1 +1,0 @@
-In blender create a 11yo athletic low poly child girl character with MPFB add-on standing in a-pose with the arms straight to the side without cloth and a mixamo default armature and skeleton. Skin texture should be saltycowdawg_genuine_caucasian_female_with_genitals and topology proxy741. store the files under client\public\assets
