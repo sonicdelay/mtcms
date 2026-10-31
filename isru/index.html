@@ -1,0 +1,1495 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>iMGSRC.RU album → image gallery</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0f1115;
+        --panel: #171a21;
+        --panel-2: #1d212b;
+        --line: #262b36;
+        --text: #e6e9ef;
+        --muted: #8b93a7;
+        --accent: #7aa2f7;
+        --ok: #9ece6a;
+        --warn: #e0af68;
+        --err: #f7768e;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 28px clamp(12px, 3vw, 48px) 64px;
+        background: var(--bg);
+        color: var(--text);
+        font:
+          15px/1.55 system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+      }
+      h1 {
+        margin: 0 0 6px;
+        font-size: clamp(20px, 2.6vw, 28px);
+        font-weight: 650;
+      }
+      .lead {
+        margin: 0 0 24px;
+        color: var(--muted);
+        font-size: 13.5px;
+      }
+      .lead code {
+        color: var(--text);
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 18px;
+        max-width: 980px;
+      }
+      form {
+        display: grid;
+        gap: 12px;
+      }
+      .row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: end;
+      }
+      .field {
+        display: grid;
+        gap: 5px;
+        flex: 1 1 340px;
+        min-width: 0;
+      }
+      .field.narrow {
+        flex: 0 1 160px;
+      }
+      label {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      input,
+      select,
+      button {
+        font: inherit;
+        color: var(--text);
+        background: var(--panel-2);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 9px 11px;
+      }
+      input:focus,
+      select:focus,
+      button:focus-visible {
+        outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+        outline-offset: 1px;
+      }
+      input::placeholder {
+        color: #5f6678;
+      }
+      button {
+        cursor: pointer;
+        background: var(--accent);
+        border-color: transparent;
+        color: #0b1020;
+        font-weight: 650;
+        padding: 9px 18px;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      button.ghost {
+        background: var(--panel-2);
+        color: var(--text);
+        border-color: var(--line);
+        font-weight: 500;
+      }
+      button.danger {
+        background: transparent;
+        color: var(--err);
+        border-color: var(--line);
+        font-weight: 500;
+      }
+
+      details.settings {
+        margin-top: 4px;
+      }
+      details.settings summary {
+        cursor: pointer;
+        color: var(--muted);
+        font-size: 12.5px;
+        user-select: none;
+      }
+      details.settings .inner {
+        display: grid;
+        gap: 10px;
+        margin-top: 10px;
+        padding: 12px;
+        border: 1px dashed var(--line);
+        border-radius: 8px;
+      }
+      .hint {
+        font-size: 12px;
+        color: var(--muted);
+        margin: 0;
+      }
+      .hint a {
+        color: var(--accent);
+      }
+
+      .progress-wrap {
+        margin-top: 14px;
+        display: none;
+        gap: 8px;
+      }
+      .progress-wrap.on {
+        display: grid;
+      }
+      .bar {
+        height: 6px;
+        background: var(--panel-2);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .bar > i {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, var(--accent), #bb9af7);
+        transition: width 0.25s ease;
+      }
+      .status {
+        font-size: 12.5px;
+        color: var(--muted);
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .alert {
+        display: none;
+        margin-top: 14px;
+        padding: 11px 13px;
+        border-radius: 8px;
+        font-size: 13px;
+        border: 1px solid;
+        overflow-wrap: anywhere;
+      }
+      .alert.on {
+        display: block;
+      }
+      .alert.error {
+        color: var(--err);
+        border-color: color-mix(in srgb, var(--err) 40%, var(--line));
+        background: color-mix(in srgb, var(--err) 8%, transparent);
+      }
+      .alert.info {
+        color: var(--warn);
+        border-color: color-mix(in srgb, var(--warn) 40%, var(--line));
+        background: color-mix(in srgb, var(--warn) 8%, transparent);
+      }
+
+      #results {
+        margin-top: 28px;
+        display: none;
+      }
+      #results.on {
+        display: block;
+      }
+      .results-head {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+      .results-head h2 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .results-head .meta {
+        color: var(--muted);
+        font-size: 12.5px;
+        overflow-wrap: anywhere;
+      }
+      .results-head .meta a {
+        color: var(--accent);
+      }
+      .toolbar {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .note {
+        max-width: 980px;
+        margin-top: 18px;
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .note strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+    </style>
+
+    <!-- Shared by the live results and the exported HTML file. -->
+    <style id="gallery-style">
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+        gap: 16px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .card {
+        margin: 0;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .frame {
+        display: block;
+        aspect-ratio: 4 / 3;
+        background: #0b0d11;
+        overflow: hidden;
+      }
+      .frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        transition: transform 0.18s ease;
+      }
+      .frame:hover img {
+        transform: scale(1.02);
+      }
+      figcaption {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        font-size: 12.5px;
+        border-top: 1px solid var(--line);
+        min-width: 0;
+      }
+      .idx {
+        flex: none;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+        min-width: 2.5em;
+      }
+      .name {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .dims {
+        flex: none;
+        color: var(--muted);
+      }
+
+      #lb {
+        position: fixed;
+        inset: 0;
+        display: none;
+        place-items: center;
+        background: rgba(0, 0, 0, 0.92);
+        z-index: 50;
+        padding: 24px;
+      }
+      #lb.open {
+        display: grid;
+      }
+      #lb img {
+        max-width: 100%;
+        max-height: calc(100vh - 90px);
+        object-fit: contain;
+        border-radius: 4px;
+      }
+      #lb .bar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 14px;
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      #lb button {
+        background: #1d212b;
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 4px 12px;
+        cursor: pointer;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>iMGSRC.RU album → image gallery</h1>
+      <p class="lead">
+        Paste an album, photo, or tape URL. The page starts at the album's
+        initial view, continues to the “all images on one page” view, collects
+        every full-size image and renders a list you can export as a standalone
+        HTML file. When the same photo is offered in several formats, it is
+        listed once and the WEBP version is preferred (falling back to the
+        other formats when no WEBP file exists).
+      </p>
+    </header>
+
+    <section class="panel">
+      <form id="scrape-form">
+        <div class="row">
+          <div class="field">
+            <label for="album-url">Album URL</label>
+            <input
+              id="album-url"
+              type="url"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="https://imgsrc.ru/user/123456.html?pwd=…"
+            />
+          </div>
+          <div class="field narrow">
+            <label for="max-images"
+              >Max images <span aria-hidden="true">(optional)</span></label
+            >
+            <input
+              id="max-images"
+              type="number"
+              min="1"
+              step="1"
+              placeholder="all"
+            />
+          </div>
+          <button id="start" type="submit">Collect images</button>
+          <button id="cancel" class="danger" type="button" hidden>
+            Cancel
+          </button>
+        </div>
+
+        <details class="settings">
+          <summary>Connection settings</summary>
+          <div class="inner">
+            <div class="field">
+              <label for="backend">Fetch through</label>
+              <select id="backend">
+                <option value="auto">
+                  Auto (local proxy if available, otherwise Jina Reader)
+                </option>
+                <option value="jina">Jina Reader (r.jina.ai, no setup)</option>
+                <option value="proxy">Local proxy (./proxy)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="jina-key"
+                >Jina Reader API key
+                <span aria-hidden="true"
+                  >(optional, raises rate limits)</span
+                ></label
+              >
+              <input
+                id="jina-key"
+                type="password"
+                autocomplete="off"
+                placeholder="jina_…"
+              />
+            </div>
+            <p class="hint">
+              iMGSRC.RU does not send CORS headers, so the browser cannot fetch
+              it directly. The default reader relays the request (it sees the
+              album URL, including any
+              <code>?pwd=</code> token). For a local-only relay, run
+              <code>node cors-proxy.mjs</code> and open
+              <a href="http://localhost:8787" target="_blank" rel="noopener"
+                >http://localhost:8787</a
+              >.
+            </p>
+          </div>
+        </details>
+      </form>
+
+      <div class="progress-wrap" id="progress-wrap">
+        <div class="bar"><i id="progress-bar"></i></div>
+        <div class="status">
+          <span id="status">Starting…</span>
+          <span id="counter"></span>
+        </div>
+      </div>
+
+      <div class="alert" id="alert" role="status"></div>
+    </section>
+
+    <section id="results">
+      <div class="results-head">
+        <div>
+          <h2 id="results-title">Album</h2>
+          <div class="meta" id="results-meta"></div>
+        </div>
+        <div class="toolbar">
+          <button type="button" class="ghost" id="export">Export HTML</button>
+          <button type="button" class="ghost" id="copy">Copy image URLs</button>
+          <button type="button" class="ghost" id="open-source">
+            Open album
+          </button>
+        </div>
+      </div>
+      <main class="grid" id="grid"></main>
+    </section>
+
+    <p class="note">
+      <strong>How it works:</strong> the page loads the album’s initial view
+      (deriving it from a <code>tape-…</code> URL when needed), then continues
+      to the <code>tape-…</code> “all images on one page” view. It reads the
+      full-size image URLs from <code>&lt;source&gt;</code> and
+      <code>&lt;img&gt;</code> elements, groups the variants of the same photo
+      into a single entry, prefers the WEBP file and paginates through the
+      album. Adult-content warnings and “foreword” pages
+      (<code>?preword=show</code>) are skipped automatically. “Export HTML”
+      downloads a standalone gallery file. Images stay on the iMGSRC CDN.
+    </p>
+
+    <div id="lb-host"></div>
+
+    <script>
+      (() => {
+        "use strict";
+
+        const JINA_PREFIX = "https://r.jina.ai/";
+        const JINA_INTERVAL = 3300; // stay below the free reader limit (20 req/min)
+        const TAPE_RE = /\/tape-(\d+)-(\d+)-(\d+)\.html$/;
+        const IMGSRC_RE = /(^|\.)imgsrc\.ru$/i;
+
+        // One entry per photo. When the same photo is offered in several
+        // formats, the highest-ranked variant wins; WEBP is preferred.
+        const FORMAT_RANK = {
+          webp: 100,
+          gif: 90,
+          avif: 80,
+          png: 70,
+          tiff: 60,
+          jpg: 10
+        };
+        const formatRank = (ext) => FORMAT_RANK[ext] ?? 50;
+        const EXT_ALIASES = {
+          jpeg: "jpg",
+          jpe: "jpg",
+          jfif: "jpg",
+          tif: "tiff",
+          "svg+xml": "svg",
+          "x-icon": "ico"
+        };
+        const MIME_TO_EXT = {
+          "image/jpeg": "jpg",
+          "image/jpg": "jpg",
+          "image/pjpeg": "jpg",
+          "image/svg+xml": "svg",
+          "image/x-icon": "ico",
+          "image/vnd.microsoft.icon": "ico"
+        };
+        const BASE_TITLE = "iMGSRC.RU album → image gallery";
+        const STORAGE_KEY = "imgsrc:lastAlbum";
+
+        const $ = (selector) => document.querySelector(selector);
+        const form = $("#scrape-form");
+        const urlInput = $("#album-url");
+        const limitInput = $("#max-images");
+        const backendSelect = $("#backend");
+        const jinaKeyInput = $("#jina-key");
+        const startButton = $("#start");
+        const cancelButton = $("#cancel");
+        const progressWrap = $("#progress-wrap");
+        const progressBar = $("#progress-bar");
+        const statusEl = $("#status");
+        const counterEl = $("#counter");
+        const alertEl = $("#alert");
+        const results = $("#results");
+        const resultsTitle = $("#results-title");
+        const resultsMeta = $("#results-meta");
+        const grid = $("#grid");
+        const exportButton = $("#export");
+        const copyButton = $("#copy");
+        const openSourceButton = $("#open-source");
+
+        const LIGHTBOX_MARKUP = `
+    <div id="lb" role="dialog" aria-modal="true" aria-label="Image viewer">
+      <img alt="">
+      <div class="bar">
+        <button type="button" data-nav="-1">← Prev</button>
+        <span id="lb-count"></span>
+        <button type="button" data-nav="1">Next →</button>
+        <button type="button" data-close>Close</button>
+      </div>
+    </div>`;
+
+        $("#lb-host").innerHTML = LIGHTBOX_MARKUP;
+
+        let current = null; // { images, title, sourceUrl }
+        let abortController = null;
+        let proxyAvailable = false;
+        let lastJinaRequest = 0;
+
+        /* ---------------------------------------------------------------- helpers */
+
+        const escapeHtml = (value) =>
+          String(value ?? "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#39;");
+
+        const sleep = (ms, signal) =>
+          new Promise((resolve, reject) => {
+            const timer = setTimeout(resolve, ms);
+            signal?.addEventListener(
+              "abort",
+              () => {
+                clearTimeout(timer);
+                reject(new DOMException("Aborted", "AbortError"));
+              },
+              { once: true }
+            );
+          });
+
+        const galleryTitle = (album) => `${album} — iMGSRC.RU image gallery`;
+
+        function slugify(value) {
+          return (
+            String(value)
+              .normalize("NFKD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .replace(/[^\p{L}\p{N}]+/gu, "-")
+              .replace(/^-+|-+$/g, "")
+              .slice(0, 80) || "imgsrc-album"
+          );
+        }
+
+        function rememberAlbum({ images, title, sourceUrl }) {
+          try {
+            localStorage.setItem(
+              STORAGE_KEY,
+              JSON.stringify({
+                title,
+                sourceUrl,
+                count: images.length,
+                savedAt: new Date().toISOString()
+              })
+            );
+          } catch {
+            // localStorage may be unavailable (private mode, some file:// setups).
+          }
+        }
+
+        function normalizeUrl(raw) {
+          let value = String(raw || "").trim();
+          if (!value) throw new Error("Enter an album URL first.");
+          if (!/^https?:\/\//i.test(value)) value = `https://${value}`;
+
+          const url = new URL(value);
+          if (!IMGSRC_RE.test(url.hostname)) {
+            throw new Error("Only iMGSRC.RU URLs are supported.");
+          }
+          url.hash = "";
+          return url.toString();
+        }
+
+        const absoluteUrl = (src) => {
+          if (!src) return null;
+          if (src.startsWith("//")) return `https:${src}`;
+          if (/^https?:\/\//i.test(src)) return src;
+          return new URL(src, "https://imgsrc.ru/").toString();
+        };
+
+        // <source srcset> may carry multiple candidates ("url 1x, url 2x").
+        const srcsetUrls = (srcset) =>
+          String(srcset || "")
+            .split(",")
+            .map((part) => part.trim().split(/\s+/)[0])
+            .filter(Boolean);
+
+        // Normalizes a file extension or MIME subtype ("jpeg" → "jpg").
+        const normalizeExt = (value) => {
+          const ext = String(value || "")
+            .toLowerCase()
+            .replace(/^\./, "");
+          return EXT_ALIASES[ext] || ext || null;
+        };
+
+        // <source type="image/…"> → internal format name. Accepts every
+        // image MIME type, so new formats are collected automatically.
+        const mimeToExt = (type) => {
+          const mime = String(type || "")
+            .toLowerCase()
+            .split(";")[0]
+            .trim();
+          if (!mime.startsWith("image/")) return null;
+          return MIME_TO_EXT[mime] || normalizeExt(mime.slice("image/".length));
+        };
+
+        // Derives the internal format ("webp" | "gif" | "png" | "jpg" | …)
+        // from a URL, normalizing the JPEG and TIFF variants.
+        const imageExtOf = (url) => {
+          try {
+            const file = decodeURIComponent(
+              new URL(url).pathname.split("/").pop() || ""
+            ).toLowerCase();
+            const dot = file.lastIndexOf(".");
+            if (dot < 0) return null;
+            const ext = normalizeExt(file.slice(dot + 1));
+            return ext && /^[a-z0-9]+$/.test(ext) ? ext : null;
+          } catch {
+            return null;
+          }
+        };
+
+        // Dedupe key: one key per photo, ignoring the file extension. iMGSRC
+        // names the variants of a photo after the same base file
+        // (imgsrc.ru_<photoId><hash>.webp / .jpg / …), so the extension-less
+        // path identifies the different formats of the same image.
+        const photoKeyOf = (url) => {
+          try {
+            const parsed = new URL(url);
+            return `${parsed.origin}${parsed.pathname.replace(/\.[a-z0-9]+$/i, "")}${parsed.search}`;
+          } catch {
+            return String(url);
+          }
+        };
+
+        function setStatus(text) {
+          statusEl.textContent = text;
+        }
+
+        function setProgress(done, total, count) {
+          const percent = total ? Math.min(100, (done / total) * 100) : 0;
+          progressBar.style.width = `${percent}%`;
+          counterEl.textContent = `${done} / ${total} page${total === 1 ? "" : "s"} · ${count} image${count === 1 ? "" : "s"}`;
+        }
+
+        function showAlert(message, kind = "error") {
+          alertEl.textContent = message;
+          alertEl.className = `alert on ${kind}`;
+        }
+
+        function hideAlert() {
+          alertEl.className = "alert";
+          alertEl.textContent = "";
+        }
+
+        function setBusy(busy) {
+          startButton.disabled = busy;
+          startButton.textContent = busy ? "Collecting…" : "Collect images";
+          cancelButton.hidden = !busy;
+          progressWrap.classList.toggle("on", busy);
+          if (!busy) progressBar.style.width = "0%";
+        }
+
+        /* ---------------------------------------------------------------- fetching */
+
+        const chosenBackend = () => {
+          const value = backendSelect.value;
+          if (value === "auto") return proxyAvailable ? "proxy" : "jina";
+          return value;
+        };
+
+        async function fetchViaProxy(url, signal) {
+          const response = await fetch(
+            `./proxy?url=${encodeURIComponent(url)}`,
+            {
+              signal,
+              cache: "no-store"
+            }
+          );
+          if (!response.ok) {
+            throw new Error(
+              `Local proxy returned HTTP ${response.status}. Is cors-proxy.mjs running?`
+            );
+          }
+          return response.text();
+        }
+
+        async function fetchViaJina(url, signal) {
+          const headers = {
+            "X-Return-Format": "html",
+            // iMGSRC.RU puts adult albums behind a one-click “over 18” page
+            // and remembers the answer in this cookie. Forward it so the
+            // reader returns the album instead of the warning page.
+            "X-Set-Cookie": "over18=yeah"
+          };
+          const key = jinaKeyInput.value.trim();
+          if (key) headers.Authorization = `Bearer ${key}`;
+
+          for (let attempt = 0; attempt < 8; attempt += 1) {
+            const wait = lastJinaRequest + JINA_INTERVAL - Date.now();
+            if (wait > 0) {
+              setStatus(
+                `Waiting ${Math.ceil(wait / 1000)}s for the reader rate limit…`
+              );
+              await sleep(wait, signal);
+            }
+            lastJinaRequest = Date.now();
+
+            let response;
+            try {
+              response = await fetch(JINA_PREFIX + url, { headers, signal });
+            } catch (error) {
+              if (error.name === "AbortError") throw error;
+              throw new Error(
+                `Could not reach r.jina.ai (${error.message}). ` +
+                  "Try the local proxy: run “node cors-proxy.mjs” and open http://localhost:8787."
+              );
+            }
+
+            if (response.status === 429) {
+              const retryAfter = Number.parseInt(
+                response.headers.get("retry-after") || "",
+                10
+              );
+              const seconds =
+                Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter : 20;
+              setStatus(`Reader rate limit hit — retrying in ${seconds}s…`);
+              await sleep(seconds * 1000, signal);
+              continue;
+            }
+
+            if (!response.ok) {
+              throw new Error(
+                `Reader returned HTTP ${response.status} ${response.statusText}.`
+              );
+            }
+
+            return response.text();
+          }
+
+          throw new Error(
+            "The reader rate limit was hit repeatedly. Add a Jina API key, or use the local proxy."
+          );
+        }
+
+        const fetchHtml = (url, signal) =>
+          chosenBackend() === "proxy"
+            ? fetchViaProxy(url, signal)
+            : fetchViaJina(url, signal);
+
+        /* ---------------------------------------------------------------- parsing */
+
+        const parseDoc = (html) =>
+          new DOMParser().parseFromString(html, "text/html");
+
+        function tapeInfo(url) {
+          const match = new URL(url).pathname.match(TAPE_RE);
+          if (!match) return null;
+          return { album: match[1], first: match[2], offset: Number(match[3]) };
+        }
+
+        /** Tape URL → the album's initial view (its first photo page). */
+        function initialViewUrl(url) {
+          const parsed = new URL(url);
+          const match = parsed.pathname.match(
+            /^(.*)\/tape-\d+-(\d+)-\d+\.html$/
+          );
+          if (!match) return url;
+          parsed.pathname = `${match[1]}/${match[2]}.html`;
+          parsed.hash = "";
+          return parsed.toString();
+        }
+
+        /**
+         * iMGSRC.RU may show a “foreword” page before an album
+         * (…?preword=show). It carries a GET form named “preword” whose submit
+         * button continues to the album. Returns the URL to follow, or null.
+         */
+        function prewordContinueUrl(doc, currentUrl) {
+          const form = doc.querySelector("form[name='preword']");
+          if (!form) return null;
+
+          let url;
+          try {
+            url = new URL(form.getAttribute("action") || currentUrl, currentUrl);
+          } catch {
+            return null;
+          }
+
+          const params = new URLSearchParams(url.search);
+          for (const field of form.querySelectorAll(
+            "input[name], select[name], textarea[name]"
+          )) {
+            const name = field.getAttribute("name");
+            const type = (field.getAttribute("type") || "").toLowerCase();
+            if (!name || field.disabled) continue;
+            if (type === "submit" || type === "button" || type === "image")
+              continue;
+            if (
+              (type === "checkbox" || type === "radio") &&
+              !field.hasAttribute("checked")
+            ) {
+              continue;
+            }
+            params.set(name, field.value ?? "");
+          }
+
+          // Keep the album password when the form itself dropped it.
+          const pwd = new URL(currentUrl).searchParams.get("pwd");
+          if (pwd && !params.has("pwd")) params.set("pwd", pwd);
+
+          // The album lives at the same URL without the preword flag.
+          params.delete("preword");
+          url.search = params.toString();
+          url.hash = "";
+          return url.toString();
+        }
+
+        /** Fetches a page and transparently follows a “foreword” page. */
+        async function fetchDoc(url, signal) {
+          let doc = parseDoc(await fetchHtml(url, signal));
+          const continueUrl = prewordContinueUrl(doc, url);
+          if (!continueUrl) return { doc, url };
+
+          setStatus("Skipping the album foreword…");
+          doc = parseDoc(await fetchHtml(continueUrl, signal));
+          return { doc, url: continueUrl };
+        }
+
+        function findTapeHref(doc, currentUrl) {
+          const current = new URL(currentUrl);
+          const userPrefix = current.pathname.replace(/\/[^/]*$/, "/");
+
+          for (const anchor of doc.querySelectorAll("a[href]")) {
+            const candidate = absoluteUrl(anchor.getAttribute("href"));
+            if (!candidate) continue;
+
+            const url = new URL(candidate);
+            if (!/\/tape-\d+-\d+-\d+\.html$/.test(url.pathname)) continue;
+            if (!url.pathname.startsWith(userPrefix)) continue;
+
+            // Keep the album password when the link itself dropped it.
+            if (
+              current.searchParams.get("pwd") &&
+              !url.searchParams.has("pwd")
+            ) {
+              url.searchParams.set("pwd", current.searchParams.get("pwd"));
+            }
+            url.hash = "";
+            return url.toString();
+          }
+          return null;
+        }
+
+        function tapeOffsets(doc, url) {
+          const info = tapeInfo(url);
+          if (!info) return [];
+
+          const offsets = new Set([info.offset]);
+          for (const anchor of doc.querySelectorAll("a[href]")) {
+            const candidate = absoluteUrl(anchor.getAttribute("href"));
+            if (!candidate) continue;
+            const match = new URL(candidate).pathname.match(TAPE_RE);
+            if (match && match[1] === info.album && match[2] === info.first) {
+              offsets.add(Number(match[3]));
+            }
+          }
+          return [...offsets].sort((a, b) => a - b);
+        }
+
+        function tapeUrlForOffset(baseUrl, offset) {
+          const url = new URL(baseUrl);
+          url.pathname = url.pathname.replace(/-\d+\.html$/, `-${offset}.html`);
+          return url.toString();
+        }
+
+        function nextTapeUrl(doc, currentUrl) {
+          const info = tapeInfo(currentUrl);
+          if (!info) return null;
+
+          let best = null;
+          for (const anchor of doc.querySelectorAll("a[href]")) {
+            const candidate = absoluteUrl(anchor.getAttribute("href"));
+            if (!candidate) continue;
+            const match = new URL(candidate).pathname.match(TAPE_RE);
+            if (!match || match[1] !== info.album || match[2] !== info.first)
+              continue;
+
+            const offset = Number(match[3]);
+            if (offset <= info.offset) continue;
+            if (!best || offset < best.offset)
+              best = { offset, url: candidate };
+          }
+
+          if (!best) return null;
+
+          // Keep the album password when the link itself dropped it.
+          const result = new URL(best.url);
+          const pwd = new URL(currentUrl).searchParams.get("pwd");
+          if (pwd && !result.searchParams.has("pwd"))
+            result.searchParams.set("pwd", pwd);
+          result.hash = "";
+          return result.toString();
+        }
+
+        function extractImages(doc) {
+          const out = [];
+
+          const captionOf = (element) => {
+            const container = element.closest("div");
+            if (!container) return "";
+            const clone = container.cloneNode(true);
+            clone
+              .querySelectorAll("picture, a, br, i, span")
+              .forEach((node) => node.remove());
+            const text = (clone.textContent || "").replace(/\s+/g, " ").trim();
+            return text.split("©")[0].trim();
+          };
+
+          const push = (url, caption, width, height, ext) => {
+            const absolute = absoluteUrl(url);
+            if (!absolute) return;
+            out.push({
+              url: absolute,
+              caption,
+              width,
+              height,
+              ext,
+              key: photoKeyOf(absolute)
+            });
+          };
+
+          const handleSource = (source, caption, width, height) => {
+            const declaredExt = mimeToExt(source.getAttribute("type"));
+
+            const srcset =
+              source.getAttribute("srcset") || source.getAttribute("src") || "";
+            for (const url of srcsetUrls(srcset)) {
+              // Full-size files are named imgsrc.ru_<photoId><hash>.<ext>;
+              // navigation thumbnails do not carry the "imgsrc.ru_" prefix.
+              if (!/imgsrc\.ru_\d+/.test(url)) continue;
+              const fullUrl = absoluteUrl(url);
+              if (!fullUrl) continue;
+              const ext = imageExtOf(fullUrl) || declaredExt;
+              if (!ext) continue;
+              push(fullUrl, caption, width, height, ext);
+            }
+          };
+
+          // Full-size sources of every <picture> element — animated GIFs arrive
+          // as image/gif sources, static photos as image/webp and image/jpeg,
+          // and any other format is picked up the same way.
+          for (const picture of doc.querySelectorAll("picture")) {
+            const img = picture.querySelector("img");
+            const width = img?.getAttribute("width") || null;
+            const height = img?.getAttribute("height") || null;
+            for (const source of picture.querySelectorAll("source")) {
+              handleSource(source, captionOf(picture), width, height);
+            }
+          }
+
+          // Full-size images that are plain <img> sources (e.g. animated GIFs).
+          for (const img of doc.querySelectorAll("img")) {
+            const url = absoluteUrl(img.getAttribute("src") || "");
+            const ext = url ? imageExtOf(url) : null;
+            if (!url || !ext) continue;
+            // Skip placeholders (e.g. /images/1.gif) and navigation thumbnails.
+            if (!/imgsrc\.ru_\d+/.test(url)) continue;
+            push(
+              url,
+              captionOf(img),
+              img.getAttribute("width") || null,
+              img.getAttribute("height") || null,
+              ext
+            );
+          }
+
+          // On single-photo pages the full-size URL can sit in an inline
+          // onclick handler (animated GIFs, and occasionally other formats).
+          for (const element of doc.querySelectorAll("[onclick]")) {
+            const onclick = element.getAttribute("onclick") || "";
+            for (const match of onclick.matchAll(/['"]([^'"]+)['"]/g)) {
+              const url = match[1];
+              if (!/imgsrc\.ru_\d+/.test(url)) continue;
+              const fullUrl = absoluteUrl(url);
+              if (!fullUrl) continue;
+              const ext = imageExtOf(fullUrl);
+              if (!ext) continue;
+
+              const big = element.querySelector("img.big");
+              const name = doc.getElementById("photo_name")?.textContent?.trim();
+              push(
+                fullUrl,
+                name || captionOf(element),
+                big?.getAttribute("width") || null,
+                big?.getAttribute("height") || null,
+                ext
+              );
+            }
+          }
+
+          return out;
+        }
+
+        function addImages(doc, map, limit) {
+          for (const image of extractImages(doc)) {
+            const existing = map.get(image.key);
+            if (existing) {
+              // Same photo in another format: keep the preferred variant
+              // (WEBP before GIF/AVIF/PNG before the JPG fallback).
+              if (formatRank(image.ext) > formatRank(existing.ext)) {
+                map.set(image.key, image);
+              }
+              continue;
+            }
+            if (map.size >= limit) break;
+            map.set(image.key, image);
+          }
+          return map.size;
+        }
+
+        function albumTitle(pageTitle, fallback) {
+          const cleaned = String(pageTitle || "")
+            .replace(/\s*@iMGSRC\.RU\s*$/i, "")
+            .trim();
+          if (!cleaned) return fallback;
+          return cleaned.split(" / ")[0].trim() || cleaned;
+        }
+
+        const fileName = (url) => {
+          try {
+            return decodeURIComponent(
+              new URL(url).pathname.split("/").pop() || ""
+            );
+          } catch {
+            return url;
+          }
+        };
+
+        // Human-readable list of the formats present in a result set.
+        const formatSummary = (images) => {
+          const formats = [...new Set(images.map((image) => image.ext))]
+            .filter(Boolean)
+            .map((ext) => ext.toUpperCase())
+            .sort();
+          return formats.length ? `formats: ${formats.join(", ")}` : "";
+        };
+
+        /* ---------------------------------------------------------------- rendering */
+
+        function cardsHtml(images) {
+          return images
+            .map((image, index) => {
+              const label = image.caption || fileName(image.url);
+              const dims =
+                image.width && image.height
+                  ? `${image.width} × ${image.height}`
+                  : "";
+              return `      <figure class="card">
+        <a class="frame" href="${escapeHtml(image.url)}" target="_blank" rel="noopener">
+          <img src="${escapeHtml(image.url)}" alt="${escapeHtml(label)}" loading="lazy" decoding="async">
+        </a>
+        <figcaption>
+          <span class="idx">${index + 1}</span>
+          <span class="name" title="${escapeHtml(label)}">${escapeHtml(label)}</span>
+          ${dims ? `<span class="dims">${escapeHtml(dims)}</span>` : ""}
+        </figcaption>
+      </figure>`;
+            })
+            .join("\n");
+        }
+
+        function renderResults({ images, title, sourceUrl }) {
+          current = { images, title, sourceUrl };
+
+          resultsTitle.textContent = title;
+          document.title = galleryTitle(title);
+          rememberAlbum({ images, title, sourceUrl });
+          const formats = formatSummary(images);
+          resultsMeta.innerHTML =
+            `${images.length} image${images.length === 1 ? "" : "s"}${formats ? ` · ${formats}` : ""} · ` +
+            `source: <a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(sourceUrl)}</a>`;
+          grid.innerHTML = cardsHtml(images);
+          results.classList.add("on");
+          openSourceButton.dataset.url = sourceUrl;
+        }
+
+        function buildStandaloneHtml() {
+          if (!current) return "";
+          const css = document.getElementById("gallery-style").textContent;
+          const lightbox = document.getElementById("lightbox-js").textContent;
+          const generated =
+            new Date().toISOString().replace("T", " ").slice(0, 16) + " UTC";
+          const formats = formatSummary(current.images);
+
+          return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${escapeHtml(galleryTitle(current.title))}</title>
+<meta name="album" content="${escapeHtml(current.title)}">
+<meta name="source" content="${escapeHtml(current.sourceUrl)}">
+<meta name="generator" content="iMGSRC.RU browser collector">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0f1115;
+    --panel: #171a21;
+    --line: #262b36;
+    --text: #e6e9ef;
+    --muted: #8b93a7;
+    --accent: #7aa2f7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px clamp(12px, 3vw, 48px) 64px;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header { margin-bottom: 28px; }
+  h1 { margin: 0 0 6px; font-size: clamp(20px, 2.6vw, 30px); font-weight: 650; }
+  .meta { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+  .meta a { color: var(--accent); }
+  footer { margin-top: 32px; color: var(--muted); font-size: 12px; }
+${css}
+</style>
+</head>
+<body>
+<header>
+  <h1>${escapeHtml(current.title)}</h1>
+  <div class="meta">
+    ${current.images.length} image${current.images.length === 1 ? "" : "s"}${formats ? ` · ${formats}` : ""} ·
+    source: <a href="${escapeHtml(current.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(current.sourceUrl)}</a><br>
+    generated ${escapeHtml(generated)} with the iMGSRC.RU browser collector
+  </div>
+</header>
+
+<main class="grid">
+${cardsHtml(current.images)}
+</main>
+
+<footer>Click an image to view it full size. Use ← / → to move, Esc to close.</footer>
+
+${LIGHTBOX_MARKUP}
+<script>${lightbox}<\/script>
+</body>
+</html>
+`;
+        }
+
+        /* ---------------------------------------------------------------- workflow */
+
+        async function collect(startUrl, limit, signal) {
+          const images = new Map();
+
+          // Start at the album's initial view. If the input is a tape URL,
+          // derive the first photo page from it.
+          const initialUrl = initialViewUrl(startUrl);
+          const fromTape = initialUrl !== startUrl;
+          let albumUrl = initialUrl;
+
+          setStatus(
+            fromTape
+              ? "Fetching the initial album view…"
+              : "Fetching album view…"
+          );
+          setProgress(0, 1, 0);
+
+          const albumPage = await fetchDoc(albumUrl, signal);
+          const albumDoc = albumPage.doc;
+          albumUrl = albumPage.url;
+          const title = albumTitle(albumDoc.title, startUrl);
+          addImages(albumDoc, images, limit);
+
+          let pagesDone = 1;
+
+          // If the input was already the tape view, we know where to continue.
+          let tapeUrl = fromTape ? startUrl : null;
+          if (!tapeUrl && images.size < limit) {
+            tapeUrl = findTapeHref(albumDoc, albumUrl);
+          }
+
+          let tapeDoc = null;
+          if (tapeUrl && images.size < limit) {
+            setStatus("Fetching the “all images on one page” view…");
+            tapeDoc = (await fetchDoc(tapeUrl, signal)).doc;
+            addImages(tapeDoc, images, limit);
+            pagesDone += 1;
+            setProgress(pagesDone, pagesDone, images.size);
+          }
+
+          const info = tapeDoc ? tapeInfo(tapeUrl) : null;
+          const offsets = info ? tapeOffsets(tapeDoc, tapeUrl) : [];
+
+          if (info && offsets.length > 1) {
+            const totalPages =
+              pagesDone +
+              offsets.filter((offset) => offset !== info.offset).length;
+            setProgress(pagesDone, totalPages, images.size);
+
+            for (const offset of offsets) {
+              if (offset === info.offset) continue;
+              if (images.size >= limit) break;
+
+              const pageUrl = tapeUrlForOffset(tapeUrl, offset);
+              setStatus(`Fetching page ${pagesDone + 1} / ${totalPages}…`);
+              const pageDoc = (await fetchDoc(pageUrl, signal)).doc;
+              addImages(pageDoc, images, limit);
+              pagesDone += 1;
+              setProgress(pagesDone, totalPages, images.size);
+            }
+          } else if (tapeDoc) {
+            // Fallback: follow the “next page” links one by one.
+            let next = nextTapeUrl(tapeDoc, tapeUrl);
+            let page = pagesDone;
+            while (next && images.size < limit) {
+              page += 1;
+              setStatus(`Fetching page ${page}…`);
+              const pageDoc = (await fetchDoc(next, signal)).doc;
+              addImages(pageDoc, images, limit);
+              next = nextTapeUrl(pageDoc, next);
+              pagesDone = page;
+              setProgress(page, page + 1, images.size);
+            }
+          }
+
+          return {
+            images: [...images.values()],
+            title,
+            sourceUrl: tapeUrl || albumUrl,
+            pages: pagesDone
+          };
+        }
+
+        async function run(event) {
+          event.preventDefault();
+          hideAlert();
+          results.classList.remove("on");
+          document.title = BASE_TITLE;
+
+          let startUrl;
+          let limit = Infinity;
+          try {
+            startUrl = normalizeUrl(urlInput.value);
+            const limitRaw = limitInput.value.trim();
+            if (limitRaw) {
+              const parsed = Number.parseInt(limitRaw, 10);
+              if (!Number.isFinite(parsed) || parsed <= 0) {
+                throw new Error("“Max images” must be a positive number.");
+              }
+              limit = parsed;
+            }
+          } catch (error) {
+            showAlert(error.message);
+            return;
+          }
+
+          abortController = new AbortController();
+          setBusy(true);
+          setProgress(0, 1, 0);
+
+          try {
+            const result = await collect(
+              startUrl,
+              limit,
+              abortController.signal
+            );
+
+            if (!result.images.length) {
+              throw new Error(
+                "No images found. Check that the album is public and the URL is correct " +
+                  "(password-protected albums need the ?pwd=… token)."
+              );
+            }
+
+            renderResults(result);
+            setStatus(
+              `Done — ${result.images.length} image(s) from ${result.pages} page(s).`
+            );
+            setProgress(result.pages, result.pages, result.images.length);
+            showAlert(
+              `Collected ${result.images.length} image(s). Use “Export HTML” to save the gallery.`,
+              "info"
+            );
+          } catch (error) {
+            if (error.name === "AbortError") {
+              setStatus("Cancelled.");
+              showAlert(
+                "Cancelled before the album was fully collected.",
+                "info"
+              );
+            } else {
+              setStatus("Failed.");
+              showAlert(error.message);
+            }
+          } finally {
+            setBusy(false);
+            abortController = null;
+          }
+        }
+
+        /* ---------------------------------------------------------------- actions */
+
+        function downloadHtml() {
+          if (!current) return;
+          rememberAlbum(current);
+          const blob = new Blob([buildStandaloneHtml()], {
+            type: "text/html;charset=utf-8"
+          });
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = `${slugify(current.title)}.html`;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+        }
+
+        async function copyUrls() {
+          if (!current) return;
+          const text = current.images.map((image) => image.url).join("\n");
+          try {
+            await navigator.clipboard.writeText(text);
+            showAlert(
+              `Copied ${current.images.length} image URL(s) to the clipboard.`,
+              "info"
+            );
+          } catch {
+            const area = document.createElement("textarea");
+            area.value = text;
+            area.style.position = "fixed";
+            area.style.opacity = "0";
+            document.body.appendChild(area);
+            area.select();
+            document.execCommand("copy");
+            area.remove();
+            showAlert(
+              `Copied ${current.images.length} image URL(s) to the clipboard.`,
+              "info"
+            );
+          }
+        }
+
+        /* ---------------------------------------------------------------- startup */
+
+        form.addEventListener("submit", run);
+        cancelButton.addEventListener("click", () => abortController?.abort());
+        exportButton.addEventListener("click", downloadHtml);
+        copyButton.addEventListener("click", copyUrls);
+        openSourceButton.addEventListener("click", () => {
+          if (current) window.open(current.sourceUrl, "_blank", "noopener");
+        });
+
+        const params = new URLSearchParams(location.search);
+        if (params.get("url")) urlInput.value = params.get("url");
+        if (params.get("backend")) backendSelect.value = params.get("backend");
+
+        // Restore the last collected album name so a saved/reopened page keeps it.
+        if (!params.get("url")) {
+          try {
+            const saved = JSON.parse(
+              localStorage.getItem(STORAGE_KEY) || "null"
+            );
+            if (saved?.title) document.title = galleryTitle(saved.title);
+          } catch {
+            // Ignore malformed or unavailable storage.
+          }
+        }
+
+        if (location.protocol.startsWith("http")) {
+          fetch("./proxy?ping=1", { cache: "no-store" })
+            .then((response) => (response.ok ? response.json() : null))
+            .then((data) => {
+              proxyAvailable = Boolean(data?.ok);
+              if (proxyAvailable && backendSelect.value === "auto") {
+                setStatus(
+                  "Local proxy detected — requests will stay on your machine."
+                );
+              }
+            })
+            .catch(() => {
+              proxyAvailable = false;
+            });
+        }
+
+        if (params.get("url")) {
+          form.requestSubmit();
+        }
+      })();
+    </script>
+
+    <!-- Shared by the live results and the exported HTML file. -->
+    <script id="lightbox-js">
+      (() => {
+        const lightbox = document.getElementById("lb");
+        if (!lightbox) return;
+
+        const lightboxImg = lightbox.querySelector("img");
+        const counter = document.getElementById("lb-count");
+        let images = [];
+        let index = 0;
+
+        function show(next) {
+          if (!images.length) return;
+          index = (next + images.length) % images.length;
+          lightboxImg.src = images[index].src;
+          lightboxImg.alt = images[index].alt;
+          counter.textContent = `${index + 1} / ${images.length}`;
+          lightbox.classList.add("open");
+          document.body.style.overflow = "hidden";
+        }
+
+        function close() {
+          lightbox.classList.remove("open");
+          lightboxImg.removeAttribute("src");
+          document.body.style.overflow = "";
+        }
+
+        document.addEventListener("click", (event) => {
+          const frame = event.target.closest(".card a.frame");
+          if (frame) {
+            event.preventDefault();
+            images = [...document.querySelectorAll(".card img")];
+            show(images.indexOf(frame.querySelector("img")));
+            return;
+          }
+          const nav = event.target.closest("[data-nav]");
+          if (nav) {
+            show(index + Number(nav.dataset.nav));
+            return;
+          }
+          if (event.target.closest("[data-close]") || event.target === lightbox)
+            close();
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (!lightbox.classList.contains("open")) return;
+          if (event.key === "Escape") close();
+          if (event.key === "ArrowLeft") show(index - 1);
+          if (event.key === "ArrowRight") show(index + 1);
+        });
+      })();
+    </script>
+  </body>
+</html>
