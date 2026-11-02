@@ -26,9 +26,17 @@
       .user-select-wrap {
         margin-bottom: 8px;
       }
+      #user-letter {
+        font-size: 13.5px;
+        margin-right: 12px;
+      }
       #user-select {
         font-size: 13.5px;
         min-width: 260px;
+      }
+      #user-next {
+        font-size: 13px;
+        margin-left: 8px;
       }
       #user-filter {
         font-size: 13.5px;
@@ -39,6 +47,7 @@
         color: var(--muted);
         font-size: 12px;
         margin-left: 10px;
+        cursor: help;
       }
       .albums-list {
         display: grid;
@@ -352,6 +361,10 @@
         color: var(--text);
         font-weight: 600;
       }
+    </style>
+
+    <!-- Shared by the live results and the exported HTML file. -->
+    <style id="gallery-style">
       .grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
@@ -467,8 +480,13 @@
 
     <section class="user-panel" id="user-panel">
       <div class="user-select-wrap">
+        <label for="user-letter">Starts with:</label>
+        <select id="user-letter" disabled></select>
         <label for="user-select">Select user:</label>
         <select id="user-select" disabled></select>
+        <button id="user-next" class="ghost" type="button" disabled>
+          Next user →
+        </button>
         <input
           id="user-filter"
           type="search"
@@ -1561,8 +1579,11 @@
               /* ---------------------------------------------------------------- user selector */
 
               const USERS_URL = "https://imgsrc.ru/main/users.php";
+              const USERS_FILE = "./users.json";
               const USER_LETTERS = ["", ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0"];
+              const userLetter = $("#user-letter");
               const userSelect = $("#user-select");
+              const userNext = $("#user-next");
               const userFilter = $("#user-filter");
               const userStatus = $("#user-status");
               const albumsList = $("#albums-list");
@@ -1624,32 +1645,153 @@
                 await Promise.all(runners);
               }
 
+              const USER_GROUPS = [
+                ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                "0–9",
+                "#"
+              ];
+
+              function userGroupOf(name) {
+                const first = name.charAt(0).toUpperCase();
+                if (first >= "A" && first <= "Z") return first;
+                if (first >= "0" && first <= "9") return "0–9";
+                return "#";
+              }
+
+              const formatCount = (value) =>
+                Number(value).toLocaleString("en-US");
+
+              function groupUsersOf(group) {
+                return group === "all"
+                  ? usersList
+                  : usersList.filter(
+                      (user) => userGroupOf(user.name) === group
+                    );
+              }
+
               function fillUserSelect(filter) {
                 if (!userSelect) return [];
+                const group = userLetter ? userLetter.value : "all";
+                const pool = groupUsersOf(group);
                 const needle = filter.trim().toLowerCase();
                 const matches = needle
-                  ? usersList.filter((user) =>
+                  ? pool.filter((user) =>
                       user.name.toLowerCase().includes(needle)
                     )
-                  : usersList;
-                const fragment = document.createDocumentFragment();
+                  : pool;
+                const groups = new Map();
                 for (const user of matches) {
-                  const option = document.createElement("option");
-                  option.value = user.url;
-                  option.textContent = user.name;
-                  fragment.appendChild(option);
+                  const label = userGroupOf(user.name);
+                  if (!groups.has(label)) groups.set(label, []);
+                  groups.get(label).push(user);
+                }
+                const fragment = document.createDocumentFragment();
+                for (const label of USER_GROUPS) {
+                  const users = groups.get(label);
+                  if (!users) continue;
+                  const optgroup = document.createElement("optgroup");
+                  optgroup.label = label;
+                  for (const user of users) {
+                    const option = document.createElement("option");
+                    option.value = user.url;
+                    option.textContent = user.name;
+                    optgroup.appendChild(option);
+                  }
+                  fragment.appendChild(optgroup);
                 }
                 userSelect.replaceChildren(fragment);
-                setUserStatus(
-                  needle
-                    ? `${matches.length} of ${usersList.length} users match “${filter.trim()}”`
-                    : `${usersList.length} users`
-                );
+
+                if (needle) {
+                  setUserStatus(
+                    `${formatCount(matches.length)} of ${formatCount(
+                      pool.length
+                    )} match “${filter.trim()}”${
+                      group === "all" ? "" : ` in ${group}`
+                    }`
+                  );
+                } else {
+                  setUserStatus(
+                    group === "all"
+                      ? `${formatCount(usersList.length)} users`
+                      : `${group} · ${formatCount(matches.length)} users`
+                  );
+                }
                 return matches;
               }
 
-              async function loadUsers() {
-                setUserStatus("Loading users…");
+              function renderLetterOptions() {
+                if (!userLetter) return;
+                const counts = new Map();
+                for (const user of usersList) {
+                  const group = userGroupOf(user.name);
+                  counts.set(group, (counts.get(group) || 0) + 1);
+                }
+                const previous = userLetter.value || "A";
+                const fragment = document.createDocumentFragment();
+                const allOption = document.createElement("option");
+                allOption.value = "all";
+                allOption.textContent = `All (${formatCount(usersList.length)})`;
+                fragment.appendChild(allOption);
+                for (const label of USER_GROUPS) {
+                  const count = counts.get(label);
+                  if (!count) continue;
+                  const option = document.createElement("option");
+                  option.value = label;
+                  option.textContent = `${label} (${formatCount(count)})`;
+                  fragment.appendChild(option);
+                }
+                userLetter.replaceChildren(fragment);
+                const available = [...userLetter.options].some(
+                  (option) => option.value === previous
+                );
+                userLetter.value = available ? previous : "A";
+                userLetter.disabled = false;
+              }
+
+              function normalizeUsers(names) {
+                const byName = new Map();
+                for (const raw of names) {
+                  if (typeof raw !== "string") continue;
+                  const name = raw.trim();
+                  if (!name) continue;
+                  const key = name.toLowerCase();
+                  if (!byName.has(key)) {
+                    byName.set(key, {
+                      name,
+                      url: `https://imgsrc.ru/${name}`
+                    });
+                  }
+                }
+                return [...byName.values()].sort((a, b) =>
+                  a.name.localeCompare(b.name, "en", { sensitivity: "base" })
+                );
+              }
+
+              async function readUsersJson() {
+                try {
+                  const response = await fetch(USERS_FILE, {
+                    cache: "no-store"
+                  });
+                  if (!response.ok) return [];
+                  const data = await response.json();
+                  if (Array.isArray(data)) return normalizeUsers(data);
+                  if (Array.isArray(data.users)) {
+                    return normalizeUsers(data.users);
+                  }
+                  if (data.groups && typeof data.groups === "object") {
+                    const names = [];
+                    for (const list of Object.values(data.groups)) {
+                      if (Array.isArray(list)) names.push(...list);
+                    }
+                    return normalizeUsers(names);
+                  }
+                  return [];
+                } catch {
+                  return [];
+                }
+              }
+
+              async function scrapeUsers() {
                 await proxyProbe;
                 const byName = new Map();
                 const concurrency = chosenBackend() === "proxy" ? 4 : 1;
@@ -1676,20 +1818,39 @@
                   );
                 });
 
-                usersList = [...byName.values()].sort((a, b) =>
+                return [...byName.values()].sort((a, b) =>
                   a.name.localeCompare(b.name, "en", { sensitivity: "base" })
                 );
+              }
+
+              async function loadUsers() {
+                setUserStatus("Loading users…");
+                usersList = await readUsersJson();
+                if (!usersList.length) {
+                  setUserStatus("Loading users from imgsrc.ru…");
+                  usersList = await scrapeUsers();
+                }
 
                 if (!usersList.length) {
                   setUserStatus("Could not load the user list.");
                   return;
                 }
 
+                renderLetterOptions();
                 userSelect.disabled = false;
                 userFilter.disabled = false;
-                fillUserSelect("");
+                if (userNext) userNext.disabled = false;
 
                 const wanted = new URLSearchParams(location.search).get("user");
+                if (wanted) {
+                  const group = userGroupOf(wanted);
+                  const hasGroup = [...userLetter.options].some(
+                    (option) => option.value === group
+                  );
+                  if (hasGroup) userLetter.value = group;
+                }
+
+                fillUserSelect("");
                 let index = 0;
                 if (wanted) {
                   const wantedUrl = `https://imgsrc.ru/${wanted}`.toLowerCase();
@@ -1947,18 +2108,50 @@
                 loadUserAlbums(option.value, option.textContent);
               }
 
+              if (userLetter) {
+                userLetter.addEventListener("change", () => {
+                  if (userFilter) userFilter.value = "";
+                  const matches = fillUserSelect("");
+                  if (!matches.length) {
+                    albumsList.replaceChildren();
+                    userInfo = null;
+                    return;
+                  }
+                  userSelect.selectedIndex = 0;
+                  selectUser(0);
+                });
+              }
+
               if (userSelect) {
                 userSelect.addEventListener("change", () => {
                   selectUser(userSelect.selectedIndex);
                 });
-                userSelect.addEventListener("mouseenter", (event) => {
-                  if (!userInfo) return;
-                  const rows = userInfo.rows.map((row) => [...row]);
-                  rows.push(["Albums", String(userInfo.albums.length)]);
-                  showTooltip(userInfo.name, rows, event);
-                });
+                userSelect.addEventListener("mouseenter", showUserTooltip);
                 userSelect.addEventListener("mousemove", moveTooltip);
                 userSelect.addEventListener("mouseleave", hideTooltip);
+              }
+
+              if (userNext) {
+                userNext.addEventListener("click", () => {
+                  const count = userSelect.options.length;
+                  if (!count) return;
+                  const index = (userSelect.selectedIndex + 1) % count;
+                  userSelect.selectedIndex = index;
+                  selectUser(index);
+                });
+              }
+
+              function showUserTooltip(event) {
+                if (!userInfo) return;
+                const rows = userInfo.rows.map((row) => [...row]);
+                rows.push(["Albums", String(userInfo.albums.length)]);
+                showTooltip(userInfo.name, rows, event);
+              }
+
+              if (userStatus) {
+                userStatus.addEventListener("mouseenter", showUserTooltip);
+                userStatus.addEventListener("mousemove", moveTooltip);
+                userStatus.addEventListener("mouseleave", hideTooltip);
               }
 
               window.addEventListener("scroll", hideTooltip, true);
@@ -1984,6 +2177,10 @@
               }
 
               loadUsers();
+
+              if (params.get("url")) {
+                form.requestSubmit();
+              }
 
             })();
     </script>

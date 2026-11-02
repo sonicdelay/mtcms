@@ -55,6 +55,25 @@ The page supports deep links:
 index.html?url=https%3A%2F%2Fimgsrc.ru%2Fuser%2F123456.html&backend=proxy
 ```
 
+### User selector
+
+Above the form, **Starts with** limits the user list to one character group
+(default `A`), so the page renders a few thousand options instead of all
+~65,000. **Select user** then shows that user's albums with cover previews; the
+**Filter users** field narrows the current group, and **Next user →** advances
+to the next entry. Hovering a user or an album shows its details in a tooltip,
+and clicking an album loads it into the collector.
+
+The list is loaded once at startup from `users.json`, generated from
+<https://imgsrc.ru/main/users.php>:
+
+```bash
+node build-users-json.mjs
+```
+
+`cors-proxy.mjs` serves the file at `/users.json`. Without it (or when opened
+from `file://`) the page falls back to scraping the 28 letter pages at startup.
+
 ### Adult-content albums
 
 Some albums redirect to iMGSRC.RU's one-click adult-content warning page
@@ -97,13 +116,13 @@ follows all of its pages, de-duplicates images, and writes `imgsrc-album.html`
 
 ### Options
 
-| Option             | Description                                                                      |
-| ------------------ | -------------------------------------------------------------------------------- |
-| `--out <file>`     | Output HTML file (default `imgsrc-album.html`)                                   |
+| Option             | Description                                                                          |
+| ------------------ | ------------------------------------------------------------------------------------ |
+| `--out <file>`     | Output HTML file (default `imgsrc-album.html`)                                       |
 | `--download [dir]` | Download the WEBP/GIF/JPG files to `dir` (default `webp`) and reference them locally |
-| `--limit <n>`      | Stop after `n` images                                                            |
-| `--headed`         | Show the browser window                                                          |
-| `--slow <ms>`      | Slow down Playwright actions (debugging)                                         |
+| `--limit <n>`      | Stop after `n` images                                                                |
+| `--headed`         | Show the browser window                                                              |
+| `--slow <ms>`      | Slow down Playwright actions (debugging)                                             |
 
 Examples:
 

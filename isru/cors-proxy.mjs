@@ -6,6 +6,7 @@
  * headers, so a page opened from disk cannot read its HTML. This server:
  *
  *   - serves index.html at http://localhost:8787/
+ *   - serves users.json (the default user list index.html loads at startup)
  *   - relays GET /proxy?url=<imgsrc.ru URL> and adds CORS headers
  *   - only proxies imgsrc.ru hosts (it is not an open proxy)
  *
@@ -23,6 +24,7 @@ const PORT = Number.parseInt(process.env.PORT || "8787", 10);
 const HOST = process.env.HOST || "127.0.0.1";
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const INDEX_FILE = path.join(HERE, "index.html");
+const USERS_FILE = path.join(HERE, "users.json");
 const USER_AGENT =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) " +
   "Chrome/126.0.0.0 Safari/537.36";
@@ -119,6 +121,16 @@ const server = createServer(async (request, response) => {
       response.end(body);
     } catch (error) {
       send(response, 502, `Upstream error: ${error.message}`);
+    }
+    return;
+  }
+
+  if (url.pathname === "/users.json") {
+    try {
+      const json = await readFile(USERS_FILE);
+      send(response, 200, json, "application/json; charset=utf-8");
+    } catch {
+      send(response, 404, "users.json not found; run build-users-json.mjs");
     }
     return;
   }
