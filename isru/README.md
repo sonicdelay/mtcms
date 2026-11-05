@@ -8,6 +8,12 @@ Two ways to turn an iMGSRC.RU album into a list of all its full-size **WEBP**,
 | `index.html` + `cors-proxy.mjs` | Browser UI, no Playwright needed       |
 | `imgsrc-webp-album.mjs`         | Playwright script for the command line |
 
+The browser UI is split into `index.html` (markup), `styles.css` (explorer and
+form styles), `app.js` (collector, user/album explorer) and `lightbox.js`
+(image viewer). `gallery.css` holds the grid and lightbox rules that the
+exported HTML file needs; the export inlines `gallery.css` and `lightbox.js` so
+the downloaded page stays a single self-contained file.
+
 Both start at the album's initial view, continue to the paginated "all images
 on one page" (`tape-…`) view, list each photo once and can export a standalone
 HTML gallery. When a photo is available in several formats, `index.html`
@@ -30,18 +36,22 @@ iMGSRC.RU sends no CORS headers, so a web page cannot read its HTML directly.
    ```
 
    Then open <http://localhost:8787> and use the page from there. The proxy only
-   relays `imgsrc.ru` hosts and is not an open proxy.
+   relays `imgsrc.ru` hosts and is not an open proxy. It also serves
+   `styles.css`, `gallery.css`, `app.js` and `lightbox.js`, so no separate
+   static server is needed.
 
 Usage:
 
-1. Open `index.html` (double-click it, or use the local proxy URL).
+1. Open <http://localhost:8787> (or double-click `index.html` to use the Jina
+   relay).
 2. Paste an album/photo URL, for example
    `https://imgsrc.ru/user/123456.html?pwd=…`.
 3. Optionally set **Max images** for a quick test.
 4. Click **Collect images**.
-5. Use **Export HTML** to download the same standalone gallery the Playwright
-   script produces, **Copy image URLs** to get a plain list, or click an image
-   to open the lightbox.
+5. Use the **HTML** button next to an album to download the same standalone
+   gallery the Playwright script produces (this needs the local proxy, because
+   the export inlines `gallery.css` and `lightbox.js`), **Copy image URLs** to
+   get a plain list, or click an image to open the lightbox.
 
 When a collection finishes, the album name is written to the page's document
 title (`<album> — iMGSRC.RU WEBP & GIF gallery`) and remembered in `localStorage`, so
@@ -55,24 +65,42 @@ The page supports deep links:
 index.html?url=https%3A%2F%2Fimgsrc.ru%2Fuser%2F123456.html&backend=proxy
 ```
 
-### User selector
+### Explorer
 
-Above the form, **Starts with** limits the user list to one character group
-(default `A`), so the page renders a few thousand options instead of all
-~65,000. **Select user** then shows that user's albums with cover previews; the
-**Filter users** field narrows the current group, and **Next user →** advances
-to the next entry. Hovering a user or an album shows its details in a tooltip,
-and clicking an album loads it into the collector.
+The left side holds two stacked blocks: **User** on top for picking a user and
+seeing their details, **Albums** below it listing that user's albums as a
+single column of preview images. The selected album's images fill the
+remaining space on the right. **Starts with** limits the user list to one
+character group (default `A`), so the page renders a few thousand options
+instead of all ~65,000. **Select user** loads that user's details and albums;
+the **Filter users** field narrows the current group, and **Next user →**
+advances to the next entry. Hovering a user or an album shows its details in a
+tooltip.
 
-The list is loaded once at startup from `users.json`, generated from
-<https://imgsrc.ru/main/users.php>:
+Clicking an album loads it into the collector so its images appear in the
+preview pane. The **HTML** button next to an album collects that album and
+immediately downloads the standalone gallery page to the local machine,
+without opening the album first. Entering an album URL in the collector form
+also switches the left side to that album's owner: the **Starts with** group
+and **Select user** follow the URL, the owner's albums are listed, and the
+collected album is highlighted in that list.
+
+The list is loaded once at startup from the default `users.json`, generated
+from <https://imgsrc.ru/main/users.php>:
 
 ```bash
 node build-users-json.mjs
 ```
 
-`cors-proxy.mjs` serves the file at `/users.json`. Without it (or when opened
-from `file://`) the page falls back to scraping the 28 letter pages at startup.
+The page does not scrape `users.php` at startup. The **Starts with** options are
+static (`A`–`Z`, `0`) and present before any data loads. Choosing a letter
+reloads exactly that letter from iMGSRC.RU — the same operation as **Update
+users**, which stays available as a manual retry. With `cors-proxy.mjs` running
+the page sends `POST /users.json?letter=A`, which scrapes that one page and
+replaces just that group in `users.json` and in memory; without the proxy the
+page scrapes the single letter itself and merges it into the list for that
+session. The letter's already-loaded users are cached and shown immediately
+while the refresh runs. `cors-proxy.mjs` serves the file at `/users.json`.
 
 ### Adult-content albums
 

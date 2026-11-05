@@ -3,15 +3,18 @@
  * build-users-json.mjs
  *
  * Builds users.json, the default user list that index.html loads at startup.
- * The list comes from the 28 letter pages of https://imgsrc.ru/main/users.php
+ * The list comes from the 27 letter pages of https://imgsrc.ru/main/users.php
  * and is grouped by the first character so the UI can show one letter at a
  * time instead of rendering all ~65k <option> elements.
  *
  * Usage:
  *   node build-users-json.mjs
+ *
+ * The proxy uses rebuildUsersGroup() to refresh a single letter group instead
+ * of scraping every page again.
  */
 
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -22,6 +25,7 @@ const USER_AGENT =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) " +
   "Chrome/126.0.0.0 Safari/537.36";
 const SYSTEM_NAMES = /^(main|members|blog|user|images|css)$/i;
+const USER_GROUPS = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0"];
 const OUT_FILE = path.join(
   path.dirname(fileURLToPath(import.meta.url)),
   "users.json"
@@ -30,8 +34,7 @@ const OUT_FILE = path.join(
 function userGroupOf(name) {
   const first = name.charAt(0).toUpperCase();
   if (first >= "A" && first <= "Z") return first;
-  if (first >= "0" && first <= "9") return "0–9";
-  return "#";
+  return "0";
 }
 
 function parseUsers(html) {
@@ -61,7 +64,7 @@ async function fetchPage(letter) {
   return response.text();
 }
 
-async function main() {
+export async function buildUsersJson() {
   const started = Date.now();
   const byName = new Map();
   let done = 0;
@@ -91,14 +94,18 @@ async function main() {
     Array.from({ length: Math.min(CONCURRENCY, LETTERS.length) }, worker)
   );
 
-  const groups = {};
+  const byGroup = new Map();
   for (const name of byName.values()) {
     const group = userGroupOf(name);
-    if (!groups[group]) groups[group] = [];
-    groups[group].push(name);
+    if (!byGroup.has(group)) byGroup.set(group, []);
+    byGroup.get(group).push(name);
   }
-  for (const names of Object.values(groups)) {
+  const groups = {};
+  for (const group of USER_GROUPS) {
+    const names = byGroup.get(group);
+    if (!names || !names.length) continue;
     names.sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
+    groups[group] = names;
   }
 
   const payload = {
@@ -108,13 +115,82 @@ async function main() {
     groups
   };
 
-  await writeFile(OUT_FILE, JSON.stringify(payload) + "\n");
+  await writeFile(OUT_FILE, JSON.stringify(payload, null, 2) + "\n");
   console.log(
     `Wrote ${byName.size} users to users.json in ${Date.now() - started} ms`
   );
+  return payload;
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+function sortNames(names) {
+  const byKey = new Map();
+  for (const name of names) {
+    const key = name.toLowerCase();
+    if (!byKey.has(key)) byKey.set(key, name);
+  }
+  return [...byKey.values()].sort((a, b) =>
+    a.localeCompare(b, "en", { sensitivity: "base" })
+  );
+}
+
+export async function rebuildUsersGroup(group) {
+  if (!USER_GROUPS.includes(group)) {
+    const error = new Error(`Unknown user group "${group}".`);
+    error.code = "INVALID_GROUP";
+    throw error;
+  }
+
+  const started = Date.now();
+  const html = await fetchPage(group);
+  const names = sortNames(
+    parseUsers(html).filter((name) => userGroupOf(name) === group)
+  );
+
+  let payload = {};
+  try {
+    payload = JSON.parse(await readFile(OUT_FILE, "utf8"));
+  } catch {
+    payload = {};
+  }
+  const previousGroups =
+    payload.groups && typeof payload.groups === "object" ? payload.groups : {};
+
+  const groups = {};
+  for (const key of USER_GROUPS) {
+    const list = Array.isArray(previousGroups[key]) ? previousGroups[key] : [];
+    const kept = list.filter((name) => userGroupOf(name) !== group);
+    if (kept.length) groups[key] = sortNames(kept);
+  }
+  if (names.length) groups[group] = names;
+
+  const ordered = {};
+  for (const key of USER_GROUPS) {
+    if (groups[key]) ordered[key] = groups[key];
+  }
+
+  const next = {
+    source: USERS_URL,
+    generated: new Date().toISOString(),
+    count: Object.values(ordered).reduce((sum, list) => sum + list.length, 0),
+    groups: ordered
+  };
+
+  await writeFile(OUT_FILE, JSON.stringify(next, null, 2) + "\n");
+  console.log(
+    `Wrote ${names.length} users for "${group}" to users.json in ${
+      Date.now() - started
+    } ms`
+  );
+  return next;
+}
+
+const isMain =
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (isMain) {
+  buildUsersJson().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}

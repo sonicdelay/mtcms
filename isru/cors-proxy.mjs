@@ -6,7 +6,9 @@
  * headers, so a page opened from disk cannot read its HTML. This server:
  *
  *   - serves index.html at http://localhost:8787/
+ *   - serves its assets (styles.css, gallery.css, app.js, lightbox.js)
  *   - serves users.json (the default user list index.html loads at startup)
+ *   - rebuilds one letter group of users.json on POST /users.json?letter=A
  *   - relays GET /proxy?url=<imgsrc.ru URL> and adds CORS headers
  *   - only proxies imgsrc.ru hosts (it is not an open proxy)
  *
@@ -19,12 +21,24 @@ import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { rebuildUsersGroup } from "./build-users-json.mjs";
 
 const PORT = Number.parseInt(process.env.PORT || "8787", 10);
 const HOST = process.env.HOST || "127.0.0.1";
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const INDEX_FILE = path.join(HERE, "index.html");
 const USERS_FILE = path.join(HERE, "users.json");
+const STATIC_FILES = new Map(
+  [
+    ["/styles.css", "styles.css", "text/css; charset=utf-8"],
+    ["/gallery.css", "gallery.css", "text/css; charset=utf-8"],
+    ["/app.js", "app.js", "text/javascript; charset=utf-8"],
+    ["/lightbox.js", "lightbox.js", "text/javascript; charset=utf-8"]
+  ].map(([route, file, contentType]) => [
+    route,
+    { file: path.join(HERE, file), contentType }
+  ])
+);
 const USER_AGENT =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) " +
   "Chrome/126.0.0.0 Safari/537.36";
@@ -51,12 +65,33 @@ const server = createServer(async (request, response) => {
   );
 
   response.setHeader("access-control-allow-origin", "*");
-  response.setHeader("access-control-allow-methods", "GET, OPTIONS");
+  response.setHeader("access-control-allow-methods", "GET, POST, OPTIONS");
   response.setHeader("access-control-allow-headers", "content-type");
 
   if (request.method === "OPTIONS") {
     response.writeHead(204);
     response.end();
+    return;
+  }
+
+  if (request.method === "POST" && url.pathname === "/users.json") {
+    const letter = (url.searchParams.get("letter") || "A").toUpperCase();
+    try {
+      const payload = await rebuildUsersGroup(letter);
+      send(
+        response,
+        200,
+        JSON.stringify(payload),
+        "application/json; charset=utf-8"
+      );
+    } catch (error) {
+      if (error.code === "INVALID_GROUP") {
+        send(response, 400, error.message);
+        return;
+      }
+      console.error(`Failed to rebuild users for "${letter}":`, error);
+      send(response, 502, "Could not rebuild that letter from imgsrc.ru");
+    }
     return;
   }
 
@@ -121,6 +156,17 @@ const server = createServer(async (request, response) => {
       response.end(body);
     } catch (error) {
       send(response, 502, `Upstream error: ${error.message}`);
+    }
+    return;
+  }
+
+  const asset = STATIC_FILES.get(url.pathname);
+  if (asset) {
+    try {
+      const body = await readFile(asset.file);
+      send(response, 200, body, asset.contentType);
+    } catch {
+      send(response, 404, `${url.pathname} not found next to cors-proxy.mjs`);
     }
     return;
   }
