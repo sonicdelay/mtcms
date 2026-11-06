@@ -1,0 +1,212 @@
+﻿{
+  "$schema": "./.opencode/schema.json",
+  "plugins": [
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "@wakatime/opencode-wakatime",
+    "@nick-vi/opencode-type-inject",
+    "@tarquinen/opencode-dcp"
+  ],
+  "mcp": {
+    "timeout": {
+      "startup": 120000
+    },
+    "servers": {
+      "blender": {
+        "type": "local",
+        "command": [
+          "uvx",
+          "--from",
+          "mcp-for-blender",
+          "mcp-for-blender"
+        ]
+      },
+      "playwright": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@playwright/mcp@latest"
+        ]
+      },
+      "babylon-nme": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@babylonjs/mcp-servers@9.32.0",
+          "nme"
+        ]
+      },
+      "babylon-npe": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@babylonjs/mcp-servers@9.32.0",
+          "npe"
+        ]
+      },
+      "babylon-flow-graph": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@babylonjs/mcp-servers@9.32.0",
+          "flow-graph"
+        ]
+      },
+      "babylon-nge": {
+        "type": "local",
+        "disabled": true,
+        "command": [
+          "npx",
+          "-y",
+          "@babylonjs/mcp-servers@9.32.0",
+          "nge"
+        ]
+      },
+      "babylon-nrge": {
+        "type": "local",
+        "disabled": true,
+        "command": [
+          "npx",
+          "-y",
+          "@babylonjs/mcp-servers@9.32.0",
+          "nrge"
+        ]
+      },
+      "babylon-gui": {
+        "type": "local",
+        "disabled": true,
+        "command": [
+          "npx",
+          "-y",
+          "@babylonjs/mcp-servers@9.32.0",
+          "gui"
+        ]
+      },
+      "babylon-smart-filters": {
+        "type": "local",
+        "disabled": true,
+        "command": [
+          "npx",
+          "-y",
+          "@babylonjs/mcp-servers@9.32.0",
+          "smart-filters"
+        ]
+      }
+    }
+  },
+  "skills": [
+    "./ai/skills"
+  ],
+  "instructions": [
+    "ai/rules/*.md"
+  ],
+  "lsp": true,
+  "experimental": {
+    "todo": true
+  },
+  "providers": {
+    "lmstudio": {
+      "package": "@ai-sdk/openai-compatible",
+      "name": "LM Studio (local)",
+      "settings": {
+        "apiKey": "lm-studio",
+        "baseURL": "http://192.168.178.27:1234/v1"
+      },
+      "models": {
+        "gemma-4-e4b-uncensored-hauhaucs-aggressive": {
+          "name": "gemma-4-e4b-uncensored-hauhaucs-aggressive"
+        },
+        "qwen/qwen2.5-coder-14b": {
+          "name": "qwen/qwen2.5-coder-14b"
+        }
+      }
+    },
+    "anthropic": {
+      "package": "@ai-sdk/anthropic",
+      "name": "Anthropic",
+      "settings": {
+        "apiKey": "eea2cdba75fc4e518b0521219c24d3b406a85c2ed39a4b93a8535a65e01cff29"
+      }
+    }
+  },
+  "model": "opencode/big-pickle",
+  "formatter": {
+    "prettier": {
+      "command": [
+        "npx",
+        "prettier",
+        "--write",
+        "$FILE"
+      ],
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".js",
+        ".jsx",
+        ".mjs",
+        ".cjs",
+        ".mts",
+        ".cts",
+        ".json",
+        ".jsonc",
+        ".md"
+      ]
+    }
+  },
+  "permissions": [
+    {
+      "action": "websearch",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "webfetch",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "question",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "edit",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "git",
+      "resource": "*",
+      "effect": "ask"
+    }
+  ],
+  "watcher": {
+    "ignore": [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/.git/**",
+      "**/.cache/**",
+      "**/.next/**",
+      "**/.turbo/**",
+      "**/.yarn/**",
+      "**/.pnpm/**",
+      "**/.fallow/**",
+      "**/.backup/**",
+      "**/.idea/**",
+      "**/.vscode/**",
+      "**/coverage/**",
+      "**/logs/**",
+      "**/3rd-party/**",
+      "**/tmp/**",
+    ]
+  }
+}
