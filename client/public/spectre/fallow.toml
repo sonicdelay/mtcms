@@ -1,0 +1,5 @@
+# fallow.toml - Dead code analysis configuration
+# Static browser assets and nested standalone npm projects that are outside
+# spectre's module graph.
+ignore = ["**/public/**", "**/isru/**", "**/agentsdk/**"]
+ignore_dependencies = ["react", "react-dom"]

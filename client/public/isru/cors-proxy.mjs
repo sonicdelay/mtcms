@@ -66,9 +66,21 @@ const server = createServer(async (request, response) => {
 
   response.setHeader("access-control-allow-origin", "*");
   response.setHeader("access-control-allow-methods", "GET, POST, OPTIONS");
-  response.setHeader("access-control-allow-headers", "content-type");
+  // Reflect whatever the page asks for so a cross-origin preflight never
+  // fails on a header we forgot to list (e.g. authorization).
+  response.setHeader(
+    "access-control-allow-headers",
+    request.headers["access-control-request-headers"] || "content-type"
+  );
+  response.setHeader("access-control-max-age", "86400");
+  response.setHeader("vary", "Origin, Access-Control-Request-Headers");
 
   if (request.method === "OPTIONS") {
+    // Chrome's Private Network Access preflight: a page on a public origin
+    // reaching http://localhost must be told this is allowed.
+    if (request.headers["access-control-request-private-network"] === "true") {
+      response.setHeader("access-control-allow-private-network", "true");
+    }
     response.writeHead(204);
     response.end();
     return;

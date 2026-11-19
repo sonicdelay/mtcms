@@ -93,14 +93,17 @@ node build-users-json.mjs
 ```
 
 The page does not scrape `users.php` at startup. The **Starts with** options are
-static (`A`–`Z`, `0`) and present before any data loads. Choosing a letter
-reloads exactly that letter from iMGSRC.RU — the same operation as **Update
-users**, which stays available as a manual retry. With `cors-proxy.mjs` running
-the page sends `POST /users.json?letter=A`, which scrapes that one page and
-replaces just that group in `users.json` and in memory; without the proxy the
-page scrapes the single letter itself and merges it into the list for that
-session. The letter's already-loaded users are cached and shown immediately
-while the refresh runs. `cors-proxy.mjs` serves the file at `/users.json`.
+static (`A`–`Z`, `0–9`) and present before any data loads. Choosing a letter
+immediately shows that letter's users from the local `users.json`; **Update
+users** is the only action that scrapes a letter from iMGSRC.RU again. With
+`cors-proxy.mjs` running it sends `POST /users.json?letter=A`, which scrapes
+that one page and replaces just that group in `users.json` and in memory;
+without the proxy the page scrapes the single letter itself and merges it into
+the list for that session. `cors-proxy.mjs` serves the file at `/users.json`.
+
+Entering or pasting an album URL into **Album URL** also selects the album
+owner: the **Starts with** letter follows the owner's first character and the
+user list switches to that letter with the owner selected.
 
 ### Adult-content albums
 

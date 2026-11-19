@@ -1001,27 +1001,17 @@ ${LIGHTBOX_MARKUP}
     }
   }
 
-  let proxyProbe = Promise.resolve();
-  if (location.protocol.startsWith("http")) {
-    proxyProbe = fetch("./proxy?ping=1", { cache: "no-store" })
-      .then((response) => (response.ok ? response.json() : null))
-      .then((data) => {
-        proxyAvailable = Boolean(data?.ok);
-        if (proxyAvailable && backendSelect.value === "auto") {
-          setStatus(
-            "Local proxy detected — requests will stay on your machine."
-          );
-        }
-      })
-      .catch(() => {
-        proxyAvailable = false;
-      });
-  }
+  const proxyProbe = detectProxy().then((found) => {
+    proxyAvailable = found;
+    if (proxyAvailable && backendSelect.value === "auto") {
+      setStatus("Local proxy detected — requests will stay on your machine.");
+    }
+    return proxyAvailable;
+  });
 
   /* ---------------------------------------------------------------- user selector */
 
   const USERS_URL = "https://imgsrc.ru/main/users.php";
-  const USERS_FILE = "./users.json";
   const userLetter = $("#user-letter");
   const userSelect = $("#user-select");
   const userNext = $("#user-next");
@@ -1034,6 +1024,7 @@ ${LIGHTBOX_MARKUP}
   const previewEmpty = $("#preview-empty");
   const tooltipHost = $("#tooltip-host");
   let usersList = [];
+  let usersReady = false;
   let userInfo = null;
   let albumRequest = 0;
   let activeAlbumId = null;
@@ -1041,7 +1032,6 @@ ${LIGHTBOX_MARKUP}
   let userUpdateBusy = false;
   let pendingUser = null;
   const groupCache = new Map();
-  let letterRequest = 0;
   let autoDownload = false;
   let autoDownloadButton = null;
 
@@ -1119,6 +1109,7 @@ ${LIGHTBOX_MARKUP}
   function fillUserSelect(filter) {
     if (!userSelect) return [];
     const group = userLetter ? userLetter.value : "all";
+    const groupLabel = userLetter?.selectedOptions?.[0]?.textContent || group;
     const pool = groupUsersOf(group);
     const needle = filter.trim().toLowerCase();
     const matches = needle
@@ -1150,13 +1141,13 @@ ${LIGHTBOX_MARKUP}
       setUserStatus(
         `${formatCount(matches.length)} of ${formatCount(
           pool.length
-        )} match “${filter.trim()}”${group === "all" ? "" : ` in ${group}`}`
+        )} match “${filter.trim()}”${group === "all" ? "" : ` in ${groupLabel}`}`
       );
     } else {
       setUserStatus(
         group === "all"
           ? `${formatCount(usersList.length)} users`
-          : `${group} · ${formatCount(matches.length)} users`
+          : `${groupLabel} · ${formatCount(matches.length)} users`
       );
     }
     return matches;
@@ -1205,8 +1196,14 @@ ${LIGHTBOX_MARKUP}
   }
 
   async function readUsersJson() {
+    await proxyProbe;
+    // A file:// page cannot fetch next to itself; without a detected proxy
+    // there is nothing to read, so skip the request instead of logging a
+    // CORS error.
+    if (!proxyOrigin && !isHttpPage()) return [];
+
     try {
-      const response = await fetch(USERS_FILE, {
+      const response = await fetch(proxyUrl("/users.json"), {
         cache: "no-store"
       });
       if (!response.ok) return [];
@@ -1243,8 +1240,9 @@ ${LIGHTBOX_MARKUP}
     let saved = false;
 
     try {
+      await proxyProbe;
       const response = await fetch(
-        `${USERS_FILE}?letter=${encodeURIComponent(group)}`,
+        proxyUrl(`/users.json?letter=${encodeURIComponent(group)}`),
         { method: "POST", cache: "no-store" }
       );
       if (response.ok) {
@@ -1290,6 +1288,7 @@ ${LIGHTBOX_MARKUP}
     setUserStatus("Loading users…");
     if (userUpdate) userUpdate.disabled = false;
     usersList = await readUsersJson();
+    usersReady = true;
 
     if (!usersList.length) {
       setUserStatus("Default user list unavailable — click Update users.");
@@ -1321,6 +1320,10 @@ ${LIGHTBOX_MARKUP}
   }
 
   function showUserByName(name) {
+    if (!usersReady) {
+      pendingUser = name;
+      return;
+    }
     const group = userGroupOf(name);
     if (userLetter && USER_GROUPS.includes(group)) userLetter.value = group;
     if (userFilter) userFilter.value = "";
@@ -1792,58 +1795,20 @@ ${LIGHTBOX_MARKUP}
   }
 
   if (userLetter) {
-    userLetter.addEventListener("change", async () => {
+    userLetter.addEventListener("change", () => {
       const group = userLetter.value;
-      const requestId = (letterRequest += 1);
       if (userFilter) userFilter.value = "";
-
-      // Show the users already loaded for this letter while the refresh runs.
-      const cached = fillUserSelect("");
-      if (cached.length) {
-        userSelect.selectedIndex = 0;
-        selectUser(0, true);
-      } else {
+      const matches = fillUserSelect("");
+      if (!matches.length) {
         resetPreview();
         albumsList.replaceChildren();
         userInfo = null;
         renderUserInfo();
+        setUserStatus(`No users starting with ${group}.`);
+        return;
       }
-
-      try {
-        const { users, saved } = await fetchGroup(group);
-        if (requestId !== letterRequest || userLetter.value !== group) return;
-
-        const previous = userSelect.value;
-        const matches = fillUserSelect("");
-        if (!matches.length) {
-          resetPreview();
-          albumsList.replaceChildren();
-          userInfo = null;
-          renderUserInfo();
-          setUserStatus(`No users starting with ${group}.`);
-          return;
-        }
-
-        let index = 0;
-        if (previous) {
-          const found = Array.from(userSelect.options).findIndex(
-            (option) => option.value === previous
-          );
-          if (found >= 0) index = found;
-        }
-        const changed = userSelect.options[index]?.value !== previous;
-        userSelect.selectedIndex = index;
-        if (changed || !cached.length) selectUser(index, true);
-        setUserStatus(
-          `${formatCount(users.length)} users in ${group}${
-            saved ? " · saved to users.json" : ""
-          }`
-        );
-      } catch (error) {
-        if (requestId !== letterRequest) return;
-        console.error("Failed to update users:", error);
-        setUserStatus(`Update failed: ${error.message}`);
-      }
+      userSelect.selectedIndex = 0;
+      selectUser(0, true);
     });
   }
 
@@ -1905,7 +1870,39 @@ ${LIGHTBOX_MARKUP}
     });
   }
 
-  loadGalleryAssets().catch(() => {});
+  if (urlInput) {
+    let urlSyncTimer = 0;
+    let syncedUser = "";
+    const syncUserFromUrl = () => {
+      window.clearTimeout(urlSyncTimer);
+      const raw = urlInput.value.trim();
+      if (!raw) return;
+      let url;
+      try {
+        url = normalizeUrl(raw);
+      } catch {
+        return;
+      }
+      const name = userFromAlbumUrl(url);
+      if (!name) return;
+      const key = name.toLowerCase();
+      if (key === syncedUser) return;
+      syncedUser = key;
+      showUserByName(name);
+    };
+    urlInput.addEventListener("input", () => {
+      window.clearTimeout(urlSyncTimer);
+      urlSyncTimer = window.setTimeout(syncUserFromUrl, 400);
+    });
+    urlInput.addEventListener("change", syncUserFromUrl);
+  }
+
+  proxyProbe.then(() => {
+    // Warm the export assets only when they can actually be fetched: same
+    // origin (http/https) or through a detected proxy. A file:// page without
+    // the proxy would otherwise log a CORS error for each asset.
+    if (proxyOrigin || isHttpPage()) loadGalleryAssets().catch(() => {});
+  });
   loadUsers();
 
   if (params.get("url")) {
