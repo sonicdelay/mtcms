@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Speak</title>
+  <script>
+    //https://speech.evanliu.com/
+    document.addEventListener('DOMContentLoaded', () => {
+      // Get the output element from the page
+      const output = document.getElementById('output');
+      output.innerHTML = "<p>Initializing speech recognition...</p>";
+
+      try {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (!SpeechRecognition) {
+          output.innerHTML = "<p>Error: Speech Recognition API is not supported in this browser.</p>";
+          return;
+        }
+
+        const recognition = new SpeechRecognition();
+        window.currentRecognition = recognition;
+
+        // Timing and metrics variables
+        let startTime = 0;
+        let firstTokenTime = 0;
+        let endTime = 0;
+        let fullTranscript = '';
+        let latestResults = [];
+        let lastResultCount = 0;
+        let pendingChunkBreak = false;
+        let pendingChunkBreakIndex = -1;
+        let isSpeaking = false;
+        let silenceStartTimer;
+        let silenceStopTimer;
+        const chunkBreaks = new Set();
+
+        const clearSilenceTimers = () => {
+          clearTimeout(silenceStartTimer);
+          clearTimeout(silenceStopTimer);
+        };
+
+        const renderTranscript = (results) => {
+          const chunks = [''];
+          for (let i = 0; i < results.length; ++i) {
+            if (chunkBreaks.has(i) && chunks[chunks.length - 1]) {
+              chunks.push('');
+            }
+
+            const transcript = results[i][0].transcript.trim();
+            if (transcript) {
+              const lastChunk = chunks.length - 1;
+              chunks[lastChunk] += `${chunks[lastChunk] ? ' ' : ''}${transcript}`;
+            }
+          }
+
+          if (pendingChunkBreak && chunks[chunks.length - 1]) {
+            chunks.push('');
+          }
+
+          fullTranscript = chunks.filter(Boolean).join(' ');
+          const transcriptLabel = document.createElement('strong');
+          transcriptLabel.textContent = 'Transcript:';
+          const transcriptParagraph = document.createElement('p');
+          transcriptParagraph.append(transcriptLabel, ` ${chunks[0] || ''}`);
+          const paragraphs = [transcriptParagraph];
+
+          for (const chunk of chunks.slice(1)) {
+            const paragraph = document.createElement('p');
+            paragraph.textContent = chunk;
+            paragraphs.push(paragraph);
+          }
+
+          output.replaceChildren(...paragraphs);
+        };
+
+        const scheduleSilenceTimers = () => {
+          clearSilenceTimers();
+          silenceStartTimer = setTimeout(() => {
+            if (!isSpeaking && lastResultCount > 0 && !chunkBreaks.has(lastResultCount)) {
+              pendingChunkBreakIndex = lastResultCount;
+              pendingChunkBreak = true;
+              chunkBreaks.add(pendingChunkBreakIndex);
+              renderTranscript(latestResults);
+            }
+          }, 1000);
+          silenceStopTimer = setTimeout(() => {
+            if (!isSpeaking) {
+              recognition.stop();
+            }
+          }, 5000);
+        };
+
+        // --- Options Set by You ---
+        recognition.lang = "de-DE";
+        recognition.processLocally = false;
+        recognition.quality = "conversation";
+        recognition.interimResults = true;
+        recognition.continuous = true;
+        recognition.unspokenPunctuation = true;
+        // --------------------------
+
+        recognition.onstart = () => {
+          performance.mark('speech-recognition-onstart');
+          startTime = performance.now();
+          firstTokenTime = 0;
+          latestResults = [];
+          lastResultCount = 0;
+          pendingChunkBreak = false;
+          pendingChunkBreakIndex = -1;
+          isSpeaking = false;
+          chunkBreaks.clear();
+          output.innerHTML = "<p>Listening... Speak into your microphone.</p>";
+          scheduleSilenceTimers();
+        };
+
+        recognition.onspeechstart = () => {
+          isSpeaking = true;
+          clearSilenceTimers();
+        };
+
+        recognition.onspeechend = () => {
+          isSpeaking = false;
+          scheduleSilenceTimers();
+        };
+
+        recognition.onresult = (event) => {
+          if (firstTokenTime === 0) {
+            performance.mark('speech-recognition-first-token');
+            firstTokenTime = performance.now();
+            performance.measure('SpeechRecognition (TFTT)', 'speech-recognition-start', 'speech-recognition-first-token');
+          }
+
+          latestResults = event.results;
+          if (pendingChunkBreak && event.results.length > pendingChunkBreakIndex) {
+            pendingChunkBreak = false;
+          }
+          lastResultCount = event.results.length;
+          renderTranscript(event.results);
+          if (!isSpeaking) {
+            scheduleSilenceTimers();
+          }
+        };
+
+        recognition.onerror = (event) => {
+          output.innerHTML = `<p><strong>Error:</strong> ${event.error}</p>`;
+        };
+
+        recognition.onend = () => {
+          clearSilenceTimers();
+          if (endTime === 0) {
+            performance.mark('speech-recognition-end');
+            endTime = performance.now();
+            performance.measure('SpeechRecognition (end to end)', 'speech-recognition-start', 'speech-recognition-end');
+          }
+
+          const coldStartMs = firstTokenTime ? (firstTokenTime - startTime).toFixed(2) : 0;
+          const e2eMs = (endTime - startTime).toFixed(2);
+
+          const tokens = fullTranscript.trim().split(/\s+/).filter(word => word.length > 0).length;
+          const decodeTimeS = firstTokenTime ? (endTime - firstTokenTime) / 1000 : 0;
+          const tokensPerSec = decodeTimeS > 0 ? (tokens / decodeTimeS).toFixed(2) : 0;
+
+          const metricsHtml = `
+            <div class="metrics">
+                <p><strong>Cold Start (Time to First Token):</strong> ${coldStartMs} ms</p>
+                <p><strong>Decoding Speed:</strong> ${tokensPerSec} tokens/sec (${tokens} tokens)</p>
+                <p><strong>End-to-End Latency:</strong> ${e2eMs} ms</p>
+            </div>
+        `;
+
+          output.innerHTML += metricsHtml + "<p>(Recognition ended.)</p>";
+        };
+
+        // Start the recognition
+        performance.mark('speech-recognition-start');
+        recognition.start();
+
+      } catch (e) {
+        output.innerHTML = `<p>An execution error occurred: ${e.message}</p>`;
+        console.error(e);
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <div id="output"></div>
+</body>
+
+</html>

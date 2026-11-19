@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+logs/
+!.gitkeep
+spectre/.hermes
+spectre/ollama-local/
+spectre/open-webui-local
+.backup/

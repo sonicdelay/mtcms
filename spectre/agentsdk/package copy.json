@@ -1,0 +1,17 @@
+{
+  "name": "isru",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev2": "tsx watch index.ts",
+    "dev": "deno watch -A index.ts"
+  },
+  "dependencies": {
+    "playwright": "^1.61.0"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "share": "disabled",
+  "disabled_providers": [
+    // "openai",
+    // "opencode"
+  ],
+  "provider": {
+    "lmstudio": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LM Studio (local)",
+      "options": {
+        "apiKey": "lm-studio",
+        "baseURL": "http://192.168.178.175:1234/v1"
+        //"baseURL": "http://127.0.0.1:1234/v1"
+      },
+      "models": {
+        "gemma-4-e4b-uncensored-hauhaucs-aggressive": {
+          "name": "gemma-4-e4b-uncensored-hauhaucs-aggressive"
+        },
+        "qwen/qwen2.5-coder-14b": {
+          "name": "qwen/qwen2.5-coder-14b"
+        }
+      },
+      "model": ""
+    }
+  },
+  "model": "gemma-4-e4b-uncensored-hauhaucs-aggressive"
+}
